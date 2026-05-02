@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://cdl4hvrn3nxf2"]
+
+[ext_resource type="Environment" uid="uid://cm77bbr0io118" path="res://scenes/main-environment.tres" id="1_x8oc8"]
+[ext_resource type="Script" uid="uid://djjwyfljn15im" path="res://addons/floatable_body/fluid_area_3d.gd" id="3_sugp2"]
+[ext_resource type="PackedScene" uid="uid://cl8wcl4pdmpdc" path="res://scenes/ship.tscn" id="7_o6xl0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jyhfs"]
+size = Vector3(100, 10, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_tbgi4"]
+size = Vector3(100, 10, 100)
+
+[node name="Main" type="Node3D" unique_id=619861050]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=456682190]
+environment = ExtResource("1_x8oc8")
+
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=1021538697]
+transform = Transform3D(-0.7660449, -0.492404, 0.41317585, 0, 0.6427878, 0.76604426, -0.642788, 0.5868242, -0.49240378, 0, 0, 0)
+shadow_enabled = true
+shadow_opacity = 0.95
+
+[node name="Ship" parent="." unique_id=93912584 instance=ExtResource("7_o6xl0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.8957253, 0)
+
+[node name="View" type="Node3D" parent="." unique_id=2004286940]
+transform = Transform3D(0.9999996, 0, 0, 0, 0.9063077, 0.422618, 0, -0.42261824, 0.90630716, 0, 25, 35)
+
+[node name="Camera" type="Camera3D" parent="View" unique_id=66272632]
+transform = Transform3D(1.0000005, 0, -2.9802322e-08, -2.9802322e-08, 1, -2.9802322e-08, 5.9604645e-08, -2.9802322e-08, 1.0000006, -1.2342169, 2.734147, 9.6336775)
+environment = ExtResource("1_x8oc8")
+fov = 40.0
+
+[node name="Water" type="Area3D" parent="." unique_id=335967148]
+script = ExtResource("3_sugp2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Water" unique_id=1351500850]
+shape = SubResource("BoxShape3D_jyhfs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Water" unique_id=862462830]
+mesh = SubResource("BoxMesh_tbgi4")

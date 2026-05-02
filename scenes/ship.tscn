@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://cl8wcl4pdmpdc"]
+
+[ext_resource type="Script" uid="uid://cjbo5j87k13ot" path="res://scripts/ship.gd" id="1_2gnfn"]
+[ext_resource type="PackedScene" uid="uid://cxxpeuwmub1wx" path="res://kenney_pirate-kit/Models/GLB format/ship-small.glb" id="1_l3rv8"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2gnfn"]
+radius = 3.5
+
+[node name="Ship" type="CharacterBody3D" unique_id=1389603216 node_paths=PackedStringArray("view")]
+script = ExtResource("1_2gnfn")
+view = NodePath("View")
+forward_incline = Vector2(-10, 3)
+side_incline = Vector3(-15, 15, 4)
+mass = 300.0
+fluid_damp = 2.0
+move_speed = 30.0
+rotate_speed = 2.7
+angular_damp = 5.0
+idle_wave = 1.0
+metadata/_custom_type_script = "uid://cjbo5j87k13ot"
+
+[node name="View" type="Node3D" parent="." unique_id=159638074]
+
+[node name="ship-small2" parent="View" unique_id=1661171686 instance=ExtResource("1_l3rv8")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1829515575]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.9, 0)
+shape = SubResource("SphereShape3D_2gnfn")
