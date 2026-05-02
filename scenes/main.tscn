@@ -2,13 +2,23 @@
 
 [ext_resource type="Environment" uid="uid://cm77bbr0io118" path="res://scenes/main-environment.tres" id="1_x8oc8"]
 [ext_resource type="Script" uid="uid://djjwyfljn15im" path="res://addons/floatable_body/fluid_area_3d.gd" id="3_sugp2"]
+[ext_resource type="Script" uid="uid://caaql6778xuoy" path="res://scripts/camera_controller.gd" id="3_tbgi4"]
+[ext_resource type="Shader" uid="uid://bbo1abph4arco" path="res://addons/water_shader/WaterShader.tres" id="4_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://cl8wcl4pdmpdc" path="res://scenes/ship.tscn" id="7_o6xl0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jyhfs"]
 size = Vector3(100, 10, 100)
 
-[sub_resource type="BoxMesh" id="BoxMesh_tbgi4"]
-size = Vector3(100, 10, 100)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ss84j"]
+render_priority = 0
+shader = ExtResource("4_jyhfs")
+shader_parameter/ColorParameter = Color(0, 0.266667, 0.533333, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_tbgi4"]
+material = SubResource("ShaderMaterial_ss84j")
+size = Vector2(100, 100)
+subdivide_width = 200
+subdivide_depth = 200
 
 [node name="Main" type="Node3D" unique_id=619861050]
 
@@ -23,13 +33,21 @@ shadow_opacity = 0.95
 [node name="Ship" parent="." unique_id=93912584 instance=ExtResource("7_o6xl0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.8957253, 0)
 
-[node name="View" type="Node3D" parent="." unique_id=2004286940]
-transform = Transform3D(0.9999996, 0, 0, 0, 0.9063077, 0.422618, 0, -0.42261824, 0.90630716, 0, 25, 35)
+[node name="CameraController" type="Node3D" parent="." unique_id=2004286940 node_paths=PackedStringArray("target")]
+transform = Transform3D(0.9999996, 0, 0, 0, 0.819152, 0.57357603, 0, -0.5735764, 0.81915146, 0, 40, 45)
+script = ExtResource("3_tbgi4")
+target = NodePath("../Ship")
+smooth_speed = 2.0
+min_bounds = Vector3(-15, -100, -100)
+max_bounds = Vector3(15, 100, 100)
 
-[node name="Camera" type="Camera3D" parent="View" unique_id=66272632]
-transform = Transform3D(1.0000005, 0, -2.9802322e-08, -2.9802322e-08, 1, -2.9802322e-08, 5.9604645e-08, -2.9802322e-08, 1.0000006, -1.2342169, 2.734147, 9.6336775)
+[node name="Camera" type="Camera3D" parent="CameraController" unique_id=66272632]
+transform = Transform3D(1.0000005, 0, -2.9802322e-08, -2.9802322e-08, 1, -2.9802322e-08, 5.9604645e-08, -2.9802322e-08, 1.0000006, 0, 0, 0)
 environment = ExtResource("1_x8oc8")
+projection = 1
+current = true
 fov = 40.0
+size = 45.0
 
 [node name="Water" type="Area3D" parent="." unique_id=335967148]
 script = ExtResource("3_sugp2")
@@ -37,5 +55,7 @@ script = ExtResource("3_sugp2")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Water" unique_id=1351500850]
 shape = SubResource("BoxShape3D_jyhfs")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Water" unique_id=862462830]
-mesh = SubResource("BoxMesh_tbgi4")
+[node name="View" type="MeshInstance3D" parent="Water" unique_id=2050170998]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+mesh = SubResource("PlaneMesh_tbgi4")
+skeleton = NodePath("../..")
