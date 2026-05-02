@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://djjwyfljn15im" path="res://addons/floatable_body/fluid_area_3d.gd" id="3_sugp2"]
 [ext_resource type="Script" uid="uid://caaql6778xuoy" path="res://scripts/camera_controller.gd" id="3_tbgi4"]
 [ext_resource type="Shader" uid="uid://bbo1abph4arco" path="res://addons/water_shader/WaterShader.tres" id="4_jyhfs"]
+[ext_resource type="Shader" uid="uid://oq6p7nl4l7by" path="res://shaders/post_process.gdshader" id="6_tefeu"]
 [ext_resource type="PackedScene" uid="uid://cl8wcl4pdmpdc" path="res://scenes/ship.tscn" id="7_o6xl0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jyhfs"]
@@ -19,6 +20,10 @@ material = SubResource("ShaderMaterial_ss84j")
 size = Vector2(100, 100)
 subdivide_width = 200
 subdivide_depth = 200
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o6xl0"]
+shader = ExtResource("6_tefeu")
+shader_parameter/dither_scale = 1.0
 
 [node name="Main" type="Node3D" unique_id=619861050]
 
@@ -59,3 +64,13 @@ shape = SubResource("BoxShape3D_jyhfs")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 mesh = SubResource("PlaneMesh_tbgi4")
 skeleton = NodePath("../..")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1811039162]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1494704084]
+material = SubResource("ShaderMaterial_o6xl0")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
