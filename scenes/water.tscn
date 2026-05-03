@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://t0rocmbnigpa"]
+
+[ext_resource type="Script" uid="uid://djjwyfljn15im" path="res://addons/floatable_body/fluid_area_3d.gd" id="1_s3811"]
+[ext_resource type="Shader" uid="uid://bbo1abph4arco" path="res://addons/water_shader/WaterShader.tres" id="2_p1n2c"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jyhfs"]
+size = Vector3(1000, 10, 1000)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ss84j"]
+render_priority = 0
+shader = ExtResource("2_p1n2c")
+shader_parameter/ColorParameter = Color(0, 0.266667, 0.533333, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_tbgi4"]
+material = SubResource("ShaderMaterial_ss84j")
+size = Vector2(1000, 1000)
+subdivide_width = 500
+subdivide_depth = 500
+
+[node name="Water" type="Area3D" unique_id=64071595]
+script = ExtResource("1_s3811")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=31754425]
+shape = SubResource("BoxShape3D_jyhfs")
+
+[node name="View" type="MeshInstance3D" parent="." unique_id=1939866415]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+mesh = SubResource("PlaneMesh_tbgi4")
+skeleton = NodePath("../..")

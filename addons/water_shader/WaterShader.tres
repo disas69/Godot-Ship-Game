@@ -7,7 +7,7 @@ default_input_values = [0, 0.0, 1, 1.25]
 operator = 5
 
 [sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_f5e8f"]
-constant = 0.8
+constant = 0.7
 
 [sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_2ti6r"]
 
@@ -52,7 +52,7 @@ default_input_values = [0, Vector3(0, 0, 0), 1, Vector3(1, 1, 1), 2, Vector3(0.5
 op_type = 3
 
 [sub_resource type="VisualShaderNodeUVFunc" id="VisualShaderNodeUVFunc_6gfb6"]
-default_input_values = [1, Vector2(5, 5), 2, Vector2(0, 0)]
+default_input_values = [1, Vector2(50, 50), 2, Vector2(0, 0)]
 function = 1
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_5uywx"]
@@ -124,11 +124,11 @@ default_input_values = [1, Vector2(0.1, 0.1), 2, Vector2(0, 0)]
 input_name = "time"
 
 [sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_qxf5e"]
-default_input_values = [0, Vector3(0, 0, 0), 1, Vector3(0.2, 0.2, 0.2)]
+default_input_values = [0, Vector3(0, 0, 0), 1, Vector3(1, 1, 1)]
 operator = 2
 
 [sub_resource type="VisualShaderNodeUVFunc" id="VisualShaderNodeUVFunc_0y022"]
-default_input_values = [1, Vector2(2, 2), 2, Vector2(0, 0)]
+default_input_values = [1, Vector2(25, 25), 2, Vector2(0, 0)]
 function = 1
 
 [resource]
@@ -148,7 +148,7 @@ nodes/vertex/8/node = SubResource("VisualShaderNodeVectorOp_qxf5e")
 nodes/vertex/8/position = Vector2(-500, 200)
 nodes/vertex/9/node = SubResource("VisualShaderNodeUVFunc_0y022")
 nodes/vertex/9/position = Vector2(-1510, -540)
-nodes/vertex/connections = PackedInt32Array(2, 0, 5, 0, 3, 0, 5, 2, 5, 0, 0, 0, 7, 0, 6, 2, 4, 0, 8, 0, 8, 0, 5, 1, 6, 0, 2, 0, 9, 0, 6, 0)
+nodes/vertex/connections = PackedInt32Array(2, 0, 5, 0, 3, 0, 5, 2, 7, 0, 6, 2, 4, 0, 8, 0, 8, 0, 5, 1, 6, 0, 2, 0, 9, 0, 6, 0)
 nodes/fragment/0/position = Vector2(280, -20)
 nodes/fragment/2/node = SubResource("VisualShaderNodeColorParameter_m5clb")
 nodes/fragment/2/position = Vector2(-1640, -220)
