@@ -12,6 +12,8 @@ class_name Ship extends FloatablePlayer3D
 @export var aim_indicator: Node3D
 @export_range(5.0, 85.0, 1.0) var cannon_launch_angle_degrees: float = 45.0
 @export var cannon_aim_radius: float = 10.0
+@export var aim_line_dot_count: int = 12
+@export var aim_line_dot_radius: float = 0.08
 @export var use_constant_force: bool
 @export var cannon_constant_force: float = 15.0
 
@@ -20,12 +22,14 @@ var default_gravity: float
 var cannon_start_position: Vector3
 var cannon_start_scale: Vector3
 var cannon_tween: Tween
+var aim_line: MultiMeshInstance3D
 
 
 func _ready() -> void:
 	default_gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 	cannon_start_position = cannon_view.position
 	cannon_start_scale = cannon_view.scale
+	setup_aim_line()
 	super._ready()
 	
 	
@@ -58,13 +62,17 @@ func _process(delta: float) -> void:
 	if target_position != null:
 		var target: Vector3 = target_position
 		rotate_cannon_towards(target)
+	else:		
+		target_position = get_cannon_forward_aim_position()
+
+	var aim_target: Vector3 = target_position
+	update_aim_line(aim_target)
 
 	if Input.is_action_just_pressed("shoot"):
 		if use_constant_force:
 			shoot_constant_force()
 		elif target_position != null:
-			var target: Vector3 = target_position
-			shoot(target)
+			shoot(aim_target)
 
 
 func incline_view_x(delta: float) -> void:
@@ -105,7 +113,7 @@ func get_gamepad_aim_position() -> Variant:
 	right.y = 0.0
 
 	var target_dir: Vector3 = (right.normalized() * aim.x + forward.normalized() * -aim.y).normalized()
-	var aim_origin: Vector3 = Vector3(cannon_view.global_position.x, global_position.y, cannon_view.global_position.z)
+	var aim_origin: Vector3 = get_aim_origin()
 	return clamp_aim_position(aim_origin + target_dir * cannon_aim_radius)
 
 
@@ -124,7 +132,7 @@ func get_mouse_water_position(camera: Camera3D, mouse_pos: Vector2) -> Variant:
 
 
 func clamp_aim_position(target_position: Vector3) -> Vector3:
-	var aim_origin: Vector3 = Vector3(cannon_view.global_position.x, global_position.y, cannon_view.global_position.z)
+	var aim_origin: Vector3 = get_aim_origin()
 	var aim_offset: Vector3 = target_position - aim_origin
 	aim_offset.y = 0.0
 
@@ -137,6 +145,67 @@ func clamp_aim_position(target_position: Vector3) -> Vector3:
 	return aim_origin + aim_offset.normalized() * cannon_aim_radius
 
 
+func get_cannon_forward_aim_position() -> Vector3:
+	var cannon_forward: Vector3 = cannon_anchor.global_transform.basis.z
+	cannon_forward.y = 0.0
+
+	if cannon_forward.is_zero_approx():
+		cannon_forward = Vector3.FORWARD
+
+	return clamp_aim_position(get_aim_origin() + cannon_forward.normalized() * cannon_aim_radius)
+
+
+func get_aim_origin() -> Vector3:
+	return Vector3(cannon_view.global_position.x, global_position.y, cannon_view.global_position.z)
+
+
+func setup_aim_line() -> void:
+	aim_line = MultiMeshInstance3D.new()
+	aim_line.visible = false
+	add_child(aim_line)
+	aim_line.set_as_top_level(true)
+	aim_line.global_transform = Transform3D.IDENTITY
+
+	var dot_mesh := SphereMesh.new()
+	dot_mesh.radius = aim_line_dot_radius
+	dot_mesh.height = aim_line_dot_radius * 2.0
+	dot_mesh.radial_segments = 8
+	dot_mesh.rings = 4
+
+	var dot_material := StandardMaterial3D.new()
+	dot_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	dot_material.albedo_color = Color(1.0, 1.0, 1.0, 0.6)
+	dot_mesh.material = dot_material
+
+	var multimesh := MultiMesh.new()
+	multimesh.transform_format = MultiMesh.TRANSFORM_3D
+	multimesh.mesh = dot_mesh
+	multimesh.instance_count = aim_line_dot_count
+
+	aim_line.multimesh = multimesh
+
+
+func update_aim_line(target_position: Vector3) -> void:
+	var start_position: Vector3 = get_aim_origin()
+	var line_offset: Vector3 = target_position - start_position
+	line_offset.y = 0.0
+
+	if line_offset.is_zero_approx():
+		aim_line.visible = false
+		return
+
+	aim_line.visible = true
+	var line_direction: Vector3 = line_offset.normalized()
+	var line_length: float = line_offset.length() - 1.5
+
+	for i in aim_line_dot_count:
+		var t: float = float(i + 1) / float(aim_line_dot_count + 1)
+		var dot_position: Vector3 = start_position + line_direction * line_length * t
+		aim_line.multimesh.set_instance_transform(i, Transform3D(Basis(), dot_position))
+		
+	aim_indicator.global_transform.origin = target_position
+
+
 func rotate_cannon_towards(target_position: Vector3) -> void:
 	var target_dir: Vector3 = target_position - cannon_view.global_position
 	target_dir.y = 0.0
@@ -147,8 +216,6 @@ func rotate_cannon_towards(target_position: Vector3) -> void:
 	var local_target_dir: Vector3 = global_transform.basis.inverse() * target_dir.normalized()
 	cannon_view.rotation.y = atan2(local_target_dir.x, local_target_dir.z)
 	
-	aim_indicator.global_transform.origin = target_position
-
 
 func shoot(target_position: Vector3) -> void:
 	var cannon_ball_inst: CannonBall = spawn_cannon_ball()
