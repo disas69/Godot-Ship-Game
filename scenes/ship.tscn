@@ -4,11 +4,12 @@
 [ext_resource type="PackedScene" uid="uid://cxxpeuwmub1wx" path="res://kenney_pirate-kit/Models/GLB format/ship-small.glb" id="1_l3rv8"]
 [ext_resource type="PackedScene" uid="uid://0apargwt4mty" path="res://scenes/cannon_ball.tscn" id="2_4tobq"]
 [ext_resource type="PackedScene" uid="uid://25nq07drfg3l" path="res://kenney_pirate-kit/Models/GLB format/cannon.glb" id="4_tfsc7"]
+[ext_resource type="Texture2D" uid="uid://baaquuaomcxnd" path="res://images/circle_01_a.png" id="5_gudjc"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_2gnfn"]
 radius = 3.5
 
-[node name="Ship" type="CharacterBody3D" unique_id=1389603216 node_paths=PackedStringArray("view", "cannon_view", "cannon_anchor")]
+[node name="Ship" type="CharacterBody3D" unique_id=1389603216 node_paths=PackedStringArray("view", "cannon_view", "cannon_anchor", "aim_indicator")]
 script = ExtResource("1_2gnfn")
 view = NodePath("View")
 forward_incline = Vector2(-10, 3)
@@ -16,6 +17,7 @@ side_incline = Vector3(-15, 15, 4)
 cannon_ball = ExtResource("2_4tobq")
 cannon_view = NodePath("View/cannon2")
 cannon_anchor = NodePath("View/cannon2/CannonAnchor")
+aim_indicator = NodePath("Aim")
 use_constant_force = true
 mass = 300.0
 fluid_damp = 2.0
@@ -38,3 +40,9 @@ transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0.6416068,
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1829515575]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.3, 0)
 shape = SubResource("SphereShape3D_2gnfn")
+
+[node name="Aim" type="Node3D" parent="." unique_id=1888978139]
+
+[node name="Sprite3D" type="Sprite3D" parent="Aim" unique_id=1191014613]
+transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, 0, 0, 0)
+texture = ExtResource("5_gudjc")

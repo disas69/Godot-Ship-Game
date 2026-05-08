@@ -9,7 +9,9 @@ class_name Ship extends FloatablePlayer3D
 @export var cannon_ball: PackedScene
 @export var cannon_view: Node3D
 @export var cannon_anchor: Node3D
+@export var aim_indicator: Node3D
 @export_range(5.0, 85.0, 1.0) var cannon_launch_angle_degrees: float = 45.0
+@export var cannon_aim_radius: float = 10.0
 @export var use_constant_force: bool
 @export var cannon_constant_force: float = 15.0
 
@@ -103,7 +105,8 @@ func get_gamepad_aim_position() -> Variant:
 	right.y = 0.0
 
 	var target_dir: Vector3 = (right.normalized() * aim.x + forward.normalized() * -aim.y).normalized()
-	return global_position + target_dir * 10.0
+	var aim_origin: Vector3 = Vector3(cannon_view.global_position.x, global_position.y, cannon_view.global_position.z)
+	return clamp_aim_position(aim_origin + target_dir * cannon_aim_radius)
 
 
 func get_mouse_water_position(camera: Camera3D, mouse_pos: Vector2) -> Variant:
@@ -117,7 +120,21 @@ func get_mouse_water_position(camera: Camera3D, mouse_pos: Vector2) -> Variant:
 	if distance_to_plane < 0.0:
 		return null
 
-	return ray_origin + ray_direction * distance_to_plane
+	return clamp_aim_position(ray_origin + ray_direction * distance_to_plane)
+
+
+func clamp_aim_position(target_position: Vector3) -> Vector3:
+	var aim_origin: Vector3 = Vector3(cannon_view.global_position.x, global_position.y, cannon_view.global_position.z)
+	var aim_offset: Vector3 = target_position - aim_origin
+	aim_offset.y = 0.0
+
+	if aim_offset.is_zero_approx():
+		aim_offset = cannon_view.global_transform.basis.z
+		aim_offset.y = 0.0
+		if aim_offset.is_zero_approx():
+			aim_offset = Vector3.FORWARD
+
+	return aim_origin + aim_offset.normalized() * cannon_aim_radius
 
 
 func rotate_cannon_towards(target_position: Vector3) -> void:
@@ -129,6 +146,8 @@ func rotate_cannon_towards(target_position: Vector3) -> void:
 
 	var local_target_dir: Vector3 = global_transform.basis.inverse() * target_dir.normalized()
 	cannon_view.rotation.y = atan2(local_target_dir.x, local_target_dir.z)
+	
+	aim_indicator.global_transform.origin = target_position
 
 
 func shoot(target_position: Vector3) -> void:
