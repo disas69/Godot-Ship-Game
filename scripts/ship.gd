@@ -10,6 +10,8 @@ class_name Ship extends FloatablePlayer3D
 @export var cannon_view: Node3D
 @export var cannon_anchor: Node3D
 @export_range(5.0, 85.0, 1.0) var cannon_launch_angle_degrees: float = 45.0
+@export var use_constant_force: bool
+@export var cannon_constant_force: float = 15.0
 
 var default_gravity: float
 var cannon_start_position: Vector3
@@ -42,7 +44,11 @@ func _process(delta: float) -> void:
 		var target: Vector3 = target_position
 		rotate_cannon_towards(target)
 
-		if Input.is_action_just_pressed("shoot"):
+	if Input.is_action_just_pressed("shoot"):
+		if use_constant_force:
+			shoot_constant_force()
+		elif target_position != null:
+			var target: Vector3 = target_position
 			shoot(target)
 
 
@@ -97,15 +103,27 @@ func rotate_cannon_towards(target_position: Vector3) -> void:
 
 
 func shoot(target_position: Vector3) -> void:
-	var cannon_ball_inst: CannonBall = cannon_ball.instantiate() as CannonBall
-	get_tree().current_scene.add_child(cannon_ball_inst)
-	cannon_ball_inst.global_transform = cannon_anchor.global_transform
-
+	var cannon_ball_inst: CannonBall = spawn_cannon_ball()
 	var start_pos: Vector3 = cannon_anchor.global_transform.origin
 	var launch_velocity: Vector3 = calculate_ballistic_velocity(start_pos, target_position, cannon_ball_inst.gravity_scale)
 	cannon_ball_inst.linear_velocity = launch_velocity + velocity
 
 	play_cannon_recoil()
+
+
+func shoot_constant_force() -> void:
+	var cannon_ball_inst: CannonBall = spawn_cannon_ball()
+	var forward: Vector3 = cannon_anchor.global_transform.basis.z.normalized()
+	cannon_ball_inst.linear_velocity = forward * cannon_constant_force + velocity
+
+	play_cannon_recoil()
+
+
+func spawn_cannon_ball() -> CannonBall:
+	var cannon_ball_inst: CannonBall = cannon_ball.instantiate() as CannonBall
+	get_tree().current_scene.add_child(cannon_ball_inst)
+	cannon_ball_inst.global_transform = cannon_anchor.global_transform
+	return cannon_ball_inst
 
 
 func play_cannon_recoil() -> void:
