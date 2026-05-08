@@ -12,10 +12,15 @@ class_name Ship extends FloatablePlayer3D
 @export_range(5.0, 85.0, 1.0) var cannon_launch_angle_degrees: float = 45.0
 
 var default_gravity: float
+var cannon_start_position: Vector3
+var cannon_start_scale: Vector3
+var cannon_tween: Tween
 
 
 func _ready() -> void:
 	default_gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+	cannon_start_position = cannon_view.position
+	cannon_start_scale = cannon_view.scale
 	super._ready()
 
 
@@ -99,6 +104,22 @@ func shoot(target_position: Vector3) -> void:
 	var start_pos: Vector3 = cannon_anchor.global_transform.origin
 	var launch_velocity: Vector3 = calculate_ballistic_velocity(start_pos, target_position, cannon_ball_inst.gravity_scale)
 	cannon_ball_inst.linear_velocity = launch_velocity + velocity
+
+	play_cannon_recoil()
+
+
+func play_cannon_recoil() -> void:
+	if cannon_tween and cannon_tween.is_valid():
+		cannon_tween.kill()
+
+	var cannon_forward: Vector3 = cannon_view.transform.basis.z.normalized()
+	cannon_view.position = cannon_start_position - cannon_forward * 0.75
+	cannon_view.scale = cannon_start_scale * 1.15
+
+	cannon_tween = create_tween()
+	cannon_tween.set_parallel(true)
+	cannon_tween.tween_property(cannon_view, "position", cannon_start_position, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	cannon_tween.tween_property(cannon_view, "scale", cannon_start_scale, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
 func calculate_ballistic_velocity(start_position: Vector3, target_position: Vector3, gravity_scale: float) -> Vector3:
