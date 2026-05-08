@@ -13,6 +13,7 @@ class_name Ship extends FloatablePlayer3D
 @export var use_constant_force: bool
 @export var cannon_constant_force: float = 15.0
 
+var is_using_gamepad: bool
 var default_gravity: float
 var cannon_start_position: Vector3
 var cannon_start_scale: Vector3
@@ -24,6 +25,13 @@ func _ready() -> void:
 	cannon_start_position = cannon_view.position
 	cannon_start_scale = cannon_view.scale
 	super._ready()
+	
+	
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey or event is InputEventMouse: 
+		is_using_gamepad = false
+	elif event is InputEventJoypadMotion or event is InputEventJoypadButton:
+		is_using_gamepad = true
 
 
 func _process(delta: float) -> void:
@@ -36,10 +44,15 @@ func _process(delta: float) -> void:
 	var time: float = Time.get_ticks_msec() / 1000.0
 	view.position.y -= sin(time * 4) * idle_wave * delta
 	
-	var camera: Camera3D = get_viewport().get_camera_3d()
-	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
-	var target_position: Variant = get_mouse_water_position(camera, mouse_pos)
-
+	var target_position: Variant
+	
+	if is_using_gamepad:
+		target_position = get_gamepad_aim_position()
+	else:
+		var camera: Camera3D = get_viewport().get_camera_3d()
+		var mouse_pos: Vector2 = get_viewport().get_mouse_position()
+		target_position = get_mouse_water_position(camera, mouse_pos)
+	
 	if target_position != null:
 		var target: Vector3 = target_position
 		rotate_cannon_towards(target)
@@ -75,6 +88,22 @@ func incline_view_z(delta: float) -> void:
 		incline_speed = side_incline.z
 
 	view.rotation_degrees.z = lerp(view.rotation_degrees.z, target_z, incline_speed * delta)
+
+
+func get_gamepad_aim_position() -> Variant:
+	var aim: Vector2 = Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
+	if aim.is_zero_approx():
+		return null
+
+	var camera: Camera3D = get_viewport().get_camera_3d()
+	var forward: Vector3 = -camera.global_transform.basis.z
+	var right: Vector3 = camera.global_transform.basis.x
+
+	forward.y = 0.0
+	right.y = 0.0
+
+	var target_dir: Vector3 = (right.normalized() * aim.x + forward.normalized() * -aim.y).normalized()
+	return global_position + target_dir * 10.0
 
 
 func get_mouse_water_position(camera: Camera3D, mouse_pos: Vector2) -> Variant:
