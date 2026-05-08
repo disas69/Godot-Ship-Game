@@ -8,6 +8,7 @@
 [node name="CannonBall" type="RigidBody3D" unique_id=1368326954]
 collision_layer = 2
 collision_mask = 2
+gravity_scale = 3.5
 script = ExtResource("1_tqdv6")
 
 [node name="cannon-ball2" parent="." unique_id=2009406726 instance=ExtResource("1_4105j")]

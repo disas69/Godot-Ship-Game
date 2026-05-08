@@ -9,7 +9,15 @@ class_name Ship extends FloatablePlayer3D
 @export var cannon_ball: PackedScene
 @export var cannon_view: Node3D
 @export var cannon_anchor: Node3D
-@export var cannon_force: float = 20.0
+@export_range(5.0, 85.0, 1.0) var cannon_launch_angle_degrees: float = 45.0
+
+var default_gravity: float
+
+
+func _ready() -> void:
+	default_gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+	super._ready()
+
 
 func _process(delta: float) -> void:
 	if !last_move_dir.is_zero_approx():
@@ -21,21 +29,16 @@ func _process(delta: float) -> void:
 	var time: float = Time.get_ticks_msec() / 1000.0
 	view.position.y -= sin(time * 4) * idle_wave * delta
 	
-	# rotate cannon view towards the mouse position
 	var camera: Camera3D = get_viewport().get_camera_3d()
 	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
-	var from: Vector3 = cannon_view.global_transform.origin
-	var to: Vector3 = camera.project_position(mouse_pos, from.distance_to(camera.global_transform.origin))
-	to.y = from.y # keep the cannon level
-	var target_dir: Vector3 = (to - from).normalized()
-	
-	# Transform target direction to ship's local space
-	var ship_basis: Basis = global_transform.basis
-	var local_target_dir: Vector3 = ship_basis.inverse() * target_dir
-	cannon_view.rotation.y = atan2(local_target_dir.x, local_target_dir.z)
-	
-	if Input.is_action_just_pressed("shoot"):
-		shoot(Vector3(to.x, to.y, to.z))
+	var target_position: Variant = get_mouse_water_position(camera, mouse_pos)
+
+	if target_position != null:
+		var target: Vector3 = target_position
+		rotate_cannon_towards(target)
+
+		if Input.is_action_just_pressed("shoot"):
+			shoot(target)
 
 
 func incline_view_x(delta: float) -> void:
@@ -59,31 +62,66 @@ func incline_view_z(delta: float) -> void:
 		else:
 			target_z = side_incline.y
 		incline_speed = side_incline.z
-		
+
 	view.rotation_degrees.z = lerp(view.rotation_degrees.z, target_z, incline_speed * delta)
 
-	
+
+func get_mouse_water_position(camera: Camera3D, mouse_pos: Vector2) -> Variant:
+	var ray_origin: Vector3 = camera.project_ray_origin(mouse_pos)
+	var ray_direction: Vector3 = camera.project_ray_normal(mouse_pos)
+
+	if is_zero_approx(ray_direction.y):
+		return null
+
+	var distance_to_plane: float = (global_position.y - ray_origin.y) / ray_direction.y
+	if distance_to_plane < 0.0:
+		return null
+
+	return ray_origin + ray_direction * distance_to_plane
+
+
+func rotate_cannon_towards(target_position: Vector3) -> void:
+	var target_dir: Vector3 = target_position - cannon_view.global_position
+	target_dir.y = 0.0
+
+	if target_dir.is_zero_approx():
+		return
+
+	var local_target_dir: Vector3 = global_transform.basis.inverse() * target_dir.normalized()
+	cannon_view.rotation.y = atan2(local_target_dir.x, local_target_dir.z)
+
+
 func shoot(target_position: Vector3) -> void:
 	var cannon_ball_inst: CannonBall = cannon_ball.instantiate() as CannonBall
-	cannon_ball_inst.transform.origin = cannon_anchor.global_transform.origin
-	cannon_ball_inst.transform.basis = cannon_anchor.global_transform.basis
 	get_tree().current_scene.add_child(cannon_ball_inst)
-	
+	cannon_ball_inst.global_transform = cannon_anchor.global_transform
+
 	var start_pos: Vector3 = cannon_anchor.global_transform.origin
-	var displacement: Vector3 = target_position - start_pos
-	var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
-	
-	# Calculate required velocity for ballistic trajectory
-	var horizontal_dist: float = Vector2(displacement.x, displacement.z).length()
-	var vertical_dist: float = displacement.y
-	
-	# Using angle of 45 degrees for optimal range
-	var angle: float = PI / 4.0
-	var required_speed: float = sqrt((gravity * horizontal_dist * horizontal_dist) / (2.0 * cos(angle) * cos(angle) * (horizontal_dist * tan(angle) - vertical_dist)))
-	
-	var direction: Vector3 = displacement.normalized()
-	var cannon_velocity: Vector3 = direction * required_speed * cannon_force
-	cannon_ball_inst.linear_velocity = cannon_velocity + velocity
+	var launch_velocity: Vector3 = calculate_ballistic_velocity(start_pos, target_position, cannon_ball_inst.gravity_scale)
+	cannon_ball_inst.linear_velocity = launch_velocity + velocity
+
+
+func calculate_ballistic_velocity(start_position: Vector3, target_position: Vector3, gravity_scale: float) -> Vector3:
+	var displacement: Vector3 = target_position - start_position
+	var horizontal_displacement: Vector3 = Vector3(displacement.x, 0.0, displacement.z)
+	var horizontal_distance: float = horizontal_displacement.length()
+
+	if is_zero_approx(horizontal_distance):
+		return Vector3.ZERO
+
+	var gravity: float = default_gravity * gravity_scale
+	var launch_angle: float = deg_to_rad(cannon_launch_angle_degrees)
+	var cos_angle: float = cos(launch_angle)
+	var tan_angle: float = tan(launch_angle)
+	var denominator: float = 2.0 * cos_angle * cos_angle * (horizontal_distance * tan_angle - displacement.y)
+
+	if denominator <= 0.0:
+		return Vector3.ZERO
+
+	var launch_speed: float = sqrt((gravity * horizontal_distance * horizontal_distance) / denominator)
+	var horizontal_velocity: Vector3 = horizontal_displacement.normalized() * launch_speed * cos_angle
+	var vertical_velocity: Vector3 = Vector3.UP * launch_speed * sin(launch_angle)
+	return horizontal_velocity + vertical_velocity
 
 
 func take_hit() -> void:
