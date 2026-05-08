@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://0apargwt4mty"]
+
+[ext_resource type="PackedScene" uid="uid://d1xn1vohxsqi5" path="res://kenney_pirate-kit/Models/GLB format/cannon-ball.glb" id="1_4105j"]
+[ext_resource type="Script" uid="uid://dh2kdoiubky88" path="res://scripts/cannon_ball.gd" id="1_tqdv6"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tqdv6"]
+
+[node name="CannonBall" type="RigidBody3D" unique_id=1368326954]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_tqdv6")
+
+[node name="cannon-ball2" parent="." unique_id=2009406726 instance=ExtResource("1_4105j")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=149342509]
+shape = SubResource("SphereShape3D_tqdv6")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

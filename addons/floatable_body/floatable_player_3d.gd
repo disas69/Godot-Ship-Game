@@ -16,7 +16,7 @@ var roll_vel := 0.0
 
 func _ready():
 	for owner_id in get_shape_owners():
-		var collision = shape_owner_get_owner(owner_id)
+		var collision: Object = shape_owner_get_owner(owner_id)
 		if collision is CollisionShape3D:
 			fluid_interactor.add_collision_shape(collision)
 
@@ -33,7 +33,7 @@ func _physics_process(delta: float) -> void:
 	# Gravity
 	velocity += Vector3(0.0, -9.8 * 2, 0.0) * delta
 	
-	var camera = get_viewport().get_camera_3d()
+	var camera: Camera3D = get_viewport().get_camera_3d()
 	var move_direction := Vector3.ZERO
 	if Input.is_action_pressed("move_left"):
 		move_direction -= camera.basis.x

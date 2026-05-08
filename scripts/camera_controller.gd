@@ -16,7 +16,7 @@ func _process(delta: float) -> void:
 	if not target:
 		return
 
-	var desired_position = target.global_position + offset
+	var desired_position: Vector3 = target.global_position + offset
 
 	# Clamp
 	desired_position.x = clamp(desired_position.x, min_bounds.x, max_bounds.x)
@@ -24,4 +24,4 @@ func _process(delta: float) -> void:
 	desired_position.z = clamp(desired_position.z, min_bounds.z, max_bounds.z)
 
 	# Smooth follow
-	global_position = global_position.lerp(desired_position, smooth_speed * delta)
+	global_position = global_position.lerp(desired_position, smooth_speed * delta)	
