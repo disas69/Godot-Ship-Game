@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cjbo5j87k13ot" path="res://scripts/ship.gd" id="1_2gnfn"]
 [ext_resource type="PackedScene" uid="uid://cxxpeuwmub1wx" path="res://kenney_pirate-kit/Models/GLB format/ship-small.glb" id="1_l3rv8"]
 [ext_resource type="PackedScene" uid="uid://0apargwt4mty" path="res://scenes/cannon_ball.tscn" id="2_4tobq"]
+[ext_resource type="PackedScene" uid="uid://yrmvw60puafh" path="res://vfx/cannon_smoke.tscn" id="3_7j21i"]
 [ext_resource type="PackedScene" uid="uid://25nq07drfg3l" path="res://kenney_pirate-kit/Models/GLB format/cannon.glb" id="4_tfsc7"]
 [ext_resource type="Texture2D" uid="uid://baaquuaomcxnd" path="res://images/circle_01_a.png" id="5_gudjc"]
 
@@ -18,11 +19,10 @@ cannon_ball = ExtResource("2_4tobq")
 cannon_view = NodePath("View/cannon2")
 cannon_anchor = NodePath("View/cannon2/CannonAnchor")
 aim_indicator = NodePath("Aim")
-cannon_aim_radius = 13.5
+cannon_aim_radius = 15.0
 aim_line_dot_count = 10
 aim_line_dot_radius = 0.15
-use_constant_force = true
-cannon_constant_force = 20.0
+cannon_smoke_particles = ExtResource("3_7j21i")
 mass = 300.0
 fluid_damp = 2.0
 move_speed = 30.0
@@ -36,7 +36,7 @@ metadata/_custom_type_script = "uid://cjbo5j87k13ot"
 [node name="ship-small2" parent="View" unique_id=1661171686 instance=ExtResource("1_l3rv8")]
 
 [node name="cannon2" parent="View" unique_id=2080688903 instance=ExtResource("4_tfsc7")]
-transform = Transform3D(1.5, 0, 0, 0, 1.4488888, 0.38822848, 0, -0.38822848, 1.4488888, 0, 3.8054032, -2.77079)
+transform = Transform3D(1.5, 0, 0, 0, 1.409539, 0.5130302, 0, -0.5130302, 1.409539, 0, 3.8054032, -2.77079)
 
 [node name="CannonAnchor" type="Node3D" parent="View/cannon2" unique_id=1293749115]
 transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0.6416068, 1.0021322)

@@ -1,6 +1,8 @@
 class_name CannonBall extends RigidBody3D
 
 @export var max_lifetime: float = 5.0
+@export var water_splash_particles: PackedScene
+
 
 func _ready() -> void:
 	pass # Replace with function body.
@@ -19,3 +21,19 @@ func _on_body_entered(body: Node) -> void:
 	ship.take_hit()
 	
 	queue_free()
+
+
+func on_water_entered(pos: Vector3) -> void:
+	linear_velocity *= 0.4
+	gravity_scale = 0.1
+	play_water_splash(pos)
+
+
+func play_water_splash(pos: Vector3) -> void:
+	var splash: Node3D = water_splash_particles.instantiate() as Node3D
+	splash.global_position = pos
+	get_tree().current_scene.add_child(splash)
+	splash.get_node("GPUParticles3D").emitting = true
+	await splash.get_node("GPUParticles3D").finished
+	splash.queue_free()
+	

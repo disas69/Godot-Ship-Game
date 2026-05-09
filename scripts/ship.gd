@@ -14,8 +14,7 @@ class_name Ship extends FloatablePlayer3D
 @export var cannon_aim_radius: float = 10.0
 @export var aim_line_dot_count: int = 12
 @export var aim_line_dot_radius: float = 0.08
-@export var use_constant_force: bool
-@export var cannon_constant_force: float = 15.0
+@export var cannon_smoke_particles: PackedScene
 
 var is_using_gamepad: bool
 var default_gravity: float
@@ -69,10 +68,7 @@ func _process(delta: float) -> void:
 	update_aim_line(aim_target)
 
 	if Input.is_action_just_pressed("shoot"):
-		if use_constant_force:
-			shoot_constant_force()
-		elif target_position != null:
-			shoot(aim_target)
+		shoot(aim_target)
 
 
 func incline_view_x(delta: float) -> void:
@@ -214,7 +210,8 @@ func rotate_cannon_towards(target_position: Vector3) -> void:
 		return
 
 	var local_target_dir: Vector3 = global_transform.basis.inverse() * target_dir.normalized()
-	cannon_view.rotation.y = atan2(local_target_dir.x, local_target_dir.z)
+	var target_y: float = atan2(local_target_dir.x, local_target_dir.z)
+	cannon_view.rotation.y = lerp_angle(cannon_view.rotation.y, target_y, 15.0 * get_process_delta_time())
 	
 
 func shoot(target_position: Vector3) -> void:
@@ -224,14 +221,7 @@ func shoot(target_position: Vector3) -> void:
 	cannon_ball_inst.linear_velocity = launch_velocity + velocity
 
 	play_cannon_recoil()
-
-
-func shoot_constant_force() -> void:
-	var cannon_ball_inst: CannonBall = spawn_cannon_ball()
-	var forward: Vector3 = cannon_anchor.global_transform.basis.z.normalized()
-	cannon_ball_inst.linear_velocity = forward * cannon_constant_force + velocity
-
-	play_cannon_recoil()
+#	play_cannon_smoke_particles()
 
 
 func spawn_cannon_ball() -> CannonBall:
@@ -247,7 +237,7 @@ func play_cannon_recoil() -> void:
 
 	var cannon_forward: Vector3 = cannon_view.transform.basis.z.normalized()
 	cannon_view.position = cannon_start_position - cannon_forward * 0.75
-	cannon_view.scale = cannon_start_scale * 1.15
+	cannon_view.scale = cannon_start_scale * 1.25
 
 	cannon_tween = create_tween()
 	cannon_tween.set_parallel(true)
@@ -276,6 +266,15 @@ func calculate_ballistic_velocity(start_position: Vector3, target_position: Vect
 	var horizontal_velocity: Vector3 = horizontal_displacement.normalized() * launch_speed * cos_angle
 	var vertical_velocity: Vector3 = Vector3.UP * launch_speed * sin(launch_angle)
 	return horizontal_velocity + vertical_velocity
+
+
+func play_cannon_smoke_particles() -> void:
+	var smoke: Node3D = cannon_smoke_particles.instantiate() as Node3D
+	smoke.global_transform = cannon_anchor.global_transform
+	get_tree().current_scene.add_child(smoke)
+	smoke.get_node("GPUParticles3D").emitting = true
+	await smoke.get_node("GPUParticles3D").finished
+	smoke.queue_free()
 
 
 func take_hit() -> void:
