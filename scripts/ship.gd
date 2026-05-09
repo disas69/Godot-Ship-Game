@@ -1,4 +1,5 @@
 class_name Ship extends FloatablePlayer3D
+const AIM_OVERLAY_SHADER := preload("res://shaders/aim_overlay.gdshader")
 
 @export_category("View")
 @export var view: Node3D
@@ -168,9 +169,10 @@ func setup_aim_line() -> void:
 	dot_mesh.radial_segments = 8
 	dot_mesh.rings = 4
 
-	var dot_material := StandardMaterial3D.new()
-	dot_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	dot_material.albedo_color = Color(1.0, 1.0, 1.0, 0.6)
+	var dot_material := ShaderMaterial.new()
+	dot_material.shader = AIM_OVERLAY_SHADER
+	dot_material.set_shader_parameter("use_texture", false)
+	dot_material.set_shader_parameter("tint_color", Color(1.0, 1.0, 1.0, 0.6))
 	dot_mesh.material = dot_material
 
 	var multimesh := MultiMesh.new()
@@ -221,7 +223,7 @@ func shoot(target_position: Vector3) -> void:
 	cannon_ball_inst.linear_velocity = launch_velocity + velocity
 
 	play_cannon_recoil()
-#	play_cannon_smoke_particles()
+	play_cannon_smoke_particles()
 
 
 func spawn_cannon_ball() -> CannonBall:

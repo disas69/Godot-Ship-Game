@@ -6,9 +6,17 @@
 [ext_resource type="PackedScene" uid="uid://yrmvw60puafh" path="res://vfx/cannon_smoke.tscn" id="3_7j21i"]
 [ext_resource type="PackedScene" uid="uid://25nq07drfg3l" path="res://kenney_pirate-kit/Models/GLB format/cannon.glb" id="4_tfsc7"]
 [ext_resource type="Texture2D" uid="uid://baaquuaomcxnd" path="res://images/circle_01_a.png" id="5_gudjc"]
+[ext_resource type="Shader" uid="uid://xsh5qa5stwbf" path="res://shaders/aim_overlay.gdshader" id="6_3m36u"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_2gnfn"]
 radius = 3.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8qiel"]
+render_priority = 0
+shader = ExtResource("6_3m36u")
+shader_parameter/use_texture = true
+shader_parameter/albedo_tex = ExtResource("5_gudjc")
+shader_parameter/tint_color = Color(1, 1, 1, 1)
 
 [node name="Ship" type="CharacterBody3D" unique_id=1389603216 node_paths=PackedStringArray("view", "cannon_view", "cannon_anchor", "aim_indicator")]
 script = ExtResource("1_2gnfn")
@@ -49,4 +57,5 @@ shape = SubResource("SphereShape3D_2gnfn")
 
 [node name="Sprite3D" type="Sprite3D" parent="Aim" unique_id=1191014613]
 transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_8qiel")
 texture = ExtResource("5_gudjc")
