@@ -29,6 +29,9 @@ cannon_root = NodePath("View/CannonViewRoot")
 cannon_anchor = NodePath("View/cannon2/CannonAnchor")
 aim_indicator = NodePath("Aim")
 cannon_aim_radius = 15.0
+cannon_aim_radius_max = Vector2(8, 22)
+cannon_view_rotation_max = Vector2(-15, -50)
+cannon_aim_radius_change_speed = 15.0
 aim_line_dot_count = 10
 aim_line_dot_radius = 0.15
 cannon_smoke_particles = ExtResource("3_7j21i")
@@ -45,7 +48,7 @@ metadata/_custom_type_script = "uid://cjbo5j87k13ot"
 [node name="ship-small2" parent="View" unique_id=1661171686 instance=ExtResource("1_l3rv8")]
 
 [node name="cannon2" parent="View" unique_id=2080688903 instance=ExtResource("4_tfsc7")]
-transform = Transform3D(1.5, 0, 0, 0, 1.4095389, 0.5130301, 0, -0.5130301, 1.4095389, 0, 3.8054032, -2.77079)
+transform = Transform3D(1.5, 0, 0, 0, 1.4095389, 0.5130302, 0, -0.5130302, 1.4095389, 0, 3.8054032, -2.77079)
 
 [node name="CannonAnchor" type="Node3D" parent="View/cannon2" unique_id=1293749115]
 transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0.6416068, 1.0021322)

@@ -14,6 +14,9 @@ const AIM_OVERLAY_SHADER := preload("res://shaders/aim_overlay.gdshader")
 @export var aim_indicator: Node3D
 @export_range(5.0, 85.0, 1.0) var cannon_launch_angle_degrees: float = 45.0
 @export var cannon_aim_radius: float = 10.0
+@export var cannon_aim_radius_max: Vector2
+@export var cannon_view_rotation_max: Vector2
+@export var cannon_aim_radius_change_speed: float = 1.0
 @export var aim_line_dot_count: int = 12
 @export var aim_line_dot_radius: float = 0.08
 @export var cannon_smoke_particles: PackedScene
@@ -51,6 +54,8 @@ func _process(delta: float) -> void:
 	var time: float = Time.get_ticks_msec() / 1000.0
 	view.position.y -= sin(time * 4) * idle_wave * delta
 	
+	update_aim_radius()
+	
 	var target_position: Variant
 	
 	if is_using_gamepad:
@@ -71,6 +76,19 @@ func _process(delta: float) -> void:
 
 	if Input.is_action_just_pressed("shoot"):
 		shoot(aim_target)
+
+
+func update_aim_radius() -> void:
+	var target_radius: float = cannon_aim_radius
+	if Input.is_action_pressed("increase_radius"):
+		target_radius += cannon_aim_radius_change_speed * get_process_delta_time()
+	elif Input.is_action_pressed("decrease_radius"):
+		target_radius -= cannon_aim_radius_change_speed * get_process_delta_time()
+	cannon_aim_radius = clamp(target_radius, cannon_aim_radius_max.x, cannon_aim_radius_max.y)
+	
+	var t: float = inverse_lerp(cannon_aim_radius_max.x, cannon_aim_radius_max.y, cannon_aim_radius)
+	var cannon_view_target_rotation: float = lerp(cannon_view_rotation_max.x, cannon_view_rotation_max.y, t)
+	cannon_view.rotation_degrees.x = cannon_view_target_rotation
 
 
 func incline_view_x(delta: float) -> void:
