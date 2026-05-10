@@ -9,7 +9,6 @@ class_name FloatablePlayer3D extends CharacterBody3D
 
 @onready var fluid_interactor := FluidInteractor3D.new()
 
-var last_move_dir := Vector3.ZERO
 var pitch_vel := 0.0
 var roll_vel := 0.0
 
@@ -25,39 +24,10 @@ func _physics_process(delta: float) -> void:
 	fluid_interactor.process(global_transform, mass)
 	
 	if not fluid_interactor.float_force.is_zero_approx():
-		# Bouyancy
 		velocity += fluid_interactor.float_force * delta
-		# Damping
 		velocity += -velocity * fluid_damp * delta
 
-	# Gravity
 	velocity += Vector3(0.0, -9.8 * 2, 0.0) * delta
-	
-	var camera: Camera3D = get_viewport().get_camera_3d()
-	var forward: Vector3 = -camera.global_transform.basis.z
-	var right: Vector3 = camera.global_transform.basis.x
-	forward.y = 0.0
-	right.y = 0.0
-	
-#	var move_direction := Vector3.ZERO
-#	if Input.is_action_pressed("move_left"):
-#		move_direction -= camera.basis.x
-#	if Input.is_action_pressed("move_right"):
-#		move_direction += camera.basis.x
-#	if Input.is_action_pressed("move_up"):
-#		move_direction -= camera.basis.z
-#	if Input.is_action_pressed("move_down"):
-#		move_direction += camera.basis.z
-	
-	var input_dir: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	var move_direction: Vector3 = (right.normalized() * input_dir.x + forward.normalized() * -input_dir.y).normalized()
-	last_move_dir = move_direction
-	
-	if !move_direction.is_zero_approx():
-		move_direction.y = 0.0
-		move_direction = move_direction.normalized()
-		velocity += move_direction * move_speed * delta
-		quaternion = quaternion.slerp(Quaternion(Vector3.BACK, move_direction), rotate_speed * delta)
 
 	var time: float = Time.get_ticks_msec() / 1000.0
 	roll_vel += sin(time * 1.5) * idle_wave * delta

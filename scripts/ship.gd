@@ -1,4 +1,5 @@
 class_name Ship extends FloatablePlayer3D
+
 const AIM_OVERLAY_SHADER := preload("res://shaders/aim_overlay.gdshader")
 
 @export_category("View")
@@ -21,6 +22,7 @@ const AIM_OVERLAY_SHADER := preload("res://shaders/aim_overlay.gdshader")
 @export var aim_line_dot_radius: float = 0.08
 @export var cannon_smoke_particles: PackedScene
 
+var last_move_dir := Vector3.ZERO
 var is_using_gamepad: bool
 var default_gravity: float
 var cannon_start_position: Vector3
@@ -42,6 +44,26 @@ func _input(event: InputEvent) -> void:
 		is_using_gamepad = false
 	elif event is InputEventJoypadMotion or event is InputEventJoypadButton:
 		is_using_gamepad = true
+
+
+func _physics_process(delta: float) -> void:
+	var camera: Camera3D = get_viewport().get_camera_3d()
+	var forward: Vector3 = -camera.global_transform.basis.z
+	var right: Vector3 = camera.global_transform.basis.x
+	forward.y = 0.0
+	right.y = 0.0
+	
+	var input_dir: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	var move_direction: Vector3 = (right.normalized() * input_dir.x + forward.normalized() * -input_dir.y).normalized()
+	last_move_dir = move_direction
+	
+	if !move_direction.is_zero_approx():
+		move_direction.y = 0.0
+		move_direction = move_direction.normalized()
+		velocity += move_direction * move_speed * delta
+		quaternion = quaternion.slerp(Quaternion(Vector3.BACK, move_direction), rotate_speed * delta)
+		
+	super._physics_process(delta)
 
 
 func _process(delta: float) -> void:
