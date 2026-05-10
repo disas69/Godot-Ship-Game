@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://tu6g83v637wo"]
+
+[ext_resource type="Script" uid="uid://vy6ut7srfl86" path="res://scripts/bot_ship.gd" id="1_40qv6"]
+[ext_resource type="PackedScene" uid="uid://0apargwt4mty" path="res://scenes/cannon_ball.tscn" id="2_e3a0j"]
+[ext_resource type="PackedScene" uid="uid://yrmvw60puafh" path="res://vfx/cannon_smoke.tscn" id="3_wfviw"]
+[ext_resource type="PackedScene" uid="uid://b614euc42fiac" path="res://kenney_pirate-kit/Models/GLB format/ship-pirate-small.glb" id="4_40qv6"]
+[ext_resource type="PackedScene" uid="uid://25nq07drfg3l" path="res://kenney_pirate-kit/Models/GLB format/cannon.glb" id="5_3dq4y"]
+[ext_resource type="Shader" uid="uid://xsh5qa5stwbf" path="res://shaders/aim_overlay.gdshader" id="6_qmehp"]
+[ext_resource type="Texture2D" uid="uid://baaquuaomcxnd" path="res://images/circle_01_a.png" id="7_n0rpc"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2gnfn"]
+radius = 3.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8qiel"]
+render_priority = 0
+shader = ExtResource("6_qmehp")
+shader_parameter/use_texture = true
+shader_parameter/albedo_tex = ExtResource("7_n0rpc")
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+
+[node name="BotShip" type="CharacterBody3D" unique_id=1886569867 node_paths=PackedStringArray("view", "cannon_view", "cannon_root", "cannon_anchor", "aim_indicator")]
+script = ExtResource("1_40qv6")
+view = NodePath("View")
+forward_incline = Vector2(-10, 3)
+side_incline = Vector3(-15, 15, 4)
+cannon_ball = ExtResource("2_e3a0j")
+cannon_view = NodePath("View/cannon2")
+cannon_root = NodePath("View/CannonViewRoot")
+cannon_anchor = NodePath("View/cannon2/CannonAnchor")
+aim_indicator = NodePath("Aim")
+cannon_aim_radius = 15.0
+cannon_aim_radius_max = Vector2(8, 22)
+cannon_view_rotation_max = Vector2(-15, -50)
+cannon_aim_radius_change_speed = 15.0
+aim_line_dot_count = 10
+aim_line_dot_radius = 0.15
+cannon_smoke_particles = ExtResource("3_wfviw")
+mass = 300.0
+fluid_damp = 2.0
+move_speed = 30.0
+rotate_speed = 2.7
+angular_damp = 5.0
+idle_wave = 1.0
+metadata/_custom_type_script = "uid://vy6ut7srfl86"
+
+[node name="View" type="Node3D" parent="." unique_id=159638074]
+
+[node name="ship-pirate-small2" parent="View" unique_id=1899141855 instance=ExtResource("4_40qv6")]
+
+[node name="cannon2" parent="View" unique_id=2080688903 instance=ExtResource("5_3dq4y")]
+transform = Transform3D(1.5, 0, 0, 0, 1.4095389, 0.5130302, 0, -0.5130302, 1.4095389, 0, 3.8054032, -2.77079)
+
+[node name="CannonAnchor" type="Node3D" parent="View/cannon2" unique_id=1293749115]
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0.6416068, 1.0021322)
+
+[node name="CannonViewRoot" type="Node3D" parent="View" unique_id=959974116]
+transform = Transform3D(1.5, 0, 0, 0, 1.409539, 0.5130302, 0, -0.5130302, 1.409539, 0, 3.8054032, -2.77079)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1829515575]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.3, 0)
+shape = SubResource("SphereShape3D_2gnfn")
+
+[node name="Aim" type="Node3D" parent="." unique_id=1888978139]
+visible = false
+
+[node name="Sprite3D" type="Sprite3D" parent="Aim" unique_id=1191014613]
+transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_8qiel")
+texture = ExtResource("7_n0rpc")

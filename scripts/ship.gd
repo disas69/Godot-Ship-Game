@@ -18,12 +18,12 @@ const AIM_OVERLAY_SHADER := preload("res://shaders/aim_overlay.gdshader")
 @export var cannon_aim_radius_max: Vector2
 @export var cannon_view_rotation_max: Vector2
 @export var cannon_aim_radius_change_speed: float = 1.0
+@export var show_aim_helpers: bool = true
 @export var aim_line_dot_count: int = 12
 @export var aim_line_dot_radius: float = 0.08
 @export var cannon_smoke_particles: PackedScene
 
 var last_move_dir := Vector3.ZERO
-var is_using_gamepad: bool
 var default_gravity: float
 var cannon_start_position: Vector3
 var cannon_start_scale: Vector3
@@ -37,13 +37,6 @@ func _ready() -> void:
 	cannon_start_scale = cannon_view.scale
 	setup_aim_line()
 	super._ready()
-	
-	
-func _input(event: InputEvent) -> void:
-	if event is InputEventKey or event is InputEventMouse: 
-		is_using_gamepad = false
-	elif event is InputEventJoypadMotion or event is InputEventJoypadButton:
-		is_using_gamepad = true
 
 
 func _physics_process(delta: float) -> void:
@@ -53,7 +46,7 @@ func _physics_process(delta: float) -> void:
 	forward.y = 0.0
 	right.y = 0.0
 	
-	var input_dir: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	var input_dir: Vector2 = get_move_input()
 	var move_direction: Vector3 = (right.normalized() * input_dir.x + forward.normalized() * -input_dir.y).normalized()
 	last_move_dir = move_direction
 	
@@ -76,12 +69,13 @@ func _process(delta: float) -> void:
 	var time: float = Time.get_ticks_msec() / 1000.0
 	view.position.y -= sin(time * 4) * idle_wave * delta
 	
-	update_aim_radius()
+	update_aim_radius(delta, get_radius_input())
 	
 	var target_position: Variant
+	var aim_input: Vector2 = get_aim_input()
 	
-	if is_using_gamepad:
-		target_position = get_gamepad_aim_position()
+	if not should_use_mouse_aim(aim_input):
+		target_position = get_gamepad_aim_position(aim_input)
 	else:
 		var camera: Camera3D = get_viewport().get_camera_3d()
 		var mouse_pos: Vector2 = get_viewport().get_mouse_position()
@@ -94,18 +88,39 @@ func _process(delta: float) -> void:
 		target_position = get_cannon_forward_aim_position()
 
 	var aim_target: Vector3 = target_position
-	update_aim_line(aim_target)
+	if show_aim_helpers:
+		update_aim_line(aim_target)
+	elif aim_line:
+		aim_line.visible = false
+		aim_indicator.visible = false
 
-	if Input.is_action_just_pressed("shoot"):
+	if wants_to_shoot():
 		shoot(aim_target)
 
 
-func update_aim_radius() -> void:
+func get_move_input() -> Vector2:
+	return Vector2.ZERO
+
+
+func get_aim_input() -> Vector2:
+	return Vector2.ZERO
+
+
+func get_radius_input() -> float:
+	return 0.0
+
+
+func should_use_mouse_aim(_aim_input: Vector2) -> bool:
+	return false
+
+
+func wants_to_shoot() -> bool:
+	return false
+
+
+func update_aim_radius(delta: float, radius_input: float) -> void:
 	var target_radius: float = cannon_aim_radius
-	if Input.is_action_pressed("increase_radius"):
-		target_radius += cannon_aim_radius_change_speed * get_process_delta_time()
-	elif Input.is_action_pressed("decrease_radius"):
-		target_radius -= cannon_aim_radius_change_speed * get_process_delta_time()
+	target_radius += radius_input * cannon_aim_radius_change_speed * delta
 	cannon_aim_radius = clamp(target_radius, cannon_aim_radius_max.x, cannon_aim_radius_max.y)
 	
 	var t: float = inverse_lerp(cannon_aim_radius_max.x, cannon_aim_radius_max.y, cannon_aim_radius)
@@ -138,8 +153,7 @@ func incline_view_z(delta: float) -> void:
 	view.rotation_degrees.z = lerp(view.rotation_degrees.z, target_z, incline_speed * delta)
 
 
-func get_gamepad_aim_position() -> Variant:
-	var aim: Vector2 = Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
+func get_gamepad_aim_position(aim: Vector2) -> Variant:
 	if aim.is_zero_approx():
 		return null
 
@@ -222,6 +236,7 @@ func setup_aim_line() -> void:
 	multimesh.instance_count = aim_line_dot_count
 
 	aim_line.multimesh = multimesh
+	aim_indicator.visible = show_aim_helpers
 
 
 func update_aim_line(target_position: Vector3) -> void:

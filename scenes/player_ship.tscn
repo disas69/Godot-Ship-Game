@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cl8wcl4pdmpdc"]
 
-[ext_resource type="Script" uid="uid://cjbo5j87k13ot" path="res://scripts/ship.gd" id="1_2gnfn"]
+[ext_resource type="Script" uid="uid://c3qbu38gndskv" path="res://scripts/player_ship.gd" id="1_2gnfn"]
 [ext_resource type="PackedScene" uid="uid://cxxpeuwmub1wx" path="res://kenney_pirate-kit/Models/GLB format/ship-small.glb" id="1_l3rv8"]
 [ext_resource type="PackedScene" uid="uid://0apargwt4mty" path="res://scenes/cannon_ball.tscn" id="2_4tobq"]
 [ext_resource type="PackedScene" uid="uid://yrmvw60puafh" path="res://vfx/cannon_smoke.tscn" id="3_7j21i"]
@@ -18,7 +18,7 @@ shader_parameter/use_texture = true
 shader_parameter/albedo_tex = ExtResource("5_gudjc")
 shader_parameter/tint_color = Color(1, 1, 1, 1)
 
-[node name="Ship" type="CharacterBody3D" unique_id=1389603216 node_paths=PackedStringArray("view", "cannon_view", "cannon_root", "cannon_anchor", "aim_indicator")]
+[node name="PlayerShip" type="CharacterBody3D" unique_id=1389603216 node_paths=PackedStringArray("view", "cannon_view", "cannon_root", "cannon_anchor", "aim_indicator")]
 script = ExtResource("1_2gnfn")
 view = NodePath("View")
 forward_incline = Vector2(-10, 3)
@@ -41,7 +41,6 @@ move_speed = 30.0
 rotate_speed = 2.7
 angular_damp = 5.0
 idle_wave = 1.0
-metadata/_custom_type_script = "uid://cjbo5j87k13ot"
 
 [node name="View" type="Node3D" parent="." unique_id=159638074]
 

@@ -7,10 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://bdfkvq5s1kdti" path="res://kenney_pirate-kit/Models/GLB format/patch-sand.glb" id="6_tipki"]
 [ext_resource type="PackedScene" uid="uid://kncaqo6f6xr7" path="res://kenney_pirate-kit/Models/GLB format/palm-straight.glb" id="6_ya4ey"]
 [ext_resource type="PackedScene" uid="uid://dc10i5dihved4" path="res://kenney_pirate-kit/Models/GLB format/patch-sand-foliage.glb" id="7_85g3d"]
-[ext_resource type="PackedScene" uid="uid://cl8wcl4pdmpdc" path="res://scenes/ship.tscn" id="7_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://cl8wcl4pdmpdc" path="res://scenes/player_ship.tscn" id="7_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://cxqc7j4e32pcr" path="res://kenney_pirate-kit/Models/GLB format/palm-bend.glb" id="8_choun"]
 [ext_resource type="PackedScene" uid="uid://dhc18mtf2wafk" path="res://kenney_pirate-kit/Models/GLB format/ship-wreck.glb" id="10_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://872rwbns01tn" path="res://kenney_pirate-kit/Models/GLB format/palm-detailed-bend.glb" id="11_trceg"]
+[ext_resource type="PackedScene" uid="uid://tu6g83v637wo" path="res://scenes/bot_ship.tscn" id="12_eb6dy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o6xl0"]
 shader = ExtResource("6_tefeu")
@@ -26,13 +27,13 @@ transform = Transform3D(-0.7660449, -0.492404, 0.41317585, 0, 0.6427878, 0.76604
 shadow_enabled = true
 shadow_opacity = 0.95
 
-[node name="Ship" parent="." unique_id=93912584 instance=ExtResource("7_o6xl0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.8957253, 0)
+[node name="PlayerShip1" parent="." unique_id=1389603216 instance=ExtResource("7_o6xl0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)
 
 [node name="CameraController" type="Node3D" parent="." unique_id=2004286940 node_paths=PackedStringArray("target")]
 transform = Transform3D(0.9999996, 0, 0, 0, 0.819152, 0.57357603, 0, -0.5735764, 0.81915146, 0, 40, 45)
 script = ExtResource("3_tbgi4")
-target = NodePath("../Ship")
+target = NodePath("../PlayerShip1")
 smooth_speed = 2.0
 min_bounds = Vector3(-15, -100, -100)
 max_bounds = Vector3(15, 100, 100)
@@ -154,3 +155,9 @@ transform = Transform3D(1.1756674, -0.15796453, 0.91807044, 0.029169595, 1.48379
 
 [node name="palm-detailed-bend2" parent="Env" unique_id=1183948946 instance=ExtResource("11_trceg")]
 transform = Transform3D(1.4491619, 0, 1.3783793, 0, 2, 0, -1.3783793, 0, 1.4491619, 48.63214, 5.2799616, 16.032946)
+
+[node name="BotShip" parent="." unique_id=1886569867 instance=ExtResource("12_eb6dy")]
+transform = Transform3D(0.90823084, 0, 0.41846952, 0, 1, 0, -0.41846952, 0, 0.90823084, 13.686, 7, -14.937907)
+
+[node name="BotShip2" parent="." unique_id=775917740 instance=ExtResource("12_eb6dy")]
+transform = Transform3D(0.5034422, 0, -0.86402893, 0, 1, 0, 0.86402893, 0, 0.5034422, -17.839397, 7, -7)
