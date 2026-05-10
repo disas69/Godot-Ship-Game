@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://brwr25ogu6wpj"]
+
+[ext_resource type="Script" uid="uid://caaql6778xuoy" path="res://scripts/main_camera.gd" id="1_7dc62"]
+[ext_resource type="Environment" uid="uid://cm77bbr0io118" path="res://scenes/main-environment.tres" id="2_qvmr3"]
+
+[node name="MainCamera" type="Node3D" unique_id=1655320981 node_paths=PackedStringArray("camera", "targets")]
+transform = Transform3D(0.9999996, 0, 0, 0, 0.819152, 0.57357603, 0, -0.5735764, 0.81915146, 0, 0, 0)
+script = ExtResource("1_7dc62")
+camera = NodePath("Camera")
+targets = [null, null]
+smooth_speed = 2.0
+camera_size_range = Vector2(45, 75)
+min_bounds = Vector3(-15, -100, -100)
+max_bounds = Vector3(15, 100, 100)
+
+[node name="Camera" type="Camera3D" parent="." unique_id=1875357754]
+transform = Transform3D(1.0000005, 0, -2.9802322e-08, -2.9802322e-08, 1, -2.9802322e-08, 5.9604645e-08, -2.9802322e-08, 1.0000006, 0, 0, 0)
+environment = ExtResource("2_qvmr3")
+projection = 1
+current = true
+fov = 40.0
+size = 55.0
