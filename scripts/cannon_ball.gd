@@ -36,8 +36,8 @@ func on_water_entered(pos: Vector3) -> void:
 
 func play_water_splash(pos: Vector3) -> void:
 	var splash: Node3D = water_splash_particles.instantiate() as Node3D
-	splash.global_position = pos
 	get_tree().current_scene.add_child(splash)
+	splash.global_position = pos
 	splash.get_node("GPUParticles3D").emitting = true
 	await splash.get_node("GPUParticles3D").finished
 	splash.queue_free()

@@ -9,6 +9,7 @@ const AIM_OVERLAY_SHADER := preload("res://shaders/aim_overlay.gdshader")
 @export_category("Cannon")
 @export var cannon_ball: PackedScene
 @export var cannon_view: Node3D
+@export var cannon_root: Node3D
 @export var cannon_anchor: Node3D
 @export var aim_indicator: Node3D
 @export_range(5.0, 85.0, 1.0) var cannon_launch_angle_degrees: float = 45.0
@@ -134,7 +135,7 @@ func clamp_aim_position(target_position: Vector3) -> Vector3:
 	aim_offset.y = 0.0
 
 	if aim_offset.is_zero_approx():
-		aim_offset = cannon_view.global_transform.basis.z
+		aim_offset = cannon_root.global_transform.basis.z
 		aim_offset.y = 0.0
 		if aim_offset.is_zero_approx():
 			aim_offset = Vector3.FORWARD
@@ -153,7 +154,7 @@ func get_cannon_forward_aim_position() -> Vector3:
 
 
 func get_aim_origin() -> Vector3:
-	return Vector3(cannon_view.global_position.x, global_position.y, cannon_view.global_position.z)
+	return Vector3(cannon_root.global_position.x, global_position.y, cannon_root.global_position.z)
 
 
 func setup_aim_line() -> void:

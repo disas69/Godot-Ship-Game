@@ -18,13 +18,14 @@ shader_parameter/use_texture = true
 shader_parameter/albedo_tex = ExtResource("5_gudjc")
 shader_parameter/tint_color = Color(1, 1, 1, 1)
 
-[node name="Ship" type="CharacterBody3D" unique_id=1389603216 node_paths=PackedStringArray("view", "cannon_view", "cannon_anchor", "aim_indicator")]
+[node name="Ship" type="CharacterBody3D" unique_id=1389603216 node_paths=PackedStringArray("view", "cannon_view", "cannon_root", "cannon_anchor", "aim_indicator")]
 script = ExtResource("1_2gnfn")
 view = NodePath("View")
 forward_incline = Vector2(-10, 3)
 side_incline = Vector3(-15, 15, 4)
 cannon_ball = ExtResource("2_4tobq")
 cannon_view = NodePath("View/cannon2")
+cannon_root = NodePath("View/CannonViewRoot")
 cannon_anchor = NodePath("View/cannon2/CannonAnchor")
 aim_indicator = NodePath("Aim")
 cannon_aim_radius = 15.0
@@ -44,10 +45,13 @@ metadata/_custom_type_script = "uid://cjbo5j87k13ot"
 [node name="ship-small2" parent="View" unique_id=1661171686 instance=ExtResource("1_l3rv8")]
 
 [node name="cannon2" parent="View" unique_id=2080688903 instance=ExtResource("4_tfsc7")]
-transform = Transform3D(1.5, 0, 0, 0, 1.409539, 0.5130302, 0, -0.5130302, 1.409539, 0, 3.8054032, -2.77079)
+transform = Transform3D(1.5, 0, 0, 0, 1.4095389, 0.5130301, 0, -0.5130301, 1.4095389, 0, 3.8054032, -2.77079)
 
 [node name="CannonAnchor" type="Node3D" parent="View/cannon2" unique_id=1293749115]
 transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0.6416068, 1.0021322)
+
+[node name="CannonViewRoot" type="Node3D" parent="View" unique_id=959974116]
+transform = Transform3D(1.5, 0, 0, 0, 1.409539, 0.5130302, 0, -0.5130302, 1.409539, 0, 3.8054032, -2.77079)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1829515575]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.3, 0)
