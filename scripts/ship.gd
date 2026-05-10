@@ -94,7 +94,7 @@ func _process(delta: float) -> void:
 		aim_line.visible = false
 		aim_indicator.visible = false
 
-	if wants_to_shoot():
+	if can_shoot():
 		shoot(aim_target)
 
 
@@ -114,7 +114,7 @@ func should_use_mouse_aim(_aim_input: Vector2) -> bool:
 	return false
 
 
-func wants_to_shoot() -> bool:
+func can_shoot() -> bool:
 	return false
 
 
