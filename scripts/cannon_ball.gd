@@ -1,6 +1,7 @@
 class_name CannonBall extends RigidBody3D
 
 @export var max_lifetime: float = 5.0
+@export var cannon_view: Node3D
 @export var water_splash_particles: PackedScene
 
 
@@ -24,8 +25,12 @@ func _on_body_entered(body: Node) -> void:
 
 
 func on_water_entered(pos: Vector3) -> void:
-	linear_velocity *= 0.4
+	linear_velocity *= 0.2
 	gravity_scale = 0.1
+	
+	var scale_tween: Tween = create_tween()
+	scale_tween.tween_property(cannon_view, "scale", Vector3.ONE * 0.5, 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+
 	play_water_splash(pos)
 
 
