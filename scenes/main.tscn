@@ -25,13 +25,11 @@ shadow_opacity = 0.95
 [node name="PlayerShip1" parent="." unique_id=1389603216 instance=ExtResource("7_o6xl0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)
 
-[node name="PlayerShip2" parent="." unique_id=1879811996 instance=ExtResource("7_o6xl0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 16.54872)
-local_player_index = 1
-
 [node name="MainCamera" parent="." unique_id=1655320981 node_paths=PackedStringArray("targets") instance=ExtResource("3_eb6dy")]
 transform = Transform3D(0.9999996, 0, 0, 0, 0.819152, 0.57357603, 0, -0.5735764, 0.81915146, 0, 40, 45)
-targets = [NodePath("../PlayerShip1"), NodePath("../PlayerShip2")]
+targets = [NodePath("../PlayerShip1"), NodePath("")]
+min_bounds = Vector3(-150, -150, -150)
+max_bounds = Vector3(150, 150, 150)
 
 [node name="Water" parent="." unique_id=64071595 instance=ExtResource("4_tbgi4")]
 
