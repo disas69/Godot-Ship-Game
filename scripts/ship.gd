@@ -6,6 +6,11 @@ const AIM_OVERLAY_SHADER := preload("res://shaders/aim_overlay.gdshader")
 @export var view: Node3D
 @export var forward_incline: Vector2
 @export var side_incline: Vector3
+@export_category("Hit FX")
+@export var hit_punch_scale: float = 1.12
+@export var hit_flash_strength: float = 0.8
+@export var hit_flash_material_template: ShaderMaterial
+@export var hit_flash_targets: Array[GeometryInstance3D] = []
 
 @export_category("Cannon")
 @export var cannon_ball: PackedScene
@@ -29,12 +34,19 @@ var cannon_start_position: Vector3
 var cannon_start_scale: Vector3
 var cannon_tween: Tween
 var aim_line: MultiMeshInstance3D
+var view_base_scale: Vector3
+var hit_scale_tween: Tween
+var hit_flash_tween: Tween
+var hit_flash_material_instance: ShaderMaterial
 
 
 func _ready() -> void:
 	default_gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 	cannon_start_position = cannon_view.position
 	cannon_start_scale = cannon_view.scale
+	view_base_scale = view.scale
+	setup_hit_flash_material_instance()
+	set_hit_flash_strength(0.0)
 	setup_aim_line()
 	super._ready()
 
@@ -277,6 +289,7 @@ func shoot(target_position: Vector3) -> void:
 	var start_pos: Vector3 = cannon_anchor.global_transform.origin
 	var launch_velocity: Vector3 = calculate_ballistic_velocity(start_pos, target_position, cannon_ball_inst.gravity_scale)
 	cannon_ball_inst.linear_velocity = launch_velocity + velocity
+	cannon_ball_inst.set_shooter(self)
 
 	play_cannon_recoil()
 	play_cannon_smoke_particles()
@@ -335,5 +348,38 @@ func play_cannon_smoke_particles() -> void:
 	smoke.queue_free()
 
 
-func take_hit() -> void:
-	print("Ship hit!")
+func take_hit(hit_velocity: Vector3) -> void:
+	hit_velocity.y = 0
+	velocity += hit_velocity
+	play_hit_feedback()
+
+
+func play_hit_feedback() -> void:
+	if hit_scale_tween and hit_scale_tween.is_valid():
+		hit_scale_tween.kill()
+	if hit_flash_tween and hit_flash_tween.is_valid():
+		hit_flash_tween.kill()
+
+	view.scale = view_base_scale
+	set_hit_flash_strength(0.0)
+
+	hit_scale_tween = create_tween()
+	hit_scale_tween.tween_property(view, "scale", view_base_scale * hit_punch_scale, 0.05).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	hit_scale_tween.tween_property(view, "scale", view_base_scale, 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+	if hit_flash_material_instance:
+		hit_flash_tween = create_tween()
+		var flash_setter := Callable(self, "set_hit_flash_strength")
+		hit_flash_tween.tween_method(flash_setter, 0.0, hit_flash_strength, 0.03)
+		hit_flash_tween.tween_method(flash_setter, hit_flash_strength, 0.0, 0.08)
+
+
+func setup_hit_flash_material_instance() -> void:
+	hit_flash_material_instance = hit_flash_material_template.duplicate(true) as ShaderMaterial
+	for mesh in hit_flash_targets:
+		mesh.material_overlay = hit_flash_material_instance
+
+
+func set_hit_flash_strength(value: float) -> void:
+	if hit_flash_material_instance:
+		hit_flash_material_instance.set_shader_parameter(&"flash_strength", value)

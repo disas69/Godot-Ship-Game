@@ -1,0 +1,21 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://108ojhm7ymbd"]
+
+[sub_resource type="Shader" id="Shader_e3a0j"]
+resource_local_to_scene = true
+code = "shader_type spatial;
+render_mode unshaded, blend_mix, depth_draw_never, cull_disabled;
+
+uniform vec4 flash_color : source_color = vec4(1.0);
+uniform float flash_strength : hint_range(0.0, 1.0) = 0.0;
+
+void fragment() {
+	ALBEDO = flash_color.rgb;
+	ALPHA = flash_color.a * flash_strength;
+}
+"
+
+[resource]
+render_priority = 0
+shader = SubResource("Shader_e3a0j")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_strength = 0.0

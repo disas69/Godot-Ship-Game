@@ -1,11 +1,13 @@
 class_name FloatablePlayer3D extends CharacterBody3D
 
+@export_category("Ship Settings")
 @export var mass := 1.0
 @export var fluid_damp := 4.0
 @export var move_speed := 10.0
 @export var rotate_speed := 10.0
 @export var angular_damp: float = 3.0
 @export var idle_wave: float = 0.5
+@export var velocity_cap: float = 15.0
 
 @onready var fluid_interactor := FluidInteractor3D.new()
 
@@ -38,6 +40,9 @@ func _physics_process(delta: float) -> void:
 	
 	rotation.x += (pitch_vel * delta)
 	rotation.z += roll_vel * delta
+	
+	if velocity.length() > velocity_cap:
+		velocity = velocity.normalized() * velocity_cap
 	
 	move_and_slide()
 	
