@@ -4,6 +4,8 @@ class_name CannonBall extends RigidBody3D
 @export var cannon_view: Node3D
 @export var water_splash_particles: PackedScene
 
+var shooter: Ship
+
 
 func _ready() -> void:
 	pass # Replace with function body.
@@ -15,13 +17,18 @@ func _process(delta: float) -> void:
 		queue_free()
 
 
-func _on_body_entered(body: Node) -> void:
-	print("Bullet hit: ", body.name)
-	
+func _on_body_entered(body: Node) -> void:	
 	var ship: Ship = body as Ship
-	ship.take_hit()
+	if ship != null and ship != shooter:
+		ship.take_hit(linear_velocity)
 	
 	queue_free()
+
+
+func set_shooter(ship: Ship) -> void:
+	shooter = ship
+	if shooter:
+		add_collision_exception_with(shooter)
 
 
 func on_water_entered(pos: Vector3) -> void:

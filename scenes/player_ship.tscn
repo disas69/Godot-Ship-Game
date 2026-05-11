@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c3qbu38gndskv" path="res://scripts/player_ship.gd" id="1_2gnfn"]
 [ext_resource type="PackedScene" uid="uid://cxxpeuwmub1wx" path="res://kenney_pirate-kit/Models/GLB format/ship-small.glb" id="1_l3rv8"]
 [ext_resource type="PackedScene" uid="uid://0apargwt4mty" path="res://scenes/cannon_ball.tscn" id="2_4tobq"]
+[ext_resource type="Material" uid="uid://108ojhm7ymbd" path="res://materials/hit_flash.tres" id="2_evoqb"]
 [ext_resource type="PackedScene" uid="uid://yrmvw60puafh" path="res://vfx/cannon_smoke.tscn" id="3_7j21i"]
 [ext_resource type="PackedScene" uid="uid://25nq07drfg3l" path="res://kenney_pirate-kit/Models/GLB format/cannon.glb" id="4_tfsc7"]
 [ext_resource type="Texture2D" uid="uid://baaquuaomcxnd" path="res://images/circle_01_a.png" id="5_gudjc"]
@@ -18,11 +19,14 @@ shader_parameter/use_texture = true
 shader_parameter/albedo_tex = ExtResource("5_gudjc")
 shader_parameter/tint_color = Color(1, 1, 1, 1)
 
-[node name="PlayerShip" type="CharacterBody3D" unique_id=1389603216 node_paths=PackedStringArray("view", "cannon_view", "cannon_root", "cannon_anchor", "aim_indicator")]
+[node name="PlayerShip" type="CharacterBody3D" unique_id=1389603216 node_paths=PackedStringArray("view", "hit_flash_targets", "cannon_view", "cannon_root", "cannon_anchor", "aim_indicator")]
+collision_mask = 3
 script = ExtResource("1_2gnfn")
 view = NodePath("View")
 forward_incline = Vector2(-10, 3)
 side_incline = Vector3(-15, 15, 4)
+hit_flash_material_template = ExtResource("2_evoqb")
+hit_flash_targets = [NodePath("View/ship-small2/ship-small"), NodePath("View/ship-small2/ship-small/flag-a"), NodePath("View/ship-small2/ship-small/flag-b"), NodePath("View/ship-small2/ship-small/sail-a")]
 cannon_ball = ExtResource("2_4tobq")
 cannon_view = NodePath("View/cannon2")
 cannon_root = NodePath("View/CannonViewRoot")
@@ -65,3 +69,5 @@ shape = SubResource("SphereShape3D_2gnfn")
 transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, 0, 0, 0)
 material_override = SubResource("ShaderMaterial_8qiel")
 texture = ExtResource("5_gudjc")
+
+[editable path="View/ship-small2"]
