@@ -3,14 +3,9 @@
 [ext_resource type="Environment" uid="uid://cm77bbr0io118" path="res://scenes/main-environment.tres" id="1_x8oc8"]
 [ext_resource type="PackedScene" uid="uid://brwr25ogu6wpj" path="res://scenes/main_camera.tscn" id="3_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://t0rocmbnigpa" path="res://scenes/water.tscn" id="4_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://rwop237uw6cm" path="res://scenes/environment.tscn" id="6_o6xl0"]
 [ext_resource type="Shader" uid="uid://oq6p7nl4l7by" path="res://shaders/post_process.gdshader" id="6_tefeu"]
-[ext_resource type="PackedScene" uid="uid://bdfkvq5s1kdti" path="res://kenney_pirate-kit/Models/GLB format/patch-sand.glb" id="6_tipki"]
-[ext_resource type="PackedScene" uid="uid://kncaqo6f6xr7" path="res://kenney_pirate-kit/Models/GLB format/palm-straight.glb" id="6_ya4ey"]
-[ext_resource type="PackedScene" uid="uid://dc10i5dihved4" path="res://kenney_pirate-kit/Models/GLB format/patch-sand-foliage.glb" id="7_85g3d"]
 [ext_resource type="PackedScene" uid="uid://cl8wcl4pdmpdc" path="res://scenes/player_ship.tscn" id="7_o6xl0"]
-[ext_resource type="PackedScene" uid="uid://cxqc7j4e32pcr" path="res://kenney_pirate-kit/Models/GLB format/palm-bend.glb" id="8_choun"]
-[ext_resource type="PackedScene" uid="uid://dhc18mtf2wafk" path="res://kenney_pirate-kit/Models/GLB format/ship-wreck.glb" id="10_eb6dy"]
-[ext_resource type="PackedScene" uid="uid://872rwbns01tn" path="res://kenney_pirate-kit/Models/GLB format/palm-detailed-bend.glb" id="11_trceg"]
 [ext_resource type="PackedScene" uid="uid://tu6g83v637wo" path="res://scenes/bot_ship.tscn" id="12_eb6dy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o6xl0"]
@@ -50,103 +45,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Env" type="Node3D" parent="." unique_id=1079760856]
-
-[node name="palm-straight2" parent="Env" unique_id=1757298455 instance=ExtResource("6_ya4ey")]
-transform = Transform3D(1.7942855, 0, -0.8834815, 0, 2, 0, 0.8834815, 0, 1.7942855, 52.11417, 5.476612, 11.929346)
-
-[node name="patch-sand2" parent="Env" unique_id=392815290 instance=ExtResource("6_tipki")]
-transform = Transform3D(3.57452, 0, -1.7952175, 0, 4, 0, 1.7952175, 0, 3.57452, 49.839527, 4.297531, 11.47753)
-
-[node name="patch-sand3" parent="Env" unique_id=658422835 instance=ExtResource("6_tipki")]
-transform = Transform3D(-0.6135988, 0, -3.9526567, 0, 4, 0, 3.9526567, 0, -0.6135988, 48.268803, 4.297531, -9.126368)
-
-[node name="patch-sand4" parent="Env" unique_id=420634260 instance=ExtResource("6_tipki")]
-transform = Transform3D(-1.4386201, 0, 3.7323418, 0, 4, 0, -3.7323418, 0, -1.4386201, 46.420902, 4.297531, -27.235622)
-
-[node name="patch-sand5" parent="Env" unique_id=1243294959 instance=ExtResource("6_tipki")]
-transform = Transform3D(3.9823267, 0, -0.37559843, 0, 4, 0, 0.37559843, 0, 3.9823267, -19.178967, 4.297531, -49.779793)
-
-[node name="patch-sand8" parent="Env" unique_id=1479750246 instance=ExtResource("6_tipki")]
-transform = Transform3D(5.97349, 0, -0.56339765, 0, 6, 0, 0.56339765, 0, 5.97349, 25.81699, 4.297531, -66.318344)
-
-[node name="patch-sand9" parent="Env" unique_id=484816714 instance=ExtResource("6_tipki")]
-transform = Transform3D(3.1547017, 0, -5.1037107, 0, 6, 0, 5.1037107, 0, 3.1547017, 53.997196, 4.297531, -55.693024)
-
-[node name="patch-sand21" parent="Env" unique_id=826728620 instance=ExtResource("6_tipki")]
-transform = Transform3D(3.1547017, 0, -5.1037107, 0, 6, 0, 5.1037107, 0, 3.1547017, 82.82416, 4.297531, -43.127422)
-
-[node name="patch-sand22" parent="Env" unique_id=532614468 instance=ExtResource("6_tipki")]
-transform = Transform3D(-4.638661, 0, 3.8056316, 0, 6, 0, -3.8056316, 0, -4.638661, 54.08957, 4.297531, -82.11775)
-
-[node name="patch-sand10" parent="Env" unique_id=2076006394 instance=ExtResource("6_tipki")]
-transform = Transform3D(3.1547017, 0, -5.1037107, 0, 6, 0, 5.1037107, 0, 3.1547017, 68.50308, 4.297531, -22.43113)
-
-[node name="patch-sand11" parent="Env" unique_id=527781951 instance=ExtResource("6_tipki")]
-transform = Transform3D(5.8552494, 0, 1.3099848, 0, 6, 0, -1.3099848, 0, 5.8552494, -7.260132, 4.297531, -73.70989)
-
-[node name="patch-sand14" parent="Env" unique_id=1056736745 instance=ExtResource("6_tipki")]
-transform = Transform3D(4.56468, 0, -3.8940597, 0, 6.000001, 0, 3.8940597, 0, 4.56468, 17.409111, 4.297531, -91.63435)
-
-[node name="patch-sand12" parent="Env" unique_id=1061551411 instance=ExtResource("6_tipki")]
-transform = Transform3D(5.8552494, 0, 1.3099848, 0, 6, 0, -1.3099848, 0, 5.8552494, -34.14682, 4.297531, -68.44342)
-
-[node name="patch-sand15" parent="Env" unique_id=1359971678 instance=ExtResource("6_tipki")]
-transform = Transform3D(5.8552494, 0, 1.3099848, 0, 6, 0, -1.3099848, 0, 5.8552494, -19.363754, 4.297531, -97.178)
-
-[node name="patch-sand16" parent="Env" unique_id=1309492937 instance=ExtResource("6_tipki")]
-transform = Transform3D(5.8552494, 0, 1.3099848, 0, 6, 0, -1.3099848, 0, 5.8552494, -52.81044, 4.297531, -85.72112)
-
-[node name="patch-sand17" parent="Env" unique_id=1619612724 instance=ExtResource("6_tipki")]
-transform = Transform3D(5.8552494, 0, 1.3099848, 0, 6, 0, -1.3099848, 0, 5.8552494, -78.31123, 4.297531, -66.41074)
-
-[node name="patch-sand18" parent="Env" unique_id=2067118237 instance=ExtResource("6_tipki")]
-transform = Transform3D(5.8552494, 0, 1.3099848, 0, 6, 0, -1.3099848, 0, 5.8552494, -87.92021, 4.297531, -39.98602)
-
-[node name="patch-sand19" parent="Env" unique_id=1866326904 instance=ExtResource("6_tipki")]
-transform = Transform3D(2.164864, 2.1804013e-07, 5.5958347, -1.8734045e-07, 6.000001, -1.6131186e-07, -5.5958347, -1.16517974e-07, 2.164864, -79.512344, 4.297531, -15.871141)
-
-[node name="patch-sand20" parent="Env" unique_id=1456847356 instance=ExtResource("6_tipki")]
-transform = Transform3D(2.164864, 2.1804013e-07, 5.5958347, -1.8734045e-07, 6.000001, -1.6131186e-07, -5.5958347, -1.16517974e-07, 2.164864, -81.9146, 4.297531, 14.803715)
-
-[node name="patch-sand13" parent="Env" unique_id=793935995 instance=ExtResource("6_tipki")]
-transform = Transform3D(4.5017047, 1.2624442e-07, 3.9666939, -1.1612844e-07, 6.000001, -5.916531e-08, -3.9666939, -3.2383518e-08, 4.5017047, -59.093243, 4.297531, -49.040646)
-
-[node name="patch-sand7" parent="Env" unique_id=142439808 instance=ExtResource("6_tipki")]
-transform = Transform3D(1.9708478, 0, 3.4807699, 0, 4, 0, -3.4807699, 0, 1.9708478, -60.386765, 4.297531, 23.858337)
-
-[node name="patch-sand6" parent="Env" unique_id=551537913 instance=ExtResource("6_tipki")]
-transform = Transform3D(3.713969, 0, 1.4854071, 0, 4, 0, -1.4854071, 0, 3.713969, -39.50568, 4.297531, -42.665436)
-
-[node name="patch-sand-foliage2" parent="Env" unique_id=1194090107 instance=ExtResource("7_85g3d")]
-transform = Transform3D(4.725144, 0, 1.634935, 0, 4.9999995, 0, -1.634935, 0, 4.725144, 68.96146, 4.2231627, 20.829458)
-
-[node name="patch-sand-foliage7" parent="Env" unique_id=114215676 instance=ExtResource("7_85g3d")]
-transform = Transform3D(-0.8399519, 0, -4.9289436, 0, 5, 0, 4.9289436, 0, -0.8399519, -55.585876, 4.2231627, -2.269084)
-
-[node name="patch-sand-foliage6" parent="Env" unique_id=1518303268 instance=ExtResource("7_85g3d")]
-transform = Transform3D(3.05356, 0, 3.9592645, 0, 5, 0, -3.9592645, 0, 3.05356, -54.939102, 4.2231627, -26.014378)
-
-[node name="patch-sand-foliage4" parent="Env" unique_id=577122506 instance=ExtResource("7_85g3d")]
-transform = Transform3D(-4.8745456, 0, 1.1130177, 0, 5, 0, -1.1130177, 0, -4.8745456, 28.769993, 4.2231627, -44.677994)
-
-[node name="patch-sand-foliage5" parent="Env" unique_id=1180317845 instance=ExtResource("7_85g3d")]
-transform = Transform3D(4.999984, 0, 0.013002992, 0, 5, 0, -0.013002992, 0, 4.999984, 4.470317, 4.2231627, -50.31404)
-
-[node name="patch-sand-foliage3" parent="Env" unique_id=827902739 instance=ExtResource("7_85g3d")]
-transform = Transform3D(-3.912111, 0, 0.83389974, 0, 4, 0, -0.83389974, 0, -3.912111, 60.000023, 4.2231627, 1.4790506)
-
-[node name="palm-bend2" parent="Env" unique_id=1349724778 instance=ExtResource("8_choun")]
-transform = Transform3D(1.78726, 0, -0.89760876, 0, 2, 0, 0.89760876, 0, 1.78726, 46.622448, 5.0832653, 9.797345)
-
-[node name="palm-bend3" parent="Env" unique_id=1069322695 instance=ExtResource("8_choun")]
-transform = Transform3D(1.6581728, 0, 1.1182411, 0, 2, 0, -1.1182411, 0, 1.6581728, 56.235676, 5.0832653, 19.483215)
-
-[node name="ship-wreck2" parent="Env" unique_id=1160563444 instance=ExtResource("10_eb6dy")]
-transform = Transform3D(1.1756674, -0.15796453, 0.91807044, 0.029169595, 1.4837943, 0.21794997, -0.93110406, -0.1529712, 1.1660377, 38.495453, 3.3148117, -1.6939464)
-
-[node name="palm-detailed-bend2" parent="Env" unique_id=1183948946 instance=ExtResource("11_trceg")]
-transform = Transform3D(1.4491619, 0, 1.3783793, 0, 2, 0, -1.3783793, 0, 1.4491619, 48.63214, 5.2799616, 16.032946)
+[node name="Environment" parent="." unique_id=2110515165 instance=ExtResource("6_o6xl0")]
 
 [node name="BotShip" parent="." unique_id=1886569867 instance=ExtResource("12_eb6dy")]
 transform = Transform3D(0.90823084, 0, 0.41846952, 0, 1, 0, -0.41846952, 0, 0.90823084, 13.686, 7, -14.937907)
