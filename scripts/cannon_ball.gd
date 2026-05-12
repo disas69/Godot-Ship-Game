@@ -3,12 +3,9 @@ class_name CannonBall extends RigidBody3D
 @export var max_lifetime: float = 5.0
 @export var cannon_view: Node3D
 @export var water_splash_particles: PackedScene
+@export var hit_particles: PackedScene
 
 var shooter: Ship
-
-
-func _ready() -> void:
-	pass # Replace with function body.
 
 
 func _process(delta: float) -> void:
@@ -21,6 +18,7 @@ func _on_body_entered(body: Node) -> void:
 	var ship: Ship = body as Ship
 	if ship != null and ship != shooter:
 		ship.take_hit(linear_velocity)
+		play_hit(global_position)
 	
 	queue_free()
 
@@ -46,3 +44,8 @@ func play_water_splash(pos: Vector3) -> void:
 	get_tree().current_scene.add_child(splash)
 	splash.global_position = pos
 	
+
+func play_hit(pos: Vector3) -> void:
+	var hit: Node3D = hit_particles.instantiate() as Node3D
+	get_tree().current_scene.add_child(hit)
+	hit.global_position = pos
