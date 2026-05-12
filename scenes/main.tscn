@@ -3,7 +3,7 @@
 [ext_resource type="Environment" uid="uid://cm77bbr0io118" path="res://scenes/main-environment.tres" id="1_x8oc8"]
 [ext_resource type="PackedScene" uid="uid://brwr25ogu6wpj" path="res://scenes/main_camera.tscn" id="3_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://t0rocmbnigpa" path="res://scenes/water.tscn" id="4_tbgi4"]
-[ext_resource type="PackedScene" uid="uid://rwop237uw6cm" path="res://scenes/environment.tscn" id="6_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://b0oraw4cp7idb" path="res://scenes/environment.tscn" id="6_o6xl0"]
 [ext_resource type="Shader" uid="uid://oq6p7nl4l7by" path="res://shaders/post_process.gdshader" id="6_tefeu"]
 [ext_resource type="PackedScene" uid="uid://cl8wcl4pdmpdc" path="res://scenes/player_ship.tscn" id="7_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://tu6g83v637wo" path="res://scenes/bot_ship.tscn" id="12_eb6dy"]
@@ -27,7 +27,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)
 
 [node name="MainCamera" parent="." unique_id=1655320981 node_paths=PackedStringArray("targets") instance=ExtResource("3_eb6dy")]
 transform = Transform3D(0.9999996, 0, 0, 0, 0.819152, 0.57357603, 0, -0.5735764, 0.81915146, 0, 40, 45)
-targets = [NodePath("../PlayerShip1"), NodePath("")]
+targets = [NodePath("../PlayerShip1"), null]
 min_bounds = Vector3(-150, -150, -150)
 max_bounds = Vector3(150, 150, 150)
 
@@ -47,6 +47,9 @@ grow_vertical = 2
 
 [node name="BotShip" parent="." unique_id=1886569867 instance=ExtResource("12_eb6dy")]
 transform = Transform3D(0.90823084, 0, 0.41846952, 0, 1, 0, -0.41846952, 0, 0.90823084, 13.686, 7, -14.937907)
+
+[node name="BotShip3" parent="." unique_id=1436708021 instance=ExtResource("12_eb6dy")]
+transform = Transform3D(0.621599, 0, -0.78333557, 0, 1, 0, 0.78333557, 0, 0.621599, 23.290745, 7, 5.3775663)
 
 [node name="BotShip2" parent="." unique_id=775917740 instance=ExtResource("12_eb6dy")]
 transform = Transform3D(0.5034422, 0, -0.86402893, 0, 1, 0, 0.86402893, 0, 0.5034422, -17.839397, 7, -7)

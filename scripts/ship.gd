@@ -2,6 +2,10 @@ class_name Ship extends FloatablePlayer3D
 
 const AIM_OVERLAY_SHADER := preload("res://shaders/aim_overlay.gdshader")
 
+@export_category("Stats")
+@export var hit_ponts: int = 3
+@export var hit_points_restoration_time: float = 5.0
+
 @export_category("View")
 @export var view: Node3D
 @export var forward_incline: Vector2
@@ -11,6 +15,14 @@ const AIM_OVERLAY_SHADER := preload("res://shaders/aim_overlay.gdshader")
 @export var hit_flash_strength: float = 0.8
 @export var hit_flash_material_template: ShaderMaterial
 @export var hit_flash_targets: Array[GeometryInstance3D] = []
+@export_category("Destroyed FX")
+@export var fire_vfx: PackedScene
+@export var big_explosion_vfx: PackedScene
+@export var destroyed_sink_distance: float = 3.0
+@export var destroyed_sink_duration: float = 2.5
+@export var destroyed_shake_strength: float = 0.2
+@export_range(0.01, 1.0, 0.01) var destroyed_shake_step_duration: float = 0.1
+@export var destroyed_destroy_delay: float = 1.0
 
 @export_category("Cannon")
 @export var cannon_ball: PackedScene
@@ -38,6 +50,7 @@ var view_base_scale: Vector3
 var hit_scale_tween: Tween
 var hit_flash_tween: Tween
 var hit_flash_material_instance: ShaderMaterial
+var is_destroyed: bool
 
 
 func _ready() -> void:
@@ -52,6 +65,9 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if is_destroyed:
+		return
+
 	var camera: Camera3D = get_viewport().get_camera_3d()
 	var forward: Vector3 = -camera.global_transform.basis.z
 	var right: Vector3 = camera.global_transform.basis.x
@@ -72,6 +88,9 @@ func _physics_process(delta: float) -> void:
 
 
 func _process(delta: float) -> void:
+	if is_destroyed:
+		return
+
 	if !last_move_dir.is_zero_approx():
 		incline_view_x(delta)
 		incline_view_z(delta)
@@ -349,18 +368,64 @@ func play_cannon_smoke_particles() -> void:
 
 
 func take_hit(hit_velocity: Vector3) -> void:
+	if is_destroyed:
+		return
+
+	hit_ponts -= 1
 	hit_velocity.y = 0
 	velocity += hit_velocity
-	play_hit_feedback()
+	
+	if hit_ponts > 0:
+		play_hit_feedback(Color.WHITE)
+	else:
+		is_destroyed = true
+		play_hit_feedback(Color.RED)
+		play_destroyed_feedback()
+		
+
+func play_destroyed_feedback() -> void:
+	velocity = Vector3.ZERO
+	collision_layer = 0
+	collision_mask = 0
+	
+	var fire: Node3D = fire_vfx.instantiate() as Node3D
+	add_child(fire)
+	fire.global_position = cannon_root.global_position
+
+	var sink_tween: Tween = create_tween()
+	sink_tween.tween_property(self, "position", position + Vector3.DOWN * destroyed_sink_distance, destroyed_sink_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+
+	var shake_tween: Tween = create_tween()
+	var base_view_position: Vector3 = view.position
+	var shake_step_duration: float = maxf(destroyed_shake_step_duration, 0.01)
+	var shake_steps: int = maxi(1, int(round(destroyed_sink_duration / shake_step_duration)))
+	for step in shake_steps:
+		var shake_progress: float = float(step + 1) / float(shake_steps)
+		var shake_amplitude: float = lerp(destroyed_shake_strength, 0.02, shake_progress)
+		var shake_offset := Vector3(randf_range(-shake_amplitude, shake_amplitude), 0.0, randf_range(-shake_amplitude, shake_amplitude))
+
+		shake_tween.tween_property(view, "position", base_view_position + shake_offset, shake_step_duration * 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		shake_tween.tween_property(view, "position", base_view_position, shake_step_duration * 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+
+	await get_tree().create_timer(destroyed_sink_duration - 0.5).timeout
+	view.position = base_view_position
+	
+	var explosion: Node3D = big_explosion_vfx.instantiate() as Node3D
+	get_tree().current_scene.add_child(explosion)
+	explosion.global_position = global_position + Vector3.UP * destroyed_sink_distance
+	
+	await get_tree().create_timer(destroyed_destroy_delay).timeout
+	queue_free()
 
 
-func play_hit_feedback() -> void:
+func play_hit_feedback(color: Color) -> void:
 	if hit_scale_tween and hit_scale_tween.is_valid():
 		hit_scale_tween.kill()
 	if hit_flash_tween and hit_flash_tween.is_valid():
 		hit_flash_tween.kill()
 
 	view.scale = view_base_scale
+	set_hit_flash_color(color)
 	set_hit_flash_strength(0.0)
 
 	hit_scale_tween = create_tween()
@@ -378,6 +443,11 @@ func setup_hit_flash_material_instance() -> void:
 	hit_flash_material_instance = hit_flash_material_template.duplicate(true) as ShaderMaterial
 	for mesh in hit_flash_targets:
 		mesh.material_overlay = hit_flash_material_instance
+
+
+func set_hit_flash_color(color: Color) -> void:
+	if hit_flash_material_instance:
+		hit_flash_material_instance.set_shader_parameter(&"flash_color", color)
 
 
 func set_hit_flash_strength(value: float) -> void:
