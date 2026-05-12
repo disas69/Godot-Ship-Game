@@ -362,9 +362,6 @@ func play_cannon_smoke_particles() -> void:
 	var smoke: Node3D = cannon_smoke_particles.instantiate() as Node3D
 	smoke.global_transform = cannon_anchor.global_transform
 	get_tree().current_scene.add_child(smoke)
-	smoke.get_node("GPUParticles3D").emitting = true
-	await smoke.get_node("GPUParticles3D").finished
-	smoke.queue_free()
 
 
 func take_hit(hit_velocity: Vector3) -> void:

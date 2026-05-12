@@ -46,27 +46,27 @@ material = SubResource("StandardMaterial3D_272bh")
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0294118, 1), 0.0, 0.0, 0, 0, Vector2(0.508403, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
-[sub_resource type="CurveTexture" id="CurveTexture_1bvp3"]
+[sub_resource type="CurveTexture" id="CurveTexture_itvyf"]
 curve = SubResource("Curve_n7uud")
 
 [sub_resource type="Gradient" id="Gradient_tpr5t"]
 colors = PackedColorArray(0, 0, 0, 1, 0.102859, 0.0979141, 0.0594506, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_7mycd"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qj18y"]
 gradient = SubResource("Gradient_tpr5t")
 
 [sub_resource type="Curve" id="Curve_8tsbr"]
 _data = [Vector2(0.109244, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.82022, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_5vw27"]
+[sub_resource type="CurveTexture" id="CurveTexture_nyu0w"]
 curve = SubResource("Curve_8tsbr")
 
 [sub_resource type="Curve" id="Curve_2bah2"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_4c57u"]
+[sub_resource type="CurveTexture" id="CurveTexture_hibvt"]
 curve = SubResource("Curve_2bah2")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cyd6m"]
@@ -77,22 +77,22 @@ initial_velocity_max = 0.5
 gravity = Vector3(0, 1, 0)
 scale_min = 0.2
 scale_max = 0.4
-scale_curve = SubResource("CurveTexture_5vw27")
-color_initial_ramp = SubResource("GradientTexture1D_7mycd")
-alpha_curve = SubResource("CurveTexture_1bvp3")
+scale_curve = SubResource("CurveTexture_nyu0w")
+color_initial_ramp = SubResource("GradientTexture1D_qj18y")
+alpha_curve = SubResource("CurveTexture_itvyf")
 turbulence_enabled = true
 turbulence_noise_strength = 0.1
 turbulence_noise_scale = 5.645
 turbulence_influence_min = 0.01
 turbulence_influence_max = 0.04
-turbulence_influence_over_life = SubResource("CurveTexture_4c57u")
+turbulence_influence_over_life = SubResource("CurveTexture_hibvt")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4c57u"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_igdd2"]
 transparency = 1
 vertex_color_use_as_albedo = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_ini8m"]
-material = SubResource("StandardMaterial3D_4c57u")
+material = SubResource("StandardMaterial3D_igdd2")
 
 [sub_resource type="Curve" id="Curve_7dm0k"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.205882, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
