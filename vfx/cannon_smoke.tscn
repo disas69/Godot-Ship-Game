@@ -55,6 +55,8 @@ turbulence_influence_over_life = SubResource("CurveTexture_4c57u")
 transparency = 1
 blend_mode = 1
 shading_mode = 0
+diffuse_mode = 3
+specular_mode = 2
 albedo_texture = ExtResource("2_pnsu1")
 billboard_mode = 3
 billboard_keep_scale = true
@@ -83,7 +85,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_owucq"]
 resource_name = "play"
-length = 2.0333333
+length = 2.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true

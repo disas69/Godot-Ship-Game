@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ut43hdh8o11b"]
 
 [ext_resource type="Script" uid="uid://bcyni047fem2n" path="res://scripts/vfx_animation_player.gd" id="1_3luq3"]
-[ext_resource type="Texture2D" uid="uid://b7m2g77nyybj8" path="res://brackeys_particle_bundle/particles/alpha/circle_03_a.png" id="2_3luq3"]
+[ext_resource type="Texture2D" uid="uid://cwt4m883aselp" path="res://brackeys_particle_bundle/particles/opague/circle_03.png" id="2_3luq3"]
 
 [sub_resource type="Curve" id="Curve_vsqf0"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.205882, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -58,6 +58,8 @@ transparency = 1
 blend_mode = 1
 cull_mode = 2
 shading_mode = 0
+diffuse_mode = 3
+specular_mode = 2
 vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("2_3luq3")
 
@@ -94,6 +96,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_2c2dq"]
 resource_name = "play"
+length = 1.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
