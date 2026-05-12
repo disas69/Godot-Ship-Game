@@ -390,7 +390,7 @@ func play_destroyed_feedback() -> void:
 	
 	var fire: Node3D = fire_vfx.instantiate() as Node3D
 	add_child(fire)
-	fire.global_position = cannon_root.global_position
+	fire.global_position = cannon_root.global_position + Vector3.UP
 
 	var sink_tween: Tween = create_tween()
 	sink_tween.tween_property(self, "position", position + Vector3.DOWN * destroyed_sink_distance, destroyed_sink_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
