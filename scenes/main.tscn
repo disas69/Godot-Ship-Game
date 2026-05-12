@@ -26,7 +26,7 @@ shadow_opacity = 0.95
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)
 
 [node name="MainCamera" parent="." unique_id=1655320981 node_paths=PackedStringArray("targets") instance=ExtResource("3_eb6dy")]
-transform = Transform3D(0.9999996, 0, 0, 0, 0.819152, 0.57357603, 0, -0.5735764, 0.81915146, 0, 40, 45)
+transform = Transform3D(0.9999996, 0, 0, 0, 0.819152, 0.57357603, 0, -0.5735764, 0.81915146, 0, 60, 65)
 targets = [NodePath("../PlayerShip1"), null]
 min_bounds = Vector3(-150, -150, -150)
 max_bounds = Vector3(150, 150, 150)
@@ -53,3 +53,5 @@ transform = Transform3D(0.621599, 0, -0.78333557, 0, 1, 0, 0.78333557, 0, 0.6215
 
 [node name="BotShip2" parent="." unique_id=775917740 instance=ExtResource("12_eb6dy")]
 transform = Transform3D(0.5034422, 0, -0.86402893, 0, 1, 0, 0.86402893, 0, 0.5034422, -17.839397, 7, -7)
+
+[editable path="MainCamera"]
