@@ -13,9 +13,11 @@ class_name FloatablePlayer3D extends CharacterBody3D
 
 var pitch_vel := 0.0
 var roll_vel := 0.0
+var rand_offset := 0.0
 
 
 func _ready():
+	rand_offset = randf_range(0.0, 150.0)
 	for owner_id in get_shape_owners():
 		var collision: Object = shape_owner_get_owner(owner_id)
 		if collision is CollisionShape3D:
@@ -32,8 +34,8 @@ func _physics_process(delta: float) -> void:
 	velocity += Vector3(0.0, -9.8 * 2, 0.0) * delta
 
 	var time: float = Time.get_ticks_msec() / 1000.0
-	roll_vel += sin(time * 1.5) * idle_wave * delta
-	pitch_vel += cos(time * 1.2) * idle_wave * 0.5 * delta
+	roll_vel += sin((time + rand_offset) * 1.5) * idle_wave * delta
+	pitch_vel += cos((time + rand_offset) * 1.2) * idle_wave * 0.5 * delta
 	
 	pitch_vel = lerp(pitch_vel, 0.0, angular_damp * delta)
 	roll_vel = lerp(roll_vel, 0.0, angular_damp * delta)
