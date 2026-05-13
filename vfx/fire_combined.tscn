@@ -132,6 +132,7 @@ size = Vector2(0.5, 0.5)
 amount = 64
 lifetime = 2.5
 fixed_fps = 60
+local_coords = true
 process_material = SubResource("ParticleProcessMaterial_2cq48")
 draw_pass_1 = SubResource("QuadMesh_08sgb")
 
@@ -140,6 +141,7 @@ amount = 18
 lifetime = 3.0
 explosiveness = 0.2
 fixed_fps = 60
+local_coords = true
 process_material = SubResource("ParticleProcessMaterial_p3uje")
 draw_pass_1 = SubResource("QuadMesh_tq2wl")
 
