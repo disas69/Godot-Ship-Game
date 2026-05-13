@@ -2,9 +2,9 @@ class_name Ship extends FloatablePlayer3D
 
 const AIM_OVERLAY_SHADER := preload("res://shaders/aim_overlay.gdshader")
 
-@export_category("Stats")
+@export_category("Settings")
 @export var hit_ponts: int = 3
-@export var hit_points_restoration_time: float = 5.0
+@export var aim_help_check_radius: float = 5.0
 
 @export_category("View")
 @export var view: Node3D
@@ -41,6 +41,8 @@ const AIM_OVERLAY_SHADER := preload("res://shaders/aim_overlay.gdshader")
 @export var cannon_smoke_particles: PackedScene
 
 var last_move_dir := Vector3.ZERO
+var auto_aim_target := Vector3.ZERO
+var auto_aim_target_ship: Ship
 var default_gravity: float
 var cannon_start_position: Vector3
 var cannon_start_scale: Vector3
@@ -54,6 +56,7 @@ var is_destroyed: bool
 
 
 func _ready() -> void:
+	add_to_group("Ship")
 	default_gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 	cannon_start_position = cannon_view.position
 	cannon_start_scale = cannon_view.scale
@@ -115,10 +118,14 @@ func _process(delta: float) -> void:
 	if target_position != null:
 		var target: Vector3 = target_position
 		rotate_cannon_towards(target)
-	else:		
+	else:
+		if auto_aim_target_ship != null and is_instance_valid(auto_aim_target_ship) and not auto_aim_target_ship.is_destroyed:
+			var locked_target: Vector3 = auto_aim_target_ship.global_position
+			locked_target.y = global_position.y
+			rotate_cannon_towards(locked_target)
 		target_position = get_cannon_forward_aim_position()
-
-	var aim_target: Vector3 = target_position
+	
+	var aim_target: Vector3 = try_get_auto_aim_target(target_position)
 	if show_aim_helpers:
 		update_aim_line(aim_target)
 	elif aim_line:
@@ -126,7 +133,9 @@ func _process(delta: float) -> void:
 		aim_indicator.visible = false
 
 	if can_shoot():
-		shoot(aim_target)
+		var shoot_direction: Vector3 = aim_target - get_aim_origin()
+		shoot_direction.y = aim_target.y
+		shoot(aim_target + (shoot_direction.normalized() * 1.5))
 
 
 func get_move_input() -> Vector2:
@@ -148,6 +157,40 @@ func should_use_mouse_aim(_aim_input: Vector2) -> bool:
 func can_shoot() -> bool:
 	return false
 
+
+func try_get_auto_aim_target(pos: Vector3) -> Vector3:
+	if auto_aim_target_ship != null and is_instance_valid(auto_aim_target_ship) and not auto_aim_target_ship.is_destroyed:
+		var locked_target: Vector3 = auto_aim_target_ship.global_position
+		locked_target.y = pos.y
+		if locked_target.distance_to(pos) <= cannon_aim_radius_max.y / 2:
+			auto_aim_target = locked_target
+			return locked_target
+
+	auto_aim_target_ship = null
+	auto_aim_target = Vector3.ZERO
+
+	var closest_target_ship: Ship
+	var closest_distance: float = aim_help_check_radius
+	for node in get_tree().get_nodes_in_group("Ship"):
+		var ship: Ship = node as Ship
+		if ship == null or ship == self or ship.is_destroyed:
+			continue
+
+		var target_position: Vector3 = ship.global_position
+		target_position.y = pos.y
+		var distance: float = target_position.distance_to(pos)
+		if distance <= closest_distance:
+			closest_distance = distance
+			closest_target_ship = ship
+
+	if closest_target_ship != null:
+		auto_aim_target_ship = closest_target_ship
+		auto_aim_target = closest_target_ship.global_position
+		auto_aim_target.y = pos.y
+		return auto_aim_target
+
+	return pos
+	
 
 func update_aim_radius(delta: float, radius_input: float) -> void:
 	var target_radius: float = cannon_aim_radius
@@ -290,6 +333,11 @@ func update_aim_line(target_position: Vector3) -> void:
 		aim_line.multimesh.set_instance_transform(i, Transform3D(Basis(), dot_position))
 		
 	aim_indicator.global_transform.origin = target_position
+	
+	if auto_aim_target_ship != null and is_instance_valid(auto_aim_target_ship) and not auto_aim_target_ship.is_destroyed:
+		aim_indicator.scale = Vector3.ONE * 1.8
+	else:
+		aim_indicator.scale = Vector3.ONE
 
 
 func rotate_cannon_towards(target_position: Vector3) -> void:

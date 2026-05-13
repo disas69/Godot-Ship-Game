@@ -543,7 +543,7 @@ transform = Transform3D(0.6072351, 0, 0, 0, 0.35296503, 0, 0, 0, 0.54689926, 1.6
 transform = Transform3D(0.53188, 0, 0, 0, 0.330148, 0, 0, 0, 0.62052923, 0.18099022, 0.4113989, 1.3017588)
 
 [node name="palm-detailed-straight5" parent="." unique_id=2106045721 instance=ExtResource("11_6p5pf")]
-transform = Transform3D(-2.8402996, 0, 0.6754192, 0, 3.028944, 0, -0.7608967, 0, -2.5212276, -47.612064, 4.1327615, -81.443634)
+transform = Transform3D(2.701845, 0, -1.0299561, 0, 3.0289433, 0, 1.1603016, 0, 2.3983264, -43.105045, 4.1327615, -89.54016)
 
 [node name="palm-detailed-straight4" parent="palm-detailed-straight5" unique_id=268050329 instance=ExtResource("11_6p5pf")]
 transform = Transform3D(0.99999994, 0, -1.4901161e-08, 0, 0.56559515, 0, 0, 0, 0.9388952, 1.969305, 0.26391602, 0.787426)
@@ -809,7 +809,7 @@ transform = Transform3D(-0.068135895, 0.093417436, 0.85981166, -0.15059122, 0.72
 [node name="bottle-large7" parent="platform-planks3" unique_id=1128656806 instance=ExtResource("28_6rpxt")]
 transform = Transform3D(-0.035875767, 0.06612007, 0.5201079, -0.07929133, 0.5104698, -0.076204136, -0.4896381, -0.13486356, 0.008704126, 1.6772041, -0.49967575, 0.78956985)
 
-[node name="bottle-large" parent="platform-planks3/bottle-large7" index="0" unique_id=867552713]
+[node name="bottle-large" parent="platform-planks3/bottle-large7" index="0" unique_id=2098207814]
 material_override = SubResource("StandardMaterial3D_rlnmy")
 
 [node name="bottle4" parent="platform-planks3" unique_id=1477110490 instance=ExtResource("29_qrvva")]
@@ -938,7 +938,7 @@ transform = Transform3D(-0.068135895, 0.093417436, 0.85981166, -0.15059122, 0.72
 [node name="bottle-large7" parent="platform-planks6" unique_id=911015363 instance=ExtResource("28_6rpxt")]
 transform = Transform3D(-0.035875767, 0.06612007, 0.5201079, -0.07929133, 0.5104698, -0.076204136, -0.4896381, -0.13486356, 0.008704126, 1.6772041, -0.49967575, 0.78956985)
 
-[node name="bottle-large" parent="platform-planks6/bottle-large7" index="0" unique_id=867552713]
+[node name="bottle-large" parent="platform-planks6/bottle-large7" index="0" unique_id=2098207814]
 material_override = SubResource("StandardMaterial3D_rlnmy")
 
 [node name="bottle4" parent="platform-planks6" unique_id=2104765188 instance=ExtResource("29_qrvva")]
@@ -1067,7 +1067,7 @@ transform = Transform3D(-0.068135895, 0.093417436, 0.85981166, -0.15059122, 0.72
 [node name="bottle-large7" parent="platform-planks4" unique_id=1489875093 instance=ExtResource("28_6rpxt")]
 transform = Transform3D(-0.035875767, 0.06612007, 0.5201079, -0.07929133, 0.5104698, -0.076204136, -0.4896381, -0.13486356, 0.008704126, 1.6772041, -0.49967575, 0.78956985)
 
-[node name="bottle-large" parent="platform-planks4/bottle-large7" index="0" unique_id=867552713]
+[node name="bottle-large" parent="platform-planks4/bottle-large7" index="0" unique_id=2098207814]
 material_override = SubResource("StandardMaterial3D_rlnmy")
 
 [node name="bottle4" parent="platform-planks4" unique_id=1846363359 instance=ExtResource("29_qrvva")]
@@ -1196,7 +1196,7 @@ transform = Transform3D(-0.068135895, 0.093417436, 0.85981166, -0.15059122, 0.72
 [node name="bottle-large7" parent="platform-planks5" unique_id=2105524551 instance=ExtResource("28_6rpxt")]
 transform = Transform3D(-0.035875767, 0.06612007, 0.5201079, -0.07929133, 0.5104698, -0.076204136, -0.4896381, -0.13486356, 0.008704126, 1.6772041, -0.49967575, 0.78956985)
 
-[node name="bottle-large" parent="platform-planks5/bottle-large7" index="0" unique_id=867552713]
+[node name="bottle-large" parent="platform-planks5/bottle-large7" index="0" unique_id=2098207814]
 material_override = SubResource("StandardMaterial3D_rlnmy")
 
 [node name="bottle4" parent="platform-planks5" unique_id=1347103471 instance=ExtResource("29_qrvva")]
@@ -1325,7 +1325,7 @@ transform = Transform3D(-0.06813589, 0.093417436, 0.85981166, -0.15059122, 0.721
 [node name="bottle-large7" parent="platform-planks7" unique_id=1417066538 instance=ExtResource("28_6rpxt")]
 transform = Transform3D(-0.035875767, 0.06612007, 0.5201079, -0.07929133, 0.5104698, -0.076204136, -0.4896381, -0.13486356, 0.008704126, 1.6772041, -0.49967575, 0.78956985)
 
-[node name="bottle-large" parent="platform-planks7/bottle-large7" index="0" unique_id=867552713]
+[node name="bottle-large" parent="platform-planks7/bottle-large7" index="0" unique_id=2098207814]
 transform = Transform3D(1, -3.7252903e-09, 0, 0, 1, 0, -2.9802322e-08, 3.7252903e-09, 1, 4.877907, 0.7925463, 3.8078003)
 material_override = SubResource("StandardMaterial3D_rlnmy")
 
@@ -1420,10 +1420,10 @@ transform = Transform3D(0.72683847, 0, 0.68680847, 0, 1, 0, -0.68680847, 0, 0.72
 transform = Transform3D(0.25938594, 0.3316497, -0.9070432, 0.06234004, 0.9314798, 0.35841194, 0.9637596, -0.14951211, 0.22093776, 41.85654, 5.4005165, -42.077076)
 
 [node name="hole6" parent="." unique_id=167255549 instance=ExtResource("14_f0uwl")]
-transform = Transform3D(1.9859568, 0, 0, 0, 0.92471117, 0, 0, 0, 2.3378913, -47.61596, 5.813943, -86.08563)
+transform = Transform3D(1.9859568, 0, 0, 0, 0.92471117, 0, 0, 0, 2.3378913, -45.94741, 5.813943, -83.39109)
 
 [node name="tool-shovel10" parent="." unique_id=399141742 instance=ExtResource("13_cofmf")]
-transform = Transform3D(0.25938594, 0.3316497, -0.9070432, 0.06234004, 0.9314798, 0.35841194, 0.9637596, -0.14951211, 0.22093776, -45.88244, 5.853011, -87.63314)
+transform = Transform3D(0.25938594, 0.3316497, -0.9070432, 0.06234004, 0.9314798, 0.35841194, 0.9637596, -0.14951211, 0.22093776, -44.63518, 5.853011, -85.23761)
 
 [node name="hole5" parent="." unique_id=977252510 instance=ExtResource("14_f0uwl")]
 transform = Transform3D(1.9859568, 0, 0, 0, 0.92471117, 0, 0, 0, 2.3378913, -1535.6289, 5.361449, -43.641556)
@@ -1668,10 +1668,10 @@ transform = Transform3D(0.68649125, 0, -0.72713804, 0, 1, 0, 0.72713804, 0, 0.68
 [node name="boat-row-small5" parent="." unique_id=1654583001 instance=ExtResource("8_7yrbd")]
 transform = Transform3D(-1.8328338, 0.08787327, -0.7091661, 1.4901161e-08, 1.0886561, 0.7939116, 0.51090914, 0.31523624, -2.54406, -66.96255, 6.735908, 51.17138)
 
-[node name="boat-row-small" parent="boat-row-small5" index="0" unique_id=2082702327]
+[node name="boat-row-small" parent="boat-row-small5" index="0" unique_id=139348075]
 material_overlay = SubResource("StandardMaterial3D_w8v73")
 
-[node name="paddles" parent="boat-row-small5/boat-row-small" index="0" unique_id=1328158023]
+[node name="paddles" parent="boat-row-small5/boat-row-small" index="0" unique_id=1024873285]
 material_override = SubResource("StandardMaterial3D_6r0n0")
 
 [node name="boat-row-small2" parent="boat-row-small5" unique_id=1311302990 instance=ExtResource("8_7yrbd")]
@@ -1716,7 +1716,7 @@ transform = Transform3D(0.31623155, 0, 0.008183058, 0, 0.38349733, 0, -0.0016417
 [node name="barrel9" parent="." unique_id=985111672 instance=ExtResource("24_l5y12")]
 transform = Transform3D(0.56147677, 0, -1.0466712, 0, 1.1387118, 0, 1.0556732, 0, 0.5566889, -50.116146, 6.0474195, 26.336761)
 
-[node name="barrel" parent="barrel9" index="0" unique_id=137013273]
+[node name="barrel" parent="barrel9" index="0" unique_id=1092953501]
 material_override = SubResource("StandardMaterial3D_3wnr2")
 
 [node name="barrel3" type="MeshInstance3D" parent="barrel9" unique_id=957462324]
@@ -1905,7 +1905,7 @@ transform = Transform3D(0.36936536, 0.02538561, -0.017171845, -0.036129102, 0.38
 [node name="patch-grass2" parent="." unique_id=600086264 instance=ExtResource("50_w8v73")]
 transform = Transform3D(0.09302804, 0, 1.3586324, 0, 1, 0, -1.2787157, 0, 0.09884208, -94.08098, 6.057146, -27.503803)
 
-[node name="patch-grass" parent="patch-grass2" index="0" unique_id=1501410370]
+[node name="patch-grass" parent="patch-grass2" index="0" unique_id=1882949842]
 transform = Transform3D(1, 0, 5.9604645e-08, 0, 1, 0, 0, 0, 0.9999999, 0.29816628, -0.0039024353, 0.16056061)
 material_override = SubResource("StandardMaterial3D_b7sw3")
 
@@ -1957,7 +1957,7 @@ transform = Transform3D(0.8618573, 0, -1.6584674, 0, 0.99999976, 0, 4.277031, 0,
 [node name="tool-paddle2" parent="." unique_id=1727702518 instance=ExtResource("52_6r0n0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.708305, 5.8580093, 28.919548)
 
-[node name="tool-paddle" parent="tool-paddle2" index="0" unique_id=1650327662]
+[node name="tool-paddle" parent="tool-paddle2" index="0" unique_id=32433984]
 material_override = SubResource("StandardMaterial3D_3527y")
 
 [node name="tool-paddle2" type="MeshInstance3D" parent="tool-paddle2" unique_id=1344731355]
@@ -1975,10 +1975,10 @@ transform = Transform3D(0.4428521, -0.8865908, 0.13356198, 0.29616025, 0.2852537
 [node name="chest2" parent="." unique_id=931857129 instance=ExtResource("12_t8dep")]
 transform = Transform3D(1.2882887, 0, 0, 0, 1.1525632, 0.14056754, 0, -0.15591457, 1.0391135, -54.39022, 6.361155, 30.576443)
 
-[node name="chest" parent="chest2" index="0" unique_id=267402266]
+[node name="chest" parent="chest2" index="0" unique_id=710455982]
 material_override = SubResource("StandardMaterial3D_xdke8")
 
-[node name="lid" parent="chest2/chest" index="0" unique_id=773190291]
+[node name="lid" parent="chest2/chest" index="0" unique_id=158211140]
 material_override = SubResource("StandardMaterial3D_mv1rp")
 
 [node name="tower-watch2" parent="." unique_id=705071055 instance=ExtResource("53_3wnr2")]
