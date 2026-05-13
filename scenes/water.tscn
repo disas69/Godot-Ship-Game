@@ -1,15 +1,31 @@
 [gd_scene format=3 uid="uid://t0rocmbnigpa"]
 
 [ext_resource type="Script" uid="uid://c53fb8er26tew" path="res://scripts/water.gd" id="1_s3811"]
-[ext_resource type="Shader" uid="uid://bbo1abph4arco" path="res://addons/water_shader/WaterShader.tres" id="2_p1n2c"]
+[ext_resource type="Shader" uid="uid://ccl52wgfv50n0" path="res://shaders/water.gdshader" id="2_s3811"]
+[ext_resource type="Texture2D" uid="uid://bafjqb4q6rya3" path="res://addons/toon_water/Textures/WaterDistortion.png" id="3_ewrsg"]
+[ext_resource type="Texture2D" uid="uid://da5hyoda1jlx2" path="res://addons/toon_water/Textures/PerlinNoise.png" id="4_fiwy5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jyhfs"]
 size = Vector3(1000, 10, 1000)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ss84j"]
 render_priority = 0
-shader = ExtResource("2_p1n2c")
-shader_parameter/ColorParameter = Color(0, 0.266667, 0.533333, 1)
+shader = ExtResource("2_s3811")
+shader_parameter/surfaceNoise = ExtResource("4_fiwy5")
+shader_parameter/distortNoise = ExtResource("3_ewrsg")
+shader_parameter/beer_factor = 0.65
+shader_parameter/foam_distance = 0.01
+shader_parameter/foam_max_distance = 1.0
+shader_parameter/foam_min_distance = 0.04
+shader_parameter/foam_color = Color(1, 1, 1, 1)
+shader_parameter/surface_noise_tiling = Vector2(60, 90)
+shader_parameter/surface_noise_scroll = Vector3(0.03, 0.1, 0)
+shader_parameter/surface_noise_cutoff = 0.90000004275
+shader_parameter/surface_distortion_amount = 1.200000057
+shader_parameter/_DepthGradientShallow = Color(0.325, 0.807, 0.971, 0.725)
+shader_parameter/_DepthGradientDeep = Color(0.19764104, 0.63945913, 0.5674482, 0.7921569)
+shader_parameter/_DepthMaxDistance = 1.0
+shader_parameter/_DepthFactor = 1.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_tbgi4"]
 material = SubResource("ShaderMaterial_ss84j")

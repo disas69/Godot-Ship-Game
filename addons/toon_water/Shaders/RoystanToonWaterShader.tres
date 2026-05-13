@@ -1,0 +1,24 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://drtq82uut2fnh"]
+
+[ext_resource type="Shader" uid="uid://ccl52wgfv50n0" path="res://shaders/water.gdshader" id="1_rf8xo"]
+[ext_resource type="Texture2D" uid="uid://bafjqb4q6rya3" path="res://addons/toon_water/Textures/WaterDistortion.png" id="2_t774w"]
+[ext_resource type="Texture2D" uid="uid://da5hyoda1jlx2" path="res://addons/toon_water/Textures/PerlinNoise.png" id="3_flyx1"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_rf8xo")
+shader_parameter/surfaceNoise = ExtResource("3_flyx1")
+shader_parameter/distortNoise = ExtResource("2_t774w")
+shader_parameter/beer_factor = 0.8
+shader_parameter/foam_distance = 0.01
+shader_parameter/foam_max_distance = 0.4
+shader_parameter/foam_min_distance = 0.04
+shader_parameter/foam_color = Color(1, 1, 1, 1)
+shader_parameter/surface_noise_tiling = Vector2(1, 4)
+shader_parameter/surface_noise_scroll = Vector3(0.03, 0.03, 0)
+shader_parameter/surface_noise_cutoff = 0.777
+shader_parameter/surface_distortion_amount = 0.27
+shader_parameter/_DepthGradientShallow = Color(0.325, 0.807, 0.971, 0.725)
+shader_parameter/_DepthGradientDeep = Color(0.086, 0.407, 1, 0.749)
+shader_parameter/_DepthMaxDistance = 1.0
+shader_parameter/_DepthFactor = 1.0

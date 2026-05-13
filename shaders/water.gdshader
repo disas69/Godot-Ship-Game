@@ -6,6 +6,7 @@
 */
 
 shader_type spatial;
+render_mode blend_mix, depth_draw_never;
 
 const float SMOOTHSTEP_AA = 0.01;
 
@@ -23,7 +24,7 @@ uniform vec4 foam_color: source_color  = vec4(1.0);
 uniform vec2 surface_noise_tiling = vec2(1.0, 4.0);
 uniform vec3 surface_noise_scroll = vec3(0.03, 0.03, 0.0);
 uniform float surface_noise_cutoff: hint_range(0, 1) = 0.777;
-uniform float surface_distortion_amount: hint_range(0, 1) = 0.27;
+uniform float surface_distortion_amount: hint_range(0, 10) = 0.27;
 
 uniform vec4 _DepthGradientShallow: source_color = vec4(0.325, 0.807, 0.971, 0.725);
 uniform vec4 _DepthGradientDeep: source_color = vec4(0.086, 0.407, 1, 0.749);
@@ -49,22 +50,24 @@ void vertex() {
 }
 
 void fragment(){
-	// https://www.youtube.com/watch?v=Jq3he9Lbj7M
-	float depth = texture(depth_texture, SCREEN_UV).r;
-	depth = depth * 2.0 - 1.0;
-	depth = PROJECTION_MATRIX[3][2] / (depth + PROJECTION_MATRIX[2][2]);
-	depth = depth + VERTEX.z;
-	depth = exp(-depth * beer_factor);
-	depth = 1.0 - depth;
+	float scene_depth_raw = texture(depth_texture, SCREEN_UV).x;
+	vec3 ndc = vec3(SCREEN_UV * 2.0 - 1.0, scene_depth_raw);
+	vec4 scene_view_pos = INV_PROJECTION_MATRIX * vec4(ndc, 1.0);
+	scene_view_pos.xyz /= scene_view_pos.w;
+
+	float scene_depth = -scene_view_pos.z;
+	float water_depth = -VERTEX.z;
+	float depth_difference = max(scene_depth - water_depth, 0.0);
+	float depth = 1.0 - exp(-depth_difference * max(beer_factor, 0.0001));
 	
 	// Still unsure how to get properly the NORMAL from the camera
 	// this was my best attempt
-	vec3 existingNormal = vec3(dFdx(depth), dFdy(depth), 0);
+	vec3 existingNormal = vec3(dFdx(depth_difference), dFdy(depth_difference), 0.0);
 	
 	float normalDot = clamp(dot(existingNormal.xyz, viewNormal), 0.0, 1.0);
 	float foamDistance = mix(foam_max_distance, foam_min_distance, normalDot);
 	
-	float foamDepth = clamp(depth / foamDistance, 0.0, 1.0);
+	float foamDepth = clamp(depth_difference / max(foamDistance, 0.0001), 0.0, 1.0);
 	float surfaceNoiseCutoff = foamDepth * surface_noise_cutoff;
 	
 	vec4 distortNoiseSample = texture(distortNoise, distortUV);
