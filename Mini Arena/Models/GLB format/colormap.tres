@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://b26esyetp45oo"]
+
+[ext_resource type="Texture2D" uid="uid://baixwudg5xon8" path="res://Mini Arena/Models/GLB format/Textures/colormap.png" id="1_rvrw5"]
+
+[resource]
+resource_name = "colormap"
+albedo_color = Color(18.892157, 18.892157, 11.84926, 1)
+albedo_texture = ExtResource("1_rvrw5")
