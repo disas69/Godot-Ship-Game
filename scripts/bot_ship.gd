@@ -207,7 +207,8 @@ func update_patrol_progress() -> void:
 
 	var patrol_target: Vector3 = patrol_points[patrol_index]
 	var distance_to_point: float = global_position.distance_to(patrol_target)
-	if distance_to_point > patrol_reach_distance:
+	var reach_distance: float = max(patrol_reach_distance, stop_distance)
+	if distance_to_point > reach_distance:
 		return
 
 	patrol_index = (patrol_index + 1) % patrol_points.size()
