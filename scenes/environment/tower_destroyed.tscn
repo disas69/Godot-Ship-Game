@@ -4,32 +4,29 @@
 [ext_resource type="PackedScene" uid="uid://bsosdyyu3pjct" path="res://kenney_pirate-kit/Models/GLB format/tower-middle-windows.glb" id="2_ipena"]
 [ext_resource type="PackedScene" uid="uid://cq6gls4gfbqc4" path="res://kenney_pirate-kit/Models/GLB format/tower-base-door.glb" id="3_5xhxx"]
 [ext_resource type="PackedScene" uid="uid://cigw1p8vvckk7" path="res://kenney_pirate-kit/Models/GLB format/rocks-a.glb" id="4_hr4iq"]
-[ext_resource type="PackedScene" uid="uid://dbp08ltifwk7l" path="res://kenney_pirate-kit/Models/GLB format/patch-grass-foliage.glb" id="5_pkb52"]
 [ext_resource type="PackedScene" uid="uid://bdfkvq5s1kdti" path="res://kenney_pirate-kit/Models/GLB format/patch-sand.glb" id="6_xnm6a"]
 [ext_resource type="PackedScene" uid="uid://cl4fm7jlpy4pd" path="res://kenney_pirate-kit/Models/GLB format/tower-complete-small.glb" id="7_b23yl"]
 [ext_resource type="PackedScene" uid="uid://c0wmtfjlthhix" path="res://kenney_pirate-kit/Models/GLB format/rocks-c.glb" id="8_ldm08"]
+[ext_resource type="PackedScene" uid="uid://c68gwltirwt8n" path="res://kenney_pirate-kit/Models/GLB format/structure-platform-small.glb" id="9_cgu75"]
 [ext_resource type="PackedScene" uid="uid://djqh6crs7l6gx" path="res://kenney_pirate-kit/Models/GLB format/rocks-b.glb" id="9_tumbe"]
 
 [node name="TOWER DESTROYED" type="Node3D" unique_id=1431508293]
 transform = Transform3D(0.82440805, -1.3545769e-08, -0.57419854, 3.934337e-08, 1, 1.38356855e-08, 0.58921766, -7.11153e-08, 0.8033941, 0, 0, 0)
 
 [node name="base" parent="." unique_id=1629555184 instance=ExtResource("1_cgu75")]
-transform = Transform3D(4.292577, 0, 0, 7.1054274e-15, 6.60036, 7.1054274e-15, 0, 2.842171e-14, 4.2398677, 0, 0, 0)
+transform = Transform3D(3.8123279, 0, 0, 6.3104797e-15, 5.5828023, 6.512295e-15, 0, 2.4040022e-14, 3.8859408, 0, 0, 0)
 
 [node name="tower-middle-windows3" parent="base" unique_id=17184747 instance=ExtResource("2_ipena")]
 transform = Transform3D(0.358316, 0.049636543, 0.6561116, -0.040387295, 0.46844405, -0.012831805, -0.5924871, -0.04695681, 0.43044975, 0.020836642, 0.43203643, 4.924806)
 
 [node name="tower-middle-windows2" parent="base/tower-middle-windows3" unique_id=332694889 instance=ExtResource("2_ipena")]
-transform = Transform3D(1.2450539, -0.67278576, 0.72512114, 0.54498714, 1.7154142, -6.798655e-08, -0.5357282, 0.28948975, 1.2792525, 3.2350168, 3.6068234, -3.2851067)
+transform = Transform3D(1.007889, -0.4359872, 0.72512114, 0.441175, 1.1116446, -6.798655e-08, -0.43367973, 0.18759885, 1.2792525, 3.2350168, 3.6068234, -3.2851067)
 
 [node name="tower-base-door2" parent="base/tower-middle-windows3" unique_id=714416379 instance=ExtResource("3_5xhxx")]
 transform = Transform3D(1.507117, -0.13592164, 0.71882474, 0.11124704, 1.4145106, 0.095349595, -0.6823193, -0.032781795, 1.2184228, 2.1677198, 0.37493023, -1.6171722)
 
 [node name="rocks-a5" parent="base/tower-middle-windows3" unique_id=1972180149 instance=ExtResource("4_hr4iq")]
-transform = Transform3D(-0.12357435, -0.0971117, 0.8798362, -0.021363636, 0.8405911, 0.08934285, -0.6226394, -0.009770974, -0.13514847, 2.07753, 5.8850183, -3.0331125)
-
-[node name="patch-grass-foliage2" parent="base/tower-middle-windows3" unique_id=628853833 instance=ExtResource("5_pkb52")]
-transform = Transform3D(-0.035162643, -0.005000392, -0.5920074, -0.014401908, 0.3267408, -0.007067346, 0.45642486, 0.008430322, -0.03480965, 0.23794174, 2.165402, 0.4157803)
+transform = Transform3D(-0.12357434, 0.13806371, 0.87067443, -0.02136364, 0.8330072, -0.163544, -0.6226394, -0.05618569, -0.124653235, 1.9408478, 4.48366, -2.953167)
 
 [node name="patch-sand23" parent="base/tower-middle-windows3" unique_id=1817456096 instance=ExtResource("6_xnm6a")]
 transform = Transform3D(0.21891637, -0.030803531, -0.25822756, 0.025048438, 0.3205665, -0.017004589, 0.22540557, -0.007429224, 0.19197732, 1.3232765, 4.8173485, -1.4789267)
@@ -47,10 +44,16 @@ transform = Transform3D(0.21643311, 2.1485913e-08, 0.3536452, 1.917212e-08, 0.23
 transform = Transform3D(-0.59109116, 0.09662928, 0.26688826, 0.05150933, 0.31751105, -0.10831726, -0.2590437, -0.0810811, -0.71083605, -0.106030464, 2.0216753, 0.118294716)
 
 [node name="patch-sand2" parent="base" unique_id=551385476 instance=ExtResource("6_xnm6a")]
-transform = Transform3D(0.2437137, 0.0010198895, -0.2879918, -0.039900865, 0.1488412, -0.057221238, 0.20123363, 0.028277246, 0.31157938, -0.9549154, 3.7593207, 2.2979949)
+transform = Transform3D(0.24369468, 0.004290617, -0.2877698, -0.048364293, 0.14829633, -0.05630931, 0.19939215, 0.030726632, 0.31195045, -0.97388035, 3.0860453, 2.157865)
 
 [node name="patch-sand9" parent="base" unique_id=1069061013 instance=ExtResource("6_xnm6a")]
 transform = Transform3D(0.16289906, 1.3743188e-08, 0.1622238, -4.443573e-09, 0.1515069, -5.4648033e-09, -0.16853654, 9.7524575e-09, 0.16923806, 0.5928621, 2.0457911, 0.27285957)
 
 [node name="tower-complete-small2" parent="base" unique_id=1667441015 instance=ExtResource("7_b23yl")]
 transform = Transform3D(0.42476365, 0.013138604, 0.7195411, -0.11329174, 0.61127573, 0.050754305, -0.7086396, -0.10159752, 0.3943547, -1.4065615, 0.27924782, 6.095637)
+
+[node name="structure-platform-small6" parent="." unique_id=976792314 instance=ExtResource("9_cgu75")]
+transform = Transform3D(3.9750671, 0.04248509, -0.6506122, -2.0116568e-07, 0.9946196, 0.17532322, 1.7875124, -0.09447814, 1.5531483, 3.099348, 1.4748182, 28.200651)
+
+[node name="structure-platform-small5" parent="." unique_id=707625234 instance=ExtResource("9_cgu75")]
+transform = Transform3D(4.2998734, 3.8315502e-08, -0.086330295, -1.8044733e-07, 0.99999964, -8.104783e-08, 0.22846079, 5.0613583e-08, 1.7109361, 5.666724, -2.0460672, 7.355327)

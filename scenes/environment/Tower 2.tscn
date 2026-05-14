@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://ol83pu1tuq8h"]
+
+[ext_resource type="PackedScene" uid="uid://c31l2xhtbtmx3" path="res://kenney_pirate-kit/Models/GLB format/tower-base.glb" id="1_1mww6"]
+[ext_resource type="PackedScene" uid="uid://8flbl3dymhot" path="res://kenney_pirate-kit/Models/GLB format/tower-complete-large.glb" id="2_nxmmr"]
+[ext_resource type="PackedScene" uid="uid://bsosdyyu3pjct" path="res://kenney_pirate-kit/Models/GLB format/tower-middle-windows.glb" id="3_7xfbp"]
+[ext_resource type="PackedScene" uid="uid://dbjnq08us506y" path="res://kenney_pirate-kit/Models/GLB format/tower-roof.glb" id="4_484io"]
+[ext_resource type="PackedScene" uid="uid://bp0dmo1mpmant" path="res://kenney_pirate-kit/Models/GLB format/tower-middle.glb" id="5_wgpp6"]
+[ext_resource type="PackedScene" uid="uid://cq6gls4gfbqc4" path="res://kenney_pirate-kit/Models/GLB format/tower-base-door.glb" id="6_ykb00"]
+[ext_resource type="PackedScene" uid="uid://bejqxj4gqqlyo" path="res://kenney_pirate-kit/Models/GLB format/tower-top.glb" id="7_hc7bb"]
+
+[node name="TOWER 2" type="Node3D" unique_id=2141325863]
+transform = Transform3D(0.566419, 0, 0, 0, 0.6580606, 0, 0, 0, 0.74009603, 0, 0, 0)
+
+[node name="base" type="Node3D" parent="." unique_id=657877708]
+transform = Transform3D(-0.8381825, -0.018141855, 3.509926, -0.033253606, 3.3542376, 0.012552298, -3.624801, -0.026576493, -0.81173456, -0.056075603, 0.7898369, -0.97326374)
+
+[node name="tower-base2" parent="base" unique_id=1629555184 instance=ExtResource("1_1mww6")]
+transform = Transform3D(0.99991924, -4.656613e-10, -0.012302667, 2.7939677e-09, 0.99999994, -4.656613e-10, 0.013121903, -3.4924597e-10, 0.99991924, 2.8268394, 4.7683716e-07, -4.8927326)
+
+[node name="tower-complete-large2" parent="base/tower-base2" unique_id=256278732 instance=ExtResource("2_nxmmr")]
+transform = Transform3D(-0.62912524, -0.0049245297, -0.57478243, -0.009738193, 0.80387616, 0.00082763867, 0.6870041, 0.0050689424, -0.7093795, -0.23576546, 2.004122, 0.0022029877)
+
+[node name="tower-base4" parent="base" unique_id=1568948344 instance=ExtResource("1_1mww6")]
+transform = Transform3D(0.99991924, -4.656613e-10, -0.012302667, 2.7939677e-09, 0.99999994, -4.656613e-10, 0.013121903, -3.4924597e-10, 0.99991924, -5.108119, 2.3841858e-07, 1.6265354)
+
+[node name="tower-complete-large2" parent="base/tower-base4" unique_id=54315089 instance=ExtResource("2_nxmmr")]
+transform = Transform3D(-0.6696913, -0.0049245297, -0.6270209, -0.010366113, 0.80387616, 0.00090285763, 0.73130226, 0.0050689424, -0.7738506, 0.06984939, 2.004556, 0.25919223)
+
+[node name="tower-base3" parent="base" unique_id=431776317 instance=ExtResource("1_1mww6")]
+transform = Transform3D(0.9999999, -4.656613e-10, 0, 0, 0.99999994, 1.1641532e-10, 2.9802322e-08, 1.1641532e-10, 0.99999994, 0, 0, 0)
+
+[node name="tower-middle-windows2" parent="base/tower-base3" unique_id=17184747 instance=ExtResource("3_7xfbp")]
+transform = Transform3D(-0.71365035, -0.005169498, -0.6421617, -0.009794541, 0.84386456, 0.0010154895, 0.6071666, 0.005321094, -0.80502594, -0.008213997, 1.9822989, -0.1220417)
+
+[node name="tower-middle-windows3" parent="base/tower-base3" unique_id=2059034286 instance=ExtResource("3_7xfbp")]
+transform = Transform3D(-0.71365035, -0.005169498, -0.6421617, -0.009794541, 0.84386456, 0.0010154895, 0.6071666, 0.005321094, -0.80502594, -0.027572531, 5.14237, -0.102115475)
+
+[node name="tower-base4" parent="base/tower-base3" unique_id=1671816335 instance=ExtResource("1_1mww6")]
+transform = Transform3D(0.8576976, 0, -0.11528744, 1.8626451e-09, 1.1837448, 6.9849193e-10, 0.12078725, -9.851555e-10, 0.87315357, -0.001903832, 2.876216, 0.113738485)
+
+[node name="tower-roof2" parent="base/tower-base3" unique_id=751255378 instance=ExtResource("4_484io")]
+transform = Transform3D(-0.16721568, -0.0077903657, -0.841187, -0.004452629, 0.9667401, -0.0075875735, 0.7468474, 0.0031364507, -0.2009176, -0.039539658, 6.698092, -0.15956256)
+
+[node name="tower-middle2" parent="base" unique_id=444193337 instance=ExtResource("5_wgpp6")]
+transform = Transform3D(0.0032842606, -0.010883429, -0.8945018, -0.0037549254, 1.3505716, -0.008879488, 1.0120957, 0.0043817377, 0.003067419, 1.6636629, 1.8494899, -2.1244469)
+
+[node name="tower-base-door2" parent="base/tower-middle2" unique_id=714416379 instance=ExtResource("6_ykb00")]
+transform = Transform3D(0.7334214, 0, -0.65013754, 0, 0.71050787, 0, 0.7406882, 0, 0.7726432, 0.009523392, -1.4147663, 0.0979805)
+
+[node name="tower-top3" parent="base/tower-middle2" unique_id=1253881973 instance=ExtResource("7_hc7bb")]
+transform = Transform3D(1.0113052, 0, -0.02993375, 0, 0.4534203, 0, 0.037237614, 0, 0.9757006, -0.00582695, 2.0517356, 0.0046977997)
+
+[node name="tower-middle3" parent="base" unique_id=784920797 instance=ExtResource("5_wgpp6")]
+transform = Transform3D(-0.28360143, -0.010883428, -0.85622954, -0.006436998, 1.3505714, -0.007487966, 0.9687828, 0.004381737, -0.2673856, -2.3424106, 1.7651823, 1.2480049)
+
+[node name="tower-top2" parent="base/tower-middle3" unique_id=378707799 instance=ExtResource("7_hc7bb")]
+transform = Transform3D(1.0113052, 0, -0.029933661, 0, 0.4534204, 0, 0.037237704, 0, 0.97570056, 0.106884, 2.0754066, 0.045324326)
+
+[node name="tower-base-door3" parent="base/tower-middle3" unique_id=1491363598 instance=ExtResource("6_ykb00")]
+transform = Transform3D(0.73342156, 0, -0.6501374, 0, 0.7105079, 0, 0.74068826, 0, 0.7726431, 0.071567535, -1.391096, -0.33337975)

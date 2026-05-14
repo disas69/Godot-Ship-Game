@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://cb1lslg7s3pi4"]
+
+[ext_resource type="PackedScene" uid="uid://cl4fm7jlpy4pd" path="res://kenney_pirate-kit/Models/GLB format/tower-complete-small.glb" id="1_6exds"]
+[ext_resource type="PackedScene" uid="uid://c68gwltirwt8n" path="res://kenney_pirate-kit/Models/GLB format/structure-platform-small.glb" id="2_uc2ni"]
+[ext_resource type="PackedScene" uid="uid://bsosdyyu3pjct" path="res://kenney_pirate-kit/Models/GLB format/tower-middle-windows.glb" id="3_luoq7"]
+[ext_resource type="PackedScene" uid="uid://c5muu6iy5y5oh" path="res://kenney_pirate-kit/Models/GLB format/tower-watch.glb" id="4_n6hak"]
+[ext_resource type="PackedScene" uid="uid://c31l2xhtbtmx3" path="res://kenney_pirate-kit/Models/GLB format/tower-base.glb" id="5_m2uxf"]
+[ext_resource type="PackedScene" uid="uid://25nq07drfg3l" path="res://kenney_pirate-kit/Models/GLB format/cannon.glb" id="6_yir74"]
+
+[node name="TOWER" type="Node3D" unique_id=435101222]
+transform = Transform3D(2.5817742, 0, 1.2322155, 0, 3.0596466, 0, -1.0644994, 0, 2.9885442, 0, 0, 0)
+
+[node name="tower-complete-small4" parent="." unique_id=1834175016 instance=ExtResource("1_6exds")]
+transform = Transform3D(1, 0, 5.9604645e-08, 0, 0.9999999, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="tower-complete-small3" parent="." unique_id=2010938869 instance=ExtResource("1_6exds")]
+transform = Transform3D(1.0001706, 0, -0.104534596, 0, 1.1043789, 0, 0.09154323, 0, 0.85260165, -5.2720327, -0.5753828, 0.7873249)
+
+[node name="structure-platform-small7" parent="." unique_id=976792314 instance=ExtResource("2_uc2ni")]
+transform = Transform3D(0.43667856, 0, -0.61189985, 0, 0.3433922, 0, 1.363435, 0, 0.14630009, -0.24827051, -0.30346596, 1.8764305)
+
+[node name="structure-platform-small9" parent="." unique_id=1708516364 instance=ExtResource("2_uc2ni")]
+transform = Transform3D(0.43667856, 0, -0.61189985, 0, 0.3433922, 0, 1.363435, 0, 0.14630009, 4.2396526, -0.4066187, -4.6403885)
+
+[node name="structure-platform-small8" parent="." unique_id=1342320122 instance=ExtResource("2_uc2ni")]
+transform = Transform3D(-0.24952859, 0, -0.62748, 0, 0.3433922, 0, 1.3981507, 0, -0.08359968, -5.473192, -0.42186236, 3.8296814)
+
+[node name="tower-middle-windows3" parent="." unique_id=17184747 instance=ExtResource("3_luoq7")]
+transform = Transform3D(1.1227373, 0, -0.021406442, 0, 0.86163324, 0, 0.019845486, 0, 0.90407115, -2.435492, 1.4130516, -0.35066414)
+
+[node name="tower-middle-windows2" parent="." unique_id=53693910 instance=ExtResource("3_luoq7")]
+transform = Transform3D(1.0455886, 0, -0.0208098, 0, 0.78094316, 0, 0.018481791, 0, 0.8788728, 2.4835243, 3.3664708, -1.1903324)
+
+[node name="tower-watch2" parent="." unique_id=705071055 instance=ExtResource("4_n6hak")]
+transform = Transform3D(1.0855389, 0, -0.7506728, 0, 0.83461577, 0, 0.6697749, 0, 0.90824825, 0.06562042, 5.024637, -0.1390171)
+
+[node name="tower-base3" parent="." unique_id=1629555184 instance=ExtResource("5_m2uxf")]
+transform = Transform3D(1.0237194, 0, -0.40464395, 0, 1.0408765, 0, 0.36469242, 0, 0.8479393, 2.500699, -0.45698965, -1.1669788)
+
+[node name="tower-base4" parent="." unique_id=1816583962 instance=ExtResource("5_m2uxf")]
+transform = Transform3D(1.0237194, 0, -0.40464395, 0, 0.9119873, 0, 0.36469242, 0, 0.8479393, 2.5974636, 1.6057389, -1.1452122)
+
+[node name="tower-base5" parent="." unique_id=1704716090 instance=ExtResource("5_m2uxf")]
+transform = Transform3D(1.0237194, 0, -0.40464395, 0, 1.0408765, 0, 0.36469242, 0, 0.8479393, -2.3743749, -0.6396185, -0.12446594)
+
+[node name="tower-base6" parent="." unique_id=454738917 instance=ExtResource("5_m2uxf")]
+transform = Transform3D(0.82216024, 0, -0.7003586, 0, 0.9666798, 0, 0.63212454, 0, 0.6800041, -2.4437208, 2.9483705, -0.31093407)
+
+[node name="cannon4" parent="." unique_id=1929577548 instance=ExtResource("6_yir74")]
+transform = Transform3D(0.15778852, -0.15837476, 0.41996184, 0.039894857, 0.31315058, 0.1893703, -0.3774322, -0.02137228, 0.1489261, 5.716119, 6.521196, -1.871666)
+
+[node name="cannon5" parent="." unique_id=1010345215 instance=ExtResource("6_yir74")]
+transform = Transform3D(-0.45872724, -0.0073736906, 0.12738846, 0.039894853, 0.31315058, 0.18937033, -0.10261586, 0.13600974, -0.36826646, 5.0333633, 6.2825847, -2.9389133)
+
+[node name="cannon6" parent="." unique_id=2032763224 instance=ExtResource("6_yir74")]
+transform = Transform3D(0.40844142, -0.10606493, 0.2112003, 0.03989485, 0.31315058, 0.18937019, -0.19752419, -0.10331375, 0.34347326, -5.218234, 6.521196, 1.59585)
+
+[node name="cannon8" parent="." unique_id=177109308 instance=ExtResource("6_yir74")]
+transform = Transform3D(0.19554345, -0.063383035, 0.4454577, -0.031736728, 0.3367553, 0.098815344, -0.3646854, -0.050303258, 0.17015801, 1.9284859, 6.521196, 0.342865)
+
+[node name="cannon10" parent="." unique_id=1620906294 instance=ExtResource("6_yir74")]
+transform = Transform3D(-0.45799527, -0.046594948, 0.115218416, -0.031736705, 0.33675525, 0.098815344, -0.10757888, 0.06100216, -0.40028813, 0.34656, 6.5144305, -1.7615337)
+
+[node name="cannon9" parent="." unique_id=453186634 instance=ExtResource("6_yir74")]
+transform = Transform3D(0.19554345, -0.063383035, 0.4454577, -0.031736728, 0.3367553, 0.098815344, -0.3646854, -0.050303258, 0.17015801, 1.0489817, 6.521196, 1.2693462)
+
+[node name="cannon7" parent="." unique_id=794563755 instance=ExtResource("6_yir74")]
+transform = Transform3D(0.24568534, -0.1503456, 0.3764833, 0.039894853, 0.31315058, 0.18937033, -0.34079942, -0.048477963, 0.21857472, -4.3554316, 6.2825847, 1.0941544)
+
+[node name="tower-complete-small2" parent="." unique_id=546906977 instance=ExtResource("1_6exds")]
+transform = Transform3D(-0.8344445, 0, -0.17144513, 0, 1, 0, 0.12054524, 0, -0.8859507, 5.0573874, 0.17717505, -2.1294765)
