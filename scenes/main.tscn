@@ -5,12 +5,20 @@
 [ext_resource type="PackedScene" uid="uid://t0rocmbnigpa" path="res://scenes/water.tscn" id="4_tbgi4"]
 [ext_resource type="Shader" uid="uid://oq6p7nl4l7by" path="res://shaders/post_process.gdshader" id="6_tefeu"]
 [ext_resource type="PackedScene" uid="uid://cl8wcl4pdmpdc" path="res://scenes/player_ship.tscn" id="7_o6xl0"]
-[ext_resource type="PackedScene" uid="uid://djcyh712ps6xh" path="res://scenes/environment_battle.tscn" id="7_tipki"]
+[ext_resource type="PackedScene" path="res://scenes/environment_battle.tscn" id="7_tipki"]
 [ext_resource type="PackedScene" uid="uid://tu6g83v637wo" path="res://scenes/bot_ship.tscn" id="12_eb6dy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o6xl0"]
 shader = ExtResource("6_tefeu")
 shader_parameter/dither_scale = 1.0
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_o6xl0"]
+vertices = PackedVector3Array(-499.5, 0.5, -499.5, -499.5, 0.5, 499.5, 499.5, 0.5, 499.5, 499.5, 0.5, -499.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+agent_radius = 5.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_tipki"]
+size = Vector2(1000, 1000)
 
 [node name="Main" type="Node3D" unique_id=619861050]
 
@@ -45,13 +53,23 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="BotShip" parent="." unique_id=1886569867 instance=ExtResource("12_eb6dy")]
+[node name="BotShip" parent="." unique_id=1886569867 node_paths=PackedStringArray("target") instance=ExtResource("12_eb6dy")]
 transform = Transform3D(0.90823084, 0, 0.41846952, 0, 1, 0, -0.41846952, 0, 0.90823084, 13.686, 7, -14.937907)
+target = NodePath("../PlayerShip1")
 
 [node name="BotShip3" parent="." unique_id=1436708021 instance=ExtResource("12_eb6dy")]
 transform = Transform3D(0.621599, 0, -0.78333557, 0, 1, 0, 0.78333557, 0, 0.621599, 23.290745, 7, 5.3775663)
 
 [node name="BotShip2" parent="." unique_id=775917740 instance=ExtResource("12_eb6dy")]
 transform = Transform3D(0.5034422, 0, -0.86402893, 0, 1, 0, 0.86402893, 0, 0.5034422, -17.839397, 7, -7)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1687413730]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+navigation_mesh = SubResource("NavigationMesh_o6xl0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="NavigationRegion3D" unique_id=1561382439]
+visible = false
+layers = 0
+mesh = SubResource("PlaneMesh_tipki")
 
 [editable path="MainCamera"]

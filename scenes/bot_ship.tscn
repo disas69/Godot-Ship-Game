@@ -20,10 +20,16 @@ shader = ExtResource("6_qmehp")
 shader_parameter/use_texture = true
 shader_parameter/albedo_tex = ExtResource("7_n0rpc")
 shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/intensity = 1.0
 
-[node name="BotShip" type="CharacterBody3D" unique_id=1886569867 node_paths=PackedStringArray("view", "hit_flash_targets", "cannon_view", "cannon_root", "cannon_anchor", "aim_indicator")]
+[node name="BotShip" type="CharacterBody3D" unique_id=1886569867 node_paths=PackedStringArray("navigation_agent", "view", "hit_flash_targets", "cannon_view", "cannon_root", "cannon_anchor", "aim_indicator")]
 collision_mask = 3
 script = ExtResource("1_40qv6")
+navigation_agent = NodePath("NavigationAgent3D")
+target_update_interval = 1.0
+stop_distance = 12.0
+path_desired_distance = 5.0
+target_desired_distance = 7.0
 view = NodePath("View")
 forward_incline = Vector2(-10, 3)
 side_incline = Vector3(-15, 15, 4)
@@ -71,6 +77,8 @@ transform = Transform3D(1.5, 0, 0, 0, 1.409539, 0.5130302, 0, -0.5130302, 1.4095
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1829515575]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.3, 0)
 shape = SubResource("SphereShape3D_2gnfn")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=418037214]
 
 [node name="Aim" type="Node3D" parent="." unique_id=1888978139]
 visible = false
