@@ -2,7 +2,13 @@ class_name Ship extends FloatablePlayer3D
 
 const AIM_OVERLAY_SHADER := preload("res://shaders/aim_overlay.gdshader")
 
+enum Team {
+	GoodGuys,
+	BadGuys
+}
+
 @export_category("Settings")
+@export var team: Team = Team.GoodGuys
 @export var hit_ponts: int = 3
 @export var aim_help_check_radius: float = 5.0
 

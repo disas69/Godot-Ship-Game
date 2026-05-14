@@ -3,6 +3,7 @@ class_name BotShip extends Ship
 @export_category("Navigation")
 @export var navigation_agent: NavigationAgent3D
 @export var target: Node3D
+@export var reach_targets: Array[Node3D] = []
 @export var use_auto_target_when_empty: bool = false
 @export var target_update_interval: float = 1.0
 @export var stop_distance: float = 2.5
@@ -25,9 +26,11 @@ var next_shoot_time: float = 0.0
 var current_target_position: Vector3 = Vector3.ZERO
 var patrol_points: Array[Vector3] = []
 var patrol_index: int = 0
+var current_reach_target: Node3D
 
 enum BotState {
 	IDLE_PATROL,
+	REACH_TARGET,
 	ATTACK
 }
 
@@ -103,6 +106,11 @@ func update_navigation_target() -> void:
 		navigation_agent.set_target_position(current_target_position)
 		return
 
+	if state == BotState.REACH_TARGET and is_reach_target_valid(current_reach_target):
+		current_target_position = current_reach_target.global_position
+		navigation_agent.set_target_position(current_target_position)
+		return
+
 	if patrol_points.is_empty():
 		generate_patrol_points()
 		if patrol_points.is_empty():
@@ -123,7 +131,19 @@ func refresh_target_state() -> void:
 
 	if is_target_valid(target):
 		state = BotState.ATTACK
+		current_reach_target = null
 		patrol_points.clear()
+		return
+
+	var previous_state: BotState = state
+	current_reach_target = sanitize_reach_target(current_reach_target)
+
+	if current_reach_target == null:
+		current_reach_target = pick_random_reach_target()
+	if current_reach_target != null:
+		state = BotState.REACH_TARGET
+		if previous_state != BotState.REACH_TARGET:
+			patrol_points.clear()
 		return
 
 	state = BotState.IDLE_PATROL
@@ -163,6 +183,41 @@ func find_any_target() -> Ship:
 			closest_ship = ship
 
 	return closest_ship
+
+
+func set_reach_targets(targets: Array[Node3D]) -> void:
+	reach_targets = targets
+	current_reach_target = sanitize_reach_target(current_reach_target)
+	refresh_target_state()
+	update_navigation_target()
+
+
+func sanitize_reach_target(candidate: Node3D) -> Node3D:
+	if not is_reach_target_valid(candidate):
+		return null
+	return candidate
+
+
+func pick_random_reach_target() -> Node3D:
+	var valid_targets := get_valid_reach_targets()
+	if valid_targets.is_empty():
+		return null
+	var random_index: int = randi() % valid_targets.size()
+	return valid_targets[random_index]
+
+
+func get_valid_reach_targets() -> Array[Node3D]:
+	var valid_targets: Array[Node3D] = []
+	for node in reach_targets:
+		if is_reach_target_valid(node):
+			valid_targets.append(node)
+	return valid_targets
+
+
+func is_reach_target_valid(candidate: Node3D) -> bool:
+	if candidate == null:
+		return false
+	return is_instance_valid(candidate)
 
 
 func is_target_valid(candidate: Node3D) -> bool:
