@@ -119,7 +119,7 @@ func _process(delta: float) -> void:
 		var target: Vector3 = target_position
 		rotate_cannon_towards(target)
 	else:
-		if auto_aim_target_ship != null and is_instance_valid(auto_aim_target_ship) and not auto_aim_target_ship.is_destroyed:
+		if is_auto_aim_target_active():
 			var locked_target: Vector3 = auto_aim_target_ship.global_position
 			locked_target.y = global_position.y
 			rotate_cannon_towards(locked_target)
@@ -158,8 +158,12 @@ func can_shoot() -> bool:
 	return false
 
 
+func is_auto_aim_target_active() -> bool:
+	return auto_aim_target_ship != null and is_instance_valid(auto_aim_target_ship) and not auto_aim_target_ship.is_destroyed
+
+
 func try_get_auto_aim_target(pos: Vector3) -> Vector3:
-	if auto_aim_target_ship != null and is_instance_valid(auto_aim_target_ship) and not auto_aim_target_ship.is_destroyed:
+	if is_auto_aim_target_active():
 		var locked_target: Vector3 = auto_aim_target_ship.global_position
 		locked_target.y = pos.y
 		if locked_target.distance_to(pos) <= cannon_aim_radius_max.y / 2:
@@ -334,7 +338,7 @@ func update_aim_line(target_position: Vector3) -> void:
 		
 	aim_indicator.global_transform.origin = target_position
 	
-	if auto_aim_target_ship != null and is_instance_valid(auto_aim_target_ship) and not auto_aim_target_ship.is_destroyed:
+	if is_auto_aim_target_active():
 		aim_indicator.scale = Vector3.ONE * 1.8
 	else:
 		aim_indicator.scale = Vector3.ONE
@@ -356,7 +360,11 @@ func shoot(target_position: Vector3) -> void:
 	var cannon_ball_inst: CannonBall = spawn_cannon_ball()
 	var start_pos: Vector3 = cannon_anchor.global_transform.origin
 	var launch_velocity: Vector3 = calculate_ballistic_velocity(start_pos, target_position, cannon_ball_inst.gravity_scale)
-	cannon_ball_inst.linear_velocity = launch_velocity + velocity
+	
+	if not is_auto_aim_target_active():
+		launch_velocity += velocity
+	
+	cannon_ball_inst.linear_velocity = launch_velocity
 	cannon_ball_inst.set_shooter(self)
 
 	play_cannon_recoil()
