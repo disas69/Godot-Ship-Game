@@ -25,6 +25,13 @@ uniform vec2 surface_noise_tiling = vec2(1.0, 4.0);
 uniform vec3 surface_noise_scroll = vec3(0.03, 0.03, 0.0);
 uniform float surface_noise_cutoff: hint_range(0, 1) = 0.777;
 uniform float surface_distortion_amount: hint_range(0, 10) = 0.27;
+uniform vec2 wave_noise_tiling = vec2(1.8, 1.8);
+uniform vec2 wave_noise_scroll = vec2(0.025, 0.018);
+uniform float wave_noise_cutoff: hint_range(0, 1) = 0.6;
+uniform float wave_noise_softness: hint_range(0.001, 0.3) = 0.05;
+uniform float wave_distortion_amount: hint_range(0, 10) = 0.2;
+uniform vec4 wave_color: source_color = vec4(1.0, 1.0, 1.0, 0.2);
+uniform float wave_strength: hint_range(0, 1) = 0.4;
 
 uniform vec4 _DepthGradientShallow: source_color = vec4(0.325, 0.807, 0.971, 0.725);
 uniform vec4 _DepthGradientDeep: source_color = vec4(0.086, 0.407, 1, 0.749);
@@ -33,6 +40,7 @@ uniform float _DepthFactor = 1.0;
 
 varying vec2 noiseUV;
 varying vec2 distortUV;
+varying vec2 waveNoiseUV;
 varying vec3 viewNormal;
 
 vec4 alphaBlend(vec4 top, vec4 bottom)
@@ -47,6 +55,7 @@ void vertex() {
 	viewNormal = (MODELVIEW_MATRIX * vec4(NORMAL, 0.0)).xyz;
 	noiseUV = UV * surface_noise_tiling;
 	distortUV = UV;
+	waveNoiseUV = UV * wave_noise_tiling;
 }
 
 void fragment(){
@@ -79,13 +88,28 @@ void fragment(){
 	);
 	float surfaceNoiseSample = texture(surfaceNoise, noise_uv).r;
 	float surfaceNoiseAmount = smoothstep(surfaceNoiseCutoff - SMOOTHSTEP_AA, surfaceNoiseCutoff + SMOOTHSTEP_AA, surfaceNoiseSample);
+
+	vec2 wave_distort_amount = (distortNoiseSample.xy * 2.0 - 1.0) * wave_distortion_amount;
+	vec2 wave_noise_uv = vec2(
+		(waveNoiseUV.x + TIME * wave_noise_scroll.x) + wave_distort_amount.x,
+		(waveNoiseUV.y + TIME * wave_noise_scroll.y) + wave_distort_amount.y
+	);
+	float wave_noise_sample = texture(surfaceNoise, wave_noise_uv).r;
+	float wave_noise_amount = smoothstep(
+		wave_noise_cutoff - wave_noise_softness,
+		wave_noise_cutoff + wave_noise_softness,
+		wave_noise_sample
+	) * wave_strength;
 	
 	float waterDepth = clamp(depth / _DepthMaxDistance, 0.0, 1.0) * _DepthFactor;
 	vec4 waterColor = mix(_DepthGradientShallow, _DepthGradientDeep, waterDepth);
+	vec4 waveColor = wave_color;
+	waveColor.a *= wave_noise_amount;
 
 	vec4 surfaceNoiseColor = foam_color;
-    surfaceNoiseColor.a *= surfaceNoiseAmount;
-	vec4 color = alphaBlend(surfaceNoiseColor, waterColor);
+	surfaceNoiseColor.a *= surfaceNoiseAmount;
+	vec4 baseColor = alphaBlend(waveColor, waterColor);
+	vec4 color = alphaBlend(surfaceNoiseColor, baseColor);
 	
 	ALBEDO = color.rgb;
 	ALPHA = color.a;
