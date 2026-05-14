@@ -25,6 +25,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if targets.size() == 0:
 		return
+		
+	for i in range(targets.size() - 1, -1, -1):
+		if targets[i] == null or not is_instance_valid(targets[i]):
+			targets.remove_at(i)
 
 	var desired_position: Vector3
 	
