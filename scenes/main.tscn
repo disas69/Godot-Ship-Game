@@ -216,14 +216,18 @@ max_bounds = Vector3(150, 150, 150)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)
 
 [node name="BotShip" parent="." unique_id=1886569867 instance=ExtResource("12_eb6dy")]
-transform = Transform3D(0.90823084, 0, 0.41846952, 0, 1, 0, -0.41846952, 0, 0.90823084, 13.686, 7, -120.716774)
+transform = Transform3D(0.90823084, 0, 0.41846952, 0, 1, 0, -0.41846952, 0, 0.90823084, 13.686, 7, 58.283226)
+
+[node name="BotShip4" parent="." unique_id=1898903427 instance=ExtResource("12_eb6dy")]
+transform = Transform3D(0.90823084, 0, 0.41846952, 0, 1, 0, -0.41846952, 0, 0.90823084, -8.266164, 7, 15.511913)
+team = 0
 
 [node name="BotShip3" parent="." unique_id=1436708021 node_paths=PackedStringArray("reach_targets") instance=ExtResource("12_eb6dy")]
 transform = Transform3D(0.621599, 0, -0.78333557, 0, 1, 0, 0.78333557, 0, 0.621599, 75.237305, 7, 62.322235)
 reach_targets = [NodePath("../TOWER BIG")]
 
 [node name="BotShip2" parent="." unique_id=775917740 instance=ExtResource("12_eb6dy")]
-transform = Transform3D(0.5034422, 0, -0.86402893, 0, 1, 0, 0.86402893, 0, 0.5034422, -133.26176, 7, -7)
+transform = Transform3D(0.5034422, 0, -0.86402893, 0, 1, 0, 0.86402893, 0, 0.5034422, -18.261765, 7, 66)
 
 [node name="TOWER BIG" parent="." unique_id=1832328264 instance=ExtResource("8_tipki")]
 transform = Transform3D(-0.9349744, 0, 0.3547153, 0, 1, 0, -0.3547153, 0, -0.9349744, -85.79093, 0, 90.853226)

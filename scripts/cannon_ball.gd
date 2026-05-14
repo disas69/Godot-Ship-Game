@@ -16,7 +16,7 @@ func _process(delta: float) -> void:
 
 func _on_body_entered(body: Node) -> void:	
 	var ship: Ship = body as Ship
-	if ship != null and ship != shooter:
+	if ship != null and ship != shooter and (shooter == null or shooter.can_target_ship(ship)):
 		ship.take_hit(linear_velocity)
 		play_hit(global_position)
 	

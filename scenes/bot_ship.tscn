@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://b614euc42fiac" path="res://kenney_pirate-kit/Models/GLB format/ship-pirate-small.glb" id="4_40qv6"]
 [ext_resource type="PackedScene" uid="uid://25nq07drfg3l" path="res://kenney_pirate-kit/Models/GLB format/cannon.glb" id="5_3dq4y"]
 [ext_resource type="Shader" uid="uid://xsh5qa5stwbf" path="res://shaders/aim_overlay.gdshader" id="6_qmehp"]
+[ext_resource type="PackedScene" uid="uid://cxxpeuwmub1wx" path="res://kenney_pirate-kit/Models/GLB format/ship-small.glb" id="7_3dq4y"]
 [ext_resource type="Texture2D" uid="uid://baaquuaomcxnd" path="res://images/circle_01_a.png" id="7_n0rpc"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_2gnfn"]
@@ -22,9 +23,11 @@ shader_parameter/albedo_tex = ExtResource("7_n0rpc")
 shader_parameter/tint_color = Color(1, 1, 1, 1)
 shader_parameter/intensity = 1.0
 
-[node name="BotShip" type="CharacterBody3D" unique_id=1886569867 node_paths=PackedStringArray("navigation_agent", "view", "hit_flash_targets", "cannon_view", "cannon_root", "cannon_anchor", "aim_indicator")]
+[node name="BotShip" type="CharacterBody3D" unique_id=1886569867 node_paths=PackedStringArray("good_view", "bad_view", "navigation_agent", "view", "hit_flash_targets", "cannon_view", "cannon_root", "cannon_anchor", "aim_indicator")]
 collision_mask = 3
 script = ExtResource("1_40qv6")
+good_view = NodePath("View/ship-small2")
+bad_view = NodePath("View/ship-pirate-small2")
 navigation_agent = NodePath("NavigationAgent3D")
 stop_distance = 15.0
 path_desired_distance = 5.0
@@ -33,6 +36,7 @@ shoot_radius = 20.0
 shoot_interval_range = Vector2(0.2, 1)
 target_search_radius = 40.0
 target_lose_radius = 60.0
+team = 1
 view = NodePath("View")
 forward_incline = Vector2(-10, 3)
 side_incline = Vector3(-15, 15, 4)
@@ -65,6 +69,8 @@ idle_wave = 1.0
 metadata/_custom_type_script = "uid://vy6ut7srfl86"
 
 [node name="View" type="Node3D" parent="." unique_id=159638074]
+
+[node name="ship-small2" parent="View" unique_id=1661171686 instance=ExtResource("7_3dq4y")]
 
 [node name="ship-pirate-small2" parent="View" unique_id=1899141855 instance=ExtResource("4_40qv6")]
 

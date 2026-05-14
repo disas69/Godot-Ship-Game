@@ -1,5 +1,9 @@
 class_name BotShip extends Ship
 
+@export_category("View")
+@export var good_view: Node3D
+@export var bad_view: Node3D
+
 @export_category("Navigation")
 @export var navigation_agent: NavigationAgent3D
 @export var target: Node3D
@@ -38,6 +42,13 @@ var state: BotState = BotState.IDLE_PATROL
 
 func _ready() -> void:
 	show_aim_helpers = false
+	
+	if team == Team.GoodGuys:
+		good_view.visible = true
+		bad_view.visible = false
+	else:
+		good_view.visible = false
+		bad_view.visible = true
 
 	generate_patrol_points()
 	refresh_target_state()
@@ -156,7 +167,7 @@ func find_target_in_radius() -> Ship:
 	for node in get_tree().get_nodes_in_group("Ship"):
 		var ship := node as Ship
 
-		if ship == null or ship.is_destroyed or ship == self:
+		if not can_target_ship(ship):
 			continue
 
 		var distance := global_position.distance_to(ship.global_position)
@@ -174,7 +185,7 @@ func find_any_target() -> Ship:
 	for node in get_tree().get_nodes_in_group("Ship"):
 		var ship := node as Ship
 
-		if ship == null or ship.is_destroyed or ship == self:
+		if not can_target_ship(ship):
 			continue
 
 		var distance := global_position.distance_to(ship.global_position)
@@ -225,7 +236,7 @@ func is_target_valid(candidate: Node3D) -> bool:
 		return false
 
 	var ship: Ship = candidate as Ship
-	return ship != null and not ship.is_destroyed and ship != self
+	return can_target_ship(ship)
 
 
 func is_target_lost(candidate: Node3D) -> bool:

@@ -165,8 +165,15 @@ func can_shoot() -> bool:
 
 
 func is_auto_aim_target_active() -> bool:
-	return auto_aim_target_ship != null and is_instance_valid(auto_aim_target_ship) and not auto_aim_target_ship.is_destroyed
+	return auto_aim_target_ship != null and is_instance_valid(auto_aim_target_ship) and can_target_ship(auto_aim_target_ship)
 
+
+func can_target_ship(other: Ship) -> bool:
+	if other == null or other == self or other.is_destroyed:
+		return false
+
+	return other.team != team
+	
 
 func try_get_auto_aim_target(pos: Vector3) -> Vector3:
 	if is_auto_aim_target_active():
@@ -183,7 +190,7 @@ func try_get_auto_aim_target(pos: Vector3) -> Vector3:
 	var closest_distance: float = aim_help_check_radius
 	for node in get_tree().get_nodes_in_group("Ship"):
 		var ship: Ship = node as Ship
-		if ship == null or ship == self or ship.is_destroyed:
+		if not can_target_ship(ship):
 			continue
 
 		var target_position: Vector3 = ship.global_position
