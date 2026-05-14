@@ -1,5 +1,6 @@
 class_name BotShip extends Ship
 
+@export_category("Navigation")
 @export var navigation_agent: NavigationAgent3D
 @export var target: Node3D
 @export var use_auto_target_when_empty: bool = false
@@ -8,8 +9,13 @@ class_name BotShip extends Ship
 @export var path_desired_distance: float = 2.0
 @export var target_desired_distance: float = 3.0
 
-var target_update_timer: float = 0.0
+@export_category("Behavior")
+@export var shoot_radius: float = 15.0
+@export var shoot_interval_range: Vector2
 
+var time: float
+var target_update_timer: float = 0.0
+var next_shoot_time: float = 0.0
 
 func _ready() -> void:
 	show_aim_helpers = false
@@ -20,6 +26,11 @@ func _ready() -> void:
 		update_navigation_target()
 
 	super._ready()
+	
+
+func _process(delta: float) -> void:
+	time += delta
+	super._process(delta)
 
 
 func _physics_process(delta: float) -> void:
@@ -98,3 +109,12 @@ func find_default_target() -> Ship:
 			closest_ship = ship
 
 	return closest_ship
+
+
+func can_shoot() -> bool:
+	if target != null and is_instance_valid(target) and target != self:
+		var distance_to_target: float = global_position.distance_to(target.global_position)
+		if distance_to_target <= shoot_radius and time >= next_shoot_time:
+			next_shoot_time = time + randf_range(shoot_interval_range.x, shoot_interval_range.y)
+			return true
+	return false
