@@ -55,7 +55,7 @@ func _process(delta: float) -> void:
 	global_position = global_position.lerp(desired_position, smooth_speed * delta)
 
 
-func set_targets(new_targets: Array[Node3D]) -> void:
+func set_targets(new_targets: Array[Node3D], update_position: bool) -> void:
 	targets = new_targets
-	if targets.size() >= 1:
+	if update_position and targets.size() >= 1:
 		global_position = targets[0].global_position + offset

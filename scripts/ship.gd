@@ -2,6 +2,8 @@ class_name Ship extends FloatablePlayer3D
 
 const AIM_OVERLAY_SHADER := preload("res://shaders/aim_overlay.gdshader")
 
+signal destroyed(ship: Ship)
+
 enum Team {
 	GoodGuys,
 	BadGuys
@@ -446,6 +448,7 @@ func take_hit(hit_velocity: Vector3) -> void:
 		play_hit_feedback(Color.WHITE)
 	else:
 		is_destroyed = true
+		destroyed.emit(self)
 		play_hit_feedback(Color.RED)
 		play_destroyed_feedback()
 		

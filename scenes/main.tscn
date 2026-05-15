@@ -38,6 +38,7 @@ shader_parameter/dither_scale = 1.0
 
 [node name="Main" type="Node3D" unique_id=619861050 node_paths=PackedStringArray("spawn_ponts_good_team", "spawn_ponts_bad_team", "camera")]
 script = ExtResource("1_tipki")
+respawn_delay_sec = 5.0
 spawn_ponts_good_team = [NodePath("SpawnPoints - Good Team/Marker3D"), NodePath("SpawnPoints - Good Team/Marker3D2"), NodePath("SpawnPoints - Good Team/Marker3D3")]
 spawn_ponts_bad_team = [NodePath("SpawnPoints - Bad Team/Marker3D"), NodePath("SpawnPoints - Bad Team/Marker3D2"), NodePath("SpawnPoints - Bad Team/Marker3D3")]
 camera = NodePath("MainCamera")
