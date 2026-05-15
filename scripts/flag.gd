@@ -113,7 +113,6 @@ func update_capture_progress(delta: float) -> void:
 		if state == State.Neutral:
 			capturing_team = candidate_team
 		elif captured_team != candidate_team:
-			# Recapture: enemy team can steal when owner is not in radius.
 			capturing_team = candidate_team
 
 	if capturing_team == -1:
@@ -126,7 +125,7 @@ func update_capture_progress(delta: float) -> void:
 
 	capture_progress_sec += delta
 	capture_progress_sec = minf(capture_progress_sec, capture_duration_sec)
-	var progress_team: Ship.Team = int(capture_team)
+	var progress_team: Ship.Team = int(capture_team) as Ship.Team
 	capture_progress_changed.emit(self, progress_team, capture_progress_sec, capture_duration_sec)
 
 	if capture_progress_sec >= capture_duration_sec:
@@ -136,7 +135,7 @@ func update_capture_progress(delta: float) -> void:
 		capture_progress_sec = 0.0
 		update_view()
 		state_changed.emit(self, state, captured_team)
-		var winner_team: Ship.Team = int(captured_team)
+		var winner_team: Ship.Team = int(captured_team) as Ship.Team
 		captured.emit(self, winner_team)
 
 
