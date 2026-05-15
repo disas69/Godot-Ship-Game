@@ -348,9 +348,6 @@ func next_available_local_player_index() -> int:
 
 
 func start_game() -> void:
-	for flag in valid_flags:
-		flag.reset_flag()
-
 	good_team_kills = 0
 	bad_team_kills = 0
 	game_time_left_sec = maxf(float(game_duration_sec), 0.0)

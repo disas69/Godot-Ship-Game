@@ -163,6 +163,9 @@ func refresh_target_state() -> void:
 func find_target_in_radius() -> Ship:
 	var closest_ship: Ship = null
 	var closest_distance: float = target_search_radius
+	
+	if get_tree() == null:
+		return null
 
 	for node in get_tree().get_nodes_in_group("Ship"):
 		var ship := node as Ship

@@ -6,11 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://bjnq8gta7rkbi" path="res://scenes/environment/black_flag.tscn" id="4_s5mf2"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_32e5v"]
-radius = 15.0
+radius = 25.0
 
 [node name="Flag" type="Node3D" unique_id=2133819521 node_paths=PackedStringArray("capture_area", "collision_shape", "neutral_view", "captured_good_view", "captured_bad_view")]
 script = ExtResource("1_76ss4")
-capture_radius = 15.0
+capture_radius = 25.0
 capture_duration_sec = 3.0
 capture_area = NodePath("Area3D")
 collision_shape = NodePath("Area3D/CollisionShape3D")
@@ -29,5 +29,5 @@ shape = SubResource("SphereShape3D_32e5v")
 
 [node name="BLACK FLAG" parent="." unique_id=345538538 instance=ExtResource("4_s5mf2")]
 
-[connection signal="area_entered" from="Area3D" to="." method="on_capture_area_body_entered"]
-[connection signal="area_exited" from="Area3D" to="." method="on_capture_area_body_exited"]
+[connection signal="body_entered" from="Area3D" to="." method="on_capture_area_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="on_capture_area_body_exited"]

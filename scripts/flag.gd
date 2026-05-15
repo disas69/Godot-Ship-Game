@@ -9,6 +9,10 @@ enum State {
 	Captured
 }
 
+@export_category("State")
+@export var state: State = State.Neutral
+@export var captured_team: int = -1
+
 @export_category("Capture")
 @export var capture_radius: float = 10.0
 @export var capture_duration_sec: float = 10.0
@@ -18,9 +22,6 @@ enum State {
 @export var captured_good_view: Node3D
 @export var captured_bad_view: Node3D
 
-var state: State = State.Neutral
-var captured_team: int = -1
-
 var capture_team: int = -1
 var capture_progress_sec: float = 0.0
 var ships_in_radius: Dictionary = {}
@@ -28,7 +29,9 @@ var ships_in_radius: Dictionary = {}
 
 func _ready() -> void:
 	collision_shape.shape.radius = capture_radius
-	reset_flag()
+	ensure_capture_hooks()
+	update_view()
+	state_changed.emit(self, state, captured_team)
 
 
 func _process(delta: float) -> void:
@@ -55,10 +58,11 @@ func is_captured_by(team: Ship.Team) -> bool:
 
 
 func on_capture_area_body_entered(body: Node) -> void:
+	print("Body entered capture area: ", body.name)
 	var ship := body as Ship
 	if ship == null:
 		return
-
+	
 	ships_in_radius[ship.get_instance_id()] = ship
 	var on_exit_callable: Callable = on_tracked_ship_tree_exited.bind(ship.get_instance_id())
 	if not ship.tree_exited.is_connected(on_exit_callable):
@@ -66,6 +70,7 @@ func on_capture_area_body_entered(body: Node) -> void:
 
 
 func on_capture_area_body_exited(body: Node) -> void:
+	print("Body exited capture area: ", body.name)
 	var ship := body as Ship
 	if ship == null:
 		return
@@ -142,6 +147,17 @@ func update_capture_progress(delta: float) -> void:
 func reset_capture_progress() -> void:
 	capture_team = -1
 	capture_progress_sec = 0.0
+
+
+func ensure_capture_hooks() -> void:
+	if capture_area == null:
+		push_warning("Flag: capture_area is not assigned.")
+		return
+
+	if not capture_area.body_entered.is_connected(on_capture_area_body_entered):
+		capture_area.body_entered.connect(on_capture_area_body_entered)
+	if not capture_area.body_exited.is_connected(on_capture_area_body_exited):
+		capture_area.body_exited.connect(on_capture_area_body_exited)
 
 
 func update_view() -> void:
