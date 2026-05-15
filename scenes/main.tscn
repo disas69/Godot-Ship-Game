@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://cdl4hvrn3nxf2"]
 
+[ext_resource type="Script" uid="uid://c3h0it8oaq5jj" path="res://scripts/game_manager.gd" id="1_tipki"]
 [ext_resource type="Environment" uid="uid://cm77bbr0io118" path="res://scenes/main-environment.tres" id="1_x8oc8"]
 [ext_resource type="PackedScene" uid="uid://brwr25ogu6wpj" path="res://scenes/main_camera.tscn" id="3_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://t0rocmbnigpa" path="res://scenes/water.tscn" id="4_tbgi4"]
@@ -35,7 +36,14 @@ radius = 25.0
 shader = ExtResource("6_tefeu")
 shader_parameter/dither_scale = 1.0
 
-[node name="Main" type="Node3D" unique_id=619861050]
+[node name="Main" type="Node3D" unique_id=619861050 node_paths=PackedStringArray("spawn_ponts_good_team", "spawn_ponts_bad_team", "camera")]
+script = ExtResource("1_tipki")
+respawn_delay_sec = 5.0
+spawn_ponts_good_team = [NodePath("SpawnPoints - Good Team/Marker3D"), NodePath("SpawnPoints - Good Team/Marker3D2"), NodePath("SpawnPoints - Good Team/Marker3D3")]
+spawn_ponts_bad_team = [NodePath("SpawnPoints - Bad Team/Marker3D"), NodePath("SpawnPoints - Bad Team/Marker3D2"), NodePath("SpawnPoints - Bad Team/Marker3D3")]
+camera = NodePath("MainCamera")
+local_player_scene = ExtResource("7_o6xl0")
+bot_player_scene = ExtResource("12_eb6dy")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=456682190]
 environment = ExtResource("1_x8oc8")
@@ -49,6 +57,28 @@ directional_shadow_mode = 1
 
 [node name="Environment" parent="." unique_id=2110515165 instance=ExtResource("7_tipki")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.15, 0)
+
+[node name="SpawnPoints - Good Team" type="Node3D" parent="." unique_id=2062692654]
+
+[node name="Marker3D" type="Marker3D" parent="SpawnPoints - Good Team" unique_id=885377548]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -116.76807, 7, 43.323936)
+
+[node name="Marker3D2" type="Marker3D" parent="SpawnPoints - Good Team" unique_id=442665138]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -104.073395, 7, 53.989777)
+
+[node name="Marker3D3" type="Marker3D" parent="SpawnPoints - Good Team" unique_id=667742819]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -86.625465, 7, 52.656544)
+
+[node name="SpawnPoints - Bad Team" type="Node3D" parent="." unique_id=759013492]
+
+[node name="Marker3D" type="Marker3D" parent="SpawnPoints - Bad Team" unique_id=1148966840]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.586685, 7, -30.119171)
+
+[node name="Marker3D2" type="Marker3D" parent="SpawnPoints - Bad Team" unique_id=716864983]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.61087, 7, -26.602661)
+
+[node name="Marker3D3" type="Marker3D" parent="SpawnPoints - Bad Team" unique_id=34075174]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 77.93911, 7, -16.496967)
 
 [node name="AiNavigation" type="NavigationRegion3D" parent="." unique_id=1687413730]
 navigation_mesh = SubResource("NavigationMesh_o6xl0")
@@ -1204,27 +1234,10 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MainCamera" parent="." unique_id=1655320981 node_paths=PackedStringArray("targets") instance=ExtResource("3_eb6dy")]
-transform = Transform3D(0.9999996, 0, 0, 0, 0.819152, 0.57357603, 0, -0.5735764, 0.81915146, 0, 60, 65)
-targets = [NodePath("../PlayerShip1"), null]
+targets = []
 camera_size = 70.0
+offset = Vector3(0, -7, 0)
 min_bounds = Vector3(-150, -150, -150)
 max_bounds = Vector3(150, 150, 150)
-
-[node name="PlayerShip1" parent="." unique_id=1389603216 instance=ExtResource("7_o6xl0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 0)
-
-[node name="BotShip" parent="." unique_id=1886569867 instance=ExtResource("12_eb6dy")]
-transform = Transform3D(0.90823084, 0, 0.41846952, 0, 1, 0, -0.41846952, 0, 0.90823084, 13.686, 7, 58.283226)
-
-[node name="BotShip4" parent="." unique_id=1898903427 instance=ExtResource("12_eb6dy")]
-transform = Transform3D(0.90823084, 0, 0.41846952, 0, 1, 0, -0.41846952, 0, 0.90823084, -8.266164, 7, 15.511913)
-team = 0
-
-[node name="BotShip3" parent="." unique_id=1436708021 node_paths=PackedStringArray("reach_targets") instance=ExtResource("12_eb6dy")]
-transform = Transform3D(0.621599, 0, -0.78333557, 0, 1, 0, 0.78333557, 0, 0.621599, 75.237305, 7, 62.322235)
-reach_targets = [NodePath("")]
-
-[node name="BotShip2" parent="." unique_id=775917740 instance=ExtResource("12_eb6dy")]
-transform = Transform3D(0.5034422, 0, -0.86402893, 0, 1, 0, 0.86402893, 0, 0.5034422, -18.261765, 7, 66)
 
 [editable path="MainCamera"]

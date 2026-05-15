@@ -5,19 +5,16 @@ class_name MainCamera extends Node3D
 @export var smooth_speed: float = 10.0
 @export var camera_size: float = 55.0
 @export var camera_size_range: Vector2 = Vector2(50, 60)
+@export var offset: Vector3 = Vector3.ZERO
 @export var min_bounds: Vector3 = Vector3(-10, -10, -10)
 @export var max_bounds: Vector3 = Vector3(10, 10, 10)
 
-var offset: Vector3 = Vector3.ZERO
 
 func _ready() -> void:
 	for i in range(targets.size() - 1, -1, -1):
 		var target: Node3D = targets[i]
 		if target == null or not target.visible:
 			targets.erase(target)
-	
-	if targets.size() >= 1:
-		offset = global_position - targets[0].global_position
 		
 	camera.size = camera_size
 
@@ -56,3 +53,9 @@ func _process(delta: float) -> void:
 	desired_position.z = clamp(desired_position.z, min_bounds.z, max_bounds.z)
 	
 	global_position = global_position.lerp(desired_position, smooth_speed * delta)
+
+
+func set_targets(new_targets: Array[Node3D], update_position: bool) -> void:
+	targets = new_targets
+	if update_position and targets.size() >= 1:
+		global_position = targets[0].global_position + offset
