@@ -37,8 +37,13 @@ var bad_team_kills: int = 0
 
 func _ready() -> void:
 	register_existing_ships()
+	
+	spawn_ponts_good_team.shuffle()
+	spawn_ponts_bad_team.shuffle()
+	
 	spawn_missing_players_from_settings()
 	refresh_camera_targets(true)
+	
 	start_game()
 
 
