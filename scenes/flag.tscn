@@ -1,18 +1,33 @@
 [gd_scene format=3 uid="uid://cvi37x2yaqg03"]
 
 [ext_resource type="Script" uid="uid://cioqrabc3spcp" path="res://scripts/flag.gd" id="1_76ss4"]
+[ext_resource type="PackedScene" uid="uid://d2e8nb6tj4sfb" path="res://scenes/environment/neutral_flag.tscn" id="2_32e5v"]
+[ext_resource type="PackedScene" uid="uid://cg0fye0h146ca" path="res://scenes/environment/white_flag.tscn" id="3_tjkec"]
+[ext_resource type="PackedScene" uid="uid://bjnq8gta7rkbi" path="res://scenes/environment/black_flag.tscn" id="4_s5mf2"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_32e5v"]
+radius = 15.0
 
-[node name="Flag" type="Node3D" unique_id=2133819521 node_paths=PackedStringArray("capture_area", "collision_shape")]
+[node name="Flag" type="Node3D" unique_id=2133819521 node_paths=PackedStringArray("capture_area", "collision_shape", "neutral_view", "captured_good_view", "captured_bad_view")]
 script = ExtResource("1_76ss4")
+capture_radius = 15.0
+capture_duration_sec = 3.0
 capture_area = NodePath("Area3D")
 collision_shape = NodePath("Area3D/CollisionShape3D")
+neutral_view = NodePath("NEUTRAL FLAG")
+captured_good_view = NodePath("WHITE FLAG")
+captured_bad_view = NodePath("BLACK FLAG")
 
 [node name="Area3D" type="Area3D" parent="." unique_id=189822055]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=259043191]
 shape = SubResource("SphereShape3D_32e5v")
+
+[node name="NEUTRAL FLAG" parent="." unique_id=944816805 instance=ExtResource("2_32e5v")]
+
+[node name="WHITE FLAG" parent="." unique_id=1798348924 instance=ExtResource("3_tjkec")]
+
+[node name="BLACK FLAG" parent="." unique_id=345538538 instance=ExtResource("4_s5mf2")]
 
 [connection signal="area_entered" from="Area3D" to="." method="on_capture_area_body_entered"]
 [connection signal="area_exited" from="Area3D" to="." method="on_capture_area_body_exited"]

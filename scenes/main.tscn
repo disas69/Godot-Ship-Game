@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://brwr25ogu6wpj" path="res://scenes/main_camera.tscn" id="3_eb6dy"]
 [ext_resource type="PackedScene" uid="uid://t0rocmbnigpa" path="res://scenes/water.tscn" id="4_tbgi4"]
 [ext_resource type="Shader" uid="uid://oq6p7nl4l7by" path="res://shaders/post_process.gdshader" id="6_tefeu"]
+[ext_resource type="PackedScene" uid="uid://cvi37x2yaqg03" path="res://scenes/flag.tscn" id="7_85g3d"]
 [ext_resource type="PackedScene" uid="uid://cl8wcl4pdmpdc" path="res://scenes/player_ship.tscn" id="7_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://djcyh712ps6xh" path="res://scenes/environment_battle.tscn" id="7_tipki"]
 [ext_resource type="PackedScene" uid="uid://tu6g83v637wo" path="res://scenes/bot_ship.tscn" id="12_eb6dy"]
@@ -36,11 +37,12 @@ radius = 25.0
 shader = ExtResource("6_tefeu")
 shader_parameter/dither_scale = 1.0
 
-[node name="Main" type="Node3D" unique_id=619861050 node_paths=PackedStringArray("spawn_ponts_good_team", "spawn_ponts_bad_team", "camera")]
+[node name="Main" type="Node3D" unique_id=619861050 node_paths=PackedStringArray("spawn_ponts_good_team", "spawn_ponts_bad_team", "flags", "camera")]
 script = ExtResource("1_tipki")
 respawn_delay_sec = 5.0
 spawn_ponts_good_team = [NodePath("SpawnPoints - Good Team/Marker3D"), NodePath("SpawnPoints - Good Team/Marker3D2"), NodePath("SpawnPoints - Good Team/Marker3D3")]
 spawn_ponts_bad_team = [NodePath("SpawnPoints - Bad Team/Marker3D"), NodePath("SpawnPoints - Bad Team/Marker3D2"), NodePath("SpawnPoints - Bad Team/Marker3D3")]
+flags = [NodePath("Flags/Flag"), NodePath("Flags/Flag2"), NodePath("Flags/Flag3"), NodePath("Flags/Flag4"), NodePath("Flags/Flag5"), NodePath("Flags/Flag6")]
 camera = NodePath("MainCamera")
 local_player_scene = ExtResource("7_o6xl0")
 bot_player_scene = ExtResource("12_eb6dy")
@@ -79,6 +81,26 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.61087, 7, -26.602661)
 
 [node name="Marker3D3" type="Marker3D" parent="SpawnPoints - Bad Team" unique_id=34075174]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 77.93911, 7, -16.496967)
+
+[node name="Flags" type="Node3D" parent="." unique_id=1506953808]
+
+[node name="Flag" parent="Flags" unique_id=2133819521 instance=ExtResource("7_85g3d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -84.332, 5.5, 40.111286)
+
+[node name="Flag2" parent="Flags" unique_id=831330069 instance=ExtResource("7_85g3d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72.218124, 5.5, 115.31198)
+
+[node name="Flag3" parent="Flags" unique_id=1870924978 instance=ExtResource("7_85g3d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -122.25542, 5.5, -23.04248)
+
+[node name="Flag4" parent="Flags" unique_id=113721210 instance=ExtResource("7_85g3d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.28755, 5.5, -57.70656)
+
+[node name="Flag5" parent="Flags" unique_id=1602245777 instance=ExtResource("7_85g3d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 131.15991, 5.5, -13.851246)
+
+[node name="Flag6" parent="Flags" unique_id=2010741545 instance=ExtResource("7_85g3d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.298027, 5.5, 103.00868)
 
 [node name="AiNavigation" type="NavigationRegion3D" parent="." unique_id=1687413730]
 navigation_mesh = SubResource("NavigationMesh_o6xl0")

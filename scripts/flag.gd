@@ -14,6 +14,9 @@ enum State {
 @export var capture_duration_sec: float = 10.0
 @export var capture_area: Area3D
 @export var collision_shape: CollisionShape3D
+@export var neutral_view: Node3D
+@export var captured_good_view: Node3D
+@export var captured_bad_view: Node3D
 
 var state: State = State.Neutral
 var captured_team: int = -1
@@ -42,6 +45,7 @@ func reset_flag() -> void:
 	capture_team = -1
 	capture_progress_sec = 0.0
 	ships_in_radius.clear()
+	update_view()
 	state_changed.emit(self, state, captured_team)
 
 
@@ -125,6 +129,7 @@ func update_capture_progress(delta: float) -> void:
 		captured_team = capture_team
 		capture_team = -1
 		capture_progress_sec = 0.0
+		update_view()
 		state_changed.emit(self, state, captured_team)
 		var winner_team: Ship.Team = int(captured_team) as Ship.Team
 		captured.emit(self, winner_team)
@@ -133,3 +138,9 @@ func update_capture_progress(delta: float) -> void:
 func reset_capture_progress() -> void:
 	capture_team = -1
 	capture_progress_sec = 0.0
+
+
+func update_view() -> void:
+	neutral_view.visible = state == State.Neutral
+	captured_good_view.visible = state == State.Captured and captured_team == int(Ship.Team.GoodGuys)
+	captured_bad_view.visible = state == State.Captured and captured_team == int(Ship.Team.BadGuys)
