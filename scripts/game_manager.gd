@@ -3,11 +3,18 @@ class_name GameManager extends Node3D
 signal game_state_changed(state: GameState)
 signal game_time_changed(time_left_sec: float)
 signal team_kills_changed(good_team_kills: int, bad_team_kills: int)
+signal flags_status_changed(good_captured: int, bad_captured: int, neutral: int)
+signal game_finished(winner_team: int, reason: FinishReason, good_team_kills: int, bad_team_kills: int)
 
 enum GameState {
 	Idle,
 	Playing,
 	Finished
+}
+
+enum FinishReason {
+	TimeUp,
+	AllFlagsCaptured
 }
 
 @export_category("Game Settings")
@@ -17,6 +24,7 @@ enum GameState {
 @export var game_duration_sec: int = 60 * 3
 @export var spawn_ponts_good_team: Array[Node3D] = []
 @export var spawn_ponts_bad_team: Array[Node3D] = []
+@export var flags: Array[Flag] = []
 @export var camera: MainCamera
 
 @export_category("References")
@@ -33,9 +41,13 @@ var game_state: GameState = GameState.Idle
 var game_time_left_sec: float = 0.0
 var good_team_kills: int = 0
 var bad_team_kills: int = 0
+var winner_team: int = -1
+var finish_reason: FinishReason = FinishReason.TimeUp
+var valid_flags: Array[Flag] = []
 
 
 func _ready() -> void:
+	register_flags()
 	register_existing_ships()
 	
 	spawn_ponts_good_team.shuffle()
@@ -43,6 +55,7 @@ func _ready() -> void:
 	
 	spawn_missing_players_from_settings()
 	refresh_camera_targets(true)
+	refresh_bot_reach_targets()
 	
 	start_game()
 
@@ -55,7 +68,23 @@ func _process(delta: float) -> void:
 	game_time_changed.emit(game_time_left_sec)
 
 	if game_time_left_sec <= 0.0:
-		finish_game()
+		finish_game(FinishReason.TimeUp)
+
+
+func register_flags() -> void:
+	valid_flags.clear()
+
+	for flag in flags:
+		if flag == null or not is_instance_valid(flag):
+			continue
+		if valid_flags.has(flag):
+			continue
+
+		valid_flags.append(flag)
+		if not flag.captured.is_connected(on_flag_captured):
+			flag.captured.connect(on_flag_captured)
+
+	update_flags_status()
 
 
 func register_existing_ships() -> void:
@@ -197,6 +226,7 @@ func register_tracked_ship(ship: Ship, is_local: bool, local_player_index: int) 
 		local_players.append(ship as PlayerShip)
 	elif ship is BotShip:
 		bot_players.append(ship as BotShip)
+		refresh_bot_reach_targets()
 
 	ship.destroyed.connect(on_ship_destroyed)
 	ship.tree_exited.connect(on_tracked_ship_tree_exited.bind(ship_id), CONNECT_ONE_SHOT)
@@ -254,6 +284,7 @@ func respawn_ship_after_delay(spawn_data: Dictionary, destroyed_ship_id: int) ->
 func on_tracked_ship_tree_exited(ship_id: int) -> void:
 	tracked_ship_spawn_data.erase(ship_id)
 	prune_player_arrays()
+	refresh_bot_reach_targets()
 	refresh_camera_targets(false)
 
 
@@ -317,21 +348,32 @@ func next_available_local_player_index() -> int:
 
 
 func start_game() -> void:
+	for flag in valid_flags:
+		flag.reset_flag()
+
 	good_team_kills = 0
 	bad_team_kills = 0
 	game_time_left_sec = maxf(float(game_duration_sec), 0.0)
+	winner_team = -1
+	finish_reason = FinishReason.TimeUp
 	respawning_ship_ids.clear()
+	refresh_bot_reach_targets()
+	update_flags_status()
 
 	set_game_state(GameState.Playing)
 	team_kills_changed.emit(good_team_kills, bad_team_kills)
 	game_time_changed.emit(game_time_left_sec)
 
 
-func finish_game() -> void:
+func finish_game(reason: FinishReason, forced_winner_team: int = -1) -> void:
 	if game_state == GameState.Finished:
 		return
 
+	finish_reason = reason
+	winner_team = resolve_winner_team(forced_winner_team)
 	set_game_state(GameState.Finished)
+	respawning_ship_ids.clear()
+	game_finished.emit(winner_team, finish_reason, good_team_kills, bad_team_kills)
 
 
 func set_game_state(new_state: GameState) -> void:
@@ -349,3 +391,79 @@ func register_team_kill_from_destroyed_ship(destroyed_ship: Ship) -> void:
 		good_team_kills += 1
 
 	team_kills_changed.emit(good_team_kills, bad_team_kills)
+
+
+func on_flag_captured(_flag: Flag, captured_team: Ship.Team) -> void:
+	if game_state != GameState.Playing:
+		return
+
+	update_flags_status()
+	refresh_bot_reach_targets()
+
+	if has_team_captured_all_flags(captured_team):
+		finish_game(FinishReason.AllFlagsCaptured, int(captured_team))
+
+
+func refresh_bot_reach_targets() -> void:
+	var uncaptured_targets: Array[Node3D] = get_uncaptured_flag_targets()
+	for bot in bot_players:
+		if bot == null or not is_instance_valid(bot) or bot.is_destroyed:
+			continue
+		bot.set_reach_targets(uncaptured_targets)
+
+
+func get_uncaptured_flag_targets() -> Array[Node3D]:
+	var targets: Array[Node3D] = []
+	for flag in valid_flags:
+		if flag == null or not is_instance_valid(flag):
+			continue
+		if not flag.is_captured():
+			targets.append(flag)
+	return targets
+
+
+func has_team_captured_all_flags(team: Ship.Team) -> bool:
+	var active_flags: int = 0
+	for flag in valid_flags:
+		if flag == null or not is_instance_valid(flag):
+			continue
+		active_flags += 1
+		if not flag.is_captured_by(team):
+			return false
+
+	return active_flags > 0
+
+
+func resolve_winner_team(forced_winner_team: int = -1) -> int:
+	if forced_winner_team != -1:
+		return forced_winner_team
+
+	if has_team_captured_all_flags(Ship.Team.GoodGuys):
+		return int(Ship.Team.GoodGuys)
+	if has_team_captured_all_flags(Ship.Team.BadGuys):
+		return int(Ship.Team.BadGuys)
+
+	if good_team_kills > bad_team_kills:
+		return int(Ship.Team.GoodGuys)
+	if bad_team_kills > good_team_kills:
+		return int(Ship.Team.BadGuys)
+
+	return -1
+
+
+func update_flags_status() -> void:
+	var good_captured: int = 0
+	var bad_captured: int = 0
+	var neutral: int = 0
+
+	for flag in valid_flags:
+		if flag == null or not is_instance_valid(flag):
+			continue
+		if flag.is_captured_by(Ship.Team.GoodGuys):
+			good_captured += 1
+		elif flag.is_captured_by(Ship.Team.BadGuys):
+			bad_captured += 1
+		else:
+			neutral += 1
+
+	flags_status_changed.emit(good_captured, bad_captured, neutral)

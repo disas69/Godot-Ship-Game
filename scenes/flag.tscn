@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cvi37x2yaqg03"]
+
+[ext_resource type="Script" uid="uid://cioqrabc3spcp" path="res://scripts/flag.gd" id="1_76ss4"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_32e5v"]
+
+[node name="Flag" type="Node3D" unique_id=2133819521 node_paths=PackedStringArray("capture_area", "collision_shape")]
+script = ExtResource("1_76ss4")
+capture_area = NodePath("Area3D")
+collision_shape = NodePath("Area3D/CollisionShape3D")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=189822055]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=259043191]
+shape = SubResource("SphereShape3D_32e5v")
+
+[connection signal="area_entered" from="Area3D" to="." method="on_capture_area_body_entered"]
+[connection signal="area_exited" from="Area3D" to="." method="on_capture_area_body_exited"]

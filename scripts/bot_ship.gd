@@ -204,7 +204,7 @@ func set_reach_targets(targets: Array[Node3D]) -> void:
 
 
 func sanitize_reach_target(candidate: Node3D) -> Node3D:
-	if not is_reach_target_valid(candidate):
+	if not is_reach_target_valid(candidate) or not reach_targets.has(candidate):
 		return null
 	return candidate
 
