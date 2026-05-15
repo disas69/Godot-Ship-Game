@@ -1,5 +1,15 @@
 class_name GameManager extends Node3D
 
+signal game_state_changed(state: GameState)
+signal game_time_changed(time_left_sec: float)
+signal team_kills_changed(good_team_kills: int, bad_team_kills: int)
+
+enum GameState {
+	Idle,
+	Playing,
+	Finished
+}
+
 @export_category("Game Settings")
 @export var players_count: int = 6
 @export var local_players_count: int = 1
@@ -19,16 +29,28 @@ var spawn_point_good_index := 0
 var spawn_point_bad_index := 0
 var tracked_ship_spawn_data: Dictionary = {}
 var respawning_ship_ids: Dictionary = {}
+var game_state: GameState = GameState.Idle
+var game_time_left_sec: float = 0.0
+var good_team_kills: int = 0
+var bad_team_kills: int = 0
 
 
 func _ready() -> void:
 	register_existing_ships()
 	spawn_missing_players_from_settings()
 	refresh_camera_targets(true)
+	start_game()
 
 
 func _process(delta: float) -> void:
-	pass
+	if game_state != GameState.Playing:
+		return
+
+	game_time_left_sec = maxf(0.0, game_time_left_sec - delta)
+	game_time_changed.emit(game_time_left_sec)
+
+	if game_time_left_sec <= 0.0:
+		finish_game()
 
 
 func register_existing_ships() -> void:
@@ -179,9 +201,14 @@ func on_ship_destroyed(ship: Ship) -> void:
 	if ship == null:
 		return
 
+	if game_state != GameState.Playing:
+		return
+
 	var ship_id: int = ship.get_instance_id()
 	if respawning_ship_ids.has(ship_id):
 		return
+
+	register_team_kill_from_destroyed_ship(ship)
 
 	var spawn_data: Dictionary = tracked_ship_spawn_data.get(ship_id, {})
 	if spawn_data.is_empty():
@@ -199,6 +226,10 @@ func respawn_ship_after_delay(spawn_data: Dictionary, destroyed_ship_id: int) ->
 		await get_tree().create_timer(respawn_delay_sec).timeout
 
 	if not is_inside_tree():
+		return
+
+	if game_state != GameState.Playing:
+		respawning_ship_ids.erase(destroyed_ship_id)
 		return
 
 	respawning_ship_ids.erase(destroyed_ship_id)
@@ -278,3 +309,38 @@ func next_available_local_player_index() -> int:
 			return i
 
 	return local_players.size() % PlayerInput.MAX_LOCAL_PLAYERS
+
+
+func start_game() -> void:
+	good_team_kills = 0
+	bad_team_kills = 0
+	game_time_left_sec = maxf(float(game_duration_sec), 0.0)
+	respawning_ship_ids.clear()
+
+	set_game_state(GameState.Playing)
+	team_kills_changed.emit(good_team_kills, bad_team_kills)
+	game_time_changed.emit(game_time_left_sec)
+
+
+func finish_game() -> void:
+	if game_state == GameState.Finished:
+		return
+
+	set_game_state(GameState.Finished)
+
+
+func set_game_state(new_state: GameState) -> void:
+	if game_state == new_state:
+		return
+
+	game_state = new_state
+	game_state_changed.emit(game_state)
+
+
+func register_team_kill_from_destroyed_ship(destroyed_ship: Ship) -> void:
+	if destroyed_ship.team == Ship.Team.GoodGuys:
+		bad_team_kills += 1
+	else:
+		good_team_kills += 1
+
+	team_kills_changed.emit(good_team_kills, bad_team_kills)
