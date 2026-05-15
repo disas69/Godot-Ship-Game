@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://cg0fye0h146ca"]
+
+[ext_resource type="PackedScene" uid="uid://cj164ht3jrrfu" path="res://kenney_pirate-kit/Models/GLB format/flag.glb" id="1_0vmcc"]
+[ext_resource type="PackedScene" uid="uid://b8icgo1u1vdnr" path="res://kenney_pirate-kit/Models/GLB format/structure-fence-sides.glb" id="2_75apk"]
+
+[node name="WHITE FLAG" type="Node3D" unique_id=1798348924]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4191103, 0)
+
+[node name="structure-fence-sides2" parent="." unique_id=863034411 instance=ExtResource("2_75apk")]
+transform = Transform3D(1.1890414, 0, 0, 0, 2.075621, 0, 0, 0, 1.1336881, 0.01693833, -4.5283666, -0.37807763)
+
+[node name="flag2" parent="structure-fence-sides2" unique_id=972306963 instance=ExtResource("1_0vmcc")]
+transform = Transform3D(2.6200428, 0, 0, 0, 1.618787, 0, 0, 0, 2.0853498, -0.014245368, 2.1816926, -0.030853122)

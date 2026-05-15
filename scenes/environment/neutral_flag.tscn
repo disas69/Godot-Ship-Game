@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://d2e8nb6tj4sfb"]
+
+[ext_resource type="PackedScene" uid="uid://b8icgo1u1vdnr" path="res://kenney_pirate-kit/Models/GLB format/structure-fence-sides.glb" id="1_efl75"]
+[ext_resource type="PackedScene" uid="uid://d17oq0d8g0017" path="res://kenney_pirate-kit/Models/GLB format/rocks-sand-b.glb" id="2_vk7pu"]
+[ext_resource type="PackedScene" uid="uid://dc10i5dihved4" path="res://kenney_pirate-kit/Models/GLB format/patch-sand-foliage.glb" id="3_ed2pg"]
+[ext_resource type="PackedScene" uid="uid://dbp08ltifwk7l" path="res://kenney_pirate-kit/Models/GLB format/patch-grass-foliage.glb" id="4_rwioc"]
+[ext_resource type="PackedScene" uid="uid://dejo42spasro2" path="res://kenney_mini-arena/Models/GLB format/bricks.glb" id="5_2sghe"]
+[ext_resource type="PackedScene" uid="uid://ym8k7nde3lnl" path="res://PirateKit/Environment_Dock_Pole.gltf" id="6_jt20m"]
+[ext_resource type="PackedScene" uid="uid://bokiqqfreqjle" path="res://kenney_pirate-kit/Models/GLB format/grass-patch.glb" id="7_ftyt0"]
+
+[node name="NEUTRAL FLAG" type="Node3D" unique_id=944816805]
+
+[node name="structure-fence-sides3" parent="." unique_id=863034411 instance=ExtResource("1_efl75")]
+transform = Transform3D(0.9914761, 0.30144715, 0.6091708, -0.21478194, 1.9485635, 0, -0.627294, -0.19072168, 0.9628314, -0.23982485, 0.12935013, -0.47541258)
+
+[node name="rocks-sand-b2" parent="structure-fence-sides3" unique_id=965538430 instance=ExtResource("2_vk7pu")]
+transform = Transform3D(0.26775616, -0.039443865, -0.19314931, 0.029513633, 0.12973301, -0.021290036, 0.18029192, 0, 0.3249019, 0.79286194, 0.28234863, 1.8859291)
+
+[node name="patch-sand-foliage2" parent="structure-fence-sides3" unique_id=1331275432 instance=ExtResource("3_ed2pg")]
+transform = Transform3D(0.2702531, -0.025526669, -0.20809358, 0.008040403, 0.42860636, -0.00024214387, 0.17881265, -0.015977956, 0.34470895, -0.18334961, 2.1604462, -0.1124382)
+
+[node name="patch-grass-foliage2" parent="structure-fence-sides3" unique_id=628853833 instance=ExtResource("4_rwioc")]
+transform = Transform3D(0.073845945, 6.107474e-05, 0.054401293, 0.025556387, -0.00067575654, -0.05674347, 0.0027381442, 0.0172608, -0.0069263456, -0.9145889, 2.0687656, 1.2777367)
+
+[node name="bricks2" parent="structure-fence-sides3" unique_id=537999458 instance=ExtResource("5_2sghe")]
+transform = Transform3D(1.2508208, -0.5487261, -1.5268023, 0.13787268, 2.2891784, -0.11039431, 1.6732469, -0.1206527, 1.2783259, 1.1931763, 0.1446724, 1.2277832)
+
+[node name="patch-grass-foliage3" parent="structure-fence-sides3" unique_id=452689451 instance=ExtResource("4_rwioc")]
+transform = Transform3D(0.1908148, 5.284557e-05, -0.008325626, -0.01754982, -0.0005847057, -0.032614615, -0.0028169006, 0.014935093, -0.003827543, 0.22452545, 0.77613354, 1.1066704)
+
+[node name="Environment_Dock_Pole2" parent="structure-fence-sides3" unique_id=2035726755 instance=ExtResource("6_jt20m")]
+transform = Transform3D(0.9137233, -0.01249142, -0.6356093, -0.0316096, 0.8190056, -0.07006053, 0.5890382, 0.15409379, 1.0691766, -0.029525757, 3.758223, 0.6636276)
+
+[node name="grass-patch2" parent="structure-fence-sides3" unique_id=867716231 instance=ExtResource("7_ftyt0")]
+transform = Transform3D(0.57944185, -0.15974164, -0.38798964, 0.06386945, 0.52393585, -0.04318429, 0.39016348, 0.00072391314, 0.6528551, -1.1298599, -0.0114507675, 1.4437103)
+
+[node name="grass-patch3" parent="structure-fence-sides3" unique_id=2112583155 instance=ExtResource("7_ftyt0")]
+transform = Transform3D(0.40536347, -0.09716628, -0.1998524, 0.044681516, 0.31869522, -0.022244113, 0.27294892, 0.00044033563, 0.3362839, -0.46858978, 2.244913, 0.428154)
