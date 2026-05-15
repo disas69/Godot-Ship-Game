@@ -27,12 +27,12 @@ func get_aim_input() -> Vector2:
 	return player_input.get_input_vector("aim_left", "aim_right", "aim_up", "aim_down")
 
 
-func get_radius_input() -> float:
-	return player_input.get_action_strength("increase_radius") - player_input.get_action_strength("decrease_radius")
-
-
 func should_use_mouse_aim(aim_input: Vector2) -> bool:
 	return allow_mouse_aim and local_player_index == 0 and aim_input.is_zero_approx() and not is_using_gamepad
+
+
+func should_keep_gamepad_aim_without_input() -> bool:
+	return is_using_gamepad
 
 
 func can_shoot() -> bool:

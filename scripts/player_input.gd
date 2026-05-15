@@ -11,8 +11,6 @@ const ACTION_NAMES: PackedStringArray = [
 	"aim_up",
 	"aim_down",
 	"shoot",
-	"increase_radius",
-	"decrease_radius",
 ]
 
 var actions: Dictionary

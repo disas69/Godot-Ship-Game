@@ -43,6 +43,8 @@ enum Team {
 @export var cannon_aim_radius_max: Vector2
 @export var cannon_view_rotation_max: Vector2
 @export var cannon_aim_radius_change_speed: float = 1.0
+@export var gamepad_aim_move_speed: float = 28.0
+@export_range(0.0, 1.0, 0.01) var gamepad_aim_deadzone: float = 0.12
 @export var show_aim_helpers: bool = true
 @export var aim_line_dot_count: int = 12
 @export var aim_line_dot_radius: float = 0.08
@@ -61,6 +63,7 @@ var hit_scale_tween: Tween
 var hit_flash_tween: Tween
 var hit_flash_material_instance: ShaderMaterial
 var is_destroyed: bool
+var manual_aim_offset := Vector3.ZERO
 
 
 func _ready() -> void:
@@ -72,6 +75,7 @@ func _ready() -> void:
 	setup_hit_flash_material_instance()
 	set_hit_flash_strength(0.0)
 	setup_aim_line()
+	initialize_aim_offset()
 	super._ready()
 
 
@@ -111,13 +115,11 @@ func _process(delta: float) -> void:
 	var time: float = Time.get_ticks_msec() / 1000.0
 	view.position.y -= sin(time * 4) * idle_wave * delta
 	
-	update_aim_radius(delta, get_radius_input())
-	
 	var target_position: Variant
 	var aim_input: Vector2 = get_aim_input()
 	
 	if not should_use_mouse_aim(aim_input):
-		target_position = get_gamepad_aim_position(aim_input)
+		target_position = get_gamepad_aim_position(aim_input, delta)
 	else:
 		var camera: Camera3D = get_viewport().get_camera_3d()
 		var mouse_pos: Vector2 = get_viewport().get_mouse_position()
@@ -154,11 +156,11 @@ func get_aim_input() -> Vector2:
 	return Vector2.ZERO
 
 
-func get_radius_input() -> float:
-	return 0.0
-
-
 func should_use_mouse_aim(_aim_input: Vector2) -> bool:
+	return false
+
+
+func should_keep_gamepad_aim_without_input() -> bool:
 	return false
 
 
@@ -181,7 +183,7 @@ func try_get_auto_aim_target(pos: Vector3) -> Vector3:
 	if is_auto_aim_target_active():
 		var locked_target: Vector3 = auto_aim_target_ship.global_position
 		locked_target.y = pos.y
-		if locked_target.distance_to(pos) <= cannon_aim_radius_max.y / 2:
+		if locked_target.distance_to(pos) <= get_aim_radius_limits().y / 2:
 			auto_aim_target = locked_target
 			return locked_target
 
@@ -211,16 +213,6 @@ func try_get_auto_aim_target(pos: Vector3) -> Vector3:
 	return pos
 	
 
-func update_aim_radius(delta: float, radius_input: float) -> void:
-	var target_radius: float = cannon_aim_radius
-	target_radius += radius_input * cannon_aim_radius_change_speed * delta
-	cannon_aim_radius = clamp(target_radius, cannon_aim_radius_max.x, cannon_aim_radius_max.y)
-	
-	var t: float = inverse_lerp(cannon_aim_radius_max.x, cannon_aim_radius_max.y, cannon_aim_radius)
-	var cannon_view_target_rotation: float = lerp(cannon_view_rotation_max.x, cannon_view_rotation_max.y, t)
-	cannon_view.rotation_degrees.x = cannon_view_target_rotation
-
-
 func incline_view_x(delta: float) -> void:
 	view.rotation_degrees.x = lerp(view.rotation_degrees.x, forward_incline.x, forward_incline.y * delta)
 	
@@ -246,8 +238,12 @@ func incline_view_z(delta: float) -> void:
 	view.rotation_degrees.z = lerp(view.rotation_degrees.z, target_z, incline_speed * delta)
 
 
-func get_gamepad_aim_position(aim: Vector2) -> Variant:
-	if aim.is_zero_approx():
+func get_gamepad_aim_position(aim: Vector2, delta: float) -> Variant:
+	var aim_origin: Vector3 = get_aim_origin()
+	var aim_strength: float = aim.length()
+	if aim_strength <= gamepad_aim_deadzone:
+		if should_keep_gamepad_aim_without_input():
+			return aim_origin + manual_aim_offset
 		return null
 
 	var camera: Camera3D = get_viewport().get_camera_3d()
@@ -258,8 +254,12 @@ func get_gamepad_aim_position(aim: Vector2) -> Variant:
 	right.y = 0.0
 
 	var target_dir: Vector3 = (right.normalized() * aim.x + forward.normalized() * -aim.y).normalized()
-	var aim_origin: Vector3 = get_aim_origin()
-	return clamp_aim_position(aim_origin + target_dir * cannon_aim_radius)
+	var limits: Vector2 = get_aim_radius_limits()
+	var desired_radius: float = lerp(limits.x, limits.y, clamp(aim_strength, 0.0, 1.0))
+	var desired_offset: Vector3 = target_dir * desired_radius
+	var next_offset: Vector3 = manual_aim_offset.move_toward(desired_offset, gamepad_aim_move_speed * delta)
+	set_aim_offset(next_offset)
+	return aim_origin + manual_aim_offset
 
 
 func get_mouse_water_position(camera: Camera3D, mouse_pos: Vector2) -> Variant:
@@ -278,16 +278,8 @@ func get_mouse_water_position(camera: Camera3D, mouse_pos: Vector2) -> Variant:
 
 func clamp_aim_position(target_position: Vector3) -> Vector3:
 	var aim_origin: Vector3 = get_aim_origin()
-	var aim_offset: Vector3 = target_position - aim_origin
-	aim_offset.y = 0.0
-
-	if aim_offset.is_zero_approx():
-		aim_offset = cannon_root.global_transform.basis.z
-		aim_offset.y = 0.0
-		if aim_offset.is_zero_approx():
-			aim_offset = Vector3.FORWARD
-
-	return aim_origin + aim_offset.normalized() * cannon_aim_radius
+	set_aim_offset(target_position - aim_origin)
+	return aim_origin + manual_aim_offset
 
 
 func get_cannon_forward_aim_position() -> Vector3:
@@ -297,11 +289,54 @@ func get_cannon_forward_aim_position() -> Vector3:
 	if cannon_forward.is_zero_approx():
 		cannon_forward = Vector3.FORWARD
 
-	return clamp_aim_position(get_aim_origin() + cannon_forward.normalized() * cannon_aim_radius)
+	var limits: Vector2 = get_aim_radius_limits()
+	return clamp_aim_position(get_aim_origin() + cannon_forward.normalized() * limits.y)
 
 
 func get_aim_origin() -> Vector3:
 	return Vector3(cannon_root.global_position.x, global_position.y, cannon_root.global_position.z)
+
+
+func initialize_aim_offset() -> void:
+	var limits: Vector2 = get_aim_radius_limits()
+	set_aim_offset(resolve_fallback_aim_direction() * clamp(cannon_aim_radius, limits.x, limits.y))
+
+
+func resolve_fallback_aim_direction() -> Vector3:
+	var fallback_dir: Vector3 = manual_aim_offset
+	fallback_dir.y = 0.0
+	if fallback_dir.is_zero_approx():
+		fallback_dir = cannon_root.global_transform.basis.z
+		fallback_dir.y = 0.0
+	if fallback_dir.is_zero_approx():
+		fallback_dir = Vector3.FORWARD
+	return fallback_dir.normalized()
+
+
+func get_aim_radius_limits() -> Vector2:
+	return Vector2(minf(cannon_aim_radius_max.x, cannon_aim_radius_max.y), maxf(cannon_aim_radius_max.x, cannon_aim_radius_max.y))
+
+
+func set_aim_offset(offset: Vector3) -> void:
+	manual_aim_offset = clamp_aim_offset(offset)
+	cannon_aim_radius = manual_aim_offset.length()
+	update_cannon_view_rotation_from_aim_radius()
+
+
+func clamp_aim_offset(offset: Vector3) -> Vector3:
+	var flat_offset := Vector3(offset.x, 0.0, offset.z)
+	if flat_offset.is_zero_approx():
+		flat_offset = resolve_fallback_aim_direction()
+	var limits: Vector2 = get_aim_radius_limits()
+	var clamped_radius: float = clamp(flat_offset.length(), limits.x, limits.y)
+	return flat_offset.normalized() * clamped_radius
+
+
+func update_cannon_view_rotation_from_aim_radius() -> void:
+	var limits: Vector2 = get_aim_radius_limits()
+	var t: float = inverse_lerp(limits.x, limits.y, cannon_aim_radius)
+	var cannon_view_target_rotation: float = lerp(cannon_view_rotation_max.x, cannon_view_rotation_max.y, t)
+	cannon_view.rotation_degrees.x = cannon_view_target_rotation
 
 
 func setup_aim_line() -> void:

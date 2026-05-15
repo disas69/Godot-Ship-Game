@@ -44,6 +44,7 @@ cannon_aim_radius = 15.0
 cannon_aim_radius_max = Vector2(8, 24)
 cannon_view_rotation_max = Vector2(-15, -50)
 cannon_aim_radius_change_speed = 15.0
+gamepad_aim_move_speed = 35.0
 aim_line_dot_count = 10
 aim_line_dot_radius = 0.15
 cannon_smoke_particles = ExtResource("3_7j21i")
