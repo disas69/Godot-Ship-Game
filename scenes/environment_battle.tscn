@@ -35,7 +35,7 @@
 [ext_resource type="PackedScene" uid="uid://25nq07drfg3l" path="res://kenney_pirate-kit/Models/GLB format/cannon.glb" id="36_kqsg1"]
 [ext_resource type="PackedScene" uid="uid://bplbqjnhsj2lg" path="res://kenney_pirate-kit/Models/GLB format/mast-ropes.glb" id="37_vpfg1"]
 [ext_resource type="PackedScene" uid="uid://dapgoqcb4j5ol" path="res://PirateKit/Prop_Skull.gltf" id="43_8rf5n"]
-[ext_resource type="PackedScene" path="res://scenes/environment/Bareers.tscn" id="44_7iu1j"]
+[ext_resource type="PackedScene" uid="uid://dhgy3sgna0wef" path="res://scenes/environment/Bareers.tscn" id="44_7iu1j"]
 [ext_resource type="PackedScene" uid="uid://csb1hlge0bc6o" path="res://kenney_pirate-kit/Models/GLB format/ship-medium.glb" id="44_xooey"]
 [ext_resource type="PackedScene" uid="uid://b58nfv30xeok8" path="res://kenney_pirate-kit/Models/GLB format/ship-large.glb" id="45_1i722"]
 [ext_resource type="PackedScene" uid="uid://dmfgm6pwiewoo" path="res://PirateKit/Environment_LargeBones.gltf" id="47_0fuu8"]
@@ -211,15 +211,9 @@ transform = Transform3D(0.26316172, 0, -0.26754296, 1.2647077e-09, 0.3433924, -1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8664398, 0, -0.011595726)
 
 [node name="structure-platform-dock-small6" parent="MAIN ISLAND 1" unique_id=1782269467 instance=ExtResource("17_lne43")]
-transform = Transform3D(0.11201902, 0, -0.6833679, 1.8508209e-09, 0.5666456, -1.1023031e-09, 0.5349527, 0, 0.07350519, 4.851719, -0.6507113, 17.487202)
+transform = Transform3D(0.27318507, -0.00022211234, -0.62641, 0.0018321726, 0.5666418, 0.0007852196, 0.47338057, -0.002064949, 0.28285074, 5.156028, -0.50652176, 17.152712)
 
 [node name="structure-platform-dock-small3" parent="MAIN ISLAND 1/structure-platform-dock-small6" unique_id=875268608 instance=ExtResource("17_lne43")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8664398, 0, -0.011595726)
-
-[node name="structure-platform-dock-small8" parent="MAIN ISLAND 1/structure-platform-dock-small6" unique_id=943731375 instance=ExtResource("17_lne43")]
-transform = Transform3D(0.9999999, 0, 0, 0, 1.2749326, 0, 0, 0, 0.9999999, -4.0297318, -0.048482656, 0.030830383)
-
-[node name="structure-platform-dock-small3" parent="MAIN ISLAND 1/structure-platform-dock-small6/structure-platform-dock-small8" unique_id=319727357 instance=ExtResource("17_lne43")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8664398, 0, -0.011595726)
 
 [node name="structure-platform-dock-small7" parent="MAIN ISLAND 1" unique_id=591482791 instance=ExtResource("17_lne43")]
@@ -258,7 +252,7 @@ transform = Transform3D(-0.06813589, 0.093417436, 0.85981166, -0.15059122, 0.721
 [node name="bottle-large7" parent="MAIN ISLAND 1/Pile of furnitures 2/platform-planks7" unique_id=1417066538 instance=ExtResource("28_xuopw")]
 transform = Transform3D(-0.035875767, 0.06612007, 0.5201079, -0.07929133, 0.5104698, -0.076204136, -0.4896381, -0.13486356, 0.008704126, 1.6772041, -0.49967575, 0.78956985)
 
-[node name="bottle-large" parent="MAIN ISLAND 1/Pile of furnitures 2/platform-planks7/bottle-large7" index="0" unique_id=2098207814]
+[node name="bottle-large" parent="MAIN ISLAND 1/Pile of furnitures 2/platform-planks7/bottle-large7" index="0" unique_id=867552713]
 transform = Transform3D(1, -3.7252903e-09, 0, 0, 1, 0, -2.9802322e-08, 3.7252903e-09, 1, 4.877907, 0.7925463, 3.8078003)
 visible = false
 material_override = SubResource("StandardMaterial3D_rlnmy")
@@ -341,7 +335,7 @@ transform = Transform3D(-0.068135895, 0.093417436, 0.85981166, -0.15059122, 0.72
 [node name="bottle-large7" parent="MAIN ISLAND 1/Pile of furnitures" unique_id=1489875093 instance=ExtResource("28_xuopw")]
 transform = Transform3D(-0.035875767, 0.06612007, 0.5201079, -0.07929133, 0.5104698, -0.076204136, -0.4896381, -0.13486356, 0.008704126, 1.6772041, -0.49967575, 0.78956985)
 
-[node name="bottle-large" parent="MAIN ISLAND 1/Pile of furnitures/bottle-large7" index="0" unique_id=2098207814]
+[node name="bottle-large" parent="MAIN ISLAND 1/Pile of furnitures/bottle-large7" index="0" unique_id=867552713]
 material_override = SubResource("StandardMaterial3D_rlnmy")
 
 [node name="bottle4" parent="MAIN ISLAND 1/Pile of furnitures" unique_id=1846363359 instance=ExtResource("29_qhrke")]
@@ -401,7 +395,7 @@ transform = Transform3D(-0.068135895, 0.093417436, 0.85981166, -0.15059122, 0.72
 [node name="bottle-large7" parent="MAIN ISLAND 1/platform-planks5" unique_id=2105524551 instance=ExtResource("28_xuopw")]
 transform = Transform3D(-0.035875767, 0.06612007, 0.5201079, -0.07929133, 0.5104698, -0.076204136, -0.4896381, -0.13486356, 0.008704126, 1.6772041, -0.49967575, 0.78956985)
 
-[node name="bottle-large" parent="MAIN ISLAND 1/platform-planks5/bottle-large7" index="0" unique_id=2098207814]
+[node name="bottle-large" parent="MAIN ISLAND 1/platform-planks5/bottle-large7" index="0" unique_id=867552713]
 material_override = SubResource("StandardMaterial3D_rlnmy")
 
 [node name="bottle4" parent="MAIN ISLAND 1/platform-planks5" unique_id=1347103471 instance=ExtResource("29_qhrke")]
@@ -899,7 +893,7 @@ transform = Transform3D(-0.068135895, 0.093417436, 0.85981166, -0.15059122, 0.72
 [node name="bottle-large7" parent="MAIN ISLAND 2/platform-planks3" unique_id=1128656806 instance=ExtResource("28_xuopw")]
 transform = Transform3D(-0.035875767, 0.06612007, 0.5201079, -0.07929133, 0.5104698, -0.076204136, -0.4896381, -0.13486356, 0.008704126, 1.6772041, -0.49967575, 0.78956985)
 
-[node name="bottle-large" parent="MAIN ISLAND 2/platform-planks3/bottle-large7" index="0" unique_id=2098207814]
+[node name="bottle-large" parent="MAIN ISLAND 2/platform-planks3/bottle-large7" index="0" unique_id=867552713]
 material_override = SubResource("StandardMaterial3D_rlnmy")
 
 [node name="bottle4" parent="MAIN ISLAND 2/platform-planks3" unique_id=1477110490 instance=ExtResource("29_qhrke")]
@@ -1229,7 +1223,7 @@ transform = Transform3D(0.5436286, 0, -0.83932567, 4.374824e-16, 1, 6.219597e-17
 [node name="Environment_LargeBones2" parent="SMALL ISLAND 3" unique_id=1869708156 instance=ExtResource("47_0fuu8")]
 transform = Transform3D(0.16454841, 0.042896084, -0.7058543, 0.012858531, 0.77061206, 0.046949334, 0.5763757, -0.029438125, 0.20046553, -4.045261, 0.32994285, 2.3988771)
 
-[node name="Environment_LargeBones" parent="SMALL ISLAND 3/Environment_LargeBones2" index="0" unique_id=1471034806]
+[node name="Environment_LargeBones" parent="SMALL ISLAND 3/Environment_LargeBones2" index="0" unique_id=1057914252]
 material_override = SubResource("StandardMaterial3D_7iu1j")
 
 [node name="Prop_GoldBag2" parent="SMALL ISLAND 3" unique_id=1096592832 instance=ExtResource("48_ev8el")]
@@ -1283,7 +1277,7 @@ transform = Transform3D(0.53188, 0, 0, 0, 0.330148, 0, 0, 0, 0.62052923, 0.18099
 [node name="Prop_Skull2" parent="SMALL ISLAND 4" unique_id=1755359027 instance=ExtResource("43_8rf5n")]
 transform = Transform3D(5.666305, -1.8678095, 1.861924, 1.9566524, 5.9358234, 2.4835266e-08, -1.7683287, 0.582902, 5.966216, -3.356216, 1.1820127, 2.9940548)
 
-[node name="Prop_Skull" parent="SMALL ISLAND 4/Prop_Skull2" index="0" unique_id=1656140215]
+[node name="Prop_Skull" parent="SMALL ISLAND 4/Prop_Skull2" index="0" unique_id=141298391]
 transform = Transform3D(0.94571984, -0.2545975, 0.20197609, 0.11028369, 0.8360401, 0.53747064, -0.30569878, -0.48602203, 0.8187373, -0.16389048, 0.041824296, -0.08627248)
 material_override = SubResource("StandardMaterial3D_sn871")
 
@@ -1366,7 +1360,6 @@ transform = Transform3D(0.13518256, -3.3087225e-24, 0.48137888, -3.3087225e-24, 
 transform = Transform3D(0.14811513, -0.16055642, -0.008803174, -0.0038509737, 0.005826049, -0.27690482, 0.16819815, 0.1415193, 0.0014122127, 2.423616, 0.66113615, 4.7991633)
 
 [node name="MAP LIMITS" type="Node3D" parent="." unique_id=1662943216]
-visible = false
 
 [node name="rocks-a2" parent="MAP LIMITS" unique_id=1788590987 instance=ExtResource("20_mkcqu")]
 transform = Transform3D(-0.8969389, 0, 9.959694, 0, 10, 0, -9.959694, 0, -0.8969389, 67.03605, -0.1794815, 166.02948)
