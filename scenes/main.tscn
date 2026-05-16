@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://cvi37x2yaqg03" path="res://scenes/flag.tscn" id="7_85g3d"]
 [ext_resource type="PackedScene" uid="uid://cl8wcl4pdmpdc" path="res://scenes/player_ship.tscn" id="7_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://djcyh712ps6xh" path="res://scenes/environment_battle.tscn" id="7_tipki"]
+[ext_resource type="AudioStream" uid="uid://cjg05maxvt63r" path="res://audio/music/Pirate Vol2 Cannon Battle Main.wav" id="10_choun"]
+[ext_resource type="AudioStream" uid="uid://cs571yx2417g8" path="res://audio/sfx/freesound_community-sea-and-seagull-wave-5932.mp3" id="11_ya4ey"]
 [ext_resource type="PackedScene" uid="uid://tu6g83v637wo" path="res://scenes/bot_ship.tscn" id="12_eb6dy"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_o6xl0"]
@@ -615,5 +617,16 @@ camera_size = 70.0
 offset = Vector3(0, -7, 0)
 min_bounds = Vector3(-150, -150, -150)
 max_bounds = Vector3(150, 150, 150)
+
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=1992007850]
+stream = ExtResource("10_choun")
+autoplay = true
+bus = &"Music"
+
+[node name="Ambient" type="AudioStreamPlayer" parent="." unique_id=655873110]
+stream = ExtResource("11_ya4ey")
+volume_db = -10.0
+autoplay = true
+bus = &"SFX"
 
 [editable path="MainCamera"]

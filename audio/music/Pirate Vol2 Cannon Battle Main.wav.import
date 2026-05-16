@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cjg05maxvt63r"
+path="res://.godot/imported/Pirate Vol2 Cannon Battle Main.wav-c399c189155878db04c49dd0ce23a589.sample"
+
+[deps]
+
+source_file="res://audio/music/Pirate Vol2 Cannon Battle Main.wav"
+dest_files=["res://.godot/imported/Pirate Vol2 Cannon Battle Main.wav-c399c189155878db04c49dd0ce23a589.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=2
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

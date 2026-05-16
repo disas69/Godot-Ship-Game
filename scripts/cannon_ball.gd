@@ -4,6 +4,7 @@ class_name CannonBall extends RigidBody3D
 @export var cannon_view: Node3D
 @export var water_splash_particles: PackedScene
 @export var hit_particles: PackedScene
+@export var water_hit_sfx: AudioStreamPlayer3D
 
 var shooter: Ship
 
@@ -37,6 +38,7 @@ func on_water_entered(pos: Vector3) -> void:
 	scale_tween.tween_property(cannon_view, "scale", Vector3.ONE * 0.5, 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 
 	play_water_splash(pos)
+	water_hit_sfx.play()
 
 
 func play_water_splash(pos: Vector3) -> void:
