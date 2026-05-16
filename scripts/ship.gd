@@ -50,6 +50,11 @@ enum Team {
 @export var aim_line_dot_radius: float = 0.08
 @export var cannon_smoke_particles: PackedScene
 
+@export_category("SFX")
+@export var cannon_shooting_sfx: AudioStreamPlayer3D
+@export var explosion_sfx: AudioStreamPlayer3D
+
+
 var last_move_dir := Vector3.ZERO
 var auto_aim_target := Vector3.ZERO
 var auto_aim_target_ship: Ship
@@ -419,6 +424,7 @@ func shoot(target_position: Vector3) -> void:
 
 	play_cannon_recoil()
 	play_cannon_smoke_particles()
+	cannon_shooting_sfx.play()
 
 
 func spawn_cannon_ball() -> CannonBall:
@@ -518,6 +524,8 @@ func play_destroyed_feedback() -> void:
 	var explosion: Node3D = big_explosion_vfx.instantiate() as Node3D
 	get_tree().current_scene.add_child(explosion)
 	explosion.global_position = global_position + Vector3.UP * destroyed_sink_distance
+	
+	explosion_sfx.play()
 	
 	await get_tree().create_timer(destroyed_destroy_delay).timeout
 	queue_free()
