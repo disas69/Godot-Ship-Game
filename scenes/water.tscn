@@ -27,10 +27,10 @@ shader_parameter/wave_noise_scroll = Vector2(0.025, 0.018)
 shader_parameter/wave_noise_cutoff = 0.6
 shader_parameter/wave_noise_softness = 0.05
 shader_parameter/wave_distortion_amount = 0.2
-shader_parameter/wave_color = Color(1, 1, 1, 0.36862746)
+shader_parameter/wave_color = Color(0, 0, 0, 0.36862746)
 shader_parameter/wave_strength = 0.4
 shader_parameter/_DepthGradientShallow = Color(0.325, 0.807, 0.971, 0.725)
-shader_parameter/_DepthGradientDeep = Color(0.19764104, 0.63945913, 0.5674482, 0.7921569)
+shader_parameter/_DepthGradientDeep = Color(0.2071783, 0.6202134, 0.69379884, 0.7921569)
 shader_parameter/_DepthMaxDistance = 1.0
 shader_parameter/_DepthFactor = 1.0
 
