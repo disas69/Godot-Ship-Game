@@ -9,7 +9,6 @@ class_name UiManager extends Node
 
 
 func _ready() -> void:
-	resolve_references()
 	if game_manager == null:
 		push_warning("UiManager: game_manager is not assigned.")
 		return
@@ -22,22 +21,6 @@ func _ready() -> void:
 		game_manager.flags_status_changed.connect(on_flags_status_changed)
 
 	sync_from_game_manager()
-
-
-func resolve_references() -> void:
-	if game_manager == null:
-		game_manager = get_parent() as GameManager
-	if game_manager == null:
-		game_manager = get_tree().current_scene as GameManager
-
-	if flags_1_label == null:
-		flags_1_label = get_node_or_null("Control/Control/Flags1") as Label
-	if flags_2_label == null:
-		flags_2_label = get_node_or_null("Control/Control/Flags2") as Label
-	if kills_1_label == null:
-		kills_1_label = get_node_or_null("Control/Control/Kills1") as Label
-	if kills_2_label == null:
-		kills_2_label = get_node_or_null("Control/Control/Kills2") as Label
 
 
 func sync_from_game_manager() -> void:
