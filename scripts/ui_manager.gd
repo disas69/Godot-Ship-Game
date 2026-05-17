@@ -60,10 +60,8 @@ func sync_from_game_manager() -> void:
 
 
 func on_timer_changed(remaining_time_sec: float) -> void:
-	var minutes: int = int(remaining_time_sec) / 60
-	var seconds: int = int(remaining_time_sec) % 60
 	if timer_label != null:
-		timer_label.text = "%02d:%02d" % [minutes, seconds]
+		timer_label.text = str(int(remaining_time_sec))
 
 
 func on_team_kills_changed(good_team_kills: int, bad_team_kills: int) -> void:

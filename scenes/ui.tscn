@@ -6,14 +6,21 @@
 [ext_resource type="Texture2D" uid="uid://gy1gdbscgbmr" path="res://ui/black flag.png" id="4_p7vwb"]
 [ext_resource type="Texture2D" uid="uid://dqfdmmixda6q6" path="res://ui/white skull.png" id="5_ktti3"]
 [ext_resource type="Texture2D" uid="uid://mywykogdvj0y" path="res://ui/black skull.png" id="6_cgfq5"]
+[ext_resource type="Texture2D" uid="uid://deqi6ivh63fq6" path="res://ui/clock.png" id="7_p7vwb"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ktti3"]
+font_size = 17
+
+[sub_resource type="LabelSettings" id="LabelSettings_p7vwb"]
+font_size = 19
 
 [node name="UI" type="CanvasLayer" unique_id=976727756 node_paths=PackedStringArray("timer_label", "flags_1_label", "flags_2_label", "kills_1_label", "kills_2_label")]
 script = ExtResource("2_xynp1")
 timer_label = NodePath("Control/Control/Timer")
-flags_1_label = NodePath("Control/Control/Flags1")
-flags_2_label = NodePath("Control/Control/Flags2")
-kills_1_label = NodePath("Control/Control/Kills1")
-kills_2_label = NodePath("Control/Control/Kills2")
+flags_1_label = NodePath("Control/Control/HBoxContainer/Flags1")
+flags_2_label = NodePath("Control/Control/HBoxContainer2/Flags2")
+kills_1_label = NodePath("Control/Control/HBoxContainer3/Kills1")
+kills_2_label = NodePath("Control/Control/HBoxContainer4/Kills2")
 
 [node name="Control" type="Control" parent="." unique_id=1571261215]
 layout_mode = 3
@@ -32,17 +39,16 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -91.0
-offset_top = -174.0
-offset_right = 109.0
-offset_bottom = 26.0
+offset_left = -55.0
+offset_top = -200.0
+offset_right = 55.0
+offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 0
 rotation = -1.5707964
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("1_nt7q6")
-expand_mode = 2
-stretch_mode = 5
+expand_mode = 1
 
 [node name="Control" type="Control" parent="Control" unique_id=1036398968]
 layout_mode = 1
@@ -67,124 +73,138 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -18.955017
-offset_top = -67.71997
-offset_right = 21.044983
-offset_bottom = -44.71997
+offset_left = -19.955017
+offset_top = -57.71997
+offset_right = 20.044983
+offset_bottom = -17.71997
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 text = "1"
+label_settings = SubResource("LabelSettings_ktti3")
 horizontal_alignment = 1
 
-[node name="Flags1" type="Label" parent="Control/Control" unique_id=1645260911]
-modulate = Color(0, 0, 0, 1)
+[node name="TextureRect5" type="TextureRect" parent="Control/Control" unique_id=1147767881]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -65.95502
-offset_top = -85.71997
-offset_right = -25.955017
-offset_bottom = -62.71997
+offset_left = -76.95503
+offset_top = -125.719986
+offset_right = 76.78497
+offset_bottom = 28.02002
 grow_horizontal = 2
 grow_vertical = 0
-pivot_offset_ratio = Vector2(0.5, 0.5)
-text = "1"
-horizontal_alignment = 1
+texture = ExtResource("7_p7vwb")
+expand_mode = 2
+stretch_mode = 5
 
-[node name="Kills1" type="Label" parent="Control/Control" unique_id=1890782101]
-modulate = Color(0, 0, 0, 1)
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/Control" unique_id=1064332013]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -65.95502
-offset_top = -51.71997
-offset_right = -25.955017
-offset_bottom = -28.71997
+offset_left = -75.95502
+offset_top = -82.71997
+offset_right = -31.955017
+offset_bottom = -54.71997
 grow_horizontal = 2
 grow_vertical = 0
-pivot_offset_ratio = Vector2(0.5, 0.5)
-text = "1"
-horizontal_alignment = 1
 
-[node name="Flags2" type="Label" parent="Control/Control" unique_id=1023632289]
+[node name="Flags1" type="Label" parent="Control/Control/HBoxContainer" unique_id=1645260911]
 modulate = Color(0, 0, 0, 1)
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 34.044983
-offset_top = -86.71997
-offset_right = 74.04498
-offset_bottom = -63.71997
-grow_horizontal = 2
-grow_vertical = 0
-pivot_offset_ratio = Vector2(0.5, 0.5)
+layout_mode = 2
 text = "1"
+label_settings = SubResource("LabelSettings_p7vwb")
 horizontal_alignment = 1
 
-[node name="Kills2" type="Label" parent="Control/Control" unique_id=1175690435]
-modulate = Color(0, 0, 0, 1)
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 35.044983
-offset_top = -53.71997
-offset_right = 75.04498
-offset_bottom = -30.71997
-grow_horizontal = 2
-grow_vertical = 0
-pivot_offset_ratio = Vector2(0.5, 0.5)
-text = "1"
-horizontal_alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="Control/Control" unique_id=1436000113]
-layout_mode = 0
-offset_left = 47.0
-offset_top = 15.0
-offset_right = 87.0
-offset_bottom = 35.0
+[node name="TextureRect" type="TextureRect" parent="Control/Control/HBoxContainer" unique_id=1436000113]
+layout_mode = 2
 texture = ExtResource("3_8dubc")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureRect2" type="TextureRect" parent="Control/Control" unique_id=6239174]
-layout_mode = 0
-offset_left = 114.0
-offset_top = 15.0
-offset_right = 154.0
-offset_bottom = 35.0
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/Control" unique_id=1159423780]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 29.044983
+offset_top = -82.71997
+offset_right = 73.04498
+offset_bottom = -54.71997
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="TextureRect2" type="TextureRect" parent="Control/Control/HBoxContainer2" unique_id=6239174]
+layout_mode = 2
 texture = ExtResource("4_p7vwb")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureRect3" type="TextureRect" parent="Control/Control" unique_id=580351014]
-layout_mode = 0
-offset_left = 116.0
-offset_top = 48.0
-offset_right = 156.0
-offset_bottom = 68.0
+[node name="Flags2" type="Label" parent="Control/Control/HBoxContainer2" unique_id=1023632289]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+text = "1"
+label_settings = SubResource("LabelSettings_p7vwb")
+horizontal_alignment = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Control/Control" unique_id=1230926738]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -75.95502
+offset_top = -47.71997
+offset_right = -31.955017
+offset_bottom = -19.71997
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Kills1" type="Label" parent="Control/Control/HBoxContainer3" unique_id=1890782101]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+text = "1"
+label_settings = SubResource("LabelSettings_p7vwb")
+horizontal_alignment = 1
+
+[node name="TextureRect4" type="TextureRect" parent="Control/Control/HBoxContainer3" unique_id=662029123]
+layout_mode = 2
+texture = ExtResource("6_cgfq5")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Control/Control" unique_id=1475327585]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 29.044983
+offset_top = -47.71997
+offset_right = 73.04498
+offset_bottom = -19.71997
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="TextureRect3" type="TextureRect" parent="Control/Control/HBoxContainer4" unique_id=580351014]
+layout_mode = 2
 texture = ExtResource("5_ktti3")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TextureRect4" type="TextureRect" parent="Control/Control" unique_id=662029123]
-layout_mode = 0
-offset_left = 47.0
-offset_top = 47.0
-offset_right = 87.0
-offset_bottom = 67.0
-texture = ExtResource("6_cgfq5")
-expand_mode = 2
-stretch_mode = 5
+[node name="Kills2" type="Label" parent="Control/Control/HBoxContainer4" unique_id=1175690435]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+text = "1"
+label_settings = SubResource("LabelSettings_p7vwb")
+horizontal_alignment = 1
