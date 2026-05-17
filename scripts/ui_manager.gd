@@ -1,6 +1,7 @@
 class_name UiManager extends Node
 
 @export var game_manager: GameManager
+@export var timer_label: Label
 @export var flags_1_label: Label
 @export var flags_2_label: Label
 @export var kills_1_label: Label
@@ -13,6 +14,8 @@ func _ready() -> void:
 		push_warning("UiManager: game_manager is not assigned.")
 		return
 
+	if not game_manager.game_time_changed.is_connected(on_timer_changed):
+		game_manager.game_time_changed.connect(on_timer_changed)
 	if not game_manager.team_kills_changed.is_connected(on_team_kills_changed):
 		game_manager.team_kills_changed.connect(on_team_kills_changed)
 	if not game_manager.flags_status_changed.is_connected(on_flags_status_changed):
@@ -54,6 +57,13 @@ func sync_from_game_manager() -> void:
 			neutral += 1
 
 	on_flags_status_changed(good_captured, bad_captured, neutral)
+
+
+func on_timer_changed(remaining_time_sec: float) -> void:
+	var minutes: int = int(remaining_time_sec) / 60
+	var seconds: int = int(remaining_time_sec) % 60
+	if timer_label != null:
+		timer_label.text = "%02d:%02d" % [minutes, seconds]
 
 
 func on_team_kills_changed(good_team_kills: int, bad_team_kills: int) -> void:

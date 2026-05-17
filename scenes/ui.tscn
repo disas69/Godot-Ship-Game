@@ -2,9 +2,14 @@
 
 [ext_resource type="Texture2D" uid="uid://wx8ope6lojqp" path="res://ui/scroll/pngs/tall.png" id="1_nt7q6"]
 [ext_resource type="Script" uid="uid://lrbjdqfyf1yl" path="res://scripts/ui_manager.gd" id="2_xynp1"]
+[ext_resource type="Texture2D" uid="uid://d1gdygxngma58" path="res://ui/white flag.png" id="3_8dubc"]
+[ext_resource type="Texture2D" uid="uid://gy1gdbscgbmr" path="res://ui/black flag.png" id="4_p7vwb"]
+[ext_resource type="Texture2D" uid="uid://dqfdmmixda6q6" path="res://ui/white skull.png" id="5_ktti3"]
+[ext_resource type="Texture2D" uid="uid://mywykogdvj0y" path="res://ui/black skull.png" id="6_cgfq5"]
 
-[node name="UI" type="CanvasLayer" unique_id=976727756 node_paths=PackedStringArray("flags_1_label", "flags_2_label", "kills_1_label", "kills_2_label")]
+[node name="UI" type="CanvasLayer" unique_id=976727756 node_paths=PackedStringArray("timer_label", "flags_1_label", "flags_2_label", "kills_1_label", "kills_2_label")]
 script = ExtResource("2_xynp1")
+timer_label = NodePath("Control/Control/Timer")
 flags_1_label = NodePath("Control/Control/Flags1")
 flags_2_label = NodePath("Control/Control/Flags2")
 kills_1_label = NodePath("Control/Control/Kills1")
@@ -54,6 +59,24 @@ grow_horizontal = 2
 grow_vertical = 0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 
+[node name="Timer" type="Label" parent="Control/Control" unique_id=1348911837]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -18.955017
+offset_top = -67.71997
+offset_right = 21.044983
+offset_bottom = -44.71997
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+text = "1"
+horizontal_alignment = 1
+
 [node name="Flags1" type="Label" parent="Control/Control" unique_id=1645260911]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 1
@@ -62,10 +85,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -56.955017
-offset_top = -76.71997
-offset_right = -16.955017
-offset_bottom = -53.71997
+offset_left = -65.95502
+offset_top = -85.71997
+offset_right = -25.955017
+offset_bottom = -62.71997
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset_ratio = Vector2(0.5, 0.5)
@@ -80,10 +103,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -56.955017
-offset_top = -45.71997
-offset_right = -16.955017
-offset_bottom = -22.71997
+offset_left = -65.95502
+offset_top = -51.71997
+offset_right = -25.955017
+offset_bottom = -28.71997
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset_ratio = Vector2(0.5, 0.5)
@@ -98,10 +121,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 11.044983
-offset_top = -76.71997
-offset_right = 51.044983
-offset_bottom = -53.71997
+offset_left = 34.044983
+offset_top = -86.71997
+offset_right = 74.04498
+offset_bottom = -63.71997
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset_ratio = Vector2(0.5, 0.5)
@@ -116,12 +139,52 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 11.044983
-offset_top = -45.71997
-offset_right = 51.044983
-offset_bottom = -22.71997
+offset_left = 35.044983
+offset_top = -53.71997
+offset_right = 75.04498
+offset_bottom = -30.71997
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 text = "1"
 horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Control/Control" unique_id=1436000113]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 15.0
+offset_right = 87.0
+offset_bottom = 35.0
+texture = ExtResource("3_8dubc")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="Control/Control" unique_id=6239174]
+layout_mode = 0
+offset_left = 114.0
+offset_top = 15.0
+offset_right = 154.0
+offset_bottom = 35.0
+texture = ExtResource("4_p7vwb")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextureRect3" type="TextureRect" parent="Control/Control" unique_id=580351014]
+layout_mode = 0
+offset_left = 116.0
+offset_top = 48.0
+offset_right = 156.0
+offset_bottom = 68.0
+texture = ExtResource("5_ktti3")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TextureRect4" type="TextureRect" parent="Control/Control" unique_id=662029123]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 47.0
+offset_right = 87.0
+offset_bottom = 67.0
+texture = ExtResource("6_cgfq5")
+expand_mode = 2
+stretch_mode = 5
