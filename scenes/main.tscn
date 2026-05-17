@@ -630,7 +630,7 @@ volume_db = -10.0
 autoplay = true
 bus = &"SFX"
 
-[node name="UI" parent="." unique_id=976727756 node_paths=PackedStringArray("game_manager") instance=ExtResource("12_trceg")]
+[node name="UIManager" parent="." unique_id=976727756 node_paths=PackedStringArray("game_manager") instance=ExtResource("12_trceg")]
 game_manager = NodePath("..")
 
 [editable path="MainCamera"]

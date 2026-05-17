@@ -10,10 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://25nq07drfg3l" path="res://kenney_pirate-kit/Models/GLB format/cannon.glb" id="4_tfsc7"]
 [ext_resource type="Texture2D" uid="uid://baaquuaomcxnd" path="res://images/circle_01_a.png" id="5_gudjc"]
 [ext_resource type="Shader" uid="uid://xsh5qa5stwbf" path="res://shaders/aim_overlay.gdshader" id="6_3m36u"]
-[ext_resource type="AudioStream" uid="uid://ksf2jtytyj8h" path="res://audio/sfx/Smoke Bomb 001.wav" id="11_s6mup"]
-[ext_resource type="AudioStream" uid="uid://bgqm5n1wqw4xd" path="res://audio/sfx/Smoke Bomb 002.wav" id="12_xnucr"]
-[ext_resource type="AudioStream" uid="uid://cm81laasfaqrp" path="res://audio/sfx/Smoke Bomb 003.wav" id="13_2a2rk"]
-[ext_resource type="AudioStream" uid="uid://1iisya1lxe4m" path="res://audio/sfx/freesound_community-medium-explosion-40472.mp3" id="14_xnucr"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_2gnfn"]
 radius = 3.5
@@ -26,14 +22,7 @@ shader_parameter/albedo_tex = ExtResource("5_gudjc")
 shader_parameter/tint_color = Color(1, 1, 1, 1)
 shader_parameter/intensity = 3.0
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_py3xs"]
-random_pitch = 1.0873628
-streams_count = 3
-stream_0/stream = ExtResource("11_s6mup")
-stream_1/stream = ExtResource("12_xnucr")
-stream_2/stream = ExtResource("13_2a2rk")
-
-[node name="PlayerShip" type="CharacterBody3D" unique_id=1389603216 node_paths=PackedStringArray("view", "hit_flash_targets", "cannon_view", "cannon_root", "cannon_anchor", "aim_indicator", "cannon_shooting_sfx", "explosion_sfx")]
+[node name="PlayerShip" type="CharacterBody3D" unique_id=1389603216 node_paths=PackedStringArray("view", "hit_flash_targets", "cannon_view", "cannon_root", "cannon_anchor", "aim_indicator")]
 collision_mask = 3
 script = ExtResource("1_2gnfn")
 view = NodePath("View")
@@ -59,8 +48,6 @@ gamepad_aim_move_speed = 35.0
 aim_line_dot_count = 10
 aim_line_dot_radius = 0.15
 cannon_smoke_particles = ExtResource("3_7j21i")
-cannon_shooting_sfx = NodePath("CannonSFX")
-explosion_sfx = NodePath("ExplosionSFX")
 mass = 300.0
 fluid_damp = 2.0
 move_speed = 30.0
@@ -91,19 +78,5 @@ shape = SubResource("SphereShape3D_2gnfn")
 transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, 0, 0, 0)
 material_override = SubResource("ShaderMaterial_8qiel")
 texture = ExtResource("5_gudjc")
-
-[node name="CannonSFX" type="AudioStreamPlayer3D" parent="." unique_id=646875569]
-stream = SubResource("AudioStreamRandomizer_py3xs")
-volume_db = -2.0
-unit_size = 30.0
-max_distance = 300.0
-bus = &"SFX"
-
-[node name="ExplosionSFX" type="AudioStreamPlayer3D" parent="." unique_id=1549921021]
-stream = ExtResource("14_xnucr")
-volume_db = 4.0
-unit_size = 50.0
-max_distance = 500.0
-bus = &"SFX"
 
 [editable path="View/ship-small2"]

@@ -13,12 +13,9 @@ func _ready() -> void:
 		push_warning("UiManager: game_manager is not assigned.")
 		return
 
-	if not game_manager.game_time_changed.is_connected(on_timer_changed):
-		game_manager.game_time_changed.connect(on_timer_changed)
-	if not game_manager.team_kills_changed.is_connected(on_team_kills_changed):
-		game_manager.team_kills_changed.connect(on_team_kills_changed)
-	if not game_manager.flags_status_changed.is_connected(on_flags_status_changed):
-		game_manager.flags_status_changed.connect(on_flags_status_changed)
+	game_manager.game_time_changed.connect(on_timer_changed)
+	game_manager.team_kills_changed.connect(on_team_kills_changed)
+	game_manager.flags_status_changed.connect(on_flags_status_changed)
 
 	sync_from_game_manager()
 
