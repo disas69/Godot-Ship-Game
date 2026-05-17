@@ -1,0 +1,127 @@
+[gd_scene format=3 uid="uid://fvsww5ojowtu"]
+
+[ext_resource type="Texture2D" uid="uid://wx8ope6lojqp" path="res://ui/scroll/pngs/tall.png" id="1_nt7q6"]
+[ext_resource type="Script" uid="uid://lrbjdqfyf1yl" path="res://scripts/ui_manager.gd" id="2_xynp1"]
+
+[node name="UI" type="CanvasLayer" unique_id=976727756 node_paths=PackedStringArray("flags_1_label", "flags_2_label", "kills_1_label", "kills_2_label")]
+script = ExtResource("2_xynp1")
+flags_1_label = NodePath("Control/Control/Flags1")
+flags_2_label = NodePath("Control/Control/Flags2")
+kills_1_label = NodePath("Control/Control/Kills1")
+kills_2_label = NodePath("Control/Control/Kills2")
+
+[node name="Control" type="Control" parent="." unique_id=1571261215]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="Control" unique_id=1646761443]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -91.0
+offset_top = -174.0
+offset_right = 109.0
+offset_bottom = 26.0
+grow_horizontal = 2
+grow_vertical = 0
+rotation = -1.5707964
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("1_nt7q6")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Control" type="Control" parent="Control" unique_id=1036398968]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -87.0
+offset_top = -121.0
+offset_right = 104.910034
+offset_bottom = -23.28003
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="Flags1" type="Label" parent="Control/Control" unique_id=1645260911]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -56.955017
+offset_top = -76.71997
+offset_right = -16.955017
+offset_bottom = -53.71997
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+text = "1"
+horizontal_alignment = 1
+
+[node name="Kills1" type="Label" parent="Control/Control" unique_id=1890782101]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -56.955017
+offset_top = -45.71997
+offset_right = -16.955017
+offset_bottom = -22.71997
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+text = "1"
+horizontal_alignment = 1
+
+[node name="Flags2" type="Label" parent="Control/Control" unique_id=1023632289]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 11.044983
+offset_top = -76.71997
+offset_right = 51.044983
+offset_bottom = -53.71997
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+text = "1"
+horizontal_alignment = 1
+
+[node name="Kills2" type="Label" parent="Control/Control" unique_id=1175690435]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 11.044983
+offset_top = -45.71997
+offset_right = 51.044983
+offset_bottom = -22.71997
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+text = "1"
+horizontal_alignment = 1
