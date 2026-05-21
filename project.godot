@@ -40,7 +40,7 @@ project/assembly_name="Starter Kit Basic Scene"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/brackeys_particle_controls/plugin.cfg", "res://addons/rider-plugin/plugin.cfg", "res://addons/ui_layout_controls/plugin.cfg", "res://addons/unity_control_layout/plugin.cfg")
+enabled=PackedStringArray("res://addons/brackeys_particle_controls/plugin.cfg", "res://addons/rider-plugin/plugin.cfg", "res://addons/ui_layout_controls/plugin.cfg")
 
 [input]
 

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://brr472tdvooyw"]
 
 [ext_resource type="Script" uid="uid://bcyni047fem2n" path="res://scripts/vfx_animation_player.gd" id="1_rae34"]
-[ext_resource type="Texture2D" uid="uid://djkoi1qy46ydk" path="res://brackeys_particle_bundle/particles/alpha/smoke_07_a.png" id="2_rae34"]
+[ext_resource type="Texture2D" uid="uid://djkoi1qy46ydk" path="res://assets/brackeys_particle_bundle/particles/alpha/smoke_07_a.png" id="2_rae34"]
 
 [sub_resource type="Curve" id="Curve_ev17w"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.07239819, 0.8876405), 0.0, 0.0, 0, 0, Vector2(0.6036585, 0.874935), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]

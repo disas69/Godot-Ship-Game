@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cg0fye0h146ca"]
 
-[ext_resource type="PackedScene" uid="uid://cj164ht3jrrfu" path="res://kenney_pirate-kit/Models/GLB format/flag.glb" id="1_0vmcc"]
-[ext_resource type="PackedScene" uid="uid://b8icgo1u1vdnr" path="res://kenney_pirate-kit/Models/GLB format/structure-fence-sides.glb" id="2_75apk"]
+[ext_resource type="PackedScene" uid="uid://cj164ht3jrrfu" path="res://assets/kenney_pirate-kit/Models/GLB format/flag.glb" id="1_0vmcc"]
+[ext_resource type="PackedScene" uid="uid://b8icgo1u1vdnr" path="res://assets/kenney_pirate-kit/Models/GLB format/structure-fence-sides.glb" id="2_75apk"]
 
 [node name="WHITE FLAG" type="Node3D" unique_id=1798348924]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4191103, 0)

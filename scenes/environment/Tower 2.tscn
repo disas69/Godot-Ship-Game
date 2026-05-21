@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://ol83pu1tuq8h"]
 
-[ext_resource type="PackedScene" uid="uid://c31l2xhtbtmx3" path="res://kenney_pirate-kit/Models/GLB format/tower-base.glb" id="1_1mww6"]
-[ext_resource type="PackedScene" uid="uid://8flbl3dymhot" path="res://kenney_pirate-kit/Models/GLB format/tower-complete-large.glb" id="2_nxmmr"]
-[ext_resource type="PackedScene" uid="uid://bsosdyyu3pjct" path="res://kenney_pirate-kit/Models/GLB format/tower-middle-windows.glb" id="3_7xfbp"]
-[ext_resource type="PackedScene" uid="uid://dbjnq08us506y" path="res://kenney_pirate-kit/Models/GLB format/tower-roof.glb" id="4_484io"]
-[ext_resource type="PackedScene" uid="uid://bp0dmo1mpmant" path="res://kenney_pirate-kit/Models/GLB format/tower-middle.glb" id="5_wgpp6"]
-[ext_resource type="PackedScene" uid="uid://cq6gls4gfbqc4" path="res://kenney_pirate-kit/Models/GLB format/tower-base-door.glb" id="6_ykb00"]
-[ext_resource type="PackedScene" uid="uid://bejqxj4gqqlyo" path="res://kenney_pirate-kit/Models/GLB format/tower-top.glb" id="7_hc7bb"]
+[ext_resource type="PackedScene" uid="uid://c31l2xhtbtmx3" path="res://assets/kenney_pirate-kit/Models/GLB format/tower-base.glb" id="1_1mww6"]
+[ext_resource type="PackedScene" uid="uid://8flbl3dymhot" path="res://assets/kenney_pirate-kit/Models/GLB format/tower-complete-large.glb" id="2_nxmmr"]
+[ext_resource type="PackedScene" uid="uid://bsosdyyu3pjct" path="res://assets/kenney_pirate-kit/Models/GLB format/tower-middle-windows.glb" id="3_7xfbp"]
+[ext_resource type="PackedScene" uid="uid://dbjnq08us506y" path="res://assets/kenney_pirate-kit/Models/GLB format/tower-roof.glb" id="4_484io"]
+[ext_resource type="PackedScene" uid="uid://bp0dmo1mpmant" path="res://assets/kenney_pirate-kit/Models/GLB format/tower-middle.glb" id="5_wgpp6"]
+[ext_resource type="PackedScene" uid="uid://cq6gls4gfbqc4" path="res://assets/kenney_pirate-kit/Models/GLB format/tower-base-door.glb" id="6_ykb00"]
+[ext_resource type="PackedScene" uid="uid://bejqxj4gqqlyo" path="res://assets/kenney_pirate-kit/Models/GLB format/tower-top.glb" id="7_hc7bb"]
 
 [node name="TOWER 2" type="Node3D" unique_id=2141325863]
 transform = Transform3D(0.566419, 0, 0, 0, 0.6580606, 0, 0, 0, 0.74009603, 0, 0, 0)

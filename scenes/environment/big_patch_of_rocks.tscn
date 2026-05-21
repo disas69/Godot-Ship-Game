@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://cn5xiqhx2grdm"]
 
-[ext_resource type="PackedScene" uid="uid://cigw1p8vvckk7" path="res://kenney_pirate-kit/Models/GLB format/rocks-a.glb" id="1_cxr67"]
-[ext_resource type="PackedScene" uid="uid://c0wmtfjlthhix" path="res://kenney_pirate-kit/Models/GLB format/rocks-c.glb" id="2_urf15"]
-[ext_resource type="PackedScene" uid="uid://djqh6crs7l6gx" path="res://kenney_pirate-kit/Models/GLB format/rocks-b.glb" id="3_0c3hc"]
-[ext_resource type="PackedScene" uid="uid://cmv2uy124j7hj" path="res://kenney_pirate-kit/Models/GLB format/rocks-sand-c.glb" id="4_ol6qr"]
-[ext_resource type="PackedScene" uid="uid://d17oq0d8g0017" path="res://kenney_pirate-kit/Models/GLB format/rocks-sand-b.glb" id="5_ngspl"]
+[ext_resource type="PackedScene" uid="uid://cigw1p8vvckk7" path="res://assets/kenney_pirate-kit/Models/GLB format/rocks-a.glb" id="1_cxr67"]
+[ext_resource type="PackedScene" uid="uid://c0wmtfjlthhix" path="res://assets/kenney_pirate-kit/Models/GLB format/rocks-c.glb" id="2_urf15"]
+[ext_resource type="PackedScene" uid="uid://djqh6crs7l6gx" path="res://assets/kenney_pirate-kit/Models/GLB format/rocks-b.glb" id="3_0c3hc"]
+[ext_resource type="PackedScene" uid="uid://cmv2uy124j7hj" path="res://assets/kenney_pirate-kit/Models/GLB format/rocks-sand-c.glb" id="4_ol6qr"]
+[ext_resource type="PackedScene" uid="uid://d17oq0d8g0017" path="res://assets/kenney_pirate-kit/Models/GLB format/rocks-sand-b.glb" id="5_ngspl"]
 
 [node name="BIG PATCH OF ROCKS" type="Node3D" unique_id=1334974826]
 transform = Transform3D(-1.6610786, -0.27040622, -2.3248422, -0.06305681, 1.8022213, 0.045639854, 2.1939933, 0.039669417, -1.6476859, 0, 0, 0)

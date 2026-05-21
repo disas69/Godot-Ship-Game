@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://2k6ixn05hixw"]
 
-[ext_resource type="PackedScene" uid="uid://c31l2xhtbtmx3" path="res://kenney_pirate-kit/Models/GLB format/tower-base.glb" id="1_cgu75"]
-[ext_resource type="PackedScene" uid="uid://bsosdyyu3pjct" path="res://kenney_pirate-kit/Models/GLB format/tower-middle-windows.glb" id="2_ipena"]
-[ext_resource type="PackedScene" uid="uid://cq6gls4gfbqc4" path="res://kenney_pirate-kit/Models/GLB format/tower-base-door.glb" id="3_5xhxx"]
-[ext_resource type="PackedScene" uid="uid://cigw1p8vvckk7" path="res://kenney_pirate-kit/Models/GLB format/rocks-a.glb" id="4_hr4iq"]
-[ext_resource type="PackedScene" uid="uid://bdfkvq5s1kdti" path="res://kenney_pirate-kit/Models/GLB format/patch-sand.glb" id="6_xnm6a"]
-[ext_resource type="PackedScene" uid="uid://cl4fm7jlpy4pd" path="res://kenney_pirate-kit/Models/GLB format/tower-complete-small.glb" id="7_b23yl"]
-[ext_resource type="PackedScene" uid="uid://c0wmtfjlthhix" path="res://kenney_pirate-kit/Models/GLB format/rocks-c.glb" id="8_ldm08"]
-[ext_resource type="PackedScene" uid="uid://c68gwltirwt8n" path="res://kenney_pirate-kit/Models/GLB format/structure-platform-small.glb" id="9_cgu75"]
-[ext_resource type="PackedScene" uid="uid://djqh6crs7l6gx" path="res://kenney_pirate-kit/Models/GLB format/rocks-b.glb" id="9_tumbe"]
+[ext_resource type="PackedScene" uid="uid://c31l2xhtbtmx3" path="res://assets/kenney_pirate-kit/Models/GLB format/tower-base.glb" id="1_cgu75"]
+[ext_resource type="PackedScene" uid="uid://bsosdyyu3pjct" path="res://assets/kenney_pirate-kit/Models/GLB format/tower-middle-windows.glb" id="2_ipena"]
+[ext_resource type="PackedScene" uid="uid://cq6gls4gfbqc4" path="res://assets/kenney_pirate-kit/Models/GLB format/tower-base-door.glb" id="3_5xhxx"]
+[ext_resource type="PackedScene" uid="uid://cigw1p8vvckk7" path="res://assets/kenney_pirate-kit/Models/GLB format/rocks-a.glb" id="4_hr4iq"]
+[ext_resource type="PackedScene" uid="uid://bdfkvq5s1kdti" path="res://assets/kenney_pirate-kit/Models/GLB format/patch-sand.glb" id="6_xnm6a"]
+[ext_resource type="PackedScene" uid="uid://cl4fm7jlpy4pd" path="res://assets/kenney_pirate-kit/Models/GLB format/tower-complete-small.glb" id="7_b23yl"]
+[ext_resource type="PackedScene" uid="uid://c0wmtfjlthhix" path="res://assets/kenney_pirate-kit/Models/GLB format/rocks-c.glb" id="8_ldm08"]
+[ext_resource type="PackedScene" uid="uid://c68gwltirwt8n" path="res://assets/kenney_pirate-kit/Models/GLB format/structure-platform-small.glb" id="9_cgu75"]
+[ext_resource type="PackedScene" uid="uid://djqh6crs7l6gx" path="res://assets/kenney_pirate-kit/Models/GLB format/rocks-b.glb" id="9_tumbe"]
 
 [node name="TOWER DESTROYED" type="Node3D" unique_id=1431508293]
 transform = Transform3D(0.82440805, -1.3545769e-08, -0.57419854, 3.934337e-08, 1, 1.38356855e-08, 0.58921766, -7.11153e-08, 0.8033941, 0, 0, 0)

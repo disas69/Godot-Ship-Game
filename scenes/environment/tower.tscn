@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://cb1lslg7s3pi4"]
 
-[ext_resource type="PackedScene" uid="uid://cl4fm7jlpy4pd" path="res://kenney_pirate-kit/Models/GLB format/tower-complete-small.glb" id="1_6exds"]
-[ext_resource type="PackedScene" uid="uid://c68gwltirwt8n" path="res://kenney_pirate-kit/Models/GLB format/structure-platform-small.glb" id="2_uc2ni"]
-[ext_resource type="PackedScene" uid="uid://bsosdyyu3pjct" path="res://kenney_pirate-kit/Models/GLB format/tower-middle-windows.glb" id="3_luoq7"]
-[ext_resource type="PackedScene" uid="uid://c5muu6iy5y5oh" path="res://kenney_pirate-kit/Models/GLB format/tower-watch.glb" id="4_n6hak"]
-[ext_resource type="PackedScene" uid="uid://c31l2xhtbtmx3" path="res://kenney_pirate-kit/Models/GLB format/tower-base.glb" id="5_m2uxf"]
-[ext_resource type="PackedScene" uid="uid://25nq07drfg3l" path="res://kenney_pirate-kit/Models/GLB format/cannon.glb" id="6_yir74"]
+[ext_resource type="PackedScene" uid="uid://cl4fm7jlpy4pd" path="res://assets/kenney_pirate-kit/Models/GLB format/tower-complete-small.glb" id="1_6exds"]
+[ext_resource type="PackedScene" uid="uid://c68gwltirwt8n" path="res://assets/kenney_pirate-kit/Models/GLB format/structure-platform-small.glb" id="2_uc2ni"]
+[ext_resource type="PackedScene" uid="uid://bsosdyyu3pjct" path="res://assets/kenney_pirate-kit/Models/GLB format/tower-middle-windows.glb" id="3_luoq7"]
+[ext_resource type="PackedScene" uid="uid://c5muu6iy5y5oh" path="res://assets/kenney_pirate-kit/Models/GLB format/tower-watch.glb" id="4_n6hak"]
+[ext_resource type="PackedScene" uid="uid://c31l2xhtbtmx3" path="res://assets/kenney_pirate-kit/Models/GLB format/tower-base.glb" id="5_m2uxf"]
+[ext_resource type="PackedScene" uid="uid://25nq07drfg3l" path="res://assets/kenney_pirate-kit/Models/GLB format/cannon.glb" id="6_yir74"]
 
 [node name="TOWER" type="Node3D" unique_id=435101222]
 transform = Transform3D(2.5817742, 0, 1.2322155, 0, 3.0596466, 0, -1.0644994, 0, 2.9885442, 0, 0, 0)

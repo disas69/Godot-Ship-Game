@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bjnq8gta7rkbi"]
 
-[ext_resource type="PackedScene" uid="uid://b8icgo1u1vdnr" path="res://kenney_pirate-kit/Models/GLB format/structure-fence-sides.glb" id="1_khab3"]
-[ext_resource type="PackedScene" uid="uid://c7l4y8bxaoacy" path="res://kenney_pirate-kit/Models/GLB format/flag-pirate.glb" id="2_7u7td"]
+[ext_resource type="PackedScene" uid="uid://b8icgo1u1vdnr" path="res://assets/kenney_pirate-kit/Models/GLB format/structure-fence-sides.glb" id="1_khab3"]
+[ext_resource type="PackedScene" uid="uid://c7l4y8bxaoacy" path="res://assets/kenney_pirate-kit/Models/GLB format/flag-pirate.glb" id="2_7u7td"]
 
 [node name="BLACK FLAG" type="Node3D" unique_id=345538538]
 

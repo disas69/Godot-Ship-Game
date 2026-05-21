@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://0apargwt4mty"]
+
+[ext_resource type="PackedScene" uid="uid://d1xn1vohxsqi5" path="res://assets/kenney_pirate-kit/Models/GLB format/cannon-ball.glb" id="1_4105j"]
+[ext_resource type="Script" uid="uid://dh2kdoiubky88" path="res://scripts/cannon_ball.gd" id="1_tqdv6"]
+[ext_resource type="PackedScene" uid="uid://ut43hdh8o11b" path="res://vfx/water_splash.tscn" id="2_jlhnd"]
+[ext_resource type="PackedScene" uid="uid://brr472tdvooyw" path="res://vfx/cannon_hit.tscn" id="3_csbd0"]
+[ext_resource type="AudioStream" uid="uid://3chrt1yqjnxk" path="res://audio/sfx/freesound_community-water-splash-46402.mp3" id="5_mywdy"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_tqdv6"]
+radius = 0.55
+
+[node name="CannonBall" type="RigidBody3D" unique_id=1368326954 node_paths=PackedStringArray("cannon_view", "water_hit_sfx")]
+collision_layer = 2
+gravity_scale = 5.0
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_tqdv6")
+max_lifetime = 2.2
+cannon_view = NodePath("cannon-ball2")
+water_splash_particles = ExtResource("2_jlhnd")
+hit_particles = ExtResource("3_csbd0")
+water_hit_sfx = NodePath("WaterHitSFX")
+
+[node name="cannon-ball2" parent="." unique_id=2009406726 instance=ExtResource("1_4105j")]
+transform = Transform3D(1.7, 0, 0, 0, 1.7, 0, 0, 0, 1.7, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=149342509]
+shape = SubResource("SphereShape3D_tqdv6")
+
+[node name="WaterHitSFX" type="AudioStreamPlayer3D" parent="." unique_id=1119076143]
+stream = ExtResource("5_mywdy")
+unit_size = 30.0
+max_distance = 300.0
+bus = &"SFX"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+
+[editable path="cannon-ball2"]

@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://d2e8nb6tj4sfb"]
 
-[ext_resource type="PackedScene" uid="uid://b8icgo1u1vdnr" path="res://kenney_pirate-kit/Models/GLB format/structure-fence-sides.glb" id="1_efl75"]
-[ext_resource type="PackedScene" uid="uid://d17oq0d8g0017" path="res://kenney_pirate-kit/Models/GLB format/rocks-sand-b.glb" id="2_vk7pu"]
-[ext_resource type="PackedScene" uid="uid://dc10i5dihved4" path="res://kenney_pirate-kit/Models/GLB format/patch-sand-foliage.glb" id="3_ed2pg"]
-[ext_resource type="PackedScene" uid="uid://dbp08ltifwk7l" path="res://kenney_pirate-kit/Models/GLB format/patch-grass-foliage.glb" id="4_rwioc"]
-[ext_resource type="PackedScene" uid="uid://dejo42spasro2" path="res://kenney_mini-arena/Models/GLB format/bricks.glb" id="5_2sghe"]
-[ext_resource type="PackedScene" uid="uid://ym8k7nde3lnl" path="res://PirateKit/Environment_Dock_Pole.gltf" id="6_jt20m"]
-[ext_resource type="PackedScene" uid="uid://bokiqqfreqjle" path="res://kenney_pirate-kit/Models/GLB format/grass-patch.glb" id="7_ftyt0"]
+[ext_resource type="PackedScene" uid="uid://b8icgo1u1vdnr" path="res://assets/kenney_pirate-kit/Models/GLB format/structure-fence-sides.glb" id="1_efl75"]
+[ext_resource type="PackedScene" uid="uid://d17oq0d8g0017" path="res://assets/kenney_pirate-kit/Models/GLB format/rocks-sand-b.glb" id="2_vk7pu"]
+[ext_resource type="PackedScene" uid="uid://dc10i5dihved4" path="res://assets/kenney_pirate-kit/Models/GLB format/patch-sand-foliage.glb" id="3_ed2pg"]
+[ext_resource type="PackedScene" uid="uid://dbp08ltifwk7l" path="res://assets/kenney_pirate-kit/Models/GLB format/patch-grass-foliage.glb" id="4_rwioc"]
+[ext_resource type="PackedScene" uid="uid://dejo42spasro2" path="res://assets/kenney_mini-arena/Models/GLB format/bricks.glb" id="5_2sghe"]
+[ext_resource type="PackedScene" uid="uid://ym8k7nde3lnl" path="res://assets/PirateKit/Environment_Dock_Pole.gltf" id="6_jt20m"]
+[ext_resource type="PackedScene" uid="uid://bokiqqfreqjle" path="res://assets/kenney_pirate-kit/Models/GLB format/grass-patch.glb" id="7_ftyt0"]
 
 [node name="NEUTRAL FLAG" type="Node3D" unique_id=944816805]
 
