@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://yrmvw60puafh"]
 
-[ext_resource type="Script" uid="uid://bcyni047fem2n" path="res://scripts/vfx_animation_player.gd" id="1_0ym6o"]
+[ext_resource type="Script" uid="uid://bcyni047fem2n" path="res://scripts/vfx/vfx_animation_player.gd" id="1_0ym6o"]
 [ext_resource type="Texture2D" uid="uid://djkoi1qy46ydk" path="res://assets/brackeys_particle_bundle/particles/alpha/smoke_07_a.png" id="2_pnsu1"]
 
 [sub_resource type="Curve" id="Curve_pnsu1"]

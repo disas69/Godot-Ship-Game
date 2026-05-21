@@ -1,6 +1,9 @@
 class_name Ship extends FloatablePlayer3D
 
 const AIM_OVERLAY_SHADER := preload("res://shaders/aim_overlay.gdshader")
+const CANNON_SMOKE_VFX_KEY := "cannon_smoke"
+const FIRE_VFX_KEY := "fire"
+const SHIP_EXPLOSION_VFX_KEY := "ship_explosion"
 
 signal destroyed(ship: Ship)
 
@@ -467,9 +470,7 @@ func calculate_ballistic_velocity(start_position: Vector3, target_position: Vect
 
 
 func play_cannon_smoke_particles() -> void:
-	var smoke: Node3D = cannon_smoke_particles.instantiate() as Node3D
-	smoke.global_transform = cannon_anchor.global_transform
-	get_tree().current_scene.add_child(smoke)
+	VfxManager.spawn_at_transform(CANNON_SMOKE_VFX_KEY, cannon_anchor.global_transform)
 
 
 func take_hit(hit_velocity: Vector3) -> void:
@@ -494,9 +495,7 @@ func play_destroyed_feedback() -> void:
 	collision_layer = 0
 	collision_mask = 0
 	
-	var fire: Node3D = fire_vfx.instantiate() as Node3D
-	add_child(fire)
-	fire.global_position = cannon_root.global_position + Vector3.UP
+	VfxManager.spawn_at_transform(FIRE_VFX_KEY, Transform3D(Basis(), cannon_root.global_position + Vector3.UP), self)
 
 	var sink_tween: Tween = create_tween()
 	sink_tween.tween_property(self, "position", position + Vector3.DOWN * destroyed_sink_distance, destroyed_sink_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
@@ -516,11 +515,10 @@ func play_destroyed_feedback() -> void:
 	await get_tree().create_timer(destroyed_sink_duration - 0.5).timeout
 	view.position = base_view_position
 	
-	var explosion: Node3D = big_explosion_vfx.instantiate() as Node3D
-	get_tree().current_scene.add_child(explosion)
-	explosion.global_position = global_position + Vector3.UP * destroyed_sink_distance
+	var explosion: Node3D = VfxManager.spawn(SHIP_EXPLOSION_VFX_KEY, global_position + Vector3.UP * destroyed_sink_distance)
 	
-	AudioManager.play_sfx("ship_explosion", explosion.global_position)
+	if explosion != null:
+		AudioManager.play_sfx("ship_explosion", explosion.global_position)
 	
 	await get_tree().create_timer(destroyed_destroy_delay).timeout
 	queue_free()
