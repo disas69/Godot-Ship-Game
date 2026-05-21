@@ -25,7 +25,7 @@ buses/default_bus_layout="uid://csitjxvt01n1y"
 
 [autoload]
 
-AudioManager="*res://scripts/audio_manager.gd"
+AudioManager="*uid://b8y2uls6j20lq"
 
 [display]
 
