@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://d1xn1vohxsqi5" path="res://assets/kenney_pirate-kit/Models/GLB format/cannon-ball.glb" id="1_4105j"]
 [ext_resource type="Script" uid="uid://dh2kdoiubky88" path="res://scripts/cannon_ball.gd" id="1_tqdv6"]
-[ext_resource type="PackedScene" uid="uid://ut43hdh8o11b" path="res://vfx/water_splash.tscn" id="2_jlhnd"]
-[ext_resource type="PackedScene" uid="uid://brr472tdvooyw" path="res://vfx/cannon_hit.tscn" id="3_csbd0"]
+[ext_resource type="PackedScene" uid="uid://ut43hdh8o11b" path="res://vfx/effects/water_splash.tscn" id="2_jlhnd"]
+[ext_resource type="PackedScene" uid="uid://brr472tdvooyw" path="res://vfx/effects/cannon_hit.tscn" id="3_csbd0"]
 [ext_resource type="AudioStream" uid="uid://3chrt1yqjnxk" path="res://audio/sfx/freesound_community-water-splash-46402.mp3" id="5_mywdy"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_tqdv6"]

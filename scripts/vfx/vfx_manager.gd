@@ -4,21 +4,14 @@ extends Node
 
 var vfx_map: Dictionary[StringName, VfxEntry] = {}
 var active_effects: Dictionary[Node3D, VfxEntry] = {}
-var pools: Dictionary[StringName, Array] = {}
+var pools: Dictionary[StringName, ObjectPool] = {}
 var pool_root: Node3D
 
 
 func _ready() -> void:
-	_ensure_pool_root()
-	_rebuild_vfx_map()
-	_prewarm_pools()
-
-
-func set_library(new_library: VfxLibrary) -> void:
-	clear()
-	library = new_library
-	_rebuild_vfx_map()
-	_prewarm_pools()
+	ensure_pool_root()
+	rebuild_vfx_map()
+	prewarm_pools()
 
 
 func spawn(key: String, world_position: Vector3 = Vector3.ZERO) -> Node3D:
@@ -27,18 +20,18 @@ func spawn(key: String, world_position: Vector3 = Vector3.ZERO) -> Node3D:
 
 
 func spawn_at_transform(key: String, global_transform: Transform3D, parent: Node = null) -> Node3D:
-	var entry := _get_entry_or_warn(key)
+	var entry := get_entry_or_warn(key)
 	if entry == null:
 		return null
 
-	var effect := _get_effect_instance(entry)
+	var effect := get_effect_instance(entry)
 	if effect == null:
 		return null
 
-	_move_effect_to_parent(effect, _get_spawn_parent(parent))
+	move_effect_to_parent(effect, get_spawn_parent(parent))
 	effect.global_transform = global_transform
-	_prepare_effect_for_spawn(effect, entry)
-	_start_effect(effect)
+	prepare_effect_for_spawn(effect, entry)
+	start_effect(effect)
 	return effect
 
 
@@ -47,25 +40,25 @@ func spawn_attached(key: String, parent: Node3D, local_transform: Transform3D = 
 		push_warning("Cannot spawn VFX '%s' because parent is null." % key)
 		return null
 
-	var entry := _get_entry_or_warn(key)
+	var entry := get_entry_or_warn(key)
 	if entry == null:
 		return null
 
-	var effect := _get_effect_instance(entry)
+	var effect := get_effect_instance(entry)
 	if effect == null:
 		return null
 
-	_move_effect_to_parent(effect, parent)
+	move_effect_to_parent(effect, parent)
 	effect.transform = local_transform
-	_prepare_effect_for_spawn(effect, entry)
-	_start_effect(effect)
+	prepare_effect_for_spawn(effect, entry)
+	start_effect(effect)
 	return effect
 
 
 func stop(effect: Node3D) -> void:
 	if effect == null or not is_instance_valid(effect):
 		return
-	_release_effect(effect)
+	release_effect(effect)
 
 
 func stop_key(key: String) -> void:
@@ -75,7 +68,7 @@ func stop_key(key: String) -> void:
 			continue
 		var entry := active_effects.get(effect) as VfxEntry
 		if entry != null and entry.key == key:
-			_release_effect(effect)
+			release_effect(effect)
 
 
 func clear() -> void:
@@ -85,14 +78,12 @@ func clear() -> void:
 			effect.queue_free()
 	active_effects.clear()
 
-	for key in pools.keys():
-		for effect in pools[key]:
-			if is_instance_valid(effect):
-				effect.queue_free()
+	for pool in pools.values():
+		pool.clear()
 	pools.clear()
 
 
-func _ensure_pool_root() -> void:
+func ensure_pool_root() -> void:
 	if pool_root != null and is_instance_valid(pool_root):
 		return
 
@@ -102,7 +93,7 @@ func _ensure_pool_root() -> void:
 	add_child(pool_root)
 
 
-func _rebuild_vfx_map() -> void:
+func rebuild_vfx_map() -> void:
 	vfx_map.clear()
 	if library == null:
 		push_warning("VFX library is not assigned.")
@@ -119,41 +110,36 @@ func _rebuild_vfx_map() -> void:
 
 		vfx_map[StringName(entry.key)] = entry
 		if not pools.has(StringName(entry.key)):
-			pools[StringName(entry.key)] = []
+			pools[StringName(entry.key)] = create_effect_pool(entry)
 
 
-func _prewarm_pools() -> void:
+func prewarm_pools() -> void:
 	for entry in vfx_map.values():
 		if not entry.use_pool:
 			continue
 
 		var pool := pools[StringName(entry.key)]
-		while pool.size() < entry.preload_count:
-			var effect := _instantiate_effect(entry)
-			if effect == null:
-				break
-			_return_to_pool(effect, entry)
+		pool.prewarm(entry.preload_count)
 
 
-func _get_entry_or_warn(key: String) -> VfxEntry:
+func get_entry_or_warn(key: String) -> VfxEntry:
 	var entry := vfx_map.get(StringName(key)) as VfxEntry
 	if entry == null:
 		push_warning("Missing VFX key: " + key)
 	return entry
 
 
-func _get_effect_instance(entry: VfxEntry) -> Node3D:
+func get_effect_instance(entry: VfxEntry) -> Node3D:
 	if entry.use_pool:
 		var pool := pools[StringName(entry.key)]
-		while not pool.is_empty():
-			var effect := pool.pop_back() as Node3D
-			if is_instance_valid(effect):
-				return effect
+		var effect := pool.acquire() as Node3D
+		if effect != null:
+			return effect
 
-	return _instantiate_effect(entry)
+	return instantiate_effect(entry)
 
 
-func _instantiate_effect(entry: VfxEntry) -> Node3D:
+func instantiate_effect(entry: VfxEntry) -> Node3D:
 	var effect := entry.scene.instantiate() as Node3D
 	if effect == null:
 		push_warning("VFX entry '%s' scene root must be a Node3D." % entry.key)
@@ -168,11 +154,11 @@ func _instantiate_effect(entry: VfxEntry) -> Node3D:
 		particle_effect.auto_play = false
 		particle_effect.free_on_finished = false
 
-	effect.tree_exiting.connect(_on_effect_tree_exiting.bind(effect))
+	effect.tree_exiting.connect(on_effect_tree_exiting.bind(effect))
 	return effect
 
 
-func _prepare_effect_for_spawn(effect: Node3D, entry: VfxEntry) -> void:
+func prepare_effect_for_spawn(effect: Node3D, entry: VfxEntry) -> void:
 	active_effects[effect] = entry
 	effect.visible = true
 	effect.process_mode = Node.PROCESS_MODE_INHERIT
@@ -181,25 +167,25 @@ func _prepare_effect_for_spawn(effect: Node3D, entry: VfxEntry) -> void:
 	if effect is VfxAnimationPlayer:
 		var animation_effect := effect as VfxAnimationPlayer
 		animation_effect.free_on_finished = false
-		if not animation_effect.finished.is_connected(_on_effect_finished):
-			animation_effect.finished.connect(_on_effect_finished)
+		if not animation_effect.finished.is_connected(on_effect_finished):
+			animation_effect.finished.connect(on_effect_finished)
 	elif effect is VfxPlayer:
 		var particle_effect := effect as VfxPlayer
 		particle_effect.free_on_finished = false
-		if not particle_effect.finished.is_connected(_on_effect_finished):
-			particle_effect.finished.connect(_on_effect_finished)
+		if not particle_effect.finished.is_connected(on_effect_finished):
+			particle_effect.finished.connect(on_effect_finished)
 
 
-func _start_effect(effect: Node3D) -> void:
+func start_effect(effect: Node3D) -> void:
 	if effect is VfxAnimationPlayer:
 		(effect as VfxAnimationPlayer).play()
 	elif effect is VfxPlayer:
 		(effect as VfxPlayer).play()
 	else:
-		_restart_particles(effect)
+		restart_particles(effect)
 
 
-func _release_effect(effect: Node3D) -> void:
+func release_effect(effect: Node3D) -> void:
 	var entry := active_effects.get(effect) as VfxEntry
 	if entry == null:
 		return
@@ -207,27 +193,36 @@ func _release_effect(effect: Node3D) -> void:
 	active_effects.erase(effect)
 	if effect is VfxAnimationPlayer:
 		var animation_effect := effect as VfxAnimationPlayer
-		if animation_effect.finished.is_connected(_on_effect_finished):
-			animation_effect.finished.disconnect(_on_effect_finished)
+		if animation_effect.finished.is_connected(on_effect_finished):
+			animation_effect.finished.disconnect(on_effect_finished)
 		animation_effect.reset_for_pool()
 	elif effect is VfxPlayer:
 		var particle_effect := effect as VfxPlayer
-		if particle_effect.finished.is_connected(_on_effect_finished):
-			particle_effect.finished.disconnect(_on_effect_finished)
+		if particle_effect.finished.is_connected(on_effect_finished):
+			particle_effect.finished.disconnect(on_effect_finished)
 		particle_effect.reset_for_pool()
 
 	if entry.use_pool:
-		_return_to_pool(effect, entry)
+		return_to_pool(effect, entry)
 	else:
 		effect.queue_free()
 
 
-func _return_to_pool(effect: Node3D, entry: VfxEntry) -> void:
+func return_to_pool(effect: Node3D, entry: VfxEntry) -> void:
 	var pool := pools[StringName(entry.key)]
-	if entry.max_pool_size > 0 and pool.size() >= entry.max_pool_size:
-		effect.queue_free()
-		return
+	pool.release(effect)
 
+
+func create_effect_pool(entry: VfxEntry) -> ObjectPool:
+	return ObjectPool.new(
+		instantiate_effect.bind(entry),
+		reset_effect_for_pool.bind(entry),
+		discard_effect,
+		entry.max_pool_size
+	)
+
+
+func reset_effect_for_pool(effect: Node3D, _entry: VfxEntry) -> void:
 	if effect.get_parent() != pool_root:
 		if effect.get_parent() != null:
 			effect.get_parent().remove_child(effect)
@@ -235,10 +230,14 @@ func _return_to_pool(effect: Node3D, entry: VfxEntry) -> void:
 
 	effect.visible = false
 	effect.process_mode = Node.PROCESS_MODE_DISABLED
-	pool.append(effect)
 
 
-func _move_effect_to_parent(effect: Node3D, parent: Node) -> void:
+func discard_effect(effect: Node3D) -> void:
+	if is_instance_valid(effect):
+		effect.queue_free()
+
+
+func move_effect_to_parent(effect: Node3D, parent: Node) -> void:
 	if effect.get_parent() == parent:
 		return
 	if effect.get_parent() != null:
@@ -246,7 +245,7 @@ func _move_effect_to_parent(effect: Node3D, parent: Node) -> void:
 	parent.add_child(effect)
 
 
-func _get_spawn_parent(parent: Node) -> Node:
+func get_spawn_parent(parent: Node) -> Node:
 	if parent != null:
 		return parent
 	if get_tree().current_scene != null:
@@ -254,7 +253,7 @@ func _get_spawn_parent(parent: Node) -> Node:
 	return get_tree().root
 
 
-func _restart_particles(root: Node) -> void:
+func restart_particles(root: Node) -> void:
 	for child in root.find_children("*", "GPUParticles3D", true, false):
 		var particles := child as GPUParticles3D
 		particles.emitting = false
@@ -263,11 +262,11 @@ func _restart_particles(root: Node) -> void:
 			particles.emitting = true
 
 
-func _on_effect_finished(effect: Node3D) -> void:
+func on_effect_finished(effect: Node3D) -> void:
 	if not is_instance_valid(effect):
 		return
-	_release_effect(effect)
+	release_effect(effect)
 
 
-func _on_effect_tree_exiting(effect: Node3D) -> void:
+func on_effect_tree_exiting(effect: Node3D) -> void:
 	active_effects.erase(effect)

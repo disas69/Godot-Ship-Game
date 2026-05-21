@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="AudioLibrary" format=3 uid="uid://dp4dmqfcjr3jc"]
 
-[ext_resource type="Script" uid="uid://c0m20eaomryhb" path="res://scripts/audio_entry.gd" id="1_ai8j6"]
-[ext_resource type="Script" uid="uid://dy6boqjp4xj7h" path="res://scripts/audio_library.gd" id="2_a22k1"]
+[ext_resource type="Script" uid="uid://c0m20eaomryhb" path="res://scripts/audio/audio_entry.gd" id="1_ai8j6"]
+[ext_resource type="Script" uid="uid://dy6boqjp4xj7h" path="res://scripts/audio/audio_library.gd" id="2_a22k1"]
 [ext_resource type="AudioStream" uid="uid://ksf2jtytyj8h" path="res://audio/sfx/Smoke Bomb 001.wav" id="2_wy15s"]
 [ext_resource type="AudioStream" uid="uid://bgqm5n1wqw4xd" path="res://audio/sfx/Smoke Bomb 002.wav" id="3_wppay"]
 [ext_resource type="AudioStream" uid="uid://cm81laasfaqrp" path="res://audio/sfx/Smoke Bomb 003.wav" id="4_gkxuj"]

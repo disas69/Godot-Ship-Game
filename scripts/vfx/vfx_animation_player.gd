@@ -8,7 +8,7 @@ signal finished(effect: Node3D)
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
-var _active_animation: StringName
+var active_animation: StringName
 
 
 func _ready() -> void:
@@ -16,7 +16,7 @@ func _ready() -> void:
 		push_warning("No AnimationPlayer found in VfxAnimationPlayer.")
 		return
 
-	animation_player.animation_finished.connect(_on_animation_finished)
+	animation_player.animation_finished.connect(on_animation_finished)
 	if auto_play:
 		play()
 
@@ -28,11 +28,11 @@ func play(animation_name: StringName = &"") -> void:
 		animation_name = play_animation
 	if not animation_player.has_animation(animation_name):
 		push_warning("Missing VFX animation: " + String(animation_name))
-		_finish()
+		finish()
 		return
 
 	reset_for_pool()
-	_active_animation = animation_name
+	active_animation = animation_name
 	animation_player.play(animation_name)
 
 
@@ -51,13 +51,13 @@ func reset_for_pool() -> void:
 		particles.emitting = false
 
 
-func _on_animation_finished(animation_name: StringName) -> void:
-	if animation_name != _active_animation:
+func on_animation_finished(animation_name: StringName) -> void:
+	if animation_name != active_animation:
 		return
-	_finish()
+	finish()
 
 
-func _finish() -> void:
+func finish() -> void:
 	finished.emit(self)
 	if free_on_finished:
 		queue_free()
