@@ -1,0 +1,135 @@
+[gd_scene format=3 uid="uid://c8ya0cpre244s"]
+
+[node name="UILayoutControlsOverlay" type="Control" unique_id=398769454]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1466042868]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -344.0
+offset_top = -232.0
+offset_right = -24.0
+offset_bottom = -24.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=433497524]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1709114296]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1754755832]
+layout_mode = 2
+text = "UI Layout Controls"
+horizontal_alignment = 1
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="NodeNameLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=2055020411]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Control"
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="ContainerWarning" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1888030901]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 0.78, 0.38, 1)
+layout_mode = 2
+text = "Parent Container may overwrite layout."
+clip_text = true
+text_overrun_behavior = 3
+
+[node name="AnchorPreset" type="OptionButton" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1065673222]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Anchor preset"
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1757010779]
+layout_mode = 2
+columns = 4
+
+[node name="AnchoredXLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer" unique_id=471087808]
+layout_mode = 2
+text = "X"
+
+[node name="AnchoredX" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer" unique_id=358479491]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = -100000.0
+max_value = 100000.0
+allow_greater = true
+allow_lesser = true
+suffix = " px"
+
+[node name="AnchoredYLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer" unique_id=1382809245]
+layout_mode = 2
+text = "Y"
+
+[node name="AnchoredY" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer" unique_id=211022994]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = -100000.0
+max_value = 100000.0
+allow_greater = true
+allow_lesser = true
+suffix = " px"
+
+[node name="WidthLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer" unique_id=1151496581]
+layout_mode = 2
+text = "W"
+
+[node name="Width" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer" unique_id=961777723]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 100000.0
+allow_greater = true
+suffix = " px"
+
+[node name="HeightLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer" unique_id=268921608]
+layout_mode = 2
+text = "H"
+
+[node name="Height" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer" unique_id=1178507640]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 100000.0
+allow_greater = true
+suffix = " px"
+
+[node name="PivotXLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer" unique_id=657656241]
+layout_mode = 2
+text = "PX"
+
+[node name="PivotX" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer" unique_id=1471515449]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="PivotYLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer" unique_id=643614023]
+layout_mode = 2
+text = "PY"
+
+[node name="PivotY" type="SpinBox" parent="PanelContainer/MarginContainer/VBoxContainer/GridContainer" unique_id=50571634]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.01
