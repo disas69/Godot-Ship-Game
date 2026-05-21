@@ -58,7 +58,6 @@ func is_captured_by(team: Ship.Team) -> bool:
 
 
 func on_capture_area_body_entered(body: Node) -> void:
-	print("Body entered capture area: ", body.name)
 	var ship := body as Ship
 	if ship == null:
 		return
@@ -70,7 +69,6 @@ func on_capture_area_body_entered(body: Node) -> void:
 
 
 func on_capture_area_body_exited(body: Node) -> void:
-	print("Body exited capture area: ", body.name)
 	var ship := body as Ship
 	if ship == null:
 		return
