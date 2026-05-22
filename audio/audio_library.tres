@@ -3,10 +3,24 @@
 [ext_resource type="Script" uid="uid://c0m20eaomryhb" path="res://scripts/audio/audio_entry.gd" id="1_ai8j6"]
 [ext_resource type="Script" uid="uid://dy6boqjp4xj7h" path="res://scripts/audio/audio_library.gd" id="2_a22k1"]
 [ext_resource type="AudioStream" uid="uid://ksf2jtytyj8h" path="res://audio/sfx/Smoke Bomb 001.wav" id="2_wy15s"]
+[ext_resource type="AudioStream" uid="uid://cs571yx2417g8" path="res://audio/music/freesound_community-sea-and-seagull-wave-5932.mp3" id="3_87eir"]
 [ext_resource type="AudioStream" uid="uid://bgqm5n1wqw4xd" path="res://audio/sfx/Smoke Bomb 002.wav" id="3_wppay"]
 [ext_resource type="AudioStream" uid="uid://cm81laasfaqrp" path="res://audio/sfx/Smoke Bomb 003.wav" id="4_gkxuj"]
 [ext_resource type="AudioStream" uid="uid://1iisya1lxe4m" path="res://audio/sfx/freesound_community-medium-explosion-40472.mp3" id="5_87eir"]
 [ext_resource type="AudioStream" uid="uid://3chrt1yqjnxk" path="res://audio/sfx/freesound_community-water-splash-46402.mp3" id="6_wppay"]
+[ext_resource type="AudioStream" uid="uid://cjg05maxvt63r" path="res://audio/music/Pirate Vol2 Cannon Battle Main.wav" id="7_music"]
+
+[sub_resource type="Resource" id="Resource_music_main"]
+script = ExtResource("1_ai8j6")
+key = "cannon_battle_main"
+stream = ExtResource("7_music")
+
+[sub_resource type="Resource" id="Resource_xfatc"]
+script = ExtResource("1_ai8j6")
+key = "ambient_sea"
+stream = ExtResource("3_87eir")
+volume = -10.0
+metadata/_custom_type_script = "uid://c0m20eaomryhb"
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xfatc"]
 random_pitch = 1.0594631
@@ -34,5 +48,6 @@ metadata/_custom_type_script = "uid://c0m20eaomryhb"
 [resource]
 script = ExtResource("2_a22k1")
 sfx_preload_count = 12
-entries = Array[ExtResource("1_ai8j6")]([SubResource("Resource_ai8j6"), SubResource("Resource_8igxg"), SubResource("Resource_gkxuj")])
+sfx_entries = Array[ExtResource("1_ai8j6")]([SubResource("Resource_ai8j6"), SubResource("Resource_8igxg"), SubResource("Resource_gkxuj")])
+music_entries = Array[ExtResource("1_ai8j6")]([SubResource("Resource_music_main"), SubResource("Resource_xfatc")])
 metadata/_custom_type_script = "uid://dy6boqjp4xj7h"

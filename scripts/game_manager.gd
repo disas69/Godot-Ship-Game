@@ -57,6 +57,7 @@ func _ready() -> void:
 	refresh_camera_targets(true)
 	refresh_bot_reach_targets()
 	
+	play_music()
 	start_game()
 
 
@@ -69,6 +70,11 @@ func _process(delta: float) -> void:
 
 	if game_time_left_sec <= 0.0:
 		finish_game(FinishReason.TimeUp)
+
+
+func play_music() -> void:
+	AudioManager.play_music("cannon_battle_main")
+	AudioManager.play_music("ambient_sea")
 
 
 func register_flags() -> void:

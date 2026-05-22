@@ -5,11 +5,13 @@ var library: AudioLibrary = preload("res://audio/audio_library.tres")
 const MUSIC_BUS: StringName = &"Music"
 const SFX_BUS: StringName = &"SFX"
 
-var audio_map: Dictionary[String, AudioEntry] = {}
-var music_player: AudioStreamPlayer
+var sfx_map: Dictionary[String, AudioEntry] = {}
+var music_map: Dictionary[String, AudioEntry] = {}
+var active_music_players: Dictionary[String, AudioStreamPlayer] = {}
 var active_sfx_players: Array[AudioStreamPlayer3D] = []
 var music_bus: StringName = MUSIC_BUS
 var sfx_bus: StringName = SFX_BUS
+var music_root: Node
 var sfx_player_pool: ObjectPool
 var sfx_pool_root: Node3D
 
@@ -18,25 +20,36 @@ func _ready() -> void:
 	music_bus = resolve_bus_name(MUSIC_BUS, &"music")
 	sfx_bus = resolve_bus_name(SFX_BUS, &"sfx")
 	rebuild_audio_map()
-	ensure_music_player()
+	ensure_music_root()
 	ensure_sfx_pool_root()
 	ensure_sfx_player_pool()
 	sfx_player_pool.prewarm(library.sfx_preload_count)
 
 
 func play_music(key: String) -> void:
-	var entry := get_entry_or_warn(key)
+	var entry := get_music_entry_or_warn(key)
 	if entry == null:
 		return
-	music_player.stream = entry.stream
-	music_player.volume_db = entry.volume
-	music_player.pitch_scale = entry.pitch_scale
-	music_player.play()
+	var player := get_or_create_music_player(key)
+	if player == null:
+		return
+	player.stream = entry.stream
+	player.volume_db = entry.volume
+	player.pitch_scale = entry.pitch_scale
+	player.play()
 
 
-func stop_music() -> void:
-	if music_player != null:
-		music_player.stop()
+func stop_music(key: String = "") -> void:
+	if key.is_empty():
+		for player_key in active_music_players.keys():
+			stop_music(player_key)
+		return
+
+	var player := active_music_players.get(key) as AudioStreamPlayer
+	if player == null:
+		return
+	player.stop()
+	player.stream = null
 
 
 func play_sfx(key: String, world_position: Vector3) -> void:
@@ -66,30 +79,43 @@ func resolve_bus_name(primary: StringName, fallback: StringName) -> StringName:
 
 
 func rebuild_audio_map() -> void:
-	audio_map.clear()
+	sfx_map.clear()
+	music_map.clear()
 	if library == null:
 		push_warning("Audio library is not assigned.")
 		return
-	for entry in library.entries:
+
+	add_entries_to_map(library.sfx_entries, sfx_map, "SFX")
+	add_entries_to_map(library.music_entries, music_map, "music")
+
+
+func add_entries_to_map(entries: Array[AudioEntry], target_map: Dictionary[String, AudioEntry], entry_type: String) -> void:
+	for entry in entries:
 		if entry == null:
 			continue
 		if entry.key.is_empty():
 			continue
 		if entry.stream == null:
-			push_warning("Audio entry '%s' has no stream assigned." % entry.key)
+			push_warning("%s audio entry '%s' has no stream assigned." % [entry_type, entry.key])
 			continue
-		audio_map[entry.key] = entry
+		target_map[entry.key] = entry
 
 
-func ensure_music_player() -> void:
+func ensure_music_root() -> void:
 	var existing := get_node_or_null("Music")
-	if existing is AudioStreamPlayer:
-		music_player = existing as AudioStreamPlayer
+	if existing != null:
+		music_root = existing
 	else:
-		music_player = AudioStreamPlayer.new()
-		music_player.name = "Music"
-		add_child(music_player)
-	music_player.bus = music_bus
+		music_root = Node.new()
+		music_root.name = "Music"
+		add_child(music_root)
+
+	for child in music_root.get_children():
+		if child is AudioStreamPlayer:
+			var player := child as AudioStreamPlayer
+			player.bus = music_bus
+			if player.has_meta("audio_key"):
+				active_music_players[String(player.get_meta("audio_key"))] = player
 
 
 func ensure_sfx_pool_root() -> void:
@@ -114,15 +140,22 @@ func ensure_sfx_player_pool() -> void:
 	)
 
 
-func get_entry_or_warn(key: String) -> AudioEntry:
-	var entry := audio_map.get(key) as AudioEntry
+func get_sfx_entry_or_warn(key: String) -> AudioEntry:
+	var entry := sfx_map.get(key) as AudioEntry
 	if entry == null:
-		push_warning("Missing audio key: " + key)
+		push_warning("Missing SFX audio key: " + key)
+	return entry
+
+
+func get_music_entry_or_warn(key: String) -> AudioEntry:
+	var entry := music_map.get(key) as AudioEntry
+	if entry == null:
+		push_warning("Missing music audio key: " + key)
 	return entry
 
 
 func play_sfx_internal(key: String, world_position: Vector3) -> void:
-	var entry := get_entry_or_warn(key)
+	var entry := get_sfx_entry_or_warn(key)
 	if entry == null:
 		return
 
@@ -148,6 +181,20 @@ func play_sfx_internal(key: String, world_position: Vector3) -> void:
 	if not player.finished.is_connected(finished_callback):
 		player.finished.connect(finished_callback)
 	player.play()
+
+
+func get_or_create_music_player(key: String) -> AudioStreamPlayer:
+	var existing := active_music_players.get(key) as AudioStreamPlayer
+	if existing != null and is_instance_valid(existing):
+		return existing
+
+	var player := AudioStreamPlayer.new()
+	player.name = "MusicPlayer"
+	player.bus = music_bus
+	player.set_meta("audio_key", key)
+	music_root.add_child(player)
+	active_music_players[key] = player
+	return player
 
 
 func on_sfx_finished(player: AudioStreamPlayer3D) -> void:
