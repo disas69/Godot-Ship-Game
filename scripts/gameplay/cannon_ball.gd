@@ -1,8 +1,5 @@
 class_name CannonBall extends RigidBody3D
 
-const WATER_SPLASH_VFX_KEY := "water_splash"
-const CANNON_HIT_VFX_KEY := "cannon_hit"
-
 @export var max_lifetime: float = 5.0
 @export var cannon_view: Node3D
 @export var water_splash_particles: PackedScene
@@ -45,8 +42,8 @@ func on_water_entered(pos: Vector3) -> void:
 
 
 func play_water_splash(pos: Vector3) -> void:
-	VfxManager.spawn(WATER_SPLASH_VFX_KEY, pos)
+	VfxManager.spawn("water_splash", pos)
 	
 
 func play_hit(pos: Vector3) -> void:
-	VfxManager.spawn(CANNON_HIT_VFX_KEY, pos)
+	VfxManager.spawn("cannon_hit", pos)

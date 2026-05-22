@@ -15,7 +15,7 @@ key = "cannon_smoke"
 scene = ExtResource("2_b8w5q")
 use_pool = true
 preload_count = 4
-max_pool_size = 24
+max_pool_size = 12
 
 [sub_resource type="Resource" id="Resource_s8lij"]
 script = ExtResource("1_5yeo2")
@@ -23,7 +23,7 @@ key = "water_splash"
 scene = ExtResource("3_v8o7o")
 use_pool = true
 preload_count = 4
-max_pool_size = 24
+max_pool_size = 12
 
 [sub_resource type="Resource" id="Resource_o32xv"]
 script = ExtResource("1_5yeo2")
@@ -31,17 +31,23 @@ key = "cannon_hit"
 scene = ExtResource("4_5mn5a")
 use_pool = true
 preload_count = 4
-max_pool_size = 24
+max_pool_size = 12
 
 [sub_resource type="Resource" id="Resource_hl3cp"]
 script = ExtResource("1_5yeo2")
 key = "ship_explosion"
 scene = ExtResource("5_2tr1h")
+use_pool = true
+preload_count = 4
+max_pool_size = 4
 
 [sub_resource type="Resource" id="Resource_f1m4w"]
 script = ExtResource("1_5yeo2")
 key = "fire"
 scene = ExtResource("6_c2d0r")
+use_pool = true
+preload_count = 4
+max_pool_size = 4
 
 [sub_resource type="Resource" id="Resource_tl48x"]
 script = ExtResource("1_5yeo2")

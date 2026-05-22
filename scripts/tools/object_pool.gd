@@ -2,11 +2,11 @@ class_name ObjectPool extends RefCounted
 
 var max_size: int = 0
 
-var _available: Array = []
-var _create_item: Callable
-var _reset_item: Callable
-var _discard_item: Callable
-var _is_valid_item: Callable
+var available: Array = []
+var create_item_callback: Callable
+var reset_item_callback: Callable
+var discard_item_callback: Callable
+var is_valid_item_callback: Callable
 
 
 func _init(
@@ -16,24 +16,24 @@ func _init(
 	max_pool_size: int = 0,
 	is_valid_item: Callable = Callable()
 ) -> void:
-	_create_item = create_item
-	_reset_item = reset_item
-	_discard_item = discard_item
-	_is_valid_item = is_valid_item
+	create_item_callback = create_item
+	reset_item_callback = reset_item
+	discard_item_callback = discard_item
+	is_valid_item_callback = is_valid_item
 	max_size = max_pool_size
 
 
 func size() -> int:
-	return _available.size()
+	return available.size()
 
 
 func is_empty() -> bool:
-	return _available.is_empty()
+	return available.is_empty()
 
 
 func prewarm(count: int) -> void:
-	while _available.size() < count:
-		var item = _create_new_item()
+	while available.size() < count:
+		var item = create_new_item()
 		if item == null:
 			return
 		if not release(item):
@@ -41,51 +41,51 @@ func prewarm(count: int) -> void:
 
 
 func acquire() -> Variant:
-	while not _available.is_empty():
-		var item = _available.pop_back()
-		if _is_item_valid(item):
+	while not available.is_empty():
+		var item = available.pop_back()
+		if is_item_valid(item):
 			return item
 
-	return _create_new_item()
+	return create_new_item()
 
 
 func release(item: Variant) -> bool:
-	if not _is_item_valid(item):
+	if not is_item_valid(item):
 		return false
 
-	if max_size > 0 and _available.size() >= max_size:
-		_discard(item)
+	if max_size > 0 and available.size() >= max_size:
+		discard(item)
 		return false
 
-	if _reset_item.is_valid():
-		_reset_item.call(item)
+	if reset_item_callback.is_valid():
+		reset_item_callback.call(item)
 
-	_available.append(item)
+	available.append(item)
 	return true
 
 
 func clear() -> void:
-	for item in _available:
-		if _is_item_valid(item):
-			_discard(item)
-	_available.clear()
+	for item in available:
+		if is_item_valid(item):
+			discard(item)
+	available.clear()
 
 
-func _create_new_item() -> Variant:
-	if not _create_item.is_valid():
+func create_new_item() -> Variant:
+	if not create_item_callback.is_valid():
 		push_warning("ObjectPool has no valid create callback.")
 		return null
-	return _create_item.call()
+	return create_item_callback.call()
 
 
-func _is_item_valid(item: Variant) -> bool:
-	if _is_valid_item.is_valid():
-		return bool(_is_valid_item.call(item))
+func is_item_valid(item: Variant) -> bool:
+	if is_valid_item_callback.is_valid():
+		return bool(is_valid_item_callback.call(item))
 	if item is Object:
 		return is_instance_valid(item)
 	return item != null
 
 
-func _discard(item: Variant) -> void:
-	if _discard_item.is_valid():
-		_discard_item.call(item)
+func discard(item: Variant) -> void:
+	if discard_item_callback.is_valid():
+		discard_item_callback.call(item)
