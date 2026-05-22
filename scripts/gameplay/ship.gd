@@ -46,6 +46,8 @@ enum Team {
 @export var show_aim_helpers: bool = true
 @export var aim_line_dot_count: int = 12
 @export var aim_line_dot_radius: float = 0.08
+@export_range(0, 64, 1) var cannon_ball_preload_count: int = 8
+@export_range(0, 128, 1) var max_cannon_ball_pool_size: int = 24
 
 var last_move_dir := Vector3.ZERO
 var auto_aim_target := Vector3.ZERO
@@ -61,6 +63,8 @@ var hit_flash_tween: Tween
 var hit_flash_material_instance: ShaderMaterial
 var is_destroyed: bool
 var manual_aim_offset := Vector3.ZERO
+var cannon_ball_pool: ObjectPool
+var cannon_ball_pool_root: Node3D
 
 
 func _ready() -> void:
@@ -73,6 +77,7 @@ func _ready() -> void:
 	set_hit_flash_strength(0.0)
 	setup_aim_line()
 	initialize_aim_offset()
+	setup_cannon_ball_pool()
 	super._ready()
 
 
@@ -412,6 +417,9 @@ func rotate_cannon_towards(target_position: Vector3) -> void:
 
 func shoot(target_position: Vector3) -> void:
 	var cannon_ball_inst: CannonBall = spawn_cannon_ball()
+	if cannon_ball_inst == null:
+		return
+
 	var start_pos: Vector3 = cannon_anchor.global_transform.origin
 	var launch_velocity: Vector3 = calculate_ballistic_velocity(start_pos, target_position, cannon_ball_inst.gravity_scale)
 	
@@ -427,10 +435,89 @@ func shoot(target_position: Vector3) -> void:
 
 
 func spawn_cannon_ball() -> CannonBall:
-	var cannon_ball_inst: CannonBall = cannon_ball.instantiate() as CannonBall
-	get_tree().current_scene.add_child(cannon_ball_inst)
+	if cannon_ball_pool == null:
+		setup_cannon_ball_pool()
+
+	var cannon_ball_inst: CannonBall = cannon_ball_pool.acquire() as CannonBall
+	if cannon_ball_inst == null:
+		return null
+
+	move_cannon_ball_to_parent(cannon_ball_inst, get_cannon_ball_spawn_parent())
 	cannon_ball_inst.global_transform = cannon_anchor.global_transform
+	cannon_ball_inst.reset_for_spawn()
 	return cannon_ball_inst
+
+
+func setup_cannon_ball_pool() -> void:
+	if cannon_ball_pool != null:
+		return
+
+	ensure_cannon_ball_pool_root()
+	cannon_ball_pool = ObjectPool.new(
+		create_cannon_ball,
+		reset_cannon_ball_for_pool,
+		discard_cannon_ball,
+		max_cannon_ball_pool_size
+	)
+	cannon_ball_pool.prewarm(cannon_ball_preload_count)
+
+
+func ensure_cannon_ball_pool_root() -> void:
+	if cannon_ball_pool_root != null and is_instance_valid(cannon_ball_pool_root):
+		return
+
+	cannon_ball_pool_root = Node3D.new()
+	cannon_ball_pool_root.name = "CannonBallPool"
+	cannon_ball_pool_root.visible = false
+	cannon_ball_pool_root.process_mode = Node.PROCESS_MODE_DISABLED
+	add_child(cannon_ball_pool_root)
+
+
+func create_cannon_ball() -> CannonBall:
+	if cannon_ball == null:
+		push_warning("Cannot create cannon ball because no scene is assigned.")
+		return null
+
+	var cannon_ball_inst: CannonBall = cannon_ball.instantiate() as CannonBall
+	if cannon_ball_inst == null:
+		push_warning("Cannon ball scene root must be a CannonBall.")
+		return null
+
+	cannon_ball_inst.set_release_callback(release_cannon_ball)
+	return cannon_ball_inst
+
+
+func reset_cannon_ball_for_pool(cannon_ball_inst: CannonBall) -> void:
+	cannon_ball_inst.reset_for_pool()
+	if cannon_ball_inst.get_parent() != cannon_ball_pool_root:
+		move_cannon_ball_to_parent(cannon_ball_inst, cannon_ball_pool_root)
+
+
+func release_cannon_ball(cannon_ball_inst: CannonBall) -> void:
+	if cannon_ball_pool == null:
+		cannon_ball_inst.queue_free()
+		return
+
+	cannon_ball_pool.release(cannon_ball_inst)
+
+
+func discard_cannon_ball(cannon_ball_inst: CannonBall) -> void:
+	if is_instance_valid(cannon_ball_inst):
+		cannon_ball_inst.queue_free()
+
+
+func move_cannon_ball_to_parent(cannon_ball_inst: CannonBall, parent: Node) -> void:
+	if cannon_ball_inst.get_parent() == parent:
+		return
+	if cannon_ball_inst.get_parent() != null:
+		cannon_ball_inst.get_parent().remove_child(cannon_ball_inst)
+	parent.add_child(cannon_ball_inst)
+
+
+func get_cannon_ball_spawn_parent() -> Node:
+	if get_tree().current_scene != null:
+		return get_tree().current_scene
+	return get_tree().root
 
 
 func play_cannon_recoil() -> void:
