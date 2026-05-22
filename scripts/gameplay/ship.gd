@@ -112,15 +112,18 @@ func _process(delta: float) -> void:
 	var time: float = Time.get_ticks_msec() / 1000.0
 	view.position.y -= sin(time * 4) * idle_wave * delta
 	
-	var target_position: Variant
-	var aim_input: Vector2 = get_aim_input()
-	
-	if not should_use_mouse_aim(aim_input):
-		target_position = get_gamepad_aim_position(aim_input, delta)
+	var target_position: Variant = get_aim_target_position(delta)
+	if target_position != null:
+		target_position = clamp_aim_position(target_position)
 	else:
-		var camera: Camera3D = get_viewport().get_camera_3d()
-		var mouse_pos: Vector2 = get_viewport().get_mouse_position()
-		target_position = get_mouse_water_position(camera, mouse_pos)
+		var aim_input: Vector2 = get_aim_input()
+	
+		if not should_use_mouse_aim(aim_input):
+			target_position = get_gamepad_aim_position(aim_input, delta)
+		else:
+			var camera: Camera3D = get_viewport().get_camera_3d()
+			var mouse_pos: Vector2 = get_viewport().get_mouse_position()
+			target_position = get_mouse_water_position(camera, mouse_pos)
 	
 	if target_position != null:
 		var target: Vector3 = target_position
@@ -151,6 +154,10 @@ func get_move_input() -> Vector2:
 
 func get_aim_input() -> Vector2:
 	return Vector2.ZERO
+
+
+func get_aim_target_position(_delta: float) -> Variant:
+	return null
 
 
 func should_use_mouse_aim(_aim_input: Vector2) -> bool:
