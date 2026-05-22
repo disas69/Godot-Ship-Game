@@ -403,6 +403,18 @@ func get_attack_max_distance() -> float:
 	return get_aim_radius_limits().y
 
 
+func on_attacked_by(attacker: Ship) -> void:
+	if not can_target_ship(attacker):
+		return
+
+	target = attacker
+	current_reach_target = null
+	patrol_points.clear()
+	state = BotState.ATTACK
+	target_update_timer = 0.0
+	update_navigation_target()
+
+
 func can_shoot() -> bool:
 	if state == BotState.ATTACK and is_target_valid(target):
 		var distance_to_target: float = global_position.distance_to(target.global_position)

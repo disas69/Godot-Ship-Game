@@ -474,10 +474,11 @@ func play_cannon_smoke_particles() -> void:
 	VfxManager.spawn_at_transform("cannon_smoke", cannon_anchor.global_transform)
 
 
-func take_hit(hit_velocity: Vector3) -> void:
+func take_hit(hit_velocity: Vector3, attacker: Ship = null) -> void:
 	if is_destroyed:
 		return
 
+	on_attacked_by(attacker)
 	hit_ponts -= 1
 	hit_velocity.y = 0
 	velocity += hit_velocity
@@ -490,6 +491,10 @@ func take_hit(hit_velocity: Vector3) -> void:
 		play_hit_feedback(Color.RED)
 		play_destroyed_feedback()
 		
+
+func on_attacked_by(_attacker: Ship) -> void:
+	pass
+
 
 func play_destroyed_feedback() -> void:
 	velocity = Vector3.ZERO
