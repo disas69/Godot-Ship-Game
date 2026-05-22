@@ -5,7 +5,7 @@ var library: AudioLibrary = preload("res://audio/audio_library.tres")
 const MUSIC_BUS: StringName = &"Music"
 const SFX_BUS: StringName = &"SFX"
 
-var audio_map: Dictionary[String, AudioStream] = {}
+var audio_map: Dictionary[String, AudioEntry] = {}
 var music_player: AudioStreamPlayer
 var active_sfx_players: Array[AudioStreamPlayer3D] = []
 var music_bus: StringName = MUSIC_BUS
@@ -25,10 +25,12 @@ func _ready() -> void:
 
 
 func play_music(key: String) -> void:
-	var stream := get_stream_or_warn(key)
-	if stream == null:
+	var entry := get_entry_or_warn(key)
+	if entry == null:
 		return
-	music_player.stream = stream
+	music_player.stream = entry.stream
+	music_player.volume_db = entry.volume
+	music_player.pitch_scale = entry.pitch_scale
 	music_player.play()
 
 
@@ -43,7 +45,7 @@ func play_sfx(key: String, world_position: Vector3) -> void:
 
 func play(key: String) -> void:
 	play_sfx(key, Vector3.ZERO)
-	
+
 
 func stop_sfx(key: String = "") -> void:
 	var players: Array[AudioStreamPlayer3D] = active_sfx_players.duplicate()
@@ -76,7 +78,7 @@ func rebuild_audio_map() -> void:
 		if entry.stream == null:
 			push_warning("Audio entry '%s' has no stream assigned." % entry.key)
 			continue
-		audio_map[entry.key] = entry.stream
+		audio_map[entry.key] = entry
 
 
 func ensure_music_player() -> void:
@@ -112,16 +114,16 @@ func ensure_sfx_player_pool() -> void:
 	)
 
 
-func get_stream_or_warn(key: String) -> AudioStream:
-	var stream := audio_map.get(key) as AudioStream
-	if stream == null:
+func get_entry_or_warn(key: String) -> AudioEntry:
+	var entry := audio_map.get(key) as AudioEntry
+	if entry == null:
 		push_warning("Missing audio key: " + key)
-	return stream
+	return entry
 
 
 func play_sfx_internal(key: String, world_position: Vector3) -> void:
-	var stream := get_stream_or_warn(key)
-	if stream == null:
+	var entry := get_entry_or_warn(key)
+	if entry == null:
 		return
 
 	var player := sfx_player_pool.acquire() as AudioStreamPlayer3D
@@ -130,8 +132,12 @@ func play_sfx_internal(key: String, world_position: Vector3) -> void:
 
 	move_sfx_player_to_parent(player, self)
 
-	player.stream = stream
+	player.stream = entry.stream
 	player.bus = sfx_bus
+	player.volume_db = entry.volume
+	player.unit_size = entry.unit_size
+	player.pitch_scale = entry.pitch_scale
+	player.max_distance = entry.max_distance
 	player.top_level = true
 	player.global_position = world_position
 	player.process_mode = Node.PROCESS_MODE_INHERIT
@@ -171,6 +177,10 @@ func reset_sfx_player_for_pool(player: AudioStreamPlayer3D) -> void:
 		player.stop()
 
 	player.stream = null
+	player.volume_db = 0.0
+	player.unit_size = 10.0
+	player.pitch_scale = 1.0
+	player.max_distance = 0.0
 	player.remove_meta("audio_key")
 	player.process_mode = Node.PROCESS_MODE_DISABLED
 	move_sfx_player_to_parent(player, sfx_pool_root)
