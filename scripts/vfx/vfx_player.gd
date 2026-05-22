@@ -60,6 +60,8 @@ func reset_for_pool() -> void:
 	for particle in particles:
 		if particle != null and is_instance_valid(particle):
 			particle.emitting = false
+			particle.restart()
+			particle.emitting = false
 
 
 func on_particle_finished(particle: GPUParticles3D) -> void:

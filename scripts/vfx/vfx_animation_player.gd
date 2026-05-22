@@ -40,6 +40,7 @@ func reset_for_pool() -> void:
 	if animation_player == null:
 		return
 
+	active_animation = &""
 	animation_player.stop()
 	if animation_player.has_animation(&"RESET"):
 		animation_player.play(&"RESET")
@@ -48,6 +49,8 @@ func reset_for_pool() -> void:
 
 	for child in find_children("*", "GPUParticles3D", true, false):
 		var particles := child as GPUParticles3D
+		particles.emitting = false
+		particles.restart()
 		particles.emitting = false
 
 

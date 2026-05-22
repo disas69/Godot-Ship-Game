@@ -223,6 +223,8 @@ func create_effect_pool(entry: VfxEntry) -> ObjectPool:
 
 
 func reset_effect_for_pool(effect: Node3D, _entry: VfxEntry) -> void:
+	reset_effect_state(effect)
+
 	if effect.get_parent() != pool_root:
 		if effect.get_parent() != null:
 			effect.get_parent().remove_child(effect)
@@ -230,6 +232,15 @@ func reset_effect_for_pool(effect: Node3D, _entry: VfxEntry) -> void:
 
 	effect.visible = false
 	effect.process_mode = Node.PROCESS_MODE_DISABLED
+
+
+func reset_effect_state(effect: Node3D) -> void:
+	if effect is VfxAnimationPlayer:
+		(effect as VfxAnimationPlayer).reset_for_pool()
+	elif effect is VfxPlayer:
+		(effect as VfxPlayer).reset_for_pool()
+	else:
+		stop_particles(effect)
 
 
 func discard_effect(effect: Node3D) -> void:
@@ -254,12 +265,31 @@ func get_spawn_parent(parent: Node) -> Node:
 
 
 func restart_particles(root: Node) -> void:
+	if root is GPUParticles3D:
+		var root_particles := root as GPUParticles3D
+		root_particles.emitting = false
+		root_particles.restart()
+		root_particles.emitting = true
+
 	for child in root.find_children("*", "GPUParticles3D", true, false):
 		var particles := child as GPUParticles3D
 		particles.emitting = false
 		particles.restart()
-		if particles.one_shot:
-			particles.emitting = true
+		particles.emitting = true
+
+
+func stop_particles(root: Node) -> void:
+	if root is GPUParticles3D:
+		var root_particles := root as GPUParticles3D
+		root_particles.emitting = false
+		root_particles.restart()
+		root_particles.emitting = false
+
+	for child in root.find_children("*", "GPUParticles3D", true, false):
+		var particles := child as GPUParticles3D
+		particles.emitting = false
+		particles.restart()
+		particles.emitting = false
 
 
 func on_effect_finished(effect: Node3D) -> void:
