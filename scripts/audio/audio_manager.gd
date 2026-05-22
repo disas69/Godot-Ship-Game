@@ -5,9 +5,6 @@ var library: AudioLibrary = preload("res://audio/audio_library.tres")
 const MUSIC_BUS: StringName = &"Music"
 const SFX_BUS: StringName = &"SFX"
 
-@export_range(0, 64, 1) var sfx_preload_count: int = 4
-@export_range(0, 128, 1) var max_sfx_pool_size: int = 32
-
 var audio_map: Dictionary[String, AudioStream] = {}
 var music_player: AudioStreamPlayer
 var active_sfx_players: Array[AudioStreamPlayer3D] = []
@@ -24,7 +21,7 @@ func _ready() -> void:
 	ensure_music_player()
 	ensure_sfx_pool_root()
 	ensure_sfx_player_pool()
-	sfx_player_pool.prewarm(sfx_preload_count)
+	sfx_player_pool.prewarm(library.sfx_preload_count)
 
 
 func play_music(key: String) -> void:
@@ -111,7 +108,7 @@ func ensure_sfx_player_pool() -> void:
 		create_sfx_player,
 		reset_sfx_player_for_pool,
 		discard_sfx_player,
-		max_sfx_pool_size
+		library.max_sfx_pool_size
 	)
 
 

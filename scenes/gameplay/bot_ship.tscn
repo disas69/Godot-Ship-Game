@@ -1,11 +1,8 @@
 [gd_scene format=3 uid="uid://tu6g83v637wo"]
 
-[ext_resource type="Script" uid="uid://vy6ut7srfl86" path="res://scripts/bot_ship.gd" id="1_40qv6"]
+[ext_resource type="Script" uid="uid://vy6ut7srfl86" path="res://scripts/gameplay/bot_ship.gd" id="1_40qv6"]
 [ext_resource type="PackedScene" uid="uid://0apargwt4mty" path="res://scenes/gameplay/cannon_ball.tscn" id="2_e3a0j"]
 [ext_resource type="Material" uid="uid://108ojhm7ymbd" path="res://materials/hit_flash.tres" id="2_wfviw"]
-[ext_resource type="PackedScene" uid="uid://dgllcx1ffloe4" path="res://vfx/effects/fire.tscn" id="3_3dq4y"]
-[ext_resource type="PackedScene" uid="uid://diclxrnistp1f" path="res://vfx/effects/big_explosion.tscn" id="3_loj5y"]
-[ext_resource type="PackedScene" uid="uid://yrmvw60puafh" path="res://vfx/effects/cannon_smoke.tscn" id="3_wfviw"]
 [ext_resource type="PackedScene" uid="uid://b614euc42fiac" path="res://assets/kenney_pirate-kit/Models/GLB format/ship-pirate-small.glb" id="4_40qv6"]
 [ext_resource type="PackedScene" uid="uid://25nq07drfg3l" path="res://assets/kenney_pirate-kit/Models/GLB format/cannon.glb" id="5_3dq4y"]
 [ext_resource type="Shader" uid="uid://xsh5qa5stwbf" path="res://shaders/aim_overlay.gdshader" id="6_qmehp"]
@@ -43,8 +40,6 @@ side_incline = Vector3(-15, 15, 4)
 hit_punch_scale = 1.15
 hit_flash_material_template = ExtResource("2_wfviw")
 hit_flash_targets = [NodePath("View/ship-small2/ship-small"), NodePath("View/ship-small2/ship-small/flag-a"), NodePath("View/ship-small2/ship-small/flag-b"), NodePath("View/ship-small2/ship-small/sail-a"), NodePath("View/ship-pirate-small2/ship-pirate-small"), NodePath("View/ship-pirate-small2/ship-pirate-small/sail-a"), NodePath("View/ship-pirate-small2/ship-pirate-small/flag-b"), NodePath("View/ship-pirate-small2/ship-pirate-small/flag-a")]
-fire_vfx = ExtResource("3_3dq4y")
-big_explosion_vfx = ExtResource("3_loj5y")
 destroyed_sink_distance = 5.0
 destroyed_shake_strength = 0.6
 destroyed_destroy_delay = 0.5
@@ -59,7 +54,6 @@ cannon_view_rotation_max = Vector2(-15, -50)
 cannon_aim_radius_change_speed = 15.0
 aim_line_dot_count = 10
 aim_line_dot_radius = 0.15
-cannon_smoke_particles = ExtResource("3_wfviw")
 mass = 300.0
 fluid_damp = 2.0
 move_speed = 30.0

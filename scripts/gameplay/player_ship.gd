@@ -6,6 +6,7 @@ class_name PlayerShip extends Ship
 var player_input: PlayerInput = PlayerInput.new()
 var is_using_gamepad: bool
 
+
 func _ready() -> void:
 	local_player_index = clamp(local_player_index, 0, PlayerInput.MAX_LOCAL_PLAYERS - 1)
 	player_input.init_actions(local_player_index)

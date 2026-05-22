@@ -24,8 +24,6 @@ enum Team {
 @export var hit_flash_material_template: ShaderMaterial
 @export var hit_flash_targets: Array[GeometryInstance3D] = []
 @export_category("Destroyed FX")
-@export var fire_vfx: PackedScene
-@export var big_explosion_vfx: PackedScene
 @export var destroyed_sink_distance: float = 3.0
 @export var destroyed_sink_duration: float = 2.5
 @export var destroyed_shake_strength: float = 0.2
@@ -48,7 +46,6 @@ enum Team {
 @export var show_aim_helpers: bool = true
 @export var aim_line_dot_count: int = 12
 @export var aim_line_dot_radius: float = 0.08
-@export var cannon_smoke_particles: PackedScene
 
 var last_move_dir := Vector3.ZERO
 var auto_aim_target := Vector3.ZERO

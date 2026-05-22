@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://bgqm5n1wqw4xd" path="res://audio/sfx/Smoke Bomb 002.wav" id="3_wppay"]
 [ext_resource type="AudioStream" uid="uid://cm81laasfaqrp" path="res://audio/sfx/Smoke Bomb 003.wav" id="4_gkxuj"]
 [ext_resource type="AudioStream" uid="uid://1iisya1lxe4m" path="res://audio/sfx/freesound_community-medium-explosion-40472.mp3" id="5_87eir"]
+[ext_resource type="AudioStream" uid="uid://3chrt1yqjnxk" path="res://audio/sfx/freesound_community-water-splash-46402.mp3" id="6_wppay"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xfatc"]
 random_pitch = 1.0594631
@@ -24,7 +25,14 @@ script = ExtResource("1_ai8j6")
 key = "ship_explosion"
 stream = ExtResource("5_87eir")
 
+[sub_resource type="Resource" id="Resource_gkxuj"]
+script = ExtResource("1_ai8j6")
+key = "water_splash"
+stream = ExtResource("6_wppay")
+metadata/_custom_type_script = "uid://c0m20eaomryhb"
+
 [resource]
 script = ExtResource("2_a22k1")
-entries = Array[ExtResource("1_ai8j6")]([SubResource("Resource_ai8j6"), SubResource("Resource_8igxg")])
+sfx_preload_count = 12
+entries = Array[ExtResource("1_ai8j6")]([SubResource("Resource_ai8j6"), SubResource("Resource_8igxg"), SubResource("Resource_gkxuj")])
 metadata/_custom_type_script = "uid://dy6boqjp4xj7h"
