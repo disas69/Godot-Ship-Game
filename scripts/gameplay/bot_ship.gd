@@ -391,17 +391,22 @@ func get_attack_position() -> Vector3:
 		away_from_target = Vector3.FORWARD
 
 	var distance_to_target: float = global_position.distance_to(target_position)
-	var preferred_distance: float = clamp(attack_preferred_distance, attack_min_distance, shoot_radius)
-	if distance_to_target < attack_min_distance or distance_to_target > shoot_radius:
+	var attack_max_distance: float = get_attack_max_distance()
+	var preferred_distance: float = clamp(attack_preferred_distance, attack_min_distance, attack_max_distance)
+	if distance_to_target < attack_min_distance or distance_to_target > attack_max_distance:
 		return target_position + away_from_target.normalized() * preferred_distance
 
 	return global_position
 
 
+func get_attack_max_distance() -> float:
+	return get_aim_radius_limits().y
+
+
 func can_shoot() -> bool:
 	if state == BotState.ATTACK and is_target_valid(target):
 		var distance_to_target: float = global_position.distance_to(target.global_position)
-		if distance_to_target >= attack_min_distance and distance_to_target <= shoot_radius and time >= next_shoot_time:
+		if distance_to_target >= attack_min_distance and distance_to_target <= get_attack_max_distance() and time >= next_shoot_time:
 			next_shoot_time = time + randf_range(shoot_interval_range.x, shoot_interval_range.y)
 			enter_idle_wait()
 			return true
