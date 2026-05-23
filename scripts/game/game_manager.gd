@@ -111,7 +111,25 @@ func register_existing_ships() -> void:
 
 
 func spawn_players_from_game_mode() -> void:
-	pass
+	var selected_game_mode: GameMode = get_selected_game_mode()
+	if selected_game_mode == null:
+		push_warning("GameManager: game_mode is not assigned.")
+		return
+
+	var local_player_index: int = local_players.size()
+	for player in selected_game_mode.get_players():
+		if player == null:
+			continue
+
+		var spawned_ship: Ship
+		if player.is_local:
+			spawned_ship = spawn_local_player(player.team, local_player_index)
+			local_player_index += 1
+		else:
+			spawned_ship = spawn_bot_player(player.team)
+
+		if spawned_ship != null and not player.player_name.is_empty():
+			spawned_ship.name = player.player_name
 
 
 func get_selected_game_mode() -> GameMode:
@@ -245,7 +263,7 @@ func on_ship_destroyed(ship: Ship) -> void:
 
 
 func respawn_ship_after_delay(spawn_data: Dictionary, destroyed_ship_id: int) -> void:
-	var selected_game_mode = get_selected_game_mode()
+	var selected_game_mode: GameMode = get_selected_game_mode()
 
 	if selected_game_mode.respawn_delay_sec > 0.0:
 		await get_tree().create_timer(selected_game_mode.respawn_delay_sec).timeout
@@ -302,7 +320,7 @@ func refresh_camera_targets(update_position: bool) -> void:
 
 
 func start_game() -> void:
-	var selected_game_mode = get_selected_game_mode()
+	var selected_game_mode: GameMode = get_selected_game_mode()
 	good_team_kills = 0
 	bad_team_kills = 0
 	game_time_left_sec = maxf(float(selected_game_mode.game_duration_sec), 0.0)

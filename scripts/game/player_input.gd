@@ -1,6 +1,5 @@
 class_name PlayerInput extends RefCounted
 
-const MAX_LOCAL_PLAYERS: int = 2
 const ACTION_NAMES: PackedStringArray = [
 	"move_left",
 	"move_right",

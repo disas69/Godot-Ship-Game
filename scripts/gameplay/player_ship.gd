@@ -1,6 +1,6 @@
 class_name PlayerShip extends Ship
 
-@export_range(0, PlayerInput.MAX_LOCAL_PLAYERS - 1, 1) var local_player_index: int = 0
+@export var local_player_index: int = 0
 @export var allow_mouse_aim: bool = true
 
 var player_input: PlayerInput = PlayerInput.new()
@@ -8,7 +8,6 @@ var is_using_gamepad: bool
 
 
 func _ready() -> void:
-	local_player_index = clamp(local_player_index, 0, PlayerInput.MAX_LOCAL_PLAYERS - 1)
 	player_input.init_actions(local_player_index)
 	super._ready()
 
