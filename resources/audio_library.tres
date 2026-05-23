@@ -35,7 +35,7 @@ stream_2/stream = ExtResource("7_72jes")
 script = ExtResource("1_ym8em")
 key = "cannon_shoot"
 stream = SubResource("AudioStreamRandomizer_xfatc")
-volume = -5.0
+volume = -7.0
 unit_size = 30.0
 max_distance = 300.0
 
@@ -58,6 +58,7 @@ stream_0/stream = ExtResource("9_jgf1q")
 script = ExtResource("1_ym8em")
 key = "water_splash"
 stream = SubResource("AudioStreamRandomizer_ym8em")
+volume = -3.0
 unit_size = 30.0
 max_distance = 300.0
 metadata/_custom_type_script = "uid://c0m20eaomryhb"
