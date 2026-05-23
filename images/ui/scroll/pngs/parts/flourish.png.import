@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://deqi6ivh63fq6"
-path="res://.godot/imported/clock.png-09b4a660a58c86478b8ce31163fe5a4d.ctex"
+uid="uid://fiait3isxng5"
+path="res://.godot/imported/flourish.png-a412552807f799db36b259b18affe387.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/clock.png"
-dest_files=["res://.godot/imported/clock.png-09b4a660a58c86478b8ce31163fe5a4d.ctex"]
+source_file="res://images/ui/scroll/pngs/parts/flourish.png"
+dest_files=["res://.godot/imported/flourish.png-a412552807f799db36b259b18affe387.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://fiait3isxng5"
-path="res://.godot/imported/flourish.png-cf118d41f63fbdacbd70e687d07f3910.ctex"
+uid="uid://d2cj3v4fq24hl"
+path="res://.godot/imported/lower.png-82d48c3d54c70c2e7209073cc736a363.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/scroll/pngs/parts/flourish.png"
-dest_files=["res://.godot/imported/flourish.png-cf118d41f63fbdacbd70e687d07f3910.ctex"]
+source_file="res://images/ui/scroll/pngs/parts/lower.png"
+dest_files=["res://.godot/imported/lower.png-82d48c3d54c70c2e7209073cc736a363.ctex"]
 
 [params]
 

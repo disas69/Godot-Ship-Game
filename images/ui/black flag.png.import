@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dqfdmmixda6q6"
-path="res://.godot/imported/white skull.png-ce03c5f180629a3d7672487a34437b1f.ctex"
+uid="uid://gy1gdbscgbmr"
+path="res://.godot/imported/black flag.png-a18949c932a3ef8252ce41a81fa51b08.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/white skull.png"
-dest_files=["res://.godot/imported/white skull.png-ce03c5f180629a3d7672487a34437b1f.ctex"]
+source_file="res://images/ui/black flag.png"
+dest_files=["res://.godot/imported/black flag.png-a18949c932a3ef8252ce41a81fa51b08.ctex"]
 
 [params]
 

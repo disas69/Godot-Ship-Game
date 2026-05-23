@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://fvsww5ojowtu"]
 
-[ext_resource type="Texture2D" uid="uid://wx8ope6lojqp" path="res://ui/scroll/pngs/tall.png" id="1_nt7q6"]
-[ext_resource type="Script" uid="uid://lrbjdqfyf1yl" path="res://scripts/ui_manager.gd" id="2_xynp1"]
-[ext_resource type="Texture2D" uid="uid://d1gdygxngma58" path="res://ui/white flag.png" id="3_8dubc"]
-[ext_resource type="Texture2D" uid="uid://gy1gdbscgbmr" path="res://ui/black flag.png" id="4_p7vwb"]
-[ext_resource type="Texture2D" uid="uid://dqfdmmixda6q6" path="res://ui/white skull.png" id="5_ktti3"]
-[ext_resource type="Texture2D" uid="uid://mywykogdvj0y" path="res://ui/black skull.png" id="6_cgfq5"]
-[ext_resource type="Texture2D" uid="uid://deqi6ivh63fq6" path="res://ui/clock.png" id="7_p7vwb"]
+[ext_resource type="Texture2D" uid="uid://wx8ope6lojqp" path="res://images/ui/scroll/pngs/tall.png" id="1_nt7q6"]
+[ext_resource type="Script" path="res://scripts/ui_manager.gd" id="2_xynp1"]
+[ext_resource type="Texture2D" uid="uid://d1gdygxngma58" path="res://images/ui/white flag.png" id="3_8dubc"]
+[ext_resource type="Texture2D" uid="uid://gy1gdbscgbmr" path="res://images/ui/black flag.png" id="4_p7vwb"]
+[ext_resource type="Texture2D" uid="uid://dqfdmmixda6q6" path="res://images/ui/white skull.png" id="5_ktti3"]
+[ext_resource type="Texture2D" uid="uid://mywykogdvj0y" path="res://images/ui/black skull.png" id="6_cgfq5"]
+[ext_resource type="Texture2D" uid="uid://deqi6ivh63fq6" path="res://images/ui/clock.png" id="7_p7vwb"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ktti3"]
 font_size = 17

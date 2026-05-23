@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="VfxLibrary" format=3 uid="uid://cq30yw7feblwg"]
 
 [ext_resource type="Script" uid="uid://ccn7n8lfhj7mn" path="res://scripts/vfx/vfx_entry.gd" id="1_5yeo2"]
-[ext_resource type="PackedScene" uid="uid://yrmvw60puafh" path="res://vfx/effects/cannon_smoke.tscn" id="2_b8w5q"]
+[ext_resource type="PackedScene" uid="uid://yrmvw60puafh" path="res://vfx/cannon_smoke.tscn" id="2_b8w5q"]
 [ext_resource type="Script" uid="uid://dtox6c54i05os" path="res://scripts/vfx/vfx_library.gd" id="2_n6lkf"]
-[ext_resource type="PackedScene" uid="uid://ut43hdh8o11b" path="res://vfx/effects/water_splash.tscn" id="3_v8o7o"]
-[ext_resource type="PackedScene" uid="uid://brr472tdvooyw" path="res://vfx/effects/cannon_hit.tscn" id="4_5mn5a"]
-[ext_resource type="PackedScene" uid="uid://diclxrnistp1f" path="res://vfx/effects/big_explosion.tscn" id="5_2tr1h"]
-[ext_resource type="PackedScene" uid="uid://dgllcx1ffloe4" path="res://vfx/effects/fire.tscn" id="6_c2d0r"]
-[ext_resource type="PackedScene" uid="uid://dd462bu6gsbpq" path="res://vfx/effects/fire_combined.tscn" id="7_mik1e"]
+[ext_resource type="PackedScene" uid="uid://ut43hdh8o11b" path="res://vfx/water_splash.tscn" id="3_v8o7o"]
+[ext_resource type="PackedScene" uid="uid://brr472tdvooyw" path="res://vfx/cannon_hit.tscn" id="4_5mn5a"]
+[ext_resource type="PackedScene" uid="uid://diclxrnistp1f" path="res://vfx/big_explosion.tscn" id="5_2tr1h"]
+[ext_resource type="PackedScene" uid="uid://dgllcx1ffloe4" path="res://vfx/fire.tscn" id="6_c2d0r"]
+[ext_resource type="PackedScene" uid="uid://dd462bu6gsbpq" path="res://vfx/fire_combined.tscn" id="7_mik1e"]
 
 [sub_resource type="Resource" id="Resource_0aams"]
 script = ExtResource("1_5yeo2")

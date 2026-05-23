@@ -48,7 +48,7 @@
 [ext_resource type="Texture2D" path="res://sample/Mini Arena/Models/GLB format/Textures/colormap.png" id="46_ghe3b"]
 [ext_resource type="PackedScene" uid="uid://b5gkipamirsqv" path="res://assets/kenney_pirate-kit/Models/GLB format/structure.glb" id="47_xxa8p"]
 [ext_resource type="PackedScene" uid="uid://b7b44vhuxup2b" path="res://assets/kenney_pirate-kit/Models/GLB format/platform.glb" id="48_2m713"]
-[ext_resource type="PackedScene" uid="uid://dd462bu6gsbpq" path="res://vfx/effects/fire_combined.tscn" id="49_2m713"]
+[ext_resource type="PackedScene" uid="uid://dd462bu6gsbpq" path="res://vfx/fire_combined.tscn" id="49_2m713"]
 [ext_resource type="PackedScene" uid="uid://cplaxn3enjbvl" path="res://assets/kenney_pirate-kit/Models/GLB format/patch-grass.glb" id="50_w8v73"]
 [ext_resource type="PackedScene" uid="uid://c68gwltirwt8n" path="res://assets/kenney_pirate-kit/Models/GLB format/structure-platform-small.glb" id="51_6r0n0"]
 [ext_resource type="PackedScene" uid="uid://60or8obmfqc7" path="res://assets/kenney_pirate-kit/Models/GLB format/tool-paddle.glb" id="52_6r0n0"]

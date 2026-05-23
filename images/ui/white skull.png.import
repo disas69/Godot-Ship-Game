@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bisoaojexjnb4"
-path="res://.godot/imported/square.png-0cc889d4dca8bb5d6b5d1485e7505114.ctex"
+uid="uid://dqfdmmixda6q6"
+path="res://.godot/imported/white skull.png-28db23db19221d3d768df271df33d557.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/scroll/pngs/square.png"
-dest_files=["res://.godot/imported/square.png-0cc889d4dca8bb5d6b5d1485e7505114.ctex"]
+source_file="res://images/ui/white skull.png"
+dest_files=["res://.godot/imported/white skull.png-28db23db19221d3d768df271df33d557.ctex"]
 
 [params]
 
