@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="GameMode" format=3 uid="uid://umlvwen3rtg"]
+
+[ext_resource type="Script" uid="uid://bnadrldcax0ss" path="res://scripts/game/player.gd" id="1_rx6m8"]
+[ext_resource type="Script" uid="uid://dsyfhps1kvpi5" path="res://scripts/game/game_mode.gd" id="2_lhhqf"]
+
+[sub_resource type="Resource" id="Resource_bad_local_1"]
+script = ExtResource("1_rx6m8")
+player_name = "Bad Local Player 1"
+team = 1
+is_local = true
+
+[sub_resource type="Resource" id="Resource_bad_bot_1"]
+script = ExtResource("1_rx6m8")
+player_name = "Bad Bot 1"
+team = 1
+
+[sub_resource type="Resource" id="Resource_bad_bot_2"]
+script = ExtResource("1_rx6m8")
+player_name = "Bad Bot 2"
+team = 1
+
+[sub_resource type="Resource" id="Resource_good_bot_1"]
+script = ExtResource("1_rx6m8")
+player_name = "Good Bot 1"
+
+[sub_resource type="Resource" id="Resource_good_bot_2"]
+script = ExtResource("1_rx6m8")
+player_name = "Good Bot 2"
+
+[sub_resource type="Resource" id="Resource_good_bot_3"]
+script = ExtResource("1_rx6m8")
+player_name = "Good Bot 3"
+
+[resource]
+script = ExtResource("2_lhhqf")
+good_team_players = Array[ExtResource("1_rx6m8")]([SubResource("Resource_good_bot_1"), SubResource("Resource_good_bot_2"), SubResource("Resource_good_bot_3")])
+bad_team_players = Array[ExtResource("1_rx6m8")]([SubResource("Resource_bad_local_1"), SubResource("Resource_bad_bot_1"), SubResource("Resource_bad_bot_2")])
+respawn_delay_sec = 5.0

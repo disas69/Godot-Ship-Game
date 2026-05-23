@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="GameMode" format=3 uid="uid://bvlgacx12n77k"]
+
+[ext_resource type="Script" uid="uid://bnadrldcax0ss" path="res://scripts/game/player.gd" id="1_04l6b"]
+[ext_resource type="Script" uid="uid://dsyfhps1kvpi5" path="res://scripts/game/game_mode.gd" id="2_mrwac"]
+
+[sub_resource type="Resource" id="Resource_good_local_1"]
+script = ExtResource("1_04l6b")
+player_name = "Good Local Player 1"
+is_local = true
+
+[resource]
+script = ExtResource("2_mrwac")
+good_team_players = Array[ExtResource("1_04l6b")]([SubResource("Resource_good_local_1")])
+respawn_delay_sec = 5.0

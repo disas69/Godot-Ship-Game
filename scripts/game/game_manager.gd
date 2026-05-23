@@ -18,10 +18,7 @@ enum FinishReason {
 }
 
 @export_category("Game Settings")
-@export var players_count: int = 6
-@export var local_players_count: int = 1
-@export var respawn_delay_sec: float = 3.0
-@export var game_duration_sec: int = 60 * 3
+@export var game_mode: GameMode
 @export var spawn_ponts_good_team: Array[Node3D] = []
 @export var spawn_ponts_bad_team: Array[Node3D] = []
 @export var flags: Array[Flag] = []
@@ -53,7 +50,7 @@ func _ready() -> void:
 	spawn_ponts_good_team.shuffle()
 	spawn_ponts_bad_team.shuffle()
 	
-	spawn_missing_players_from_settings()
+	spawn_players_from_game_mode()
 	refresh_camera_targets(true)
 	refresh_bot_reach_targets()
 	
@@ -113,29 +110,14 @@ func register_existing_ships() -> void:
 		register_tracked_ship(ship, is_local, local_index)
 
 
-func spawn_missing_players_from_settings() -> void:
-	var desired_total: int = maxi(players_count, 0)
-	var desired_good: int = int(ceil(float(desired_total) / 2.0))
-	var desired_bad: int = desired_total - desired_good
-	var desired_local: int = clampi(local_players_count, 0, desired_good)
-	desired_local = mini(desired_local, PlayerInput.MAX_LOCAL_PLAYERS)
+func spawn_players_from_game_mode() -> void:
+	pass
 
-	var local_good_count: int = count_local_players_for_team(Ship.Team.GoodGuys)
-	var local_to_spawn: int = maxi(desired_local - local_good_count, 0)
-	for i in range(local_to_spawn):
-		var local_index: int = next_available_local_player_index()
-		spawn_local_player(Ship.Team.GoodGuys, local_index)
 
-	var good_count: int = count_players_for_team(Ship.Team.GoodGuys)
-	var bad_count: int = count_players_for_team(Ship.Team.BadGuys)
-	var good_bots_to_spawn: int = maxi(desired_good - good_count, 0)
-	var bad_bots_to_spawn: int = maxi(desired_bad - bad_count, 0)
-
-	for i in range(good_bots_to_spawn):
-		spawn_bot_player(Ship.Team.GoodGuys)
-
-	for i in range(bad_bots_to_spawn):
-		spawn_bot_player(Ship.Team.BadGuys)
+func get_selected_game_mode() -> GameMode:
+	if game_mode != null and is_instance_valid(game_mode):
+		return game_mode
+	return null
 
 
 func spawn_local_player(team: Ship.Team, local_player_index: int) -> PlayerShip:
@@ -263,8 +245,10 @@ func on_ship_destroyed(ship: Ship) -> void:
 
 
 func respawn_ship_after_delay(spawn_data: Dictionary, destroyed_ship_id: int) -> void:
-	if respawn_delay_sec > 0.0:
-		await get_tree().create_timer(respawn_delay_sec).timeout
+	var selected_game_mode = get_selected_game_mode()
+
+	if selected_game_mode.respawn_delay_sec > 0.0:
+		await get_tree().create_timer(selected_game_mode.respawn_delay_sec).timeout
 
 	if not is_inside_tree():
 		return
@@ -317,46 +301,11 @@ func refresh_camera_targets(update_position: bool) -> void:
 	camera.set_targets(camera_targets, update_position)
 
 
-func count_players_for_team(team: Ship.Team) -> int:
-	prune_player_arrays()
-	var count: int = 0
-	for player in local_players:
-		if player.team == team:
-			count += 1
-	for player in bot_players:
-		if player.team == team:
-			count += 1
-	return count
-
-
-func count_local_players_for_team(team: Ship.Team) -> int:
-	prune_player_arrays()
-	var count: int = 0
-	for player in local_players:
-		if player.team == team:
-			count += 1
-	return count
-
-
-func next_available_local_player_index() -> int:
-	if PlayerInput.MAX_LOCAL_PLAYERS <= 0:
-		return 0
-
-	var used_indices: Dictionary = {}
-	for player in local_players:
-		used_indices[player.local_player_index] = true
-
-	for i in range(PlayerInput.MAX_LOCAL_PLAYERS):
-		if not used_indices.has(i):
-			return i
-
-	return local_players.size() % PlayerInput.MAX_LOCAL_PLAYERS
-
-
 func start_game() -> void:
+	var selected_game_mode = get_selected_game_mode()
 	good_team_kills = 0
 	bad_team_kills = 0
-	game_time_left_sec = maxf(float(game_duration_sec), 0.0)
+	game_time_left_sec = maxf(float(selected_game_mode.game_duration_sec), 0.0)
 	winner_team = -1
 	finish_reason = FinishReason.TimeUp
 	respawning_ship_ids.clear()
