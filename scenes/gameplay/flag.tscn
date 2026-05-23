@@ -1,12 +1,22 @@
 [gd_scene format=3 uid="uid://cvi37x2yaqg03"]
 
-[ext_resource type="Script" uid="uid://cioqrabc3spcp" path="res://scripts/flag.gd" id="1_76ss4"]
+[ext_resource type="Script" uid="uid://cioqrabc3spcp" path="res://scripts/gameplay/flag.gd" id="1_76ss4"]
 [ext_resource type="PackedScene" uid="uid://d2e8nb6tj4sfb" path="res://scenes/environment/neutral_flag.tscn" id="2_32e5v"]
 [ext_resource type="PackedScene" uid="uid://cg0fye0h146ca" path="res://scenes/environment/white_flag.tscn" id="3_tjkec"]
 [ext_resource type="PackedScene" uid="uid://bjnq8gta7rkbi" path="res://scenes/environment/black_flag.tscn" id="4_s5mf2"]
+[ext_resource type="Shader" uid="uid://xsh5qa5stwbf" path="res://shaders/aim_overlay.gdshader" id="5_arcgr"]
+[ext_resource type="Texture2D" uid="uid://baaquuaomcxnd" path="res://images/circle_01_a.png" id="6_8x4ci"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_32e5v"]
 radius = 25.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q5okl"]
+render_priority = 0
+shader = ExtResource("5_arcgr")
+shader_parameter/use_texture = true
+shader_parameter/albedo_tex = ExtResource("6_8x4ci")
+shader_parameter/tint_color = Color(1, 1, 1, 0.37254903)
+shader_parameter/intensity = 3.0
 
 [node name="Flag" type="Node3D" unique_id=2133819521 node_paths=PackedStringArray("capture_area", "collision_shape", "neutral_view", "captured_good_view", "captured_bad_view")]
 script = ExtResource("1_76ss4")
@@ -17,6 +27,8 @@ collision_shape = NodePath("Area3D/CollisionShape3D")
 neutral_view = NodePath("NEUTRAL FLAG")
 captured_good_view = NodePath("WHITE FLAG")
 captured_bad_view = NodePath("BLACK FLAG")
+capture_push_scale = 0.7
+capture_pop_scale = 1.5
 
 [node name="Area3D" type="Area3D" parent="." unique_id=189822055]
 
@@ -28,6 +40,14 @@ shape = SubResource("SphereShape3D_32e5v")
 [node name="WHITE FLAG" parent="." unique_id=1798348924 instance=ExtResource("3_tjkec")]
 
 [node name="BLACK FLAG" parent="." unique_id=345538538 instance=ExtResource("4_s5mf2")]
+
+[node name="CaptureArea" type="Node3D" parent="." unique_id=1109724373]
+transform = Transform3D(11.5, 0, 0, 0, 11.5, 0, 0, 0, 11.5, 0, 1, 0)
+
+[node name="Sprite3D" type="Sprite3D" parent="CaptureArea" unique_id=74713324]
+transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_q5okl")
+texture = ExtResource("6_8x4ci")
 
 [connection signal="body_entered" from="Area3D" to="." method="on_capture_area_body_entered"]
 [connection signal="body_exited" from="Area3D" to="." method="on_capture_area_body_exited"]

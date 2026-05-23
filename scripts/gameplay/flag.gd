@@ -22,13 +22,27 @@ enum State {
 @export var captured_good_view: Node3D
 @export var captured_bad_view: Node3D
 
+@export_category("Capture FX")
+@export var capture_push_scale: float = 0.82
+@export var capture_pop_scale: float = 1.18
+@export var capture_flash_strength: float = 0.8
+@export var capture_flash_material_template: ShaderMaterial = preload("res://materials/hit_flash.tres")
+@export var capture_flash_targets: Array[GeometryInstance3D] = []
+
 var capture_team: int = -1
 var capture_progress_sec: float = 0.0
 var ships_in_radius: Dictionary = {}
+var view_base_scales: Dictionary = {}
+var capture_state_tween: Tween
+var capture_flash_tween: Tween
+var capture_flash_material_instance: ShaderMaterial
 
 
 func _ready() -> void:
 	collision_shape.shape.radius = capture_radius
+	setup_view_base_scales()
+	setup_capture_flash_material_instance()
+	set_capture_flash_strength(0.0)
 	ensure_capture_hooks()
 	update_view()
 	state_changed.emit(self, state, captured_team)
@@ -45,6 +59,7 @@ func reset_flag() -> void:
 	capture_team = -1
 	capture_progress_sec = 0.0
 	ships_in_radius.clear()
+	stop_capture_state_feedback()
 	update_view()
 	state_changed.emit(self, state, captured_team)
 
@@ -136,7 +151,7 @@ func update_capture_progress(delta: float) -> void:
 		captured_team = capture_team
 		capture_team = -1
 		capture_progress_sec = 0.0
-		update_view()
+		play_capture_state_changed_feedback()
 		state_changed.emit(self, state, captured_team)
 		var winner_team: Ship.Team = int(captured_team) as Ship.Team
 		captured.emit(self, winner_team)
@@ -162,3 +177,108 @@ func update_view() -> void:
 	neutral_view.visible = state == State.Neutral
 	captured_good_view.visible = state == State.Captured and captured_team == int(Ship.Team.GoodGuys)
 	captured_bad_view.visible = state == State.Captured and captured_team == int(Ship.Team.BadGuys)
+
+
+func play_capture_state_changed_feedback() -> void:
+	stop_capture_state_feedback()
+
+	var previous_view := get_visible_view()
+	var next_view := get_current_view()
+	set_capture_flash_color(Color.WHITE)
+	set_capture_flash_strength(0.0)
+
+	if previous_view == null or next_view == null:
+		update_view()
+		return
+
+	capture_state_tween = create_tween()
+	capture_state_tween.tween_property(previous_view, "scale", get_view_base_scale(previous_view) * capture_push_scale, 0.05).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	capture_state_tween.tween_callback(switch_to_current_view_for_capture_feedback)
+	capture_state_tween.tween_property(next_view, "scale", get_view_base_scale(next_view), 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+	if capture_flash_material_instance:
+		capture_flash_tween = create_tween()
+		capture_flash_tween.tween_interval(0.05)
+		var flash_setter := Callable(self, "set_capture_flash_strength")
+		capture_flash_tween.tween_method(flash_setter, 0.0, capture_flash_strength, 0.03)
+		capture_flash_tween.tween_method(flash_setter, capture_flash_strength, 0.0, 0.08)
+
+
+func stop_capture_state_feedback() -> void:
+	if capture_state_tween and capture_state_tween.is_valid():
+		capture_state_tween.kill()
+	if capture_flash_tween and capture_flash_tween.is_valid():
+		capture_flash_tween.kill()
+
+	reset_view_scales()
+	set_capture_flash_strength(0.0)
+
+
+func switch_to_current_view_for_capture_feedback() -> void:
+	update_view()
+	var current_view := get_current_view()
+	if current_view:
+		current_view.scale = get_view_base_scale(current_view) * capture_pop_scale
+
+
+func setup_view_base_scales() -> void:
+	view_base_scales[neutral_view] = neutral_view.scale
+	view_base_scales[captured_good_view] = captured_good_view.scale
+	view_base_scales[captured_bad_view] = captured_bad_view.scale
+
+
+func reset_view_scales() -> void:
+	for view in view_base_scales:
+		var node := view as Node3D
+		node.scale = get_view_base_scale(node)
+
+
+func get_view_base_scale(view: Node3D) -> Vector3:
+	return view_base_scales.get(view, view.scale)
+
+
+func get_current_view() -> Node3D:
+	if state == State.Neutral:
+		return neutral_view
+	if captured_team == int(Ship.Team.GoodGuys):
+		return captured_good_view
+	return captured_bad_view
+
+
+func get_visible_view() -> Node3D:
+	for view in [neutral_view, captured_good_view, captured_bad_view]:
+		if view.visible:
+			return view
+	return null
+
+
+func setup_capture_flash_material_instance() -> void:
+	if capture_flash_material_template == null:
+		return
+
+	capture_flash_material_instance = capture_flash_material_template.duplicate(true) as ShaderMaterial
+	if capture_flash_targets.is_empty():
+		for view in [neutral_view, captured_good_view, captured_bad_view]:
+			add_capture_flash_targets_from(view)
+
+	for mesh in capture_flash_targets:
+		mesh.material_overlay = capture_flash_material_instance
+
+
+func add_capture_flash_targets_from(node: Node) -> void:
+	var mesh := node as GeometryInstance3D
+	if mesh:
+		capture_flash_targets.append(mesh)
+
+	for child in node.get_children():
+		add_capture_flash_targets_from(child)
+
+
+func set_capture_flash_color(color: Color) -> void:
+	if capture_flash_material_instance:
+		capture_flash_material_instance.set_shader_parameter(&"flash_color", color)
+
+
+func set_capture_flash_strength(value: float) -> void:
+	if capture_flash_material_instance:
+		capture_flash_material_instance.set_shader_parameter(&"flash_strength", value)
