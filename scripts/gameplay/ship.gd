@@ -31,6 +31,8 @@ enum Team {
 @export var destroyed_shake_strength: float = 0.2
 @export_range(0.01, 1.0, 0.01) var destroyed_shake_step_duration: float = 0.1
 @export var destroyed_destroy_delay: float = 1.0
+@export var destroyed_push_radius: float = 25.0
+@export var destroyed_push_strength: float = 25.0
 
 @export_category("Cannon")
 @export var cannon_ball: PackedScene
@@ -618,13 +620,34 @@ func play_destroyed_feedback() -> void:
 	await get_tree().create_timer(destroyed_sink_duration - 0.5).timeout
 	view.position = base_view_position
 	
-	VfxManager.spawn("ship_explosion", global_position + Vector3.UP * destroyed_sink_distance)
+	var explosion_position: Vector3 = global_position + Vector3.UP * destroyed_sink_distance
+	VfxManager.spawn("ship_explosion", explosion_position)
 	
 	await get_tree().create_timer(0.25).timeout
+	push_ships_from_explosion(explosion_position)
 	AudioManager.play_sfx("ship_explosion", global_position)
 	
 	await get_tree().create_timer(destroyed_destroy_delay).timeout
 	queue_free()
+
+
+func push_ships_from_explosion(explosion_position: Vector3) -> void:
+	if destroyed_push_radius <= 0.0 or destroyed_push_strength <= 0.0:
+		return
+
+	for node in get_tree().get_nodes_in_group("Ship"):
+		var ship := node as Ship
+		if ship == null or ship == self or ship.is_destroyed:
+			continue
+
+		var push_offset: Vector3 = ship.global_position - explosion_position
+		push_offset.y = 0.0
+		var distance: float = push_offset.length()
+		if distance <= 0.0 or distance > destroyed_push_radius:
+			continue
+
+		var push_falloff: float = 1.0 - (distance / destroyed_push_radius)
+		ship.velocity += push_offset.normalized() * destroyed_push_strength * push_falloff
 
 
 func play_hit_feedback(color: Color) -> void:
