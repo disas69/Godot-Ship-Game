@@ -10,15 +10,10 @@ class_name GameScreen extends UiView
 func open() -> void:
 	super.open()
 
-	var game_manager := get_tree().current_scene
-	if game_manager == null:
-		push_warning("GameScreen: current scene is not assigned.")
-		return
-
-	var game: Game = game_manager.get("active_game")
+	var game: Game = GameManager.instance.active_game
 	while game == null:
 		await get_tree().process_frame
-		game = game_manager.get("active_game")
+		game = GameManager.instance.active_game
 
 	game.game_time_changed.connect(on_timer_changed)
 	game.team_kills_changed.connect(on_team_kills_changed)

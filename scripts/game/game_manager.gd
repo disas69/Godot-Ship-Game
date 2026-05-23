@@ -1,9 +1,24 @@
 class_name GameManager extends Node3D
 
+static var instance: GameManager
+
 @export var game_settings: GameSettings
 @export var scene_manager: SceneManager
 
 var active_game: Game
+
+
+func _enter_tree() -> void:
+	if instance != null:
+		push_error("GameManager: multiple instances detected. There should only be one GameManager in the scene tree.")
+
+	instance = self
+
+
+func _exit_tree() -> void:
+	if instance == self:
+		instance = null
+
 
 func _ready() -> void:
 	call_deferred("load_initial_scene")
