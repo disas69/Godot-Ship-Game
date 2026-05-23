@@ -2,9 +2,10 @@
 
 [ext_resource type="Script" uid="uid://dgl73uko6g0oh" path="res://scripts/game/game_settings.gd" id="1_settings"]
 [ext_resource type="PackedScene" uid="uid://b6epdq534gav5" path="res://scenes/game.tscn" id="2_game"]
+[ext_resource type="PackedScene" uid="uid://oaqs51ls0q0r" path="res://scenes/menu.tscn" id="2_y2m87"]
 [ext_resource type="Resource" uid="uid://bkrkdvaq85l8t" path="res://resources/game_modes/current_good_local.tres" id="3_mode"]
 
 [resource]
 script = ExtResource("1_settings")
-game_scenes = Array[PackedScene]([ExtResource("2_game")])
+game_scenes = Array[PackedScene]([ExtResource("2_y2m87"), ExtResource("2_game")])
 game_mode = ExtResource("3_mode")

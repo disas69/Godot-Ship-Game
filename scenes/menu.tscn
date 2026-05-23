@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://oaqs51ls0q0r"]
+
+[ext_resource type="Script" path="res://scripts/ui/menu.gd" id="1_3fypa"]
+[ext_resource type="Environment" uid="uid://cm77bbr0io118" path="res://scenes/main-environment.tres" id="1_con2f"]
+[ext_resource type="PackedScene" uid="uid://t0rocmbnigpa" path="res://scenes/gameplay/water.tscn" id="2_mhnvy"]
+[ext_resource type="PackedScene" uid="uid://djcyh712ps6xh" path="res://scenes/environment/environment_battle.tscn" id="3_4ytvr"]
+
+[node name="Menu" type="Node3D" unique_id=1790462864 node_paths=PackedStringArray("play_button")]
+script = ExtResource("1_3fypa")
+play_button = NodePath("CanvasLayer/PlayButton")
+
+[node name="View" type="Node3D" parent="." unique_id=1244043196]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="View" unique_id=1795496025]
+environment = ExtResource("1_con2f")
+
+[node name="Sun" type="DirectionalLight3D" parent="View" unique_id=2137842810]
+transform = Transform3D(-0.76604444, -0.49240386, 0.41317594, 0, 0.64278764, 0.76604444, -0.64278764, 0.58682406, -0.4924039, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_mode = 1
+
+[node name="Water" parent="View" unique_id=196760504 instance=ExtResource("2_mhnvy")]
+
+[node name="Environment" parent="View" unique_id=2110515165 instance=ExtResource("3_4ytvr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.15, 0)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1597129017]
+transform = Transform3D(0.55629563, -0.07242507, 0.8278223, 0, 0.9961947, 0.08715574, -0.8309845, -0.048484355, 0.5541788, -32.045, 10.33, 55.29)
+fov = 60.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PlayButton" type="Button" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -24.0
+offset_right = 80.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Play"

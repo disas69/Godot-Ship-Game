@@ -9,6 +9,8 @@ shader_parameter/dither_scale = 1.0
 
 [node name="Main" type="Node3D" unique_id=619861050]
 
+[node name="Scene" type="Node3D" parent="." unique_id=1503878336]
+
 [node name="Post-Process" type="CanvasLayer" parent="." unique_id=1811039162]
 
 [node name="ColorRect" type="ColorRect" parent="Post-Process" unique_id=1494704084]
@@ -19,4 +21,4 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="UIManager" parent="." unique_id=976727756 instance=ExtResource("12_trceg")]
+[node name="UI" parent="." unique_id=976727756 instance=ExtResource("12_trceg")]
