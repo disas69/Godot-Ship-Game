@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://cm81laasfaqrp" path="res://audio/sfx/Smoke Bomb 003.wav" id="7_72jes"]
 [ext_resource type="AudioStream" uid="uid://1iisya1lxe4m" path="res://audio/sfx/freesound_community-medium-explosion-40472.mp3" id="8_qmcs3"]
 [ext_resource type="AudioStream" uid="uid://3chrt1yqjnxk" path="res://audio/sfx/freesound_community-water-splash-46402.mp3" id="9_jgf1q"]
+[ext_resource type="AudioStream" uid="uid://c8500k80s3ti" path="res://audio/sfx/coin_collect.wav" id="10_jaogm"]
 
 [sub_resource type="Resource" id="Resource_music_main"]
 script = ExtResource("1_ym8em")
@@ -61,9 +62,17 @@ unit_size = 30.0
 max_distance = 300.0
 metadata/_custom_type_script = "uid://c0m20eaomryhb"
 
+[sub_resource type="Resource" id="Resource_abf41"]
+script = ExtResource("1_ym8em")
+key = "flag_capture"
+stream = ExtResource("10_jaogm")
+unit_size = 30.0
+max_distance = 300.0
+metadata/_custom_type_script = "uid://c0m20eaomryhb"
+
 [resource]
 script = ExtResource("4_ikubc")
 sfx_preload_count = 12
-sfx_entries = Array[ExtResource("1_ym8em")]([SubResource("Resource_ai8j6"), SubResource("Resource_8igxg"), SubResource("Resource_gkxuj")])
+sfx_entries = Array[ExtResource("1_ym8em")]([SubResource("Resource_ai8j6"), SubResource("Resource_8igxg"), SubResource("Resource_gkxuj"), SubResource("Resource_abf41")])
 music_entries = Array[ExtResource("1_ym8em")]([SubResource("Resource_music_main"), SubResource("Resource_xfatc")])
 metadata/_custom_type_script = "uid://dy6boqjp4xj7h"

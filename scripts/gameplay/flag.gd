@@ -192,16 +192,16 @@ func play_capture_state_changed_feedback() -> void:
 		return
 
 	capture_state_tween = create_tween()
-	capture_state_tween.tween_property(previous_view, "scale", get_view_base_scale(previous_view) * capture_push_scale, 0.05).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	capture_state_tween.tween_property(previous_view, "scale", get_view_base_scale(previous_view) * capture_push_scale, 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	capture_state_tween.tween_callback(switch_to_current_view_for_capture_feedback)
-	capture_state_tween.tween_property(next_view, "scale", get_view_base_scale(next_view), 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	capture_state_tween.tween_property(next_view, "scale", get_view_base_scale(next_view), 0.25).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 	if capture_flash_material_instance:
 		capture_flash_tween = create_tween()
 		capture_flash_tween.tween_interval(0.05)
 		var flash_setter := Callable(self, "set_capture_flash_strength")
-		capture_flash_tween.tween_method(flash_setter, 0.0, capture_flash_strength, 0.03)
-		capture_flash_tween.tween_method(flash_setter, capture_flash_strength, 0.0, 0.08)
+		capture_flash_tween.tween_method(flash_setter, 0.0, capture_flash_strength, 0.1)
+		capture_flash_tween.tween_method(flash_setter, capture_flash_strength, 0.0, 0.25)
 
 
 func stop_capture_state_feedback() -> void:
@@ -219,6 +219,7 @@ func switch_to_current_view_for_capture_feedback() -> void:
 	var current_view := get_current_view()
 	if current_view:
 		current_view.scale = get_view_base_scale(current_view) * capture_pop_scale
+	AudioManager.play_sfx("flag_capture", current_view.global_transform.origin)
 
 
 func setup_view_base_scales() -> void:
