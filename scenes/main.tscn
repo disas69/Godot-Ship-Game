@@ -1,5 +1,8 @@
 [gd_scene format=3 uid="uid://cdl4hvrn3nxf2"]
 
+[ext_resource type="Script" uid="uid://cxyv5wwg8cb37" path="res://scripts/tools/scene_manager.gd" id="1_sugp2"]
+[ext_resource type="Script" uid="uid://c3h0it8oaq5jj" path="res://scripts/game/game_manager.gd" id="2_q38dh"]
+[ext_resource type="Resource" uid="uid://bf578rxhemq3c" path="res://resources/game_settings.tres" id="2_tbgi4"]
 [ext_resource type="Shader" uid="uid://oq6p7nl4l7by" path="res://shaders/post_process.gdshader" id="6_tefeu"]
 [ext_resource type="PackedScene" uid="uid://fvsww5ojowtu" path="res://scenes/ui.tscn" id="12_trceg"]
 
@@ -7,9 +10,14 @@
 shader = ExtResource("6_tefeu")
 shader_parameter/dither_scale = 1.0
 
-[node name="Main" type="Node3D" unique_id=619861050]
+[node name="Main" type="Node3D" unique_id=619861050 node_paths=PackedStringArray("scene_manager")]
+script = ExtResource("2_q38dh")
+game_settings = ExtResource("2_tbgi4")
+scene_manager = NodePath("Scene")
 
-[node name="Scene" type="Node3D" parent="." unique_id=1503878336]
+[node name="Scene" type="Node3D" parent="." unique_id=1503878336 node_paths=PackedStringArray("root")]
+script = ExtResource("1_sugp2")
+root = NodePath(".")
 
 [node name="Post-Process" type="CanvasLayer" parent="." unique_id=1811039162]
 
@@ -20,5 +28,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="UI" parent="." unique_id=976727756 instance=ExtResource("12_trceg")]
+visible = false

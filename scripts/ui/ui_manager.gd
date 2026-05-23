@@ -8,10 +8,15 @@ class_name UiManager extends Node
 
 
 func _ready() -> void:
-	var game: Game = GameManager.active_game
+	var game_manager := get_tree().current_scene
+	if game_manager == null:
+		push_warning("UiManager: current scene is not assigned.")
+		return
+
+	var game: Game = game_manager.get("active_game")
 	while game == null:
 		await get_tree().process_frame
-		game = GameManager.active_game
+		game = game_manager.get("active_game")
 
 	game.game_time_changed.connect(on_timer_changed)
 	game.team_kills_changed.connect(on_team_kills_changed)

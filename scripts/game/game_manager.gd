@@ -1,17 +1,20 @@
-extends Node
+class_name GameManager extends Node3D
 
-const GAME_SETTINGS := preload("res://resources/game_settings.tres")
+@export var game_settings: GameSettings
+@export var scene_manager: SceneManager
 
-var game_settings: GameSettings = GAME_SETTINGS
 var active_game: Game
-var active_scene: Node
-
 
 func _ready() -> void:
 	call_deferred("load_initial_scene")
 
 
 func load_initial_scene() -> void:
+	resolve_scene_manager()
+	if scene_manager == null:
+		push_warning("GameManager: scene_manager is not assigned.")
+		return
+
 	resolve_active_game()
 	if active_game != null:
 		activate_game(active_game)
@@ -22,7 +25,7 @@ func load_initial_scene() -> void:
 		push_warning("GameManager: no initial scene is assigned.")
 		return
 
-	var initial_scene_instance := instantiate_scene(initial_scene)
+	var initial_scene_instance := scene_manager.load_scene(initial_scene)
 	if initial_scene_instance == null:
 		return
 
@@ -41,7 +44,32 @@ func resolve_active_game() -> void:
 
 	active_game = find_game_in_tree(current_scene)
 	if active_game != null:
-		active_scene = active_game
+		resolve_scene_manager()
+		if scene_manager != null:
+			scene_manager.set_active_scene(active_game)
+
+
+func resolve_scene_manager() -> void:
+	if scene_manager != null and is_instance_valid(scene_manager):
+		return
+
+	var current_scene := get_tree().current_scene
+	if current_scene == null:
+		return
+
+	scene_manager = find_scene_manager_in_tree(current_scene)
+
+
+func find_scene_manager_in_tree(root: Node) -> SceneManager:
+	if root is SceneManager:
+		return root as SceneManager
+
+	for child in root.get_children():
+		var found_scene_manager := find_scene_manager_in_tree(child)
+		if found_scene_manager != null:
+			return found_scene_manager
+
+	return null
 
 
 func find_game_in_tree(root: Node) -> Game:
@@ -57,6 +85,11 @@ func find_game_in_tree(root: Node) -> Game:
 
 
 func load_game_scene() -> void:
+	resolve_scene_manager()
+	if scene_manager == null:
+		push_warning("GameManager: scene_manager is not assigned.")
+		return
+
 	if active_game != null and is_instance_valid(active_game):
 		activate_game(active_game)
 		return
@@ -66,9 +99,7 @@ func load_game_scene() -> void:
 		push_warning("GameManager: no game scene is assigned.")
 		return
 
-	unload_active_scene()
-
-	var game_scene_instance := instantiate_scene(game_scene)
+	var game_scene_instance := scene_manager.load_scene(game_scene)
 	if game_scene_instance == null:
 		return
 
@@ -80,34 +111,10 @@ func load_game_scene() -> void:
 	activate_game(active_game)
 
 
-func instantiate_scene(scene: PackedScene) -> Node:
-	var scene_instance := scene.instantiate()
-	if scene_instance == null:
-		push_warning("GameManager: failed to instantiate scene.")
-		return null
-
-	active_scene = scene_instance
-
-	var current_scene := get_tree().current_scene
-	if current_scene != null:
-		current_scene.add_child(active_scene)
-	else:
-		add_child(active_scene)
-
-	return active_scene
-
-
-func unload_active_scene() -> void:
-	if active_scene == null or not is_instance_valid(active_scene):
-		return
-
-	active_scene.queue_free()
-	active_scene = null
-
-
 func activate_game(game: Game) -> void:
 	active_game = game
-	active_scene = game
+	if scene_manager != null:
+		scene_manager.set_active_scene(game)
 	setup_game(active_game)
 	active_game.start_game()
 

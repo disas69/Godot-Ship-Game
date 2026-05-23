@@ -12,4 +12,9 @@ func _ready() -> void:
 
 
 func on_play_button_pressed() -> void:
-	GameManager.load_game_scene()
+	var game_manager := get_tree().current_scene
+	if game_manager == null:
+		push_warning("Menu: current scene is not assigned.")
+		return
+
+	game_manager.call("load_game_scene")
