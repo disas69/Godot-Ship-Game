@@ -44,6 +44,15 @@ project/assembly_name="Starter Kit Basic Scene"
 
 enabled=PackedStringArray("res://addons/brackeys_particle_controls/plugin.cfg", "res://addons/rider-plugin/plugin.cfg", "res://addons/ui_layout_controls/plugin.cfg")
 
+[file_customization]
+
+folder_colors={
+"res://assets/": "purple",
+"res://resources/": "orange",
+"res://scenes/": "green",
+"res://scripts/": "red"
+}
+
 [input]
 
 p1_move_right={

@@ -35,7 +35,7 @@ stream_2/stream = ExtResource("7_1dsmq")
 script = ExtResource("1_hauhh")
 key = "cannon_shoot"
 stream = SubResource("AudioStreamRandomizer_xfatc")
-volume = -7.0
+volume = -10.0
 unit_size = 30.0
 max_distance = 300.0
 

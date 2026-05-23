@@ -5,7 +5,7 @@
 [ext_resource type="Resource" uid="uid://bf578rxhemq3c" path="res://resources/game_settings.tres" id="2_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://oaqs51ls0q0r" path="res://scenes/menu.tscn" id="4_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://b6epdq534gav5" path="res://scenes/game.tscn" id="5_o6xl0"]
-[ext_resource type="Script" path="res://scripts/tools/scene_entry.gd" id="5_tipki"]
+[ext_resource type="Script" uid="uid://7bygcym1vjus" path="res://scripts/tools/scene_entry.gd" id="5_tipki"]
 [ext_resource type="Shader" uid="uid://oq6p7nl4l7by" path="res://shaders/post_process.gdshader" id="6_tefeu"]
 
 [sub_resource type="Resource" id="Resource_85g3d"]

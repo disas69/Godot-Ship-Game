@@ -36,6 +36,7 @@ func on_initial_scene_loaded(initial_scene_instance: Node) -> void:
 		activate_game(active_game)
 	else:
 		UIManager.open_screen("menu")
+		play_music()
 
 
 func resolve_active_game() -> void:
@@ -97,3 +98,8 @@ func activate_game(game: Game) -> void:
 func setup_game(game: Game) -> void:
 	if game_settings.game_mode != null:
 		game.game_mode = game_settings.game_mode
+
+
+func play_music() -> void:
+	AudioManager.play_music("cannon_battle_main")
+	AudioManager.play_music("ambient_sea")
