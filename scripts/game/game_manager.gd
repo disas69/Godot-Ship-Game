@@ -22,6 +22,8 @@ func load_initial_scene() -> void:
 	if initial_scene_instance is Game:
 		active_game = initial_scene_instance as Game
 		activate_game(active_game)
+	else:
+		UIManager.open_screen("menu")
 
 
 func resolve_active_game() -> void:
@@ -72,6 +74,7 @@ func activate_game(game: Game) -> void:
 		scene_manager.set_active_scene(game)
 	setup_game(active_game)
 	active_game.start_game()
+	UIManager.open_screen("game")
 
 
 func setup_game(game: Game) -> void:

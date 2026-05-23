@@ -27,6 +27,7 @@ buses/default_bus_layout="uid://csitjxvt01n1y"
 
 AudioManager="*uid://b8y2uls6j20lq"
 VfxManager="*res://scripts/vfx/vfx_manager.gd"
+UIManager="*res://scripts/ui/ui_manager.gd"
 
 [display]
 

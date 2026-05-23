@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://b6epdq534gav5" path="res://scenes/game.tscn" id="5_o6xl0"]
 [ext_resource type="Script" path="res://scripts/tools/scene_entry.gd" id="5_tipki"]
 [ext_resource type="Shader" uid="uid://oq6p7nl4l7by" path="res://shaders/post_process.gdshader" id="6_tefeu"]
-[ext_resource type="PackedScene" uid="uid://fvsww5ojowtu" path="res://scenes/ui.tscn" id="12_trceg"]
 
 [sub_resource type="Resource" id="Resource_85g3d"]
 script = ExtResource("5_tipki")
@@ -31,7 +30,7 @@ scene_manager = NodePath("Scene")
 [node name="Scene" type="Node3D" parent="." unique_id=1503878336 node_paths=PackedStringArray("root")]
 script = ExtResource("1_sugp2")
 root = NodePath(".")
-scenes = Array[Resource]([SubResource("Resource_85g3d"), SubResource("Resource_choun")])
+scenes = Array[ExtResource("5_tipki")]([SubResource("Resource_85g3d"), SubResource("Resource_choun")])
 
 [node name="Post-Process" type="CanvasLayer" parent="." unique_id=1811039162]
 
@@ -43,6 +42,3 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-
-[node name="UI" parent="." unique_id=976727756 instance=ExtResource("12_trceg")]
-visible = false

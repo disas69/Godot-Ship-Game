@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="UiLibrary" format=3 uid="uid://b6811sk7vgaeu"]
+
+[ext_resource type="Script" uid="uid://dybfmno2t41au" path="res://scripts/ui/ui_library.gd" id="1_library"]
+[ext_resource type="Script" uid="uid://bkhms8eml0gjx" path="res://scripts/ui/ui_entry.gd" id="2_entry"]
+[ext_resource type="PackedScene" uid="uid://brvjfuw01q78n" path="res://scenes/ui/menu_screen.tscn" id="3_menu"]
+[ext_resource type="PackedScene" uid="uid://fvsww5ojowtu" path="res://scenes/ui/game_screen.tscn" id="3_snbbf"]
+
+[sub_resource type="Resource" id="Resource_menu"]
+script = ExtResource("2_entry")
+id = "menu"
+scene = ExtResource("3_menu")
+
+[sub_resource type="Resource" id="Resource_game"]
+script = ExtResource("2_entry")
+id = "game"
+scene = ExtResource("3_snbbf")
+
+[resource]
+script = ExtResource("1_library")
+entries = Array[Resource]([SubResource("Resource_menu"), SubResource("Resource_game")])

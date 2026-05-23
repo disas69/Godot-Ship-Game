@@ -1,63 +1,108 @@
-class_name UiManager extends Node
+extends Node
 
-@export var timer_label: Label
-@export var flags_1_label: Label
-@export var flags_2_label: Label
-@export var kills_1_label: Label
-@export var kills_2_label: Label
+var library: Resource = preload("res://resources/libraries/ui_library.tres")
+
+var entry_map: Dictionary[String, Resource] = {}
+var active_screen: UiView
+var active_popups: Dictionary[String, UiView] = {}
 
 
 func _ready() -> void:
-	var game_manager := get_tree().current_scene
-	if game_manager == null:
-		push_warning("UiManager: current scene is not assigned.")
+	rebuild_entry_map()
+
+
+func rebuild_entry_map() -> void:
+	entry_map.clear()
+	if library == null:
+		push_warning("UI library is not assigned.")
 		return
 
-	var game: Game = game_manager.get("active_game")
-	while game == null:
-		await get_tree().process_frame
-		game = game_manager.get("active_game")
-
-	game.game_time_changed.connect(on_timer_changed)
-	game.team_kills_changed.connect(on_team_kills_changed)
-	game.flags_status_changed.connect(on_flags_status_changed)
-
-	sync_from_game(game)
-
-
-func sync_from_game(game: Game) -> void:
-	on_team_kills_changed(game.good_team_kills, game.bad_team_kills)
-
-	var good_captured: int = 0
-	var bad_captured: int = 0
-	var neutral: int = 0
-	for flag in game.valid_flags:
-		if flag == null or not is_instance_valid(flag):
+	for entry in library.get("entries"):
+		var ui_entry := entry as Resource
+		if ui_entry == null:
 			continue
-		if flag.is_captured_by(Ship.Team.GoodGuys):
-			good_captured += 1
-		elif flag.is_captured_by(Ship.Team.BadGuys):
-			bad_captured += 1
-		else:
-			neutral += 1
 
-	on_flags_status_changed(good_captured, bad_captured, neutral)
+		var id := String(ui_entry.get("id"))
+		if id.is_empty():
+			continue
 
+		var scene := ui_entry.get("scene") as PackedScene
+		if scene == null:
+			push_warning("UI entry '%s' has no scene assigned." % id)
+			continue
 
-func on_timer_changed(remaining_time_sec: float) -> void:
-	if timer_label != null:
-		timer_label.text = str(int(remaining_time_sec))
+		entry_map[id] = ui_entry
 
 
-func on_team_kills_changed(good_team_kills: int, bad_team_kills: int) -> void:
-	if kills_1_label != null:
-		kills_1_label.text = str(good_team_kills)
-	if kills_2_label != null:
-		kills_2_label.text = str(bad_team_kills)
+func open_screen(id: String) -> UiView:
+	close_opened_screen()
+	var view := create_view(id)
+	if view == null:
+		return null
+
+	active_screen = view
+	add_child(active_screen)
+	active_screen.open()
+	return active_screen
 
 
-func on_flags_status_changed(good_captured: int, bad_captured: int, _neutral: int) -> void:
-	if flags_1_label != null:
-		flags_1_label.text = str(good_captured)
-	if flags_2_label != null:
-		flags_2_label.text = str(bad_captured)
+func close_opened_screen() -> void:
+	if active_screen == null:
+		return
+
+	if is_instance_valid(active_screen):
+		active_screen.close()
+	active_screen = null
+
+
+func open_popup(id: String) -> UiView:
+	var existing := active_popups.get(id) as UiView
+	if existing != null and is_instance_valid(existing):
+		return existing
+
+	var popup := create_view(id)
+	if popup == null:
+		return null
+
+	active_popups[id] = popup
+	add_child(popup)
+	popup.open()
+	return popup
+
+
+func close_popup(id: String) -> void:
+	var popup := active_popups.get(id) as UiView
+	if popup == null:
+		return
+
+	active_popups.erase(id)
+	if is_instance_valid(popup):
+		popup.close()
+
+
+func close_all_popups() -> void:
+	var popup_ids := active_popups.keys()
+	for id in popup_ids:
+		close_popup(String(id))
+
+
+func create_view(id: String) -> UiView:
+	var entry := get_entry_or_warn(id)
+	if entry == null:
+		return null
+
+	var scene := entry.get("scene") as PackedScene
+	var view := scene.instantiate() as UiView
+	if view == null:
+		push_warning("UI scene '%s' is not a UiView scene." % id)
+		return null
+
+	view.view_id = id
+	return view
+
+
+func get_entry_or_warn(id: String) -> Resource:
+	var entry := entry_map.get(id) as Resource
+	if entry == null:
+		push_warning("Missing UI entry id: " + id)
+	return entry
