@@ -3,8 +3,21 @@
 [ext_resource type="Script" uid="uid://cxyv5wwg8cb37" path="res://scripts/tools/scene_manager.gd" id="1_sugp2"]
 [ext_resource type="Script" uid="uid://c3h0it8oaq5jj" path="res://scripts/game/game_manager.gd" id="2_q38dh"]
 [ext_resource type="Resource" uid="uid://bf578rxhemq3c" path="res://resources/game_settings.tres" id="2_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://oaqs51ls0q0r" path="res://scenes/menu.tscn" id="4_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://b6epdq534gav5" path="res://scenes/game.tscn" id="5_o6xl0"]
+[ext_resource type="Script" path="res://scripts/tools/scene_entry.gd" id="5_tipki"]
 [ext_resource type="Shader" uid="uid://oq6p7nl4l7by" path="res://shaders/post_process.gdshader" id="6_tefeu"]
 [ext_resource type="PackedScene" uid="uid://fvsww5ojowtu" path="res://scenes/ui.tscn" id="12_trceg"]
+
+[sub_resource type="Resource" id="Resource_85g3d"]
+script = ExtResource("5_tipki")
+id = "menu"
+scene = ExtResource("4_o6xl0")
+
+[sub_resource type="Resource" id="Resource_choun"]
+script = ExtResource("5_tipki")
+id = "game"
+scene = ExtResource("5_o6xl0")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o6xl0"]
 shader = ExtResource("6_tefeu")
@@ -18,6 +31,7 @@ scene_manager = NodePath("Scene")
 [node name="Scene" type="Node3D" parent="." unique_id=1503878336 node_paths=PackedStringArray("root")]
 script = ExtResource("1_sugp2")
 root = NodePath(".")
+scenes = Array[Resource]([SubResource("Resource_85g3d"), SubResource("Resource_choun")])
 
 [node name="Post-Process" type="CanvasLayer" parent="." unique_id=1811039162]
 
