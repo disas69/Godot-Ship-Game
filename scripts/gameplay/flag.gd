@@ -21,6 +21,7 @@ enum State {
 @export var neutral_view: Node3D
 @export var captured_good_view: Node3D
 @export var captured_bad_view: Node3D
+@export var capture_progress_view: Sprite3D
 
 @export_category("Capture FX")
 @export var capture_push_scale: float = 0.82
@@ -36,12 +37,14 @@ var view_base_scales: Dictionary = {}
 var capture_state_tween: Tween
 var capture_flash_tween: Tween
 var capture_flash_material_instance: ShaderMaterial
+var capture_progress_material_instance: ShaderMaterial
 
 
 func _ready() -> void:
 	collision_shape.shape.radius = capture_radius
 	setup_view_base_scales()
 	setup_capture_flash_material_instance()
+	setup_capture_progress_view()
 	set_capture_flash_strength(0.0)
 	ensure_capture_hooks()
 	update_view()
@@ -60,6 +63,7 @@ func reset_flag() -> void:
 	capture_progress_sec = 0.0
 	ships_in_radius.clear()
 	stop_capture_state_feedback()
+	update_capture_progress_view()
 	update_view()
 	state_changed.emit(self, state, captured_team)
 
@@ -144,6 +148,7 @@ func update_capture_progress(delta: float) -> void:
 	capture_progress_sec += delta
 	capture_progress_sec = minf(capture_progress_sec, capture_duration_sec)
 	var progress_team: Ship.Team = int(capture_team) as Ship.Team
+	update_capture_progress_view()
 	capture_progress_changed.emit(self, progress_team, capture_progress_sec, capture_duration_sec)
 
 	if capture_progress_sec >= capture_duration_sec:
@@ -151,6 +156,7 @@ func update_capture_progress(delta: float) -> void:
 		captured_team = capture_team
 		capture_team = -1
 		capture_progress_sec = 0.0
+		update_capture_progress_view()
 		play_capture_state_changed_feedback()
 		state_changed.emit(self, state, captured_team)
 		var winner_team: Ship.Team = int(captured_team) as Ship.Team
@@ -160,6 +166,7 @@ func update_capture_progress(delta: float) -> void:
 func reset_capture_progress() -> void:
 	capture_team = -1
 	capture_progress_sec = 0.0
+	update_capture_progress_view()
 
 
 func ensure_capture_hooks() -> void:
@@ -283,3 +290,30 @@ func set_capture_flash_color(color: Color) -> void:
 func set_capture_flash_strength(value: float) -> void:
 	if capture_flash_material_instance:
 		capture_flash_material_instance.set_shader_parameter(&"flash_strength", value)
+
+
+func setup_capture_progress_view() -> void:
+	if capture_progress_view == null:
+		return
+
+	var progress_material := capture_progress_view.material_override as ShaderMaterial
+	if progress_material:
+		capture_progress_material_instance = progress_material.duplicate(true) as ShaderMaterial
+		capture_progress_view.material_override = capture_progress_material_instance
+
+	update_capture_progress_view()
+
+
+func update_capture_progress_view() -> void:
+	if capture_progress_view == null:
+		return
+
+	var is_capture_in_progress := capture_team != -1 and capture_progress_sec > 0.0
+	capture_progress_view.visible = is_capture_in_progress
+
+	var progress := 0.0
+	if is_capture_in_progress:
+		progress = clampf(capture_progress_sec / maxf(capture_duration_sec, 0.001), 0.0, 1.0)
+
+	if capture_progress_material_instance:
+		capture_progress_material_instance.set_shader_parameter(&"progress", progress)

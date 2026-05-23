@@ -6,9 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://bjnq8gta7rkbi" path="res://scenes/environment/black_flag.tscn" id="4_s5mf2"]
 [ext_resource type="Shader" uid="uid://qx6rgimmqnqq" path="res://shaders/capture_radius_overlay.gdshader" id="5_arcgr"]
 [ext_resource type="Texture2D" uid="uid://baaquuaomcxnd" path="res://images/circle_01_a.png" id="6_8x4ci"]
+[ext_resource type="Shader" uid="uid://bouukueag1sjc" path="res://shaders/radial_progress_3d.gdshader" id="7_pj1pu"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_32e5v"]
-radius = 25.0
+radius = 18.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_q5okl"]
 render_priority = 0
@@ -20,15 +21,26 @@ shader_parameter/intensity = 3.0
 shader_parameter/radial_scroll_speed = 0.35
 shader_parameter/radial_tiling = 1.0
 
-[node name="Flag" type="Node3D" unique_id=2133819521 node_paths=PackedStringArray("capture_area", "collision_shape", "neutral_view", "captured_good_view", "captured_bad_view")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_28xoc"]
+render_priority = 1
+shader = ExtResource("7_pj1pu")
+shader_parameter/progress = 0.370000017575
+shader_parameter/fill_color = Color(1, 1, 1, 0.9)
+shader_parameter/background_color = Color(0, 0, 0, 0.47058824)
+shader_parameter/inner_radius = 0.50000002375
+shader_parameter/outer_radius = 1.0
+shader_parameter/edge_softness = 0.0
+
+[node name="Flag" type="Node3D" unique_id=2133819521 node_paths=PackedStringArray("capture_area", "collision_shape", "neutral_view", "captured_good_view", "captured_bad_view", "capture_progress_view")]
 script = ExtResource("1_76ss4")
-capture_radius = 25.0
+capture_radius = 18.0
 capture_duration_sec = 3.0
 capture_area = NodePath("Area3D")
 collision_shape = NodePath("Area3D/CollisionShape3D")
 neutral_view = NodePath("NEUTRAL FLAG")
 captured_good_view = NodePath("WHITE FLAG")
 captured_bad_view = NodePath("BLACK FLAG")
+capture_progress_view = NodePath("CaptureProgress")
 capture_push_scale = 0.7
 capture_pop_scale = 1.5
 
@@ -49,6 +61,12 @@ transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 1, 0)
 [node name="Sprite3D" type="Sprite3D" parent="CaptureArea" unique_id=74713324]
 transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, 0, 0, 0)
 material_override = SubResource("ShaderMaterial_q5okl")
+texture = ExtResource("6_8x4ci")
+
+[node name="CaptureProgress" type="Sprite3D" parent="." unique_id=515356588]
+transform = Transform3D(1, 0, 0, 0, 0.819152, 0.5735764, 0, -0.5735764, 0.819152, 0, 8.5, 2)
+material_override = SubResource("ShaderMaterial_28xoc")
+pixel_size = 0.008
 texture = ExtResource("6_8x4ci")
 
 [connection signal="body_entered" from="Area3D" to="." method="on_capture_area_body_entered"]
