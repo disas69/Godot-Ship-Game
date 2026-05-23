@@ -1,6 +1,5 @@
 class_name UiManager extends Node
 
-@export var game_manager: GameManager
 @export var timer_label: Label
 @export var flags_1_label: Label
 @export var flags_2_label: Label
@@ -9,24 +8,27 @@ class_name UiManager extends Node
 
 
 func _ready() -> void:
-	if game_manager == null:
-		push_warning("UiManager: game_manager is not assigned.")
+	await get_tree().process_frame
+
+	var game: Game = GameManager["active_game"]
+	if game == null:
+		push_warning("UiManager: active_game is not assigned.")
 		return
 
-	game_manager.game_time_changed.connect(on_timer_changed)
-	game_manager.team_kills_changed.connect(on_team_kills_changed)
-	game_manager.flags_status_changed.connect(on_flags_status_changed)
+	game.game_time_changed.connect(on_timer_changed)
+	game.team_kills_changed.connect(on_team_kills_changed)
+	game.flags_status_changed.connect(on_flags_status_changed)
 
-	sync_from_game_manager()
+	sync_from_game(game)
 
 
-func sync_from_game_manager() -> void:
-	on_team_kills_changed(game_manager.good_team_kills, game_manager.bad_team_kills)
+func sync_from_game(game: Game) -> void:
+	on_team_kills_changed(game.good_team_kills, game.bad_team_kills)
 
 	var good_captured: int = 0
 	var bad_captured: int = 0
 	var neutral: int = 0
-	for flag in game_manager.valid_flags:
+	for flag in game.valid_flags:
 		if flag == null or not is_instance_valid(flag):
 			continue
 		if flag.is_captured_by(Ship.Team.GoodGuys):

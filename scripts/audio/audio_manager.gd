@@ -1,6 +1,6 @@
 extends Node
 
-var library: AudioLibrary = preload("res://resources/audio_library.tres")
+var library: AudioLibrary = preload("res://resources/libraries/audio_library.tres")
 
 const MUSIC_BUS: StringName = &"Music"
 const SFX_BUS: StringName = &"SFX"

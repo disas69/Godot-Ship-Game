@@ -1,6 +1,6 @@
 extends Node
 
-@export var library: VfxLibrary = preload("res://resources/vfx_library.tres")
+@export var library: VfxLibrary = preload("res://resources/libraries/vfx_library.tres")
 
 var vfx_map: Dictionary[StringName, VfxEntry] = {}
 var active_effects: Dictionary[Node3D, VfxEntry] = {}
