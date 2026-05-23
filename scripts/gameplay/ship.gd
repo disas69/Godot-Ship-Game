@@ -16,6 +16,8 @@ enum Team {
 
 @export_category("View")
 @export var view: Node3D
+@export var good_view: Node3D
+@export var bad_view: Node3D
 @export var forward_incline: Vector2
 @export var side_incline: Vector3
 @export_category("Hit FX")
@@ -69,6 +71,7 @@ var cannon_ball_pool_root: Node3D
 
 func _ready() -> void:
 	add_to_group("Ship")
+	update_team_view()
 	default_gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 	cannon_start_position = cannon_view.position
 	cannon_start_scale = cannon_view.scale
@@ -79,6 +82,13 @@ func _ready() -> void:
 	initialize_aim_offset()
 	setup_cannon_ball_pool()
 	super._ready()
+
+
+func update_team_view() -> void:
+	if good_view != null:
+		good_view.visible = team == Team.GoodGuys
+	if bad_view != null:
+		bad_view.visible = team == Team.BadGuys
 
 
 func _physics_process(delta: float) -> void:

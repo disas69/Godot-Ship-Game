@@ -1,12 +1,72 @@
 [gd_scene format=3 uid="uid://fvsww5ojowtu"]
 
 [ext_resource type="Texture2D" uid="uid://wx8ope6lojqp" path="res://images/ui/scroll/pngs/tall.png" id="1_nt7q6"]
-[ext_resource type="Script" path="res://scripts/ui_manager.gd" id="2_xynp1"]
 [ext_resource type="Texture2D" uid="uid://d1gdygxngma58" path="res://images/ui/white flag.png" id="3_8dubc"]
 [ext_resource type="Texture2D" uid="uid://gy1gdbscgbmr" path="res://images/ui/black flag.png" id="4_p7vwb"]
 [ext_resource type="Texture2D" uid="uid://dqfdmmixda6q6" path="res://images/ui/white skull.png" id="5_ktti3"]
 [ext_resource type="Texture2D" uid="uid://mywykogdvj0y" path="res://images/ui/black skull.png" id="6_cgfq5"]
 [ext_resource type="Texture2D" uid="uid://deqi6ivh63fq6" path="res://images/ui/clock.png" id="7_p7vwb"]
+
+[sub_resource type="GDScript" id="GDScript_8dubc"]
+script/source = "extends Node
+
+@export var game_manager: GameManager
+@export var timer_label: Label
+@export var flags_1_label: Label
+@export var flags_2_label: Label
+@export var kills_1_label: Label
+@export var kills_2_label: Label
+
+
+func _ready() -> void:
+	if game_manager == null:
+		push_warning(\"UiManager: game_manager is not assigned.\")
+		return
+
+	game_manager.game_time_changed.connect(on_timer_changed)
+	game_manager.team_kills_changed.connect(on_team_kills_changed)
+	game_manager.flags_status_changed.connect(on_flags_status_changed)
+
+	sync_from_game_manager()
+
+
+func sync_from_game_manager() -> void:
+	on_team_kills_changed(game_manager.good_team_kills, game_manager.bad_team_kills)
+
+	var good_captured: int = 0
+	var bad_captured: int = 0
+	var neutral: int = 0
+	for flag in game_manager.valid_flags:
+		if flag == null or not is_instance_valid(flag):
+			continue
+		if flag.is_captured_by(Ship.Team.GoodGuys):
+			good_captured += 1
+		elif flag.is_captured_by(Ship.Team.BadGuys):
+			bad_captured += 1
+		else:
+			neutral += 1
+
+	on_flags_status_changed(good_captured, bad_captured, neutral)
+
+
+func on_timer_changed(remaining_time_sec: float) -> void:
+	if timer_label != null:
+		timer_label.text = str(int(remaining_time_sec))
+
+
+func on_team_kills_changed(good_team_kills: int, bad_team_kills: int) -> void:
+	if kills_1_label != null:
+		kills_1_label.text = str(good_team_kills)
+	if kills_2_label != null:
+		kills_2_label.text = str(bad_team_kills)
+
+
+func on_flags_status_changed(good_captured: int, bad_captured: int, _neutral: int) -> void:
+	if flags_1_label != null:
+		flags_1_label.text = str(good_captured)
+	if flags_2_label != null:
+		flags_2_label.text = str(bad_captured)
+"
 
 [sub_resource type="LabelSettings" id="LabelSettings_ktti3"]
 font_size = 17
@@ -15,7 +75,7 @@ font_size = 17
 font_size = 19
 
 [node name="UI" type="CanvasLayer" unique_id=976727756 node_paths=PackedStringArray("timer_label", "flags_1_label", "flags_2_label", "kills_1_label", "kills_2_label")]
-script = ExtResource("2_xynp1")
+script = SubResource("GDScript_8dubc")
 timer_label = NodePath("Control/Control/Timer")
 flags_1_label = NodePath("Control/Control/HBoxContainer/Flags1")
 flags_2_label = NodePath("Control/Control/HBoxContainer2/Flags2")

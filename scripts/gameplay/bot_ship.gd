@@ -1,9 +1,5 @@
 class_name BotShip extends Ship
 
-@export_category("View")
-@export var good_view: Node3D
-@export var bad_view: Node3D
-
 @export_category("Navigation")
 @export var navigation_agent: NavigationAgent3D
 @export var target: Node3D
@@ -51,13 +47,6 @@ var state: BotState = BotState.IDLE_WAIT
 
 func _ready() -> void:
 	show_aim_helpers = false
-	
-	if team == Team.GoodGuys:
-		good_view.visible = true
-		bad_view.visible = false
-	else:
-		good_view.visible = false
-		bad_view.visible = true
 
 	generate_patrol_points()
 	randomize_closest_reach_target_attempt_limit()
