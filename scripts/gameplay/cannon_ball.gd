@@ -106,7 +106,10 @@ func release() -> void:
 
 	is_released = true
 	if release_callback.is_valid():
-		release_callback.call(self)
+		if Engine.is_in_physics_frame():
+			release_callback.call_deferred(self)
+		else:
+			release_callback.call(self)
 	else:
 		queue_free()
 

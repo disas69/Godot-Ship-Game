@@ -614,14 +614,14 @@ func play_destroyed_feedback() -> void:
 
 		shake_tween.tween_property(view, "position", base_view_position + shake_offset, shake_step_duration * 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 		shake_tween.tween_property(view, "position", base_view_position, shake_step_duration * 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-
+	
 	await get_tree().create_timer(destroyed_sink_duration - 0.5).timeout
 	view.position = base_view_position
 	
-	var explosion: Node3D = VfxManager.spawn("ship_explosion", global_position + Vector3.UP * destroyed_sink_distance)
+	VfxManager.spawn("ship_explosion", global_position + Vector3.UP * destroyed_sink_distance)
 	
-	if explosion != null:
-		AudioManager.play_sfx("ship_explosion", explosion.global_position)
+	await get_tree().create_timer(0.25).timeout
+	AudioManager.play_sfx("ship_explosion", global_position)
 	
 	await get_tree().create_timer(destroyed_destroy_delay).timeout
 	queue_free()

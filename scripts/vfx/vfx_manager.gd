@@ -29,7 +29,7 @@ func spawn_at_transform(key: String, global_transform: Transform3D, parent: Node
 		return null
 
 	move_effect_to_parent(effect, get_spawn_parent(parent))
-	effect.global_transform = global_transform
+	effect.global_transform = get_spawn_transform(effect, global_transform)
 	prepare_effect_for_spawn(effect, entry)
 	start_effect(effect)
 	return effect
@@ -49,7 +49,7 @@ func spawn_attached(key: String, parent: Node3D, local_transform: Transform3D = 
 		return null
 
 	move_effect_to_parent(effect, parent)
-	effect.transform = local_transform
+	effect.transform = get_spawn_transform(effect, local_transform)
 	prepare_effect_for_spawn(effect, entry)
 	start_effect(effect)
 	return effect
@@ -154,8 +154,15 @@ func instantiate_effect(entry: VfxEntry) -> Node3D:
 		particle_effect.auto_play = false
 		particle_effect.free_on_finished = false
 
+	effect.set_meta("vfx_root_scale", effect.scale)
 	effect.tree_exiting.connect(on_effect_tree_exiting.bind(effect))
 	return effect
+
+
+func get_spawn_transform(effect: Node3D, spawn_transform: Transform3D) -> Transform3D:
+	var root_scale := effect.get_meta("vfx_root_scale", effect.scale) as Vector3
+	var basis := spawn_transform.basis.orthonormalized().scaled(root_scale)
+	return Transform3D(basis, spawn_transform.origin)
 
 
 func prepare_effect_for_spawn(effect: Node3D, entry: VfxEntry) -> void:
