@@ -30,34 +30,37 @@ func get_scene(id: String) -> PackedScene:
 	for scene_entry in scenes:
 		if scene_entry == null:
 			continue
-		if String(scene_entry.get("id")) == id:
-			return scene_entry.get("scene") as PackedScene
+		if scene_entry.id == id:
+			return scene_entry.scene
 
 	return null
 
 
-func load_initial_scene() -> Node:
+func load_initial_scene(before_fade_out := Callable()) -> Node:
 	var initial_scene: PackedScene = get_initial_scene()
 	if initial_scene == null:
 		push_warning("SceneManager: no initial scene is assigned.")
 		return null
 
-	return load_packed_scene(initial_scene)
+	return await load_packed_scene(initial_scene, true, false, before_fade_out)
 
 
-func load_scene(id: String) -> Node:
+func load_scene(id: String, before_fade_out := Callable()) -> Node:
 	var scene: PackedScene = get_scene(id)
 	if scene == null:
 		push_warning("SceneManager: no scene found for id '%s'." % id)
 		return null
 
-	return load_packed_scene(scene)
+	return await load_packed_scene(scene, true, true, before_fade_out)
 
 
-func load_packed_scene(scene: PackedScene, unload_current := true) -> Node:
+func load_packed_scene(scene: PackedScene, unload_current := true, use_transition := true, before_fade_out := Callable()) -> Node:
 	if scene == null:
 		push_warning("SceneManager: scene is not assigned.")
 		return null
+
+	if use_transition:
+		await UIManager.transition_in()
 
 	if unload_current:
 		unload_active_scene()
@@ -65,10 +68,18 @@ func load_packed_scene(scene: PackedScene, unload_current := true) -> Node:
 	var scene_instance := scene.instantiate()
 	if scene_instance == null:
 		push_warning("SceneManager: failed to instantiate scene.")
+		await UIManager.transition_out()
 		return null
 
 	set_active_scene(scene_instance)
 	root.add_child(active_scene)
+	await get_tree().process_frame
+
+	if before_fade_out.is_valid():
+		before_fade_out.call(active_scene)
+
+	if use_transition:
+		await UIManager.transition_out()
 	return active_scene
 
 

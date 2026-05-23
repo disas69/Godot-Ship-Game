@@ -1,14 +1,18 @@
 extends Node
 
+const SCENE_TRANSITION_SCENE: PackedScene = preload("res://scenes/ui/scene_transition.tscn")
+
 var library: Resource = preload("res://resources/libraries/ui_library.tres")
 
 var entry_map: Dictionary[String, Resource] = {}
 var active_screen: UiView
 var active_popups: Dictionary[String, UiView] = {}
+var scene_transition
 
 
 func _ready() -> void:
 	rebuild_entry_map()
+	create_scene_transition()
 
 
 func rebuild_entry_map() -> void:
@@ -106,3 +110,32 @@ func get_entry_or_warn(id: String) -> Resource:
 	if entry == null:
 		push_warning("Missing UI entry id: " + id)
 	return entry
+
+
+func create_scene_transition():
+	if scene_transition != null and is_instance_valid(scene_transition):
+		return scene_transition
+
+	scene_transition = SCENE_TRANSITION_SCENE.instantiate()
+	if not scene_transition.has_method("fade_in") or not scene_transition.has_method("fade_out"):
+		push_warning("UIManager: scene transition scene is missing transition methods.")
+		return null
+
+	add_child(scene_transition)
+	return scene_transition
+
+
+func transition_in() -> void:
+	var transition: Variant = create_scene_transition()
+	if transition == null:
+		return
+
+	await transition.fade_in()
+
+
+func transition_out() -> void:
+	var transition: Variant = create_scene_transition()
+	if transition == null:
+		return
+
+	await transition.fade_out()

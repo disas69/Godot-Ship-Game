@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://b1f2ony8vjj23"]
+
+[ext_resource type="Script" uid="uid://d0xjv5un5dqg4" path="res://scripts/ui/scene_transition.gd" id="1_transition"]
+[ext_resource type="Shader" uid="uid://cjeey6648ixvt" path="res://shaders/halftone_transition.gdshader" id="2_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_transition"]
+shader = ExtResource("2_shader")
+shader_parameter/transparent_dot = true
+shader_parameter/aspect_ratio = 1.77778
+shader_parameter/dots = 20.0
+shader_parameter/min_density = 0.0
+shader_parameter/max_density = 1.0
+shader_parameter/height = -1.0
+shader_parameter/fade_color = Color(0, 0, 0, 1)
+
+[node name="SceneTransition" type="CanvasLayer" unique_id=156382901 node_paths=PackedStringArray("transition_rect")]
+layer = 128
+script = ExtResource("1_transition")
+transition_rect = NodePath("ColorRect")
+fade_in_duration = 1.0
+fade_out_duration = 1.0
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1226975057]
+material = SubResource("ShaderMaterial_transition")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

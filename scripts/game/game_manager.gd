@@ -6,18 +6,15 @@ static var instance: GameManager
 @export var scene_manager: SceneManager
 
 var active_game: Game
+var is_loading_game_scene := false
 
 
 func _enter_tree() -> void:
-	if instance != null:
-		push_error("GameManager: multiple instances detected. There should only be one GameManager in the scene tree.")
-
 	instance = self
 
 
 func _exit_tree() -> void:
-	if instance == self:
-		instance = null
+	instance = null
 
 
 func _ready() -> void:
@@ -29,11 +26,11 @@ func load_initial_scene() -> void:
 	if active_game != null:
 		activate_game(active_game)
 		return
+		
+	await scene_manager.load_initial_scene(Callable(self, "on_initial_scene_loaded"))
 
-	var initial_scene_instance: Node = scene_manager.load_initial_scene()
-	if initial_scene_instance == null:
-		return
 
+func on_initial_scene_loaded(initial_scene_instance: Node) -> void:
 	if initial_scene_instance is Game:
 		active_game = initial_scene_instance as Game
 		activate_game(active_game)
@@ -71,10 +68,15 @@ func load_game_scene() -> void:
 		activate_game(active_game)
 		return
 
-	var game_scene_instance := scene_manager.load_scene("game")
-	if game_scene_instance == null:
+	if is_loading_game_scene:
 		return
 
+	is_loading_game_scene = true
+	await scene_manager.load_scene("game", Callable(self, "on_game_scene_loaded"))
+	is_loading_game_scene = false
+
+
+func on_game_scene_loaded(game_scene_instance: Node) -> void:
 	active_game = game_scene_instance as Game
 	if active_game == null:
 		push_warning("GameManager: configured game scene is not a Game scene.")
