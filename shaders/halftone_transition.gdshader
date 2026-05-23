@@ -7,14 +7,22 @@ uniform float aspect_ratio = 1.5;
 uniform float dots = 18.0;
 uniform float min_density = 0.0;
 uniform float max_density = 1.0;
-uniform float height = -1.0;
+uniform float progress = 0.0;
+uniform float edge_width = 0.22;
 uniform vec4 fade_color : source_color = vec4(0.0, 0.0, 0.0, 1.0);
 
 
 void fragment() {
 	vec3 uv_grid = fract(vec3(UV, 0.0) * vec3(aspect_ratio * dots, dots, 0.0));
 	float grid = distance(uv_grid, vec3(0.5, 0.5, 0.5));
-	vec3 raw_image = vec3(1.0) * (UV.y + height);
+	float diagonal = (UV.x + UV.y) * 0.5;
+	float fade_progress = progress <= 1.0 ? progress : progress - 1.0;
+	float wave = mix(-edge_width, 1.0 + edge_width, fade_progress);
+	float density = clamp((wave - diagonal) / edge_width, 0.0, 1.0);
+	if (progress > 1.0) {
+		density = 1.0 - density;
+	}
+	vec3 raw_image = vec3(density);
 	vec3 grayscale = vec3(max(max(raw_image.r, raw_image.g), raw_image.b));
 	vec3 clamped = clamp(grayscale, vec3(min_density), vec3(max_density));
 

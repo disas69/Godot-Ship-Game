@@ -10,7 +10,8 @@ shader_parameter/aspect_ratio = 1.77778
 shader_parameter/dots = 20.0
 shader_parameter/min_density = 0.0
 shader_parameter/max_density = 1.0
-shader_parameter/height = -1.0
+shader_parameter/progress = 0.0
+shader_parameter/edge_width = 0.22
 shader_parameter/fade_color = Color(0, 0, 0, 1)
 
 [node name="SceneTransition" type="CanvasLayer" unique_id=156382901 node_paths=PackedStringArray("transition_rect")]
