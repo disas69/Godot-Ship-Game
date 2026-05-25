@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://t0rocmbnigpa"]
 
-[ext_resource type="Script" uid="uid://c53fb8er26tew" path="res://scripts/water.gd" id="1_s3811"]
+[ext_resource type="Script" uid="uid://c53fb8er26tew" path="res://scripts/gameplay/water.gd" id="1_s3811"]
 [ext_resource type="Shader" uid="uid://ccl52wgfv50n0" path="res://shaders/water.gdshader" id="2_s3811"]
 [ext_resource type="Texture2D" uid="uid://bafjqb4q6rya3" path="res://addons/toon_water/Textures/WaterDistortion.png" id="3_ewrsg"]
 [ext_resource type="Texture2D" uid="uid://da5hyoda1jlx2" path="res://addons/toon_water/Textures/PerlinNoise.png" id="4_fiwy5"]
@@ -20,7 +20,7 @@ shader_parameter/foam_min_distance = 0.04
 shader_parameter/foam_color = Color(1, 1, 1, 1)
 shader_parameter/surface_noise_tiling = Vector2(60, 90)
 shader_parameter/surface_noise_scroll = Vector3(0.03, 0.1, 0)
-shader_parameter/surface_noise_cutoff = 0.777
+shader_parameter/surface_noise_cutoff = 0.750000035625
 shader_parameter/surface_distortion_amount = 0.27
 shader_parameter/wave_noise_tiling = Vector2(3, 3)
 shader_parameter/wave_noise_scroll = Vector2(0.025, 0.018)
