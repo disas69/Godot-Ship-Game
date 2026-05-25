@@ -340,6 +340,7 @@ func start_game() -> void:
 	winner_team = -1
 	finish_reason = FinishReason.TimeUp
 	respawning_ship_ids.clear()
+	set_all_ships_gameplay_enabled(true)
 	refresh_bot_reach_targets()
 	update_flags_status()
 
@@ -356,6 +357,7 @@ func finish_game(reason: FinishReason, forced_winner_team: int = -1) -> void:
 	winner_team = resolve_winner_team(forced_winner_team)
 	set_game_state(GameState.Finished)
 	respawning_ship_ids.clear()
+	set_all_ships_gameplay_enabled(false)
 	game_finished.emit(winner_team, finish_reason, good_team_kills, bad_team_kills)
 
 
@@ -365,6 +367,14 @@ func set_game_state(new_state: GameState) -> void:
 
 	game_state = new_state
 	game_state_changed.emit(game_state)
+
+
+func set_all_ships_gameplay_enabled(enabled: bool) -> void:
+	for node in get_tree().get_nodes_in_group("Ship"):
+		var ship := node as Ship
+		if ship == null or not is_instance_valid(ship):
+			continue
+		ship.set_gameplay_enabled(enabled)
 
 
 func register_team_kill_from_destroyed_ship(destroyed_ship: Ship) -> void:

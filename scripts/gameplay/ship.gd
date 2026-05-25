@@ -66,6 +66,7 @@ var hit_scale_tween: Tween
 var hit_flash_tween: Tween
 var hit_flash_material_instance: ShaderMaterial
 var is_destroyed: bool
+var gameplay_enabled: bool = true
 var manual_aim_offset := Vector3.ZERO
 var cannon_ball_pool: ObjectPool
 var cannon_ball_pool_root: Node3D
@@ -94,7 +95,7 @@ func update_team_view() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if is_destroyed:
+	if is_destroyed or not gameplay_enabled:
 		return
 
 	var camera: Camera3D = get_viewport().get_camera_3d()
@@ -117,7 +118,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _process(delta: float) -> void:
-	if is_destroyed:
+	if is_destroyed or not gameplay_enabled:
 		return
 
 	if !last_move_dir.is_zero_approx():
@@ -187,6 +188,26 @@ func should_keep_gamepad_aim_without_input() -> bool:
 
 func can_shoot() -> bool:
 	return false
+
+
+func set_gameplay_enabled(enabled: bool) -> void:
+	gameplay_enabled = enabled
+	set_process(enabled)
+	set_physics_process(enabled)
+	set_process_input(enabled)
+
+	if enabled:
+		return
+
+	velocity = Vector3.ZERO
+	last_move_dir = Vector3.ZERO
+	auto_aim_target_ship = null
+	auto_aim_target = Vector3.ZERO
+
+	if aim_line != null:
+		aim_line.visible = false
+	if aim_indicator != null:
+		aim_indicator.visible = false
 
 
 func is_auto_aim_target_active() -> bool:

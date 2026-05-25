@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bkhms8eml0gjx" path="res://scripts/ui/ui_entry.gd" id="2_entry"]
 [ext_resource type="PackedScene" uid="uid://brvjfuw01q78n" path="res://scenes/ui/menu_screen.tscn" id="3_menu"]
 [ext_resource type="PackedScene" uid="uid://fvsww5ojowtu" path="res://scenes/ui/game_screen.tscn" id="3_snbbf"]
+[ext_resource type="PackedScene" path="res://scenes/ui/game_end_popup.tscn" id="4_game_end"]
 
 [sub_resource type="Resource" id="Resource_menu"]
 script = ExtResource("2_entry")
@@ -15,6 +16,11 @@ script = ExtResource("2_entry")
 id = "game"
 scene = ExtResource("3_snbbf")
 
+[sub_resource type="Resource" id="Resource_game_end"]
+script = ExtResource("2_entry")
+id = "game_end"
+scene = ExtResource("4_game_end")
+
 [resource]
 script = ExtResource("1_library")
-entries = Array[Resource]([SubResource("Resource_menu"), SubResource("Resource_game")])
+entries = Array[Resource]([SubResource("Resource_menu"), SubResource("Resource_game"), SubResource("Resource_game_end")])

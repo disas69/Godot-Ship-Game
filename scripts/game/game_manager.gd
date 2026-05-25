@@ -7,6 +7,7 @@ static var instance: GameManager
 
 var active_game: Game
 var is_loading_game_scene := false
+var is_loading_menu_scene := false
 
 
 func _enter_tree() -> void:
@@ -91,6 +92,7 @@ func activate_game(game: Game) -> void:
 	if scene_manager != null:
 		scene_manager.set_active_scene(game)
 	setup_game(active_game)
+	connect_game_signals(active_game)
 	active_game.start_game()
 	UIManager.open_screen("game")
 
@@ -98,6 +100,34 @@ func activate_game(game: Game) -> void:
 func setup_game(game: Game) -> void:
 	if game_settings.game_mode != null:
 		game.game_mode = game_settings.game_mode
+
+
+func connect_game_signals(game: Game) -> void:
+	if game == null:
+		return
+	if not game.game_finished.is_connected(on_game_finished):
+		game.game_finished.connect(on_game_finished)
+
+
+func on_game_finished(_winner_team: int, _reason: int, _good_team_kills: int, _bad_team_kills: int) -> void:
+	UIManager.open_popup("game_end")
+
+
+func return_to_menu() -> void:
+	if is_loading_menu_scene:
+		return
+
+	is_loading_menu_scene = true
+	active_game = null
+	UIManager.close_all_popups()
+	await scene_manager.load_scene("menu", Callable(self, "on_menu_scene_loaded"))
+	is_loading_menu_scene = false
+
+
+func on_menu_scene_loaded(_menu_scene_instance: Node) -> void:
+	active_game = null
+	UIManager.open_screen("menu")
+	play_music()
 
 
 func play_music() -> void:
