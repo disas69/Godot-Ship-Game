@@ -6,7 +6,24 @@
 [ext_resource type="PackedScene" uid="uid://oaqs51ls0q0r" path="res://scenes/menu.tscn" id="4_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://b6epdq534gav5" path="res://scenes/game.tscn" id="5_o6xl0"]
 [ext_resource type="Script" uid="uid://7bygcym1vjus" path="res://scripts/tools/scene_entry.gd" id="5_tipki"]
-[ext_resource type="Shader" uid="uid://oq6p7nl4l7by" path="res://shaders/post_process.gdshader" id="6_tefeu"]
+[ext_resource type="Shader" uid="uid://dx4h6uwua8a1j" path="res://shaders/pixel_outline.gdshader" id="8_tipki"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_85g3d"]
+render_priority = -128
+shader = ExtResource("8_tipki")
+shader_parameter/depth_threshold = 0.05
+shader_parameter/reverse_depth_threshold = 0.25
+shader_parameter/normal_threshold = 0.6
+shader_parameter/outline_thickness = 1.0
+shader_parameter/darken_amount = 0.3
+shader_parameter/lighten_amount = 1.5
+shader_parameter/normal_edge_bias = Vector3(1, 1, 1)
+shader_parameter/light_direction = Vector3(-0.96, -0.18, 0.2)
+
+[sub_resource type="QuadMesh" id="QuadMesh_choun"]
+material = SubResource("ShaderMaterial_85g3d")
+flip_faces = true
+size = Vector2(2, 2)
 
 [sub_resource type="Resource" id="Resource_85g3d"]
 script = ExtResource("5_tipki")
@@ -18,27 +35,33 @@ script = ExtResource("5_tipki")
 id = "game"
 scene = ExtResource("5_o6xl0")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_o6xl0"]
-shader = ExtResource("6_tefeu")
-shader_parameter/dither_scale = 1.0
-
 [node name="Main" type="Node3D" unique_id=619861050 node_paths=PackedStringArray("scene_manager")]
 script = ExtResource("2_q38dh")
 game_settings = ExtResource("2_tbgi4")
 scene_manager = NodePath("Scene")
 
-[node name="Scene" type="Node3D" parent="." unique_id=1503878336 node_paths=PackedStringArray("root")]
-script = ExtResource("1_sugp2")
-root = NodePath(".")
-scenes = Array[ExtResource("5_tipki")]([SubResource("Resource_85g3d"), SubResource("Resource_choun")])
-
-[node name="Post-Process" type="CanvasLayer" parent="." unique_id=1811039162]
-
-[node name="ColorRect" type="ColorRect" parent="Post-Process" unique_id=1494704084]
-material = SubResource("ShaderMaterial_o6xl0")
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1552819120]
+visible = false
+texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=2134851717]
+handle_input_locally = false
+size = Vector2i(1280, 720)
+render_target_update_mode = 0
+
+[node name="PostProcess" type="MeshInstance3D" parent="SubViewportContainer" unique_id=903116661]
+visible = false
+extra_cull_margin = 1000000.0
+ignore_occlusion_culling = true
+mesh = SubResource("QuadMesh_choun")
+
+[node name="Scene" type="Node3D" parent="." unique_id=1503878336 node_paths=PackedStringArray("root")]
+script = ExtResource("1_sugp2")
+root = NodePath(".")
+scenes = Array[ExtResource("5_tipki")]([SubResource("Resource_85g3d"), SubResource("Resource_choun")])
