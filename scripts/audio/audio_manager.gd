@@ -163,7 +163,7 @@ func play_sfx_internal(key: String, world_position: Vector3) -> void:
 	if player == null:
 		return
 
-	move_sfx_player_to_parent(player, self)
+	move_sfx_player_to_parent(player, get_sfx_playback_parent())
 
 	player.stream = entry.stream
 	player.bus = sfx_bus
@@ -217,6 +217,19 @@ func create_sfx_player() -> AudioStreamPlayer3D:
 	player.bus = sfx_bus
 	player.top_level = true
 	return player
+
+
+func get_sfx_playback_parent() -> Node:
+	if GameManager.instance != null:
+		var active_game := GameManager.instance.active_game
+		if active_game != null and is_instance_valid(active_game):
+			return active_game
+
+	var current_scene := get_tree().current_scene
+	if current_scene is Node3D:
+		return current_scene
+
+	return self
 
 
 func reset_sfx_player_for_pool(player: AudioStreamPlayer3D) -> void:
