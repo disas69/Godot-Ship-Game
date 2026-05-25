@@ -1,12 +1,11 @@
 [gd_scene format=3 uid="uid://b6epdq534gav5"]
 
-[ext_resource type="Script" path="res://scripts/game/game.gd" id="1_game"]
+[ext_resource type="Script" uid="uid://c18rqxpn0ybja" path="res://scripts/game/game.gd" id="1_game"]
 [ext_resource type="Environment" uid="uid://cm77bbr0io118" path="res://scenes/main-environment.tres" id="1_iywne"]
 [ext_resource type="PackedScene" uid="uid://t0rocmbnigpa" path="res://scenes/gameplay/water.tscn" id="2_p57ef"]
 [ext_resource type="PackedScene" uid="uid://djcyh712ps6xh" path="res://scenes/environment/environment_battle.tscn" id="3_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://brwr25ogu6wpj" path="res://scenes/gameplay/main_camera.tscn" id="4_gee14"]
 [ext_resource type="PackedScene" uid="uid://cvi37x2yaqg03" path="res://scenes/gameplay/flag.tscn" id="5_0tnpc"]
-[ext_resource type="Resource" uid="uid://bkrkdvaq85l8t" path="res://resources/game_modes/current_good_local.tres" id="6_mode"]
 [ext_resource type="PackedScene" uid="uid://cl8wcl4pdmpdc" path="res://scenes/gameplay/player_ship.tscn" id="7_local"]
 [ext_resource type="PackedScene" uid="uid://tu6g83v637wo" path="res://scenes/gameplay/bot_ship.tscn" id="8_bot"]
 
@@ -28,7 +27,6 @@ radius = 15.0
 
 [node name="Game" type="Node3D" unique_id=317664930 node_paths=PackedStringArray("spawn_ponts_good_team", "spawn_ponts_bad_team", "flags", "camera")]
 script = ExtResource("1_game")
-game_mode = ExtResource("6_mode")
 spawn_ponts_good_team = [NodePath("Logic/SpawnPoints - Good Team/Marker3D"), NodePath("Logic/SpawnPoints - Good Team/Marker3D2"), NodePath("Logic/SpawnPoints - Good Team/Marker3D3")]
 spawn_ponts_bad_team = [NodePath("Logic/SpawnPoints - Bad Team/Marker3D"), NodePath("Logic/SpawnPoints - Bad Team/Marker3D2"), NodePath("Logic/SpawnPoints - Bad Team/Marker3D3")]
 flags = [NodePath("Logic/Flags/Flag"), NodePath("Logic/Flags/Flag2"), NodePath("Logic/Flags/Flag3"), NodePath("Logic/Flags/Flag4"), NodePath("Logic/Flags/Flag5"), NodePath("Logic/Flags/Flag6"), NodePath("Logic/Flags/Flag7")]
@@ -53,7 +51,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.15, 0)
 
 [node name="MainCamera" parent="." unique_id=1655320981 node_paths=PackedStringArray("targets") instance=ExtResource("4_gee14")]
 targets = []
-camera_size = 70.0
 offset = Vector3(0, -7, 0)
 min_bounds = Vector3(-150, -150, -150)
 max_bounds = Vector3(150, 150, 150)
