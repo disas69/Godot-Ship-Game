@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://brvjfuw01q78n"]
 
 [ext_resource type="Script" uid="uid://b3axxaohvxqbj" path="res://scripts/ui/screens/menu_screen.gd" id="1_py1kr"]
+[ext_resource type="Script" path="res://scripts/ui/components/ui_tween_button.gd" id="2_qa746"]
 
 [node name="MenuScreen" type="CanvasLayer" unique_id=65748089 node_paths=PackedStringArray("play_button")]
 script = ExtResource("1_py1kr")
@@ -18,4 +19,5 @@ offset_right = 80.0
 offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("2_qa746")
 text = "Play"

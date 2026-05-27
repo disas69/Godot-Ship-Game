@@ -1,6 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/screens/game_end_popup.gd" id="1_game_end_popup"]
+[ext_resource type="Script" path="res://scripts/ui/components/ui_tween_button.gd" id="2_x30ry"]
 
 [node name="GameEndPopup" type="CanvasLayer" node_paths=PackedStringArray("title_label", "message_label", "menu_button")]
 layer = 10
@@ -67,4 +68,5 @@ horizontal_alignment = 1
 [node name="MenuButton" type="Button" parent="Root/Panel/Margin/VBox"]
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
+script = ExtResource("2_x30ry")
 text = "Back to Menu"
