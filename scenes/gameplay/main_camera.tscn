@@ -27,6 +27,6 @@ size = 45.0
 [node name="CameraShake" type="Node" parent="Camera" unique_id=183772160 node_paths=PackedStringArray("target")]
 script = ExtResource("3_xe2wr")
 target = NodePath("..")
-max_offset = Vector2(3, 3)
-max_roll_degrees = 9.0
-shake_decay_rate = 4.0
+max_offset = Vector2(5, 5)
+shake_decay_rate = 1.0
+trauma_power = 1.0

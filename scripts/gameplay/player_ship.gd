@@ -89,12 +89,12 @@ func can_shoot() -> bool:
 
 
 func on_shot_fired() -> void:
-	play_camera_shake(0.1)
+	play_camera_shake(0.15)
 
 
 func on_hit_taken(_destroyed: bool) -> void:
 	if _destroyed:
-		play_camera_shake(0.6)
+		play_camera_shake(0.75)
 	else:
 		play_camera_shake(0.25)
 
