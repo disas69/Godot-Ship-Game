@@ -26,8 +26,17 @@ const mat4 BAYER_MATRIX_4X4 = mat4(
 	vec4(0.4375, -0.0625, 0.3125, -0.1875)
 );
 
-float get_depth(vec2 screen_uv, mat4 inv_projection_matrix) {
-	float depth = texture(depth_texture, screen_uv).r;
+ivec2 clamp_pixel(ivec2 pixel, ivec2 texture_size) {
+	return clamp(pixel, ivec2(0), texture_size - ivec2(1));
+}
+
+vec2 pixel_to_uv(ivec2 pixel, ivec2 texture_size) {
+	return (vec2(pixel) + vec2(0.5)) / vec2(texture_size);
+}
+
+float get_depth(ivec2 pixel, mat4 inv_projection_matrix, ivec2 texture_size) {
+	float depth = texelFetch(depth_texture, pixel, 0).r;
+	vec2 screen_uv = pixel_to_uv(pixel, texture_size);
 	vec3 ndc = vec3(screen_uv * 2.0 - 1.0, depth);
 	vec4 view = inv_projection_matrix * vec4(ndc, 1.0);
 	view.xyz /= view.w;
@@ -38,34 +47,34 @@ void vertex() {
 	POSITION = vec4(VERTEX.xy, 1.0, 1.0);
 }
 
-vec3 get_outlined_color(vec2 screen_uv, mat4 inv_projection_matrix, mat4 inv_view_matrix, vec2 viewport_size) {
-	float depth = get_depth(screen_uv, inv_projection_matrix);
-	vec3 normal = texture(normal_texture, screen_uv).xyz * 2.0 - 1.0;
-	vec2 texel_size = outline_thickness / viewport_size;
+vec3 get_outlined_color(ivec2 screen_pixel, mat4 inv_projection_matrix, mat4 inv_view_matrix, ivec2 texture_size) {
+	float depth = get_depth(screen_pixel, inv_projection_matrix, texture_size);
+	vec3 normal = texelFetch(normal_texture, screen_pixel, 0).xyz * 2.0 - 1.0;
+	int outline_offset = max(int(round(outline_thickness)), 1);
 
-	vec2 uvs[4];
-	uvs[0] = vec2(screen_uv.x, min(1.0 - 0.001, screen_uv.y + texel_size.y));
-	uvs[1] = vec2(screen_uv.x, max(0.0, screen_uv.y - texel_size.y));
-	uvs[2] = vec2(min(1.0 - 0.001, screen_uv.x + texel_size.x), screen_uv.y);
-	uvs[3] = vec2(max(0.0, screen_uv.x - texel_size.x), screen_uv.y);
+	ivec2 pixels[4];
+	pixels[0] = clamp_pixel(screen_pixel + ivec2(0, outline_offset), texture_size);
+	pixels[1] = clamp_pixel(screen_pixel - ivec2(0, outline_offset), texture_size);
+	pixels[2] = clamp_pixel(screen_pixel + ivec2(outline_offset, 0), texture_size);
+	pixels[3] = clamp_pixel(screen_pixel - ivec2(outline_offset, 0), texture_size);
 
 	float depth_diff = 0.0;
 	float depth_diff_reversed = 0.0;
 	float nearest_depth = depth;
-	vec2 nearest_uv = screen_uv;
+	ivec2 nearest_pixel = screen_pixel;
 
 	float normal_sum = 0.0;
 	for (int i = 0; i < 4; i++) {
-		float d = get_depth(uvs[i], inv_projection_matrix);
+		float d = get_depth(pixels[i], inv_projection_matrix, texture_size);
 		depth_diff += depth - d;
 		depth_diff_reversed += d - depth;
 
 		if (d < nearest_depth) {
 			nearest_depth = d;
-			nearest_uv = uvs[i];
+			nearest_pixel = pixels[i];
 		}
 
-		vec3 n = texture(normal_texture, uvs[i]).xyz * 2.0 - 1.0;
+		vec3 n = texelFetch(normal_texture, pixels[i], 0).xyz * 2.0 - 1.0;
 		vec3 normal_diff = normal - n;
 
 		// Edge pixels should yield to the normal closest to the bias direction
@@ -83,8 +92,8 @@ vec3 get_outlined_color(vec2 screen_uv, mat4 inv_projection_matrix, mat4 inv_vie
 	float indicator = sqrt(normal_sum);
 	float normal_edge = step(normal_threshold, indicator - reverse_depth_edge);
 
-	vec3 original = texture(screen_texture, screen_uv).rgb;
-	vec3 nearest = texture(screen_texture, nearest_uv).rgb;
+	vec3 original = texelFetch(screen_texture, screen_pixel, 0).rgb;
+	vec3 nearest = texelFetch(screen_texture, nearest_pixel, 0).rgb;
 
 	mat3 view_to_world_normal_mat = mat3(
 		inv_view_matrix[0].xyz,
@@ -101,13 +110,18 @@ vec3 get_outlined_color(vec2 screen_uv, mat4 inv_projection_matrix, mat4 inv_vie
 }
 
 void fragment() {
-	vec2 pixel_size = resolution_downsampling / VIEWPORT_SIZE.xy;
-	vec2 pixelated_uv = SCREEN_UV - mod(SCREEN_UV, pixel_size);
-	vec2 pixel_id = SCREEN_UV / pixel_size;
+	ivec2 texture_size = textureSize(screen_texture, 0);
+	ivec2 screen_pixel = clamp_pixel(ivec2(floor(SCREEN_UV * vec2(texture_size))), texture_size);
+	int sample_step = max(int(round(resolution_downsampling)), 1);
+	ivec2 pixelated_pixel = clamp_pixel(
+		ivec2(floor(vec2(screen_pixel) / float(sample_step)) * float(sample_step)) + ivec2(sample_step / 2),
+		texture_size
+	);
+	vec2 pixel_id = floor(vec2(screen_pixel) / float(sample_step));
 	float bayer_shift = BAYER_MATRIX_4X4[int(mod(pixel_id.x, 4.0))][int(mod(pixel_id.y, 4.0))];
 	float color_steps = max(bit_depth - 1.0, 1.0);
 
-	vec3 dithered = get_outlined_color(pixelated_uv, INV_PROJECTION_MATRIX, INV_VIEW_MATRIX, VIEWPORT_SIZE.xy);
+	vec3 dithered = get_outlined_color(pixelated_pixel, INV_PROJECTION_MATRIX, INV_VIEW_MATRIX, texture_size);
 	dithered += vec3(bayer_shift / max(bit_depth, 1.0));
 	dithered = round(dithered * color_steps) / color_steps;
 
