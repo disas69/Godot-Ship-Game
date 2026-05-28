@@ -12,6 +12,9 @@ const float SMOOTHSTEP_AA = 0.01;
 
 uniform sampler2D surfaceNoise;
 uniform sampler2D distortNoise;
+uniform sampler2D wave_texture : filter_linear_mipmap, repeat_enable;
+uniform sampler2D texture_normal : filter_linear_mipmap, repeat_enable;
+uniform sampler2D texture_normal2 : filter_linear_mipmap, repeat_enable;
 uniform sampler2D depth_texture : hint_depth_texture;
 
 uniform float beer_factor = 0.8;
@@ -33,6 +36,19 @@ uniform float wave_distortion_amount: hint_range(0, 10) = 0.2;
 uniform vec4 wave_color: source_color = vec4(1.0, 1.0, 1.0, 0.2);
 uniform float wave_strength: hint_range(0, 1) = 0.4;
 
+uniform vec2 wave_direction = vec2(2.0, 0.0);
+uniform vec2 wave_2_direction = vec2(0.0, 1.0);
+uniform float wave_time_scale: hint_range(0.0, 0.2, 0.005) = 0.025;
+uniform float wave_speed = 2.0;
+uniform float wave_world_scale = 10.0;
+uniform float wave_height = 0.15;
+uniform float normal_world_scale = 10.0;
+uniform float normal_strength: hint_range(0.0, 2.0) = 0.7;
+uniform vec4 fresnel_color: source_color = vec4(0.72, 0.95, 1.0, 0.16);
+uniform float fresnel_power: hint_range(0.1, 10.0) = 5.0;
+uniform float roughness: hint_range(0.0, 1.0) = 0.08;
+uniform float metallic: hint_range(0.0, 1.0) = 0.0;
+
 uniform vec4 _DepthGradientShallow: source_color = vec4(0.325, 0.807, 0.971, 0.725);
 uniform vec4 _DepthGradientDeep: source_color = vec4(0.086, 0.407, 1, 0.749);
 uniform float _DepthMaxDistance: hint_range(0, 1) = 1.0;
@@ -42,6 +58,12 @@ varying vec2 noiseUV;
 varying vec2 distortUV;
 varying vec2 waveNoiseUV;
 varying vec3 viewNormal;
+varying vec3 worldPos;
+
+float fresnel(float amount, vec3 normal, vec3 view)
+{
+	return pow(1.0 - clamp(dot(normalize(normal), normalize(view)), 0.0, 1.0), amount);
+}
 
 vec4 alphaBlend(vec4 top, vec4 bottom)
 {
@@ -52,6 +74,10 @@ vec4 alphaBlend(vec4 top, vec4 bottom)
 }
 
 void vertex() {
+	worldPos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	float wave_height_sample = texture(wave_texture, worldPos.xz / max(wave_world_scale, 0.001) + TIME * wave_speed * wave_time_scale).r;
+	VERTEX.y += (wave_height_sample * 2.0 - 1.0) * wave_height;
+
 	viewNormal = (MODELVIEW_MATRIX * vec4(NORMAL, 0.0)).xyz;
 	noiseUV = UV * surface_noise_tiling;
 	distortUV = UV;
@@ -110,7 +136,23 @@ void fragment(){
 	surfaceNoiseColor.a *= surfaceNoiseAmount;
 	vec4 baseColor = alphaBlend(waveColor, waterColor);
 	vec4 color = alphaBlend(surfaceNoiseColor, baseColor);
+
+	vec2 normal_time = TIME * wave_direction * wave_time_scale;
+	vec2 normal_time2 = TIME * wave_2_direction * wave_time_scale;
+	vec2 normal_uv = worldPos.xz / max(normal_world_scale, 0.001);
+	vec3 normal_sample = texture(texture_normal, normal_uv + normal_time).rgb;
+	vec3 normal_sample2 = texture(texture_normal2, normal_uv + normal_time2).rgb;
+	vec3 normal_blend = mix(normal_sample, normal_sample2, 0.5);
+	normal_blend.xy = mix(vec2(0.5), normal_blend.xy, normal_strength);
+
+	float fresnel_amount = fresnel(fresnel_power, NORMAL, VIEW);
+	vec4 rimColor = fresnel_color;
+	rimColor.a *= fresnel_amount;
+	color = alphaBlend(rimColor, color);
 	
 	ALBEDO = color.rgb;
 	ALPHA = color.a;
+	METALLIC = metallic;
+	ROUGHNESS = roughness;
+	NORMAL_MAP = normal_blend;
 }
