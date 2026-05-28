@@ -18,6 +18,7 @@ uniform vec3 light_direction = vec3(-0.96, -0.18, 0.2);
 
 uniform float resolution_downsampling : hint_range(1.0, 8.0, 1.0) = 1.0;
 uniform float bit_depth : hint_range(2.0, 64.0, 2.0) = 32.0;
+uniform bool enable_dithering = true;
 
 const mat4 BAYER_MATRIX_4X4 = mat4(
 	vec4(-0.5, 0.0, -0.375, 0.125),
@@ -117,14 +118,16 @@ void fragment() {
 		ivec2(floor(vec2(screen_pixel) / float(sample_step)) * float(sample_step)) + ivec2(sample_step / 2),
 		texture_size
 	);
-	vec2 pixel_id = floor(vec2(screen_pixel) / float(sample_step));
-	float bayer_shift = BAYER_MATRIX_4X4[int(mod(pixel_id.x, 4.0))][int(mod(pixel_id.y, 4.0))];
-	float color_steps = max(bit_depth - 1.0, 1.0);
+	vec3 color = get_outlined_color(pixelated_pixel, INV_PROJECTION_MATRIX, INV_VIEW_MATRIX, texture_size);
 
-	vec3 dithered = get_outlined_color(pixelated_pixel, INV_PROJECTION_MATRIX, INV_VIEW_MATRIX, texture_size);
-	dithered += vec3(bayer_shift / max(bit_depth, 1.0));
-	dithered = round(dithered * color_steps) / color_steps;
+	if (enable_dithering) {
+		vec2 pixel_id = floor(vec2(screen_pixel) / float(sample_step));
+		float bayer_shift = BAYER_MATRIX_4X4[int(mod(pixel_id.x, 4.0))][int(mod(pixel_id.y, 4.0))];
+		float color_steps = max(bit_depth - 1.0, 1.0);
+		color += vec3(bayer_shift / max(bit_depth, 1.0));
+		color = round(color * color_steps) / color_steps;
+	}
 
-	ALBEDO = clamp(dithered, vec3(0.0), vec3(1.0));
+	ALBEDO = clamp(color, vec3(0.0), vec3(1.0));
 	ALPHA = 1.0;
 }

@@ -31,6 +31,7 @@ shader_parameter/normal_edge_bias = Vector3(1, 1, 1)
 shader_parameter/light_direction = Vector3(-0.96, -0.18, 0.2)
 shader_parameter/resolution_downsampling = 1.0
 shader_parameter/bit_depth = 32.0
+shader_parameter/enable_dithering = true
 
 [sub_resource type="QuadMesh" id="QuadMesh_choun"]
 material = SubResource("ShaderMaterial_85g3d")
