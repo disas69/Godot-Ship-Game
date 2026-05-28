@@ -86,3 +86,22 @@ func should_keep_gamepad_aim_without_input() -> bool:
 func can_shoot() -> bool:
 	var action: StringName = player_input.get_action("shoot")
 	return action != StringName("") and Input.is_action_just_pressed(action)
+
+
+func on_shot_fired() -> void:
+	play_camera_shake(0.08)
+
+
+func on_hit_taken(destroyed: bool) -> void:
+	if destroyed:
+		play_camera_shake(0.55)
+	else:
+		play_camera_shake(0.2)
+
+
+func play_camera_shake(amount: float) -> void:
+	var camera_shake := get_tree().get_first_node_in_group("CameraShake")
+	if camera_shake == null or not camera_shake.has_method("shake"):
+		return
+
+	camera_shake.shake(amount)

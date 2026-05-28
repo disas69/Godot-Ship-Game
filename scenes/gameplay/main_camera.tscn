@@ -2,11 +2,13 @@
 
 [ext_resource type="Script" uid="uid://caaql6778xuoy" path="res://scripts/camera/main_camera.gd" id="1_7dc62"]
 [ext_resource type="Environment" uid="uid://cm77bbr0io118" path="res://scenes/main-environment.tres" id="2_qvmr3"]
+[ext_resource type="Script" uid="uid://dfaolm764pxa7" path="res://scripts/camera/camera_shake.gd" id="3_xe2wr"]
 
-[node name="MainCamera" type="Node3D" unique_id=1655320981 node_paths=PackedStringArray("camera", "targets")]
+[node name="MainCamera" type="Node3D" unique_id=1655320981 node_paths=PackedStringArray("camera", "camera_shake", "targets")]
 transform = Transform3D(0.9999996, 0, 0, 0, 0.99999994, 0, 0, 0, 0.9999993, 0, 0, 0)
 script = ExtResource("1_7dc62")
 camera = NodePath("Camera")
+camera_shake = NodePath("Camera/CameraShake")
 targets = [null]
 smooth_speed = 2.0
 camera_size = 60.0
@@ -21,3 +23,9 @@ projection = 1
 current = true
 fov = 40.0
 size = 45.0
+
+[node name="CameraShake" type="Node" parent="Camera" unique_id=183772160 node_paths=PackedStringArray("target")]
+script = ExtResource("3_xe2wr")
+target = NodePath("..")
+max_offset = Vector2(1.5, 1)
+shake_decay_rate = 4.0

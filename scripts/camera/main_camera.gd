@@ -1,6 +1,7 @@
 class_name MainCamera extends Node3D
 
 @export var camera: Camera3D
+@export var camera_shake: CameraShake
 @export var targets: Array[Node3D]
 @export var smooth_speed: float = 10.0
 @export var camera_size: float = 55.0
@@ -59,3 +60,10 @@ func set_targets(new_targets: Array[Node3D], update_position: bool) -> void:
 	targets = new_targets
 	if update_position and targets.size() >= 1:
 		global_position = targets[0].global_position + offset
+
+
+func shake(amount: float = 1.0) -> void:
+	if camera_shake == null or not is_instance_valid(camera_shake):
+		return
+
+	camera_shake.shake(amount)

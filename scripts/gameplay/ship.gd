@@ -464,6 +464,7 @@ func shoot(target_position: Vector3) -> void:
 
 	play_cannon_recoil()
 	play_cannon_smoke_particles()
+	on_shot_fired()
 	AudioManager.play_sfx("cannon_shoot", start_pos)
 
 
@@ -605,14 +606,24 @@ func take_hit(hit_velocity: Vector3, attacker: Ship = null) -> void:
 	
 	if hit_ponts > 0:
 		play_hit_feedback(Color.WHITE)
+		on_hit_taken(false)
 	else:
 		is_destroyed = true
 		destroyed.emit(self)
 		play_hit_feedback(Color.RED)
+		on_hit_taken(true)
 		play_destroyed_feedback()
 		
 
 func on_attacked_by(_attacker: Ship) -> void:
+	pass
+
+
+func on_shot_fired() -> void:
+	pass
+
+
+func on_hit_taken(_destroyed: bool) -> void:
 	pass
 
 
