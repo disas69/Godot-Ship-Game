@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://25nq07drfg3l" path="res://assets/kenney_pirate-kit/Models/GLB format/cannon.glb" id="4_tfsc7"]
 [ext_resource type="Texture2D" uid="uid://baaquuaomcxnd" path="res://images/circle_01_a.png" id="5_gudjc"]
 [ext_resource type="Shader" uid="uid://xsh5qa5stwbf" path="res://shaders/aim_overlay.gdshader" id="6_3m36u"]
+[ext_resource type="Script" uid="uid://bati0lyk6bl2s" path="res://scripts/vfx/ship_trail_3d.gd" id="8_x3ydb"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_2gnfn"]
 radius = 3.5
@@ -71,6 +72,10 @@ transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0.6416068,
 
 [node name="CannonViewRoot" type="Node3D" parent="View" unique_id=959974116]
 transform = Transform3D(1.5, 0, 0, 0, 1.409539, 0.5130302, 0, -0.5130302, 1.409539, 0, 3.8054032, -2.77079)
+
+[node name="ShipTrail" type="GPUParticles3D" parent="View" unique_id=2030516922]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+script = ExtResource("8_x3ydb")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1829515575]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.3, 0)

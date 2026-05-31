@@ -8,6 +8,7 @@
 [ext_resource type="Shader" uid="uid://xsh5qa5stwbf" path="res://shaders/aim_overlay.gdshader" id="6_qmehp"]
 [ext_resource type="PackedScene" uid="uid://cxxpeuwmub1wx" path="res://assets/kenney_pirate-kit/Models/GLB format/ship-small.glb" id="7_3dq4y"]
 [ext_resource type="Texture2D" uid="uid://baaquuaomcxnd" path="res://images/circle_01_a.png" id="7_n0rpc"]
+[ext_resource type="Script" uid="uid://bati0lyk6bl2s" path="res://scripts/vfx/ship_trail_3d.gd" id="8_urxva"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_2gnfn"]
 radius = 3.5
@@ -20,11 +21,9 @@ shader_parameter/albedo_tex = ExtResource("7_n0rpc")
 shader_parameter/tint_color = Color(1, 1, 1, 1)
 shader_parameter/intensity = 1.0
 
-[node name="BotShip" type="CharacterBody3D" unique_id=1886569867 node_paths=PackedStringArray("good_view", "bad_view", "navigation_agent", "view", "hit_flash_targets", "cannon_view", "cannon_root", "cannon_anchor", "aim_indicator")]
+[node name="BotShip" type="CharacterBody3D" unique_id=1886569867 node_paths=PackedStringArray("navigation_agent", "view", "good_view", "bad_view", "hit_flash_targets", "cannon_view", "cannon_root", "cannon_anchor", "aim_indicator")]
 collision_mask = 3
 script = ExtResource("1_40qv6")
-good_view = NodePath("View/ship-small2")
-bad_view = NodePath("View/ship-pirate-small2")
 navigation_agent = NodePath("NavigationAgent3D")
 stop_distance = 15.0
 path_desired_distance = 5.0
@@ -36,6 +35,8 @@ target_lose_radius = 60.0
 attack_position_tolerance = 8.0
 team = 1
 view = NodePath("View")
+good_view = NodePath("View/ship-small2")
+bad_view = NodePath("View/ship-pirate-small2")
 forward_incline = Vector2(-10, 3)
 side_incline = Vector3(-15, 15, 4)
 hit_punch_scale = 1.15
@@ -79,6 +80,10 @@ transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 0.6416068,
 
 [node name="CannonViewRoot" type="Node3D" parent="View" unique_id=959974116]
 transform = Transform3D(1.5, 0, 0, 0, 1.409539, 0.5130302, 0, -0.5130302, 1.409539, 0, 3.8054032, -2.77079)
+
+[node name="ShipTrail" type="GPUParticles3D" parent="View" unique_id=1710898470]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+script = ExtResource("8_urxva")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1829515575]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.3, 0)
