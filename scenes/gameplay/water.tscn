@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://da5hyoda1jlx2" path="res://addons/toon_water/Textures/PerlinNoise.png" id="4_fiwy5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jyhfs"]
-size = Vector3(1000, 10, 1000)
+size = Vector3(500, 10, 500)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ss84j"]
 render_priority = 0
@@ -51,7 +51,7 @@ shader_parameter/_DepthFactor = 1.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_tbgi4"]
 material = SubResource("ShaderMaterial_ss84j")
-size = Vector2(1000, 1000)
+size = Vector2(500, 500)
 subdivide_width = 500
 subdivide_depth = 500
 
