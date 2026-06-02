@@ -15,6 +15,7 @@ camera_size = 60.0
 camera_size_range = Vector2(45, 75)
 min_bounds = Vector3(-15, -100, -100)
 max_bounds = Vector3(15, 100, 100)
+split_line_color = Color(1, 1, 1, 1)
 
 [node name="Camera" type="Camera3D" parent="." unique_id=1875357754]
 transform = Transform3D(1.0000005, 0, 0, 0, 0.81915206, 0.5735768, 0, -0.57357645, 0.81915253, 0, 60, 65)

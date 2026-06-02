@@ -98,7 +98,10 @@ func _physics_process(delta: float) -> void:
 	if is_destroyed or not gameplay_enabled:
 		return
 
-	var camera: Camera3D = get_viewport().get_camera_3d()
+	var camera: Camera3D = get_view_camera()
+	if camera == null:
+		return
+
 	var forward: Vector3 = -camera.global_transform.basis.z
 	var right: Vector3 = camera.global_transform.basis.x
 	forward.y = 0.0
@@ -139,7 +142,7 @@ func _process(delta: float) -> void:
 		if not should_use_mouse_aim(aim_input):
 			target_position = get_gamepad_aim_position(aim_input, delta)
 		else:
-			var camera: Camera3D = get_viewport().get_camera_3d()
+			var camera: Camera3D = get_view_camera()
 			var mouse_pos: Vector2 = get_viewport().get_mouse_position()
 			target_position = get_mouse_water_position(camera, mouse_pos)
 	
@@ -288,7 +291,10 @@ func get_gamepad_aim_position(aim: Vector2, delta: float) -> Variant:
 			return aim_origin + manual_aim_offset
 		return null
 
-	var camera: Camera3D = get_viewport().get_camera_3d()
+	var camera: Camera3D = get_view_camera()
+	if camera == null:
+		return null
+
 	var forward: Vector3 = -camera.global_transform.basis.z
 	var right: Vector3 = camera.global_transform.basis.x
 
@@ -305,6 +311,9 @@ func get_gamepad_aim_position(aim: Vector2, delta: float) -> Variant:
 
 
 func get_mouse_water_position(camera: Camera3D, mouse_pos: Vector2) -> Variant:
+	if camera == null:
+		return null
+
 	var ray_origin: Vector3 = camera.project_ray_origin(mouse_pos)
 	var ray_direction: Vector3 = camera.project_ray_normal(mouse_pos)
 
@@ -322,6 +331,17 @@ func clamp_aim_position(target_position: Vector3) -> Vector3:
 	var aim_origin: Vector3 = get_aim_origin()
 	set_aim_offset(target_position - aim_origin)
 	return aim_origin + manual_aim_offset
+
+
+func get_view_camera() -> Camera3D:
+	var active_camera: Camera3D = get_viewport().get_camera_3d()
+	var main_camera := get_tree().get_first_node_in_group("MainCamera")
+	if main_camera != null and main_camera.has_method("get_camera_for_target"):
+		var target_camera: Variant = main_camera.get_camera_for_target(self)
+		if target_camera is Camera3D:
+			active_camera = target_camera
+
+	return active_camera
 
 
 func get_cannon_forward_aim_position() -> Vector3:

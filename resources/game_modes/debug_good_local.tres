@@ -8,7 +8,14 @@ script = ExtResource("1_04l6b")
 player_name = "Good Local Player 1"
 is_local = true
 
+[sub_resource type="Resource" id="Resource_uycpn"]
+script = ExtResource("1_04l6b")
+player_name = "Player 2"
+team = 1
+is_local = true
+metadata/_custom_type_script = "uid://bnadrldcax0ss"
+
 [resource]
 script = ExtResource("2_mrwac")
-good_team_players = Array[ExtResource("1_04l6b")]([SubResource("Resource_good_local_1")])
+good_team_players = Array[ExtResource("1_04l6b")]([SubResource("Resource_good_local_1"), SubResource("Resource_uycpn")])
 respawn_delay_sec = 5.0

@@ -99,7 +99,10 @@ func get_move_input() -> Vector2:
 
 	direction = direction.normalized()
 
-	var camera: Camera3D = get_viewport().get_camera_3d()
+	var camera: Camera3D = get_view_camera()
+	if camera == null:
+		return Vector2.ZERO
+
 	var camera_right: Vector3 = camera.global_transform.basis.x
 	var camera_forward: Vector3 = -camera.global_transform.basis.z
 	camera_right.y = 0.0
