@@ -7,6 +7,10 @@ class_name GameScreen extends UiView
 @export var kills_2_label: Label
 
 
+func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+
+
 func open() -> void:
 	super.open()
 
@@ -58,3 +62,23 @@ func on_flags_status_changed(good_captured: int, bad_captured: int, _neutral: in
 		flags_1_label.text = str(good_captured)
 	if flags_2_label != null:
 		flags_2_label.text = str(bad_captured)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if should_open_pause(event):
+		get_viewport().set_input_as_handled()
+		UIManager.open_popup("pause")
+
+
+func should_open_pause(event: InputEvent) -> bool:
+	if GameManager.instance == null or GameManager.instance.active_game == null:
+		return false
+	if GameManager.instance.active_game.game_state != Game.GameState.Playing:
+		return false
+	if event is InputEventKey:
+		var key_event := event as InputEventKey
+		return key_event.pressed and not key_event.echo and key_event.keycode == KEY_ESCAPE
+	if event is InputEventJoypadButton:
+		var joy_event := event as InputEventJoypadButton
+		return joy_event.pressed and joy_event.button_index == JOY_BUTTON_START
+	return false

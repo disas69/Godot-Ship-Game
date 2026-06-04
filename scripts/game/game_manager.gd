@@ -78,6 +78,46 @@ func load_game_scene() -> void:
 	is_loading_game_scene = false
 
 
+func start_new_game_scene() -> void:
+	if is_loading_game_scene:
+		return
+
+	is_loading_game_scene = true
+	active_game = null
+	UIManager.close_all_popups()
+	await scene_manager.load_scene("game", Callable(self, "on_game_scene_loaded"))
+	is_loading_game_scene = false
+
+
+func replay_game_scene() -> void:
+	await start_new_game_scene()
+
+
+func configure_local_game(player_count: int, player_device: String) -> void:
+	if game_settings == null:
+		return
+
+	game_settings.player_count = clampi(player_count, 1, 2)
+	game_settings.player_device = player_device
+	game_settings.game_mode = create_local_game_mode(game_settings.player_count)
+
+
+func create_local_game_mode(player_count: int) -> GameMode:
+	var mode := GameMode.new()
+	mode.game_duration_sec = 60 * 3
+	mode.respawn_delay_sec = 3.0
+
+	mode.good_team_players.append(Player.new("Player 1", Ship.Team.GoodGuys, true))
+	if player_count >= 2:
+		mode.bad_team_players.append(Player.new("Player 2", Ship.Team.BadGuys, true))
+	else:
+		mode.bad_team_players.append(Player.new("Black Bot 1", Ship.Team.BadGuys, false))
+
+	mode.good_team_players.append(Player.new("White Bot 1", Ship.Team.GoodGuys, false))
+	mode.bad_team_players.append(Player.new("Black Bot 2", Ship.Team.BadGuys, false))
+	return mode
+
+
 func on_game_scene_loaded(game_scene_instance: Node) -> void:
 	active_game = game_scene_instance as Game
 	if active_game == null:
@@ -118,6 +158,7 @@ func return_to_menu() -> void:
 		return
 
 	is_loading_menu_scene = true
+	get_tree().paused = false
 	active_game = null
 	UIManager.close_all_popups()
 	await scene_manager.load_scene("menu", Callable(self, "on_menu_scene_loaded"))

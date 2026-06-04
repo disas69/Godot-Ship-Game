@@ -1,19 +1,16 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/ui/screens/game_end_popup.gd" id="1_game_end_popup"]
+[ext_resource type="Script" path="res://scripts/ui/popups/pause_popup.gd" id="1_pause_popup"]
 [ext_resource type="PackedScene" path="res://scenes/ui/components/game_button.tscn" id="2_game_button"]
 [ext_resource type="Script" path="res://scripts/ui/components/ui_auto_tween.gd" id="3_auto_tween"]
 [ext_resource type="Script" path="res://scripts/ui/components/ui_tween_container.gd" id="4_tween_container"]
 
-[node name="GameEndPopup" type="CanvasLayer" node_paths=PackedStringArray("title_label", "message_label", "stats_label", "replay_button", "menu_button")]
+[node name="PausePopup" type="CanvasLayer" node_paths=PackedStringArray("continue_button", "quit_button")]
 layer = 10
 process_mode = 3
-script = ExtResource("1_game_end_popup")
-title_label = NodePath("Root/Panel/Margin/VBox/Title")
-message_label = NodePath("Root/Panel/Margin/VBox/Message")
-stats_label = NodePath("Root/Panel/Margin/VBox/Stats")
-replay_button = NodePath("Root/Panel/Margin/VBox/Actions/ReplayButton")
-menu_button = NodePath("Root/Panel/Margin/VBox/Actions/MenuButton")
+script = ExtResource("1_pause_popup")
+continue_button = NodePath("Root/Panel/Margin/VBox/ContinueButton")
+quit_button = NodePath("Root/Panel/Margin/VBox/QuitButton")
 
 [node name="Root" type="Control" parent="."]
 layout_mode = 3
@@ -49,10 +46,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -240.0
-offset_top = -150.0
-offset_right = 240.0
-offset_bottom = 150.0
+offset_left = -190.0
+offset_top = -115.0
+offset_right = 190.0
+offset_bottom = 115.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -85,30 +82,15 @@ alignment = 1
 
 [node name="Title" type="Label" parent="Root/Panel/Margin/VBox"]
 layout_mode = 2
-text = "Game Over"
+text = "Paused"
 horizontal_alignment = 1
 
-[node name="Message" type="Label" parent="Root/Panel/Margin/VBox"]
+[node name="ContinueButton" parent="Root/Panel/Margin/VBox" instance=ExtResource("2_game_button")]
 layout_mode = 2
-text = "Time is up"
-horizontal_alignment = 1
+label = "Continue"
+text = "Continue"
 
-[node name="Stats" type="Label" parent="Root/Panel/Margin/VBox"]
+[node name="QuitButton" parent="Root/Panel/Margin/VBox" instance=ExtResource("2_game_button")]
 layout_mode = 2
-text = "White kills: 0\nBlack kills: 0"
-horizontal_alignment = 1
-
-[node name="Actions" type="HBoxContainer" parent="Root/Panel/Margin/VBox"]
-layout_mode = 2
-theme_override_constants/separation = 12
-alignment = 1
-
-[node name="ReplayButton" parent="Root/Panel/Margin/VBox/Actions" instance=ExtResource("2_game_button")]
-layout_mode = 2
-label = "Replay"
-text = "Replay"
-
-[node name="MenuButton" parent="Root/Panel/Margin/VBox/Actions" instance=ExtResource("2_game_button")]
-layout_mode = 2
-label = "Back"
-text = "Back"
+label = "Quit to Menu"
+text = "Quit to Menu"

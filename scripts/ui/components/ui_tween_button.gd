@@ -35,7 +35,7 @@ var base_rotation_degrees: float = 0.0
 
 
 func _ready() -> void:
-	base_scale = scale
+	base_scale = get_stable_base_scale()
 	base_rotation_degrees = rotation_degrees
 	pivot_offset = size / 2.0
 
@@ -57,6 +57,7 @@ func hover() -> void:
 
 
 func animate_to_hover() -> void:
+	refresh_base_scale_if_ready()
 	pivot_offset = size / 2.0
 	var scale_ratio := get_width_scale_ratio()
 	var scale_target := Vector2.ONE * (1.0 + (hover_scale - 1.0) * scale_ratio)
@@ -95,6 +96,7 @@ func press() -> void:
 	if not press_animate:
 		return
 
+	refresh_base_scale_if_ready()
 	pivot_offset = size / 2.0
 	kill_tween()
 	tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
@@ -113,6 +115,7 @@ func release() -> void:
 
 
 func animate_to_base() -> void:
+	refresh_base_scale_if_ready()
 	pivot_offset = size / 2.0
 	kill_tween()
 	tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
@@ -136,6 +139,17 @@ func get_random_direction() -> float:
 	if randf() < 0.5:
 		return -1.0
 	return 1.0
+
+
+func get_stable_base_scale() -> Vector2:
+	if is_zero_approx(scale.x) or is_zero_approx(scale.y):
+		return Vector2.ONE
+	return scale
+
+
+func refresh_base_scale_if_ready() -> void:
+	if is_zero_approx(base_scale.x) or is_zero_approx(base_scale.y):
+		base_scale = get_stable_base_scale()
 
 
 func play_feedback(sfx_key: String, vibration_strength: float, vibration_duration: float) -> void:

@@ -1,0 +1,149 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/popups/play_popup.gd" id="1_play_popup"]
+[ext_resource type="PackedScene" path="res://scenes/ui/components/game_button.tscn" id="2_game_button"]
+[ext_resource type="Script" path="res://scripts/ui/components/ui_auto_tween.gd" id="3_auto_tween"]
+[ext_resource type="Script" path="res://scripts/ui/components/ui_tween_container.gd" id="4_tween_container"]
+
+[node name="PlayPopup" type="CanvasLayer" node_paths=PackedStringArray("one_player_button", "two_players_button", "keyboard_button", "gamepad_button", "play_button", "back_button", "summary_label")]
+layer = 10
+process_mode = 3
+script = ExtResource("1_play_popup")
+one_player_button = NodePath("Root/Panel/Margin/VBox/PlayerButtons/OnePlayerButton")
+two_players_button = NodePath("Root/Panel/Margin/VBox/PlayerButtons/TwoPlayersButton")
+keyboard_button = NodePath("Root/Panel/Margin/VBox/DeviceButtons/KeyboardButton")
+gamepad_button = NodePath("Root/Panel/Margin/VBox/DeviceButtons/GamepadButton")
+play_button = NodePath("Root/Panel/Margin/VBox/Actions/PlayButton")
+back_button = NodePath("Root/Panel/Margin/VBox/Actions/BackButton")
+summary_label = NodePath("Root/Panel/Margin/VBox/Summary")
+
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+
+[node name="Dim" type="ColorRect" parent="Root"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.45)
+
+[node name="DimTween" type="Node" parent="Root/Dim" node_paths=PackedStringArray("target")]
+script = ExtResource("3_auto_tween")
+target = NodePath("..")
+anim_when = 1
+anim_type = 0
+duration = 0.18
+force_from = true
+
+[node name="Panel" type="PanelContainer" parent="Root"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -245.0
+offset_top = -190.0
+offset_right = 245.0
+offset_bottom = 190.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelTween" type="Control" parent="Root/Panel" node_paths=PackedStringArray("target")]
+script = ExtResource("3_auto_tween")
+target = NodePath("..")
+anim_when = 1
+anim_type = 1
+duration = 0.18
+force_from = true
+
+[node name="ListTween" type="Control" parent="Root/Panel" node_paths=PackedStringArray("target")]
+script = ExtResource("4_tween_container")
+target = NodePath("../Margin/VBox")
+anim_type = 0
+delay_appear = 0.08
+delay_between_elements = 0.05
+
+[node name="Margin" type="MarginContainer" parent="Root/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 24
+
+[node name="VBox" type="VBoxContainer" parent="Root/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Title" type="Label" parent="Root/Panel/Margin/VBox"]
+layout_mode = 2
+text = "Play"
+horizontal_alignment = 1
+
+[node name="PlayerLabel" type="Label" parent="Root/Panel/Margin/VBox"]
+layout_mode = 2
+text = "Player count"
+
+[node name="PlayerButtons" type="HBoxContainer" parent="Root/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="OnePlayerButton" parent="Root/Panel/Margin/VBox/PlayerButtons" instance=ExtResource("2_game_button")]
+layout_mode = 2
+label = "1"
+text = "1"
+
+[node name="TwoPlayersButton" parent="Root/Panel/Margin/VBox/PlayerButtons" instance=ExtResource("2_game_button")]
+layout_mode = 2
+label = "2"
+text = "2"
+
+[node name="DeviceLabel" type="Label" parent="Root/Panel/Margin/VBox"]
+layout_mode = 2
+text = "Players device"
+
+[node name="DeviceButtons" type="HBoxContainer" parent="Root/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="KeyboardButton" parent="Root/Panel/Margin/VBox/DeviceButtons" instance=ExtResource("2_game_button")]
+layout_mode = 2
+label = "Keyboard"
+text = "Keyboard"
+
+[node name="GamepadButton" parent="Root/Panel/Margin/VBox/DeviceButtons" instance=ExtResource("2_game_button")]
+layout_mode = 2
+label = "Gamepad"
+text = "Gamepad"
+
+[node name="Summary" type="Label" parent="Root/Panel/Margin/VBox"]
+layout_mode = 2
+text = "1 player / Keyboard"
+horizontal_alignment = 1
+
+[node name="Actions" type="HBoxContainer" parent="Root/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="PlayButton" parent="Root/Panel/Margin/VBox/Actions" instance=ExtResource("2_game_button")]
+layout_mode = 2
+label = "Play"
+text = "Play"
+
+[node name="BackButton" parent="Root/Panel/Margin/VBox/Actions" instance=ExtResource("2_game_button")]
+layout_mode = 2
+label = "Back"
+text = "Back"

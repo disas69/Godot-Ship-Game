@@ -1,19 +1,18 @@
 [gd_scene format=3]
 
-[ext_resource type="Script" path="res://scripts/ui/screens/game_end_popup.gd" id="1_game_end_popup"]
+[ext_resource type="Script" path="res://scripts/ui/popups/settings_popup.gd" id="1_settings_popup"]
 [ext_resource type="PackedScene" path="res://scenes/ui/components/game_button.tscn" id="2_game_button"]
 [ext_resource type="Script" path="res://scripts/ui/components/ui_auto_tween.gd" id="3_auto_tween"]
 [ext_resource type="Script" path="res://scripts/ui/components/ui_tween_container.gd" id="4_tween_container"]
 
-[node name="GameEndPopup" type="CanvasLayer" node_paths=PackedStringArray("title_label", "message_label", "stats_label", "replay_button", "menu_button")]
+[node name="SettingsPopup" type="CanvasLayer" node_paths=PackedStringArray("fullscreen_button", "windowed_button", "resolution_option", "save_button")]
 layer = 10
 process_mode = 3
-script = ExtResource("1_game_end_popup")
-title_label = NodePath("Root/Panel/Margin/VBox/Title")
-message_label = NodePath("Root/Panel/Margin/VBox/Message")
-stats_label = NodePath("Root/Panel/Margin/VBox/Stats")
-replay_button = NodePath("Root/Panel/Margin/VBox/Actions/ReplayButton")
-menu_button = NodePath("Root/Panel/Margin/VBox/Actions/MenuButton")
+script = ExtResource("1_settings_popup")
+fullscreen_button = NodePath("Root/Panel/Margin/VBox/ModeButtons/FullscreenButton")
+windowed_button = NodePath("Root/Panel/Margin/VBox/ModeButtons/WindowedButton")
+resolution_option = NodePath("Root/Panel/Margin/VBox/ResolutionOption")
+save_button = NodePath("Root/Panel/Margin/VBox/SaveButton")
 
 [node name="Root" type="Control" parent="."]
 layout_mode = 3
@@ -49,10 +48,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -240.0
-offset_top = -150.0
-offset_right = 240.0
-offset_bottom = 150.0
+offset_left = -245.0
+offset_top = -160.0
+offset_right = 245.0
+offset_bottom = 160.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -85,30 +84,37 @@ alignment = 1
 
 [node name="Title" type="Label" parent="Root/Panel/Margin/VBox"]
 layout_mode = 2
-text = "Game Over"
+text = "Settings"
 horizontal_alignment = 1
 
-[node name="Message" type="Label" parent="Root/Panel/Margin/VBox"]
+[node name="WindowLabel" type="Label" parent="Root/Panel/Margin/VBox"]
 layout_mode = 2
-text = "Time is up"
-horizontal_alignment = 1
+text = "Window mode"
 
-[node name="Stats" type="Label" parent="Root/Panel/Margin/VBox"]
-layout_mode = 2
-text = "White kills: 0\nBlack kills: 0"
-horizontal_alignment = 1
-
-[node name="Actions" type="HBoxContainer" parent="Root/Panel/Margin/VBox"]
+[node name="ModeButtons" type="HBoxContainer" parent="Root/Panel/Margin/VBox"]
 layout_mode = 2
 theme_override_constants/separation = 12
 alignment = 1
 
-[node name="ReplayButton" parent="Root/Panel/Margin/VBox/Actions" instance=ExtResource("2_game_button")]
+[node name="FullscreenButton" parent="Root/Panel/Margin/VBox/ModeButtons" instance=ExtResource("2_game_button")]
 layout_mode = 2
-label = "Replay"
-text = "Replay"
+label = "Fullscreen"
+text = "Fullscreen"
 
-[node name="MenuButton" parent="Root/Panel/Margin/VBox/Actions" instance=ExtResource("2_game_button")]
+[node name="WindowedButton" parent="Root/Panel/Margin/VBox/ModeButtons" instance=ExtResource("2_game_button")]
 layout_mode = 2
-label = "Back"
-text = "Back"
+label = "Windowed"
+text = "Windowed"
+
+[node name="ResolutionLabel" type="Label" parent="Root/Panel/Margin/VBox"]
+layout_mode = 2
+text = "Resolution"
+
+[node name="ResolutionOption" type="OptionButton" parent="Root/Panel/Margin/VBox"]
+custom_minimum_size = Vector2(220, 44)
+layout_mode = 2
+
+[node name="SaveButton" parent="Root/Panel/Margin/VBox" instance=ExtResource("2_game_button")]
+layout_mode = 2
+label = "Save and Close"
+text = "Save and Close"

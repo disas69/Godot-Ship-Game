@@ -1,23 +1,71 @@
 [gd_scene format=3 uid="uid://brvjfuw01q78n"]
 
-[ext_resource type="Script" uid="uid://b3axxaohvxqbj" path="res://scripts/ui/screens/menu_screen.gd" id="1_py1kr"]
-[ext_resource type="Script" path="res://scripts/ui/components/ui_tween_button.gd" id="2_qa746"]
+[ext_resource type="Script" uid="uid://b3axxaohvxqbj" path="res://scripts/ui/screens/menu_screen.gd" id="1_menu_screen"]
+[ext_resource type="PackedScene" path="res://scenes/ui/components/game_button.tscn" id="2_game_button"]
+[ext_resource type="Script" path="res://scripts/ui/components/ui_tween_container.gd" id="3_tween_container"]
 
-[node name="MenuScreen" type="CanvasLayer" unique_id=65748089 node_paths=PackedStringArray("play_button")]
-script = ExtResource("1_py1kr")
-play_button = NodePath("PlayButton")
+[node name="MenuScreen" type="CanvasLayer" unique_id=65748089 node_paths=PackedStringArray("play_button", "settings_button", "quit_button")]
+script = ExtResource("1_menu_screen")
+play_button = NodePath("Root/Panel/Margin/VBox/PlayButton")
+settings_button = NodePath("Root/Panel/Margin/VBox/SettingsButton")
+quit_button = NodePath("Root/Panel/Margin/VBox/QuitButton")
 
-[node name="PlayButton" type="Button" parent="." unique_id=818391506]
+[node name="Root" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="Root"]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -80.0
-offset_top = -24.0
-offset_right = 80.0
-offset_bottom = 24.0
+offset_left = -170.0
+offset_top = -136.0
+offset_right = 170.0
+offset_bottom = 136.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("2_qa746")
+
+[node name="PanelTween" type="Control" parent="Root/Panel" node_paths=PackedStringArray("target")]
+script = ExtResource("3_tween_container")
+target = NodePath("../Margin/VBox")
+anim_type = 0
+delay_between_elements = 0.06
+
+[node name="Margin" type="MarginContainer" parent="Root/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 28
+
+[node name="VBox" type="VBoxContainer" parent="Root/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="Title" type="Label" parent="Root/Panel/Margin/VBox"]
+layout_mode = 2
+text = "Ship Game"
+horizontal_alignment = 1
+
+[node name="PlayButton" parent="Root/Panel/Margin/VBox" instance=ExtResource("2_game_button")]
+layout_mode = 2
+label = "Play"
 text = "Play"
+
+[node name="SettingsButton" parent="Root/Panel/Margin/VBox" instance=ExtResource("2_game_button")]
+layout_mode = 2
+label = "Settings"
+text = "Settings"
+
+[node name="QuitButton" parent="Root/Panel/Margin/VBox" instance=ExtResource("2_game_button")]
+layout_mode = 2
+label = "Quit"
+text = "Quit"
