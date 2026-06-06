@@ -26,6 +26,11 @@ func on_continue_pressed() -> void:
 	UIManager.close_popup(view_id)
 
 
+func on_back_requested() -> bool:
+	on_continue_pressed()
+	return true
+
+
 func on_quit_pressed() -> void:
 	get_tree().paused = false
 	GameManager.instance.return_to_menu()

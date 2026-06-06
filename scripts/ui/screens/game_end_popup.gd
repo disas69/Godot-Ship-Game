@@ -53,3 +53,8 @@ func on_menu_button_pressed() -> void:
 	if menu_button != null:
 		menu_button.disabled = true
 	GameManager.instance.return_to_menu()
+
+
+func on_back_requested() -> bool:
+	on_menu_button_pressed()
+	return true

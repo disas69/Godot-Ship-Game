@@ -139,6 +139,7 @@ func refresh_view() -> void:
 
 	var can_play := selected_player_count == 1 or control_options.size() >= 2
 	play_button.disabled = not can_play
+	refresh_focus.call_deferred()
 
 	if summary_label == null:
 		return
@@ -195,3 +196,8 @@ func get_local_player_configs() -> Array[Dictionary]:
 
 func on_back_pressed() -> void:
 	UIManager.close_popup(view_id)
+
+
+func on_back_requested() -> bool:
+	on_back_pressed()
+	return true

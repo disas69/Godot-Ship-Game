@@ -49,6 +49,11 @@ func set_fullscreen(enabled: bool) -> void:
 	fullscreen = enabled
 
 
+func on_back_requested() -> bool:
+	UIManager.close_popup(view_id)
+	return true
+
+
 func on_save_pressed() -> void:
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN if fullscreen else DisplayServer.WINDOW_MODE_WINDOWED)
 	if not fullscreen and resolution_option != null:

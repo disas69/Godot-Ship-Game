@@ -41,6 +41,8 @@ func _ready() -> void:
 
 	mouse_entered.connect(hover)
 	mouse_exited.connect(unhover)
+	focus_entered.connect(hover)
+	focus_exited.connect(unhover)
 	button_down.connect(press)
 	button_up.connect(release)
 	resized.connect(update_pivot)
