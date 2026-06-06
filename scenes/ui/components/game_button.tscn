@@ -1,9 +1,53 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://cnv1q44x5xwit"]
 
-[ext_resource type="Script" path="res://scripts/ui/components/game_button.gd" id="1_game_button"]
+[ext_resource type="FontFile" uid="uid://daa5h725j1fj7" path="res://fonts/Pixelify_Sans/static/PixelifySans-Medium.ttf" id="1_1peqo"]
+[ext_resource type="Script" uid="uid://cu1tbno1nfqjl" path="res://scripts/ui/components/game_button.gd" id="1_game_button"]
+[ext_resource type="Texture2D" uid="uid://clvy6s0djiqry" path="res://assets/kenney_ui-pack-adventure/PNG/Default/button_grey.png" id="2_lkoix"]
 
-[node name="GameButton" type="Button"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_normal"]
+texture = ExtResource("2_lkoix")
+texture_margin_left = 12.0
+texture_margin_top = 8.0
+texture_margin_right = 12.0
+texture_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hover"]
+texture = ExtResource("2_lkoix")
+texture_margin_left = 12.0
+texture_margin_top = 8.0
+texture_margin_right = 12.0
+texture_margin_bottom = 8.0
+modulate_color = Color(1.12, 1.12, 1.12, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pressed"]
+texture = ExtResource("2_lkoix")
+texture_margin_left = 12.0
+texture_margin_top = 8.0
+texture_margin_right = 12.0
+texture_margin_bottom = 8.0
+modulate_color = Color(0.82, 0.82, 0.82, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_disabled"]
+texture = ExtResource("2_lkoix")
+texture_margin_left = 12.0
+texture_margin_top = 8.0
+texture_margin_right = 12.0
+texture_margin_bottom = 8.0
+modulate_color = Color(0.45, 0.45, 0.45, 0.9)
+
+[node name="GameButton" type="Button" unique_id=1587214021]
 custom_minimum_size = Vector2(180, 44)
-script = ExtResource("1_game_button")
-label = "Button"
+theme_override_fonts/font = ExtResource("1_1peqo")
+theme_override_font_sizes/font_size = 25
+theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
+theme_override_styles/normal = SubResource("StyleBoxTexture_normal")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_pressed")
+theme_override_styles/hover = SubResource("StyleBoxTexture_hover")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_disabled")
+theme_override_styles/focus = SubResource("StyleBoxTexture_hover")
 text = "Button"
+script = ExtResource("1_game_button")

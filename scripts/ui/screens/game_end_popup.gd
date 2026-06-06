@@ -1,6 +1,6 @@
 class_name GameEndPopup extends UiView
 
-@export var title_label: Label
+@export var title_label: RichTextLabel
 @export var message_label: Label
 @export var stats_label: Label
 @export var replay_button: Button
@@ -27,11 +27,11 @@ func sync_from_game() -> void:
 
 	if title_label != null:
 		if game.winner_team == int(Ship.Team.GoodGuys):
-			title_label.text = "White Fleet Wins"
+			set_title_text("White Fleet Wins")
 		elif game.winner_team == int(Ship.Team.BadGuys):
-			title_label.text = "Black Fleet Wins"
+			set_title_text("Black Fleet Wins")
 		else:
-			title_label.text = "Draw"
+			set_title_text("Draw")
 
 	if message_label != null:
 		if game.finish_reason == Game.FinishReason.AllFlagsCaptured:
@@ -41,6 +41,10 @@ func sync_from_game() -> void:
 
 	if stats_label != null:
 		stats_label.text = "White kills: %d\nBlack kills: %d" % [game.good_team_kills, game.bad_team_kills]
+
+
+func set_title_text(title: String) -> void:
+	title_label.text = "[wave amp=10 freq=5]%s[/wave]" % title
 
 
 func on_replay_button_pressed() -> void:

@@ -1,71 +1,146 @@
 [gd_scene format=3 uid="uid://brvjfuw01q78n"]
 
 [ext_resource type="Script" uid="uid://b3axxaohvxqbj" path="res://scripts/ui/screens/menu_screen.gd" id="1_menu_screen"]
-[ext_resource type="PackedScene" path="res://scenes/ui/components/game_button.tscn" id="2_game_button"]
-[ext_resource type="Script" path="res://scripts/ui/components/ui_tween_container.gd" id="3_tween_container"]
+[ext_resource type="PackedScene" uid="uid://cnv1q44x5xwit" path="res://scenes/ui/components/game_button.tscn" id="2_game_button"]
+[ext_resource type="Script" uid="uid://d0a0jyecd51my" path="res://scripts/ui/components/ui_tween_container.gd" id="3_tween_container"]
+[ext_resource type="FontFile" uid="uid://bef8jlqfff473" path="res://fonts/Pixelify_Sans/static/PixelifySans-Bold.ttf" id="3_u5qb7"]
+[ext_resource type="FontFile" uid="uid://daa5h725j1fj7" path="res://fonts/Pixelify_Sans/static/PixelifySans-Medium.ttf" id="4_body_font"]
+[ext_resource type="Texture2D" uid="uid://c0hj411sc8hj3" path="res://assets/kenney_ui-pack-adventure/PNG/Default/button_red.png" id="6_button_red"]
+
+[sub_resource type="Theme" id="Theme_ui"]
+default_font = ExtResource("4_body_font")
+default_font_size = 22
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uyapm"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_red_normal"]
+texture = ExtResource("6_button_red")
+texture_margin_left = 12.0
+texture_margin_top = 8.0
+texture_margin_right = 12.0
+texture_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_red_pressed"]
+texture = ExtResource("6_button_red")
+texture_margin_left = 12.0
+texture_margin_top = 8.0
+texture_margin_right = 12.0
+texture_margin_bottom = 8.0
+modulate_color = Color(0.82, 0.82, 0.82, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_red_hover"]
+texture = ExtResource("6_button_red")
+texture_margin_left = 12.0
+texture_margin_top = 8.0
+texture_margin_right = 12.0
+texture_margin_bottom = 8.0
+modulate_color = Color(1.12, 1.12, 1.12, 1)
 
 [node name="MenuScreen" type="CanvasLayer" unique_id=65748089 node_paths=PackedStringArray("play_button", "settings_button", "quit_button")]
 script = ExtResource("1_menu_screen")
-play_button = NodePath("Root/Panel/Margin/VBox/PlayButton")
-settings_button = NodePath("Root/Panel/Margin/VBox/SettingsButton")
-quit_button = NodePath("Root/Panel/Margin/VBox/QuitButton")
+play_button = NodePath("Root/Control/Panel/Margin/VBox/PlayButton")
+settings_button = NodePath("Root/Control/Panel/Margin/VBox/SettingsButton")
+quit_button = NodePath("Root/Control/Panel/Margin/VBox/QuitButton")
 
-[node name="Root" type="Control" parent="."]
+[node name="Root" type="Control" parent="." unique_id=1983901068]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = SubResource("Theme_ui")
 
-[node name="Panel" type="PanelContainer" parent="Root"]
+[node name="Control" type="Control" parent="Root" unique_id=985854750]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 200.0
+offset_top = -200.0
+offset_right = 500.0
+offset_bottom = 300.0
+grow_vertical = 2
+pivot_offset = Vector2(0, 250)
+
+[node name="Title" type="RichTextLabel" parent="Root/Control" unique_id=167779249]
+clip_contents = false
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -350.0
+offset_top = 20.0
+offset_right = 350.0
+offset_bottom = 530.0
+grow_horizontal = 2
+pivot_offset = Vector2(350, 0)
+theme_override_colors/font_outline_color = Color(0.32, 0.22, 0.13, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/normal_font = ExtResource("3_u5qb7")
+theme_override_font_sizes/normal_font_size = 75
+theme_override_font_sizes/bold_font_size = 20
+bbcode_enabled = true
+text = "[wave amp=20 freq=5]Cannon Battle[/wave]"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="Panel" type="PanelContainer" parent="Root/Control" unique_id=560762698]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -170.0
-offset_top = -136.0
-offset_right = 170.0
-offset_bottom = 136.0
+offset_left = -140.0
+offset_top = -129.0
+offset_right = 140.0
+offset_bottom = 129.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(140, 129)
+theme_override_styles/panel = SubResource("StyleBoxEmpty_uyapm")
 
-[node name="PanelTween" type="Control" parent="Root/Panel" node_paths=PackedStringArray("target")]
+[node name="PanelTween" type="Control" parent="Root/Control/Panel" unique_id=1109571755 node_paths=PackedStringArray("target")]
+layout_mode = 2
 script = ExtResource("3_tween_container")
 target = NodePath("../Margin/VBox")
 anim_type = 0
 delay_between_elements = 0.06
 
-[node name="Margin" type="MarginContainer" parent="Root/Panel"]
+[node name="Margin" type="MarginContainer" parent="Root/Control/Panel" unique_id=1484106015]
 layout_mode = 2
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 28
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 28
 
-[node name="VBox" type="VBoxContainer" parent="Root/Panel/Margin"]
+[node name="VBox" type="VBoxContainer" parent="Root/Control/Panel/Margin" unique_id=754745267]
 layout_mode = 2
 theme_override_constants/separation = 14
 alignment = 1
 
-[node name="Title" type="Label" parent="Root/Panel/Margin/VBox"]
+[node name="PlayButton" parent="Root/Control/Panel/Margin/VBox" unique_id=1857280589 instance=ExtResource("2_game_button")]
 layout_mode = 2
-text = "Ship Game"
-horizontal_alignment = 1
-
-[node name="PlayButton" parent="Root/Panel/Margin/VBox" instance=ExtResource("2_game_button")]
-layout_mode = 2
-label = "Play"
 text = "Play"
+label = "Play"
 
-[node name="SettingsButton" parent="Root/Panel/Margin/VBox" instance=ExtResource("2_game_button")]
+[node name="SettingsButton" parent="Root/Control/Panel/Margin/VBox" unique_id=732033184 instance=ExtResource("2_game_button")]
 layout_mode = 2
-label = "Settings"
 text = "Settings"
+label = "Settings"
 
-[node name="QuitButton" parent="Root/Panel/Margin/VBox" instance=ExtResource("2_game_button")]
+[node name="QuitButton" parent="Root/Control/Panel/Margin/VBox" unique_id=900281481 instance=ExtResource("2_game_button")]
 layout_mode = 2
-label = "Quit"
+theme_override_colors/font_color = Color(0.28, 0.12, 0.08, 1)
+theme_override_colors/font_focus_color = Color(0.28, 0.12, 0.08, 1)
+theme_override_colors/font_pressed_color = Color(0.28, 0.12, 0.08, 1)
+theme_override_colors/font_hover_color = Color(0.28, 0.12, 0.08, 1)
+theme_override_colors/font_disabled_color = Color(0.28, 0.12, 0.08, 0.55)
+theme_override_styles/normal = SubResource("StyleBoxTexture_red_normal")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_red_pressed")
+theme_override_styles/hover = SubResource("StyleBoxTexture_red_hover")
+theme_override_styles/focus = SubResource("StyleBoxTexture_red_hover")
 text = "Quit"
+label = "Quit"

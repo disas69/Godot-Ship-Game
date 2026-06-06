@@ -9,11 +9,14 @@
 [ext_resource type="Texture2D" uid="uid://deqi6ivh63fq6" path="res://images/ui/clock.png" id="7_p7vwb"]
 [ext_resource type="Script" uid="uid://cvdwtdp4jmdxh" path="res://scripts/ui/components/flag_indicators.gd" id="8_cgfq5"]
 [ext_resource type="PackedScene" path="res://scenes/ui/components/flag_indicator.tscn" id="9_tjkec"]
+[ext_resource type="FontFile" path="res://fonts/Pixelify_Sans/static/PixelifySans-Medium.ttf" id="10_body_font"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ktti3"]
+font = ExtResource("10_body_font")
 font_size = 17
 
 [sub_resource type="LabelSettings" id="LabelSettings_p7vwb"]
+font = ExtResource("10_body_font")
 font_size = 19
 
 [node name="UI" type="CanvasLayer" unique_id=976727756 node_paths=PackedStringArray("timer_label", "flags_1_label", "flags_2_label", "kills_1_label", "kills_2_label", "flag_indicators")]

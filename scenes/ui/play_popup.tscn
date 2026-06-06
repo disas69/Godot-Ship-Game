@@ -1,13 +1,50 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://nwxeasv06kq"]
 
-[ext_resource type="Script" path="res://scripts/ui/popups/play_popup.gd" id="1_play_popup"]
-[ext_resource type="PackedScene" path="res://scenes/ui/components/game_button.tscn" id="2_game_button"]
-[ext_resource type="Script" path="res://scripts/ui/components/ui_auto_tween.gd" id="3_auto_tween"]
-[ext_resource type="Script" path="res://scripts/ui/components/ui_tween_container.gd" id="4_tween_container"]
+[ext_resource type="Script" uid="uid://bwoabx5yvt5ro" path="res://scripts/ui/popups/play_popup.gd" id="1_play_popup"]
+[ext_resource type="PackedScene" uid="uid://cnv1q44x5xwit" path="res://scenes/ui/components/game_button.tscn" id="2_game_button"]
+[ext_resource type="Script" uid="uid://dle7mknyn3t7x" path="res://scripts/ui/components/ui_auto_tween.gd" id="3_auto_tween"]
+[ext_resource type="Script" uid="uid://d0a0jyecd51my" path="res://scripts/ui/components/ui_tween_container.gd" id="4_tween_container"]
+[ext_resource type="FontFile" uid="uid://daa5h725j1fj7" path="res://fonts/Pixelify_Sans/static/PixelifySans-Medium.ttf" id="5_body_font"]
+[ext_resource type="FontFile" uid="uid://bef8jlqfff473" path="res://fonts/Pixelify_Sans/static/PixelifySans-Bold.ttf" id="6_title_font"]
+[ext_resource type="Texture2D" uid="uid://dr1sy2vjpyuiv" path="res://assets/kenney_ui-pack-adventure/PNG/Default/panel_brown_corners_a.png" id="7_panel_texture"]
+[ext_resource type="Texture2D" uid="uid://clvy6s0djiqry" path="res://assets/kenney_ui-pack-adventure/PNG/Default/button_grey.png" id="8_button_normal"]
 
-[node name="PlayPopup" type="CanvasLayer" node_paths=PackedStringArray("player_count_previous_button", "player_count_next_button", "player_count_value_label", "player_1_options", "player_1_controls_previous_button", "player_1_controls_next_button", "player_1_controls_value_label", "player_1_team_previous_button", "player_1_team_next_button", "player_1_team_value_label", "player_2_options", "player_2_controls_previous_button", "player_2_controls_next_button", "player_2_controls_value_label", "player_2_team_previous_button", "player_2_team_next_button", "player_2_team_value_label", "play_button", "back_button", "summary_label")]
-layer = 10
+[sub_resource type="Theme" id="Theme_ui"]
+default_font = ExtResource("5_body_font")
+default_font_size = 22
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_panel"]
+texture = ExtResource("7_panel_texture")
+texture_margin_left = 18.0
+texture_margin_top = 18.0
+texture_margin_right = 18.0
+texture_margin_bottom = 18.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_small_normal"]
+texture = ExtResource("8_button_normal")
+texture_margin_left = 12.0
+texture_margin_top = 8.0
+texture_margin_right = 12.0
+texture_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_small_pressed"]
+texture = ExtResource("8_button_normal")
+texture_margin_left = 12.0
+texture_margin_top = 8.0
+texture_margin_right = 12.0
+texture_margin_bottom = 8.0
+modulate_color = Color(0.82, 0.82, 0.82, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_small_hover"]
+texture = ExtResource("8_button_normal")
+texture_margin_left = 12.0
+texture_margin_top = 8.0
+texture_margin_right = 12.0
+texture_margin_bottom = 8.0
+
+[node name="PlayPopup" type="CanvasLayer" unique_id=1049469319 node_paths=PackedStringArray("player_count_previous_button", "player_count_next_button", "player_count_value_label", "player_1_options", "player_1_controls_previous_button", "player_1_controls_next_button", "player_1_controls_value_label", "player_1_team_previous_button", "player_1_team_next_button", "player_1_team_value_label", "player_2_options", "player_2_controls_previous_button", "player_2_controls_next_button", "player_2_controls_value_label", "player_2_team_previous_button", "player_2_team_next_button", "player_2_team_value_label", "play_button", "back_button", "summary_label")]
 process_mode = 3
+layer = 10
 script = ExtResource("1_play_popup")
 player_count_previous_button = NodePath("Root/Panel/Margin/VBox/PlayerCountRow/PreviousButton")
 player_count_next_button = NodePath("Root/Panel/Margin/VBox/PlayerCountRow/NextButton")
@@ -30,16 +67,16 @@ play_button = NodePath("Root/Panel/Margin/VBox/Actions/PlayButton")
 back_button = NodePath("Root/Panel/Margin/VBox/Actions/BackButton")
 summary_label = NodePath("Root/Panel/Margin/VBox/Summary")
 
-[node name="Root" type="Control" parent="."]
+[node name="Root" type="Control" parent="." unique_id=1540910797]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 0
+theme = SubResource("Theme_ui")
 
-[node name="Dim" type="ColorRect" parent="Root"]
+[node name="Dim" type="ColorRect" parent="Root" unique_id=2078924330]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -49,15 +86,14 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0.45)
 
-[node name="DimTween" type="Node" parent="Root/Dim" node_paths=PackedStringArray("target")]
+[node name="DimTween" type="Node" parent="Root/Dim" unique_id=437154141 node_paths=PackedStringArray("target")]
 script = ExtResource("3_auto_tween")
 target = NodePath("..")
 anim_when = 1
-anim_type = 0
 duration = 0.18
 force_from = true
 
-[node name="Panel" type="PanelContainer" parent="Root"]
+[node name="Panel" type="PanelContainer" parent="Root" unique_id=1003414646]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -70,8 +106,10 @@ offset_right = 245.0
 offset_bottom = 260.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_panel")
 
-[node name="PanelTween" type="Control" parent="Root/Panel" node_paths=PackedStringArray("target")]
+[node name="PanelTween" type="Control" parent="Root/Panel" unique_id=1914879162 node_paths=PackedStringArray("target")]
+layout_mode = 2
 script = ExtResource("3_auto_tween")
 target = NodePath("..")
 anim_when = 1
@@ -79,200 +117,340 @@ anim_type = 1
 duration = 0.18
 force_from = true
 
-[node name="ListTween" type="Control" parent="Root/Panel" node_paths=PackedStringArray("target")]
+[node name="ListTween" type="Control" parent="Root/Panel" unique_id=1055967056 node_paths=PackedStringArray("target")]
+layout_mode = 2
 script = ExtResource("4_tween_container")
 target = NodePath("../Margin/VBox")
 anim_type = 0
 delay_appear = 0.08
 delay_between_elements = 0.05
 
-[node name="Margin" type="MarginContainer" parent="Root/Panel"]
+[node name="Margin" type="MarginContainer" parent="Root/Panel" unique_id=579742865]
 layout_mode = 2
 theme_override_constants/margin_left = 28
 theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 28
 theme_override_constants/margin_bottom = 24
 
-[node name="VBox" type="VBoxContainer" parent="Root/Panel/Margin"]
+[node name="VBox" type="VBoxContainer" parent="Root/Panel/Margin" unique_id=690608965]
 layout_mode = 2
 theme_override_constants/separation = 12
 alignment = 1
 
-[node name="Title" type="Label" parent="Root/Panel/Margin/VBox"]
+[node name="Title" type="RichTextLabel" parent="Root/Panel/Margin/VBox" unique_id=1758507911]
 layout_mode = 2
-text = "Play"
+theme_override_colors/default_color = Color(0.32, 0.22, 0.13, 1)
+theme_override_fonts/normal_font = ExtResource("6_title_font")
+theme_override_font_sizes/normal_font_size = 36
+bbcode_enabled = true
+text = "[wave amp=10 freq=5]Play[/wave]"
+fit_content = true
+scroll_active = false
 horizontal_alignment = 1
 
-[node name="PlayerCountLabel" type="Label" parent="Root/Panel/Margin/VBox"]
+[node name="PlayerCountLabel" type="Label" parent="Root/Panel/Margin/VBox" unique_id=1147605934]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
 text = "Player count"
 
-[node name="PlayerCountRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox"]
+[node name="PlayerCountRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox" unique_id=1300235099]
 layout_mode = 2
 theme_override_constants/separation = 8
 alignment = 1
 
-[node name="PreviousButton" type="Button" parent="Root/Panel/Margin/VBox/PlayerCountRow"]
-layout_mode = 2
+[node name="PreviousButton" type="Button" parent="Root/Panel/Margin/VBox/PlayerCountRow" unique_id=1074079527]
 custom_minimum_size = Vector2(44, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
+theme_override_fonts/font = ExtResource("5_body_font")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
+theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
+theme_override_styles/focus = SubResource("StyleBoxTexture_small_hover")
 text = "<"
 
-[node name="Value" type="Label" parent="Root/Panel/Margin/VBox/PlayerCountRow"]
-layout_mode = 2
+[node name="Value" type="Label" parent="Root/Panel/Margin/VBox/PlayerCountRow" unique_id=839545599]
 custom_minimum_size = Vector2(180, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
 text = "1 Player"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NextButton" type="Button" parent="Root/Panel/Margin/VBox/PlayerCountRow"]
-layout_mode = 2
+[node name="NextButton" type="Button" parent="Root/Panel/Margin/VBox/PlayerCountRow" unique_id=254264035]
 custom_minimum_size = Vector2(44, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
+theme_override_fonts/font = ExtResource("5_body_font")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
+theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
+theme_override_styles/focus = SubResource("StyleBoxTexture_small_hover")
 text = ">"
 
-[node name="Player1Options" type="VBoxContainer" parent="Root/Panel/Margin/VBox"]
+[node name="Player1Options" type="VBoxContainer" parent="Root/Panel/Margin/VBox" unique_id=128092764]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Title" type="Label" parent="Root/Panel/Margin/VBox/Player1Options"]
+[node name="Title" type="Label" parent="Root/Panel/Margin/VBox/Player1Options" unique_id=760873490]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
 text = "Player 1"
 
-[node name="ControlsRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox/Player1Options"]
+[node name="ControlsRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox/Player1Options" unique_id=141749598]
 layout_mode = 2
 theme_override_constants/separation = 8
 alignment = 1
 
-[node name="Label" type="Label" parent="Root/Panel/Margin/VBox/Player1Options/ControlsRow"]
-layout_mode = 2
+[node name="Label" type="Label" parent="Root/Panel/Margin/VBox/Player1Options/ControlsRow" unique_id=80353796]
 custom_minimum_size = Vector2(72, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
 text = "Controls"
 vertical_alignment = 1
 
-[node name="PreviousButton" type="Button" parent="Root/Panel/Margin/VBox/Player1Options/ControlsRow"]
-layout_mode = 2
+[node name="PreviousButton" type="Button" parent="Root/Panel/Margin/VBox/Player1Options/ControlsRow" unique_id=27018972]
 custom_minimum_size = Vector2(44, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
+theme_override_fonts/font = ExtResource("5_body_font")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
+theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
+theme_override_styles/focus = SubResource("StyleBoxTexture_small_hover")
 text = "<"
 
-[node name="Value" type="Label" parent="Root/Panel/Margin/VBox/Player1Options/ControlsRow"]
-layout_mode = 2
+[node name="Value" type="Label" parent="Root/Panel/Margin/VBox/Player1Options/ControlsRow" unique_id=1152033351]
 custom_minimum_size = Vector2(160, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
 text = "Keyboard"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NextButton" type="Button" parent="Root/Panel/Margin/VBox/Player1Options/ControlsRow"]
-layout_mode = 2
+[node name="NextButton" type="Button" parent="Root/Panel/Margin/VBox/Player1Options/ControlsRow" unique_id=1351458955]
 custom_minimum_size = Vector2(44, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
+theme_override_fonts/font = ExtResource("5_body_font")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
+theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
+theme_override_styles/focus = SubResource("StyleBoxTexture_small_hover")
 text = ">"
 
-[node name="TeamRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox/Player1Options"]
+[node name="TeamRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox/Player1Options" unique_id=161679831]
 layout_mode = 2
 theme_override_constants/separation = 8
 alignment = 1
 
-[node name="Label" type="Label" parent="Root/Panel/Margin/VBox/Player1Options/TeamRow"]
-layout_mode = 2
+[node name="Label" type="Label" parent="Root/Panel/Margin/VBox/Player1Options/TeamRow" unique_id=1448879786]
 custom_minimum_size = Vector2(72, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
 text = "Team"
 vertical_alignment = 1
 
-[node name="PreviousButton" type="Button" parent="Root/Panel/Margin/VBox/Player1Options/TeamRow"]
-layout_mode = 2
+[node name="PreviousButton" type="Button" parent="Root/Panel/Margin/VBox/Player1Options/TeamRow" unique_id=953582704]
 custom_minimum_size = Vector2(44, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
+theme_override_fonts/font = ExtResource("5_body_font")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
+theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
+theme_override_styles/focus = SubResource("StyleBoxTexture_small_hover")
 text = "<"
 
-[node name="Value" type="Label" parent="Root/Panel/Margin/VBox/Player1Options/TeamRow"]
-layout_mode = 2
+[node name="Value" type="Label" parent="Root/Panel/Margin/VBox/Player1Options/TeamRow" unique_id=2076342491]
 custom_minimum_size = Vector2(160, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
 text = "White"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NextButton" type="Button" parent="Root/Panel/Margin/VBox/Player1Options/TeamRow"]
-layout_mode = 2
+[node name="NextButton" type="Button" parent="Root/Panel/Margin/VBox/Player1Options/TeamRow" unique_id=463865007]
 custom_minimum_size = Vector2(44, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
+theme_override_fonts/font = ExtResource("5_body_font")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
+theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
+theme_override_styles/focus = SubResource("StyleBoxTexture_small_hover")
 text = ">"
 
-[node name="Player2Options" type="VBoxContainer" parent="Root/Panel/Margin/VBox"]
+[node name="Player2Options" type="VBoxContainer" parent="Root/Panel/Margin/VBox" unique_id=1569010502]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Title" type="Label" parent="Root/Panel/Margin/VBox/Player2Options"]
+[node name="Title" type="Label" parent="Root/Panel/Margin/VBox/Player2Options" unique_id=1430574066]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
 text = "Player 2"
 
-[node name="ControlsRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox/Player2Options"]
+[node name="ControlsRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox/Player2Options" unique_id=1742124081]
 layout_mode = 2
 theme_override_constants/separation = 8
 alignment = 1
 
-[node name="Label" type="Label" parent="Root/Panel/Margin/VBox/Player2Options/ControlsRow"]
-layout_mode = 2
+[node name="Label" type="Label" parent="Root/Panel/Margin/VBox/Player2Options/ControlsRow" unique_id=1509977631]
 custom_minimum_size = Vector2(72, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
 text = "Controls"
 vertical_alignment = 1
 
-[node name="PreviousButton" type="Button" parent="Root/Panel/Margin/VBox/Player2Options/ControlsRow"]
-layout_mode = 2
+[node name="PreviousButton" type="Button" parent="Root/Panel/Margin/VBox/Player2Options/ControlsRow" unique_id=1419410997]
 custom_minimum_size = Vector2(44, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
+theme_override_fonts/font = ExtResource("5_body_font")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
+theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
+theme_override_styles/focus = SubResource("StyleBoxTexture_small_hover")
 text = "<"
 
-[node name="Value" type="Label" parent="Root/Panel/Margin/VBox/Player2Options/ControlsRow"]
-layout_mode = 2
+[node name="Value" type="Label" parent="Root/Panel/Margin/VBox/Player2Options/ControlsRow" unique_id=1973245940]
 custom_minimum_size = Vector2(160, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
 text = "Gamepad 1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NextButton" type="Button" parent="Root/Panel/Margin/VBox/Player2Options/ControlsRow"]
-layout_mode = 2
+[node name="NextButton" type="Button" parent="Root/Panel/Margin/VBox/Player2Options/ControlsRow" unique_id=1873172074]
 custom_minimum_size = Vector2(44, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
+theme_override_fonts/font = ExtResource("5_body_font")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
+theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
+theme_override_styles/focus = SubResource("StyleBoxTexture_small_hover")
 text = ">"
 
-[node name="TeamRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox/Player2Options"]
+[node name="TeamRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox/Player2Options" unique_id=1293033735]
 layout_mode = 2
 theme_override_constants/separation = 8
 alignment = 1
 
-[node name="Label" type="Label" parent="Root/Panel/Margin/VBox/Player2Options/TeamRow"]
-layout_mode = 2
+[node name="Label" type="Label" parent="Root/Panel/Margin/VBox/Player2Options/TeamRow" unique_id=400286339]
 custom_minimum_size = Vector2(72, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
 text = "Team"
 vertical_alignment = 1
 
-[node name="PreviousButton" type="Button" parent="Root/Panel/Margin/VBox/Player2Options/TeamRow"]
-layout_mode = 2
+[node name="PreviousButton" type="Button" parent="Root/Panel/Margin/VBox/Player2Options/TeamRow" unique_id=528245144]
 custom_minimum_size = Vector2(44, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
+theme_override_fonts/font = ExtResource("5_body_font")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
+theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
+theme_override_styles/focus = SubResource("StyleBoxTexture_small_hover")
 text = "<"
 
-[node name="Value" type="Label" parent="Root/Panel/Margin/VBox/Player2Options/TeamRow"]
-layout_mode = 2
+[node name="Value" type="Label" parent="Root/Panel/Margin/VBox/Player2Options/TeamRow" unique_id=1179589960]
 custom_minimum_size = Vector2(160, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
 text = "Black"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NextButton" type="Button" parent="Root/Panel/Margin/VBox/Player2Options/TeamRow"]
-layout_mode = 2
+[node name="NextButton" type="Button" parent="Root/Panel/Margin/VBox/Player2Options/TeamRow" unique_id=151245374]
 custom_minimum_size = Vector2(44, 36)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
+theme_override_fonts/font = ExtResource("5_body_font")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
+theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
+theme_override_styles/focus = SubResource("StyleBoxTexture_small_hover")
 text = ">"
 
-[node name="Summary" type="Label" parent="Root/Panel/Margin/VBox"]
+[node name="Summary" type="Label" parent="Root/Panel/Margin/VBox" unique_id=604732836]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
 text = "Player 1: Keyboard / White"
 horizontal_alignment = 1
 
-[node name="Actions" type="HBoxContainer" parent="Root/Panel/Margin/VBox"]
+[node name="Actions" type="HBoxContainer" parent="Root/Panel/Margin/VBox" unique_id=1214921113]
 layout_mode = 2
 theme_override_constants/separation = 12
 alignment = 1
 
-[node name="PlayButton" parent="Root/Panel/Margin/VBox/Actions" instance=ExtResource("2_game_button")]
+[node name="PlayButton" parent="Root/Panel/Margin/VBox/Actions" unique_id=1402513935 instance=ExtResource("2_game_button")]
 layout_mode = 2
-label = "Play"
 text = "Play"
+label = "Play"
 
-[node name="BackButton" parent="Root/Panel/Margin/VBox/Actions" instance=ExtResource("2_game_button")]
+[node name="BackButton" parent="Root/Panel/Margin/VBox/Actions" unique_id=406342147 instance=ExtResource("2_game_button")]
 layout_mode = 2
-label = "Back"
 text = "Back"
+label = "Back"

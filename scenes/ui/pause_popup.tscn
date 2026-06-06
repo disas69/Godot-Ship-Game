@@ -1,27 +1,65 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://c247o5qug5owq"]
 
-[ext_resource type="Script" path="res://scripts/ui/popups/pause_popup.gd" id="1_pause_popup"]
-[ext_resource type="PackedScene" path="res://scenes/ui/components/game_button.tscn" id="2_game_button"]
-[ext_resource type="Script" path="res://scripts/ui/components/ui_auto_tween.gd" id="3_auto_tween"]
-[ext_resource type="Script" path="res://scripts/ui/components/ui_tween_container.gd" id="4_tween_container"]
+[ext_resource type="Script" uid="uid://c8khxgl5ebytv" path="res://scripts/ui/popups/pause_popup.gd" id="1_pause_popup"]
+[ext_resource type="PackedScene" uid="uid://cnv1q44x5xwit" path="res://scenes/ui/components/game_button.tscn" id="2_game_button"]
+[ext_resource type="Script" uid="uid://dle7mknyn3t7x" path="res://scripts/ui/components/ui_auto_tween.gd" id="3_auto_tween"]
+[ext_resource type="Script" uid="uid://d0a0jyecd51my" path="res://scripts/ui/components/ui_tween_container.gd" id="4_tween_container"]
+[ext_resource type="FontFile" uid="uid://daa5h725j1fj7" path="res://fonts/Pixelify_Sans/static/PixelifySans-Medium.ttf" id="5_body_font"]
+[ext_resource type="FontFile" uid="uid://bef8jlqfff473" path="res://fonts/Pixelify_Sans/static/PixelifySans-Bold.ttf" id="6_title_font"]
+[ext_resource type="Texture2D" uid="uid://dr1sy2vjpyuiv" path="res://assets/kenney_ui-pack-adventure/PNG/Default/panel_brown_corners_a.png" id="7_panel_texture"]
+[ext_resource type="Texture2D" uid="uid://c0hj411sc8hj3" path="res://assets/kenney_ui-pack-adventure/PNG/Default/button_red.png" id="10_button_red"]
 
-[node name="PausePopup" type="CanvasLayer" node_paths=PackedStringArray("continue_button", "quit_button")]
-layer = 10
+[sub_resource type="Theme" id="Theme_ui"]
+default_font = ExtResource("5_body_font")
+default_font_size = 22
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_panel"]
+texture = ExtResource("7_panel_texture")
+texture_margin_left = 18.0
+texture_margin_top = 18.0
+texture_margin_right = 18.0
+texture_margin_bottom = 18.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_red_normal"]
+texture = ExtResource("10_button_red")
+texture_margin_left = 12.0
+texture_margin_top = 8.0
+texture_margin_right = 12.0
+texture_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_red_pressed"]
+texture = ExtResource("10_button_red")
+texture_margin_left = 12.0
+texture_margin_top = 8.0
+texture_margin_right = 12.0
+texture_margin_bottom = 8.0
+modulate_color = Color(0.82, 0.82, 0.82, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_red_hover"]
+texture = ExtResource("10_button_red")
+texture_margin_left = 12.0
+texture_margin_top = 8.0
+texture_margin_right = 12.0
+texture_margin_bottom = 8.0
+modulate_color = Color(1.12, 1.12, 1.12, 1)
+
+[node name="PausePopup" type="CanvasLayer" unique_id=2004472859 node_paths=PackedStringArray("continue_button", "quit_button")]
 process_mode = 3
+layer = 10
 script = ExtResource("1_pause_popup")
 continue_button = NodePath("Root/Panel/Margin/VBox/ContinueButton")
 quit_button = NodePath("Root/Panel/Margin/VBox/QuitButton")
 
-[node name="Root" type="Control" parent="."]
+[node name="Root" type="Control" parent="." unique_id=1683264573]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 0
+theme = SubResource("Theme_ui")
 
-[node name="Dim" type="ColorRect" parent="Root"]
+[node name="Dim" type="ColorRect" parent="Root" unique_id=334047096]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,15 +69,14 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0.45)
 
-[node name="DimTween" type="Node" parent="Root/Dim" node_paths=PackedStringArray("target")]
+[node name="DimTween" type="Node" parent="Root/Dim" unique_id=322992112 node_paths=PackedStringArray("target")]
 script = ExtResource("3_auto_tween")
 target = NodePath("..")
 anim_when = 1
-anim_type = 0
 duration = 0.18
 force_from = true
 
-[node name="Panel" type="PanelContainer" parent="Root"]
+[node name="Panel" type="PanelContainer" parent="Root" unique_id=740894985]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -52,8 +89,9 @@ offset_right = 190.0
 offset_bottom = 115.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_panel")
 
-[node name="PanelTween" type="Node" parent="Root/Panel" node_paths=PackedStringArray("target")]
+[node name="PanelTween" type="Node" parent="Root/Panel" unique_id=1258051775 node_paths=PackedStringArray("target")]
 script = ExtResource("3_auto_tween")
 target = NodePath("..")
 anim_when = 1
@@ -61,36 +99,53 @@ anim_type = 1
 duration = 0.18
 force_from = true
 
-[node name="ListTween" type="Control" parent="Root/Panel" node_paths=PackedStringArray("target")]
+[node name="ListTween" type="Control" parent="Root/Panel" unique_id=513554687 node_paths=PackedStringArray("target")]
+layout_mode = 2
 script = ExtResource("4_tween_container")
 target = NodePath("../Margin/VBox")
 anim_type = 0
 delay_appear = 0.08
 delay_between_elements = 0.05
 
-[node name="Margin" type="MarginContainer" parent="Root/Panel"]
+[node name="Margin" type="MarginContainer" parent="Root/Panel" unique_id=1630913478]
 layout_mode = 2
 theme_override_constants/margin_left = 28
 theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 28
 theme_override_constants/margin_bottom = 24
 
-[node name="VBox" type="VBoxContainer" parent="Root/Panel/Margin"]
+[node name="VBox" type="VBoxContainer" parent="Root/Panel/Margin" unique_id=1712795396]
 layout_mode = 2
 theme_override_constants/separation = 12
 alignment = 1
 
-[node name="Title" type="Label" parent="Root/Panel/Margin/VBox"]
+[node name="Title" type="RichTextLabel" parent="Root/Panel/Margin/VBox" unique_id=1664187768]
 layout_mode = 2
-text = "Paused"
+theme_override_colors/default_color = Color(0.32, 0.22, 0.13, 1)
+theme_override_fonts/normal_font = ExtResource("6_title_font")
+theme_override_font_sizes/normal_font_size = 36
+bbcode_enabled = true
+text = "[wave amp=10 freq=5]Pause[/wave]"
+fit_content = true
+scroll_active = false
 horizontal_alignment = 1
 
-[node name="ContinueButton" parent="Root/Panel/Margin/VBox" instance=ExtResource("2_game_button")]
+[node name="ContinueButton" parent="Root/Panel/Margin/VBox" unique_id=1738088523 instance=ExtResource("2_game_button")]
 layout_mode = 2
-label = "Continue"
 text = "Continue"
+label = "Continue"
 
-[node name="QuitButton" parent="Root/Panel/Margin/VBox" instance=ExtResource("2_game_button")]
+[node name="QuitButton" parent="Root/Panel/Margin/VBox" unique_id=418606734 instance=ExtResource("2_game_button")]
 layout_mode = 2
-label = "Quit to Menu"
+theme_override_colors/font_color = Color(0.28, 0.12, 0.08, 1)
+theme_override_colors/font_focus_color = Color(0.28, 0.12, 0.08, 1)
+theme_override_colors/font_pressed_color = Color(0.28, 0.12, 0.08, 1)
+theme_override_colors/font_hover_color = Color(0.28, 0.12, 0.08, 1)
+theme_override_colors/font_disabled_color = Color(0.28, 0.12, 0.08, 0.55)
+theme_override_styles/normal = SubResource("StyleBoxTexture_red_normal")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_red_pressed")
+theme_override_styles/hover = SubResource("StyleBoxTexture_red_hover")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_red_normal")
+theme_override_styles/focus = SubResource("StyleBoxTexture_red_hover")
 text = "Quit to Menu"
+label = "Quit to Menu"
