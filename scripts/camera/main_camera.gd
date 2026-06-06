@@ -147,6 +147,45 @@ func get_camera_for_target(target: Node3D) -> Camera3D:
 	return camera
 
 
+func is_dynamic_split_active() -> bool:
+	return is_dynamic_split_available() and split_amount > 0.001
+
+
+func is_screen_point_in_target_region(target: Node3D, screen_position: Vector2, screen_size: Vector2) -> bool:
+	if target == null:
+		return true
+	if not is_dynamic_split_active():
+		return true
+	if screen_size.x <= 0.0 or screen_size.y <= 0.0:
+		return true
+	if not targets.has(target):
+		return true
+
+	var target_index := targets.find(target)
+	if target_index < 0 or target_index > 1:
+		return true
+
+	var point_uv := Vector2(screen_position.x / screen_size.x, screen_position.y / screen_size.y)
+	var player_1_uv := split_camera_1.unproject_position(targets[0].global_position) / screen_size
+	var player_2_uv := split_camera_2.unproject_position(targets[1].global_position) / screen_size
+	return is_split_uv_owned_by_player_index(point_uv, target_index, player_1_uv, player_2_uv)
+
+
+func is_split_uv_owned_by_player_index(point_uv: Vector2, player_index: int, player_1_uv: Vector2, player_2_uv: Vector2) -> bool:
+	var player_delta := player_2_uv - player_1_uv
+	var split_slope := 100000.0
+	if absf(player_delta.y) > 0.0001:
+		split_slope = player_delta.x / player_delta.y
+
+	var split_origin := Vector2(0.5, 0.5)
+	var point_line_y := (split_origin.x - point_uv.x) * split_slope + split_origin.y
+	var player_1_line_y := (split_origin.x - player_1_uv.x) * split_slope + split_origin.y
+	var point_below_line := point_uv.y > point_line_y
+	var player_1_below_line := player_1_uv.y > player_1_line_y
+	var owner_index := 0 if point_below_line == player_1_below_line else 1
+	return owner_index == player_index
+
+
 func setup_dynamic_split_screen() -> void:
 	if not dynamic_split_enabled:
 		return

@@ -5,6 +5,7 @@ class_name GameScreen extends UiView
 @export var flags_2_label: Label
 @export var kills_1_label: Label
 @export var kills_2_label: Label
+@export var flag_indicators: FlagIndicators
 
 
 func _ready() -> void:
@@ -22,6 +23,8 @@ func open() -> void:
 	game.game_time_changed.connect(on_timer_changed)
 	game.team_kills_changed.connect(on_team_kills_changed)
 	game.flags_status_changed.connect(on_flags_status_changed)
+	if flag_indicators != null:
+		flag_indicators.set_game(game)
 
 	sync_from_game(game)
 

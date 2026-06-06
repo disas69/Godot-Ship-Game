@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://dqfdmmixda6q6" path="res://images/ui/white skull.png" id="5_ktti3"]
 [ext_resource type="Texture2D" uid="uid://mywykogdvj0y" path="res://images/ui/black skull.png" id="6_cgfq5"]
 [ext_resource type="Texture2D" uid="uid://deqi6ivh63fq6" path="res://images/ui/clock.png" id="7_p7vwb"]
+[ext_resource type="Script" uid="uid://cvdwtdp4jmdxh" path="res://scripts/ui/components/flag_indicators.gd" id="8_cgfq5"]
+[ext_resource type="PackedScene" path="res://scenes/ui/components/flag_indicator.tscn" id="9_tjkec"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ktti3"]
 font_size = 17
@@ -14,13 +16,33 @@ font_size = 17
 [sub_resource type="LabelSettings" id="LabelSettings_p7vwb"]
 font_size = 19
 
-[node name="UI" type="CanvasLayer" unique_id=976727756 node_paths=PackedStringArray("timer_label", "flags_1_label", "flags_2_label", "kills_1_label", "kills_2_label")]
+[node name="UI" type="CanvasLayer" unique_id=976727756 node_paths=PackedStringArray("timer_label", "flags_1_label", "flags_2_label", "kills_1_label", "kills_2_label", "flag_indicators")]
 script = ExtResource("1_ooiym")
 timer_label = NodePath("Control/Control/Timer")
 flags_1_label = NodePath("Control/Control/HBoxContainer/Flags1")
 flags_2_label = NodePath("Control/Control/HBoxContainer2/Flags2")
 kills_1_label = NodePath("Control/Control/HBoxContainer3/Kills1")
 kills_2_label = NodePath("Control/Control/HBoxContainer4/Kills2")
+flag_indicators = NodePath("FlagIndicators")
+
+[node name="FlagIndicators" type="Control" parent="." unique_id=57190261]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("8_cgfq5")
+indicator_scene = ExtResource("9_tjkec")
+good_team_marker_texture = ExtResource("4_p7vwb")
+bad_team_marker_texture = ExtResource("3_8dubc")
+marker_edge_margin = 20.0
+close_distance = 30.0
+far_alpha = 0.35
+close_marker_scale = 1.3
+far_marker_scale = 0.7
+rotate_markers = false
 
 [node name="Control" type="Control" parent="." unique_id=1571261215]
 layout_mode = 3
