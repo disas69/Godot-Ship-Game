@@ -68,6 +68,7 @@ func prepare_children_for_appear() -> void:
 		cache_base_state(child)
 		if anim_type == AnimType.SCALE:
 			child.scale = Vector2.ZERO
+			child.modulate.a = 0.0
 			set_pivot(child, scale_from)
 		else:
 			child.modulate.a = 0.0
@@ -88,6 +89,8 @@ func animate(appearing: bool) -> void:
 	for child in children:
 		cache_base_state(child)
 		set_pivot(child, scale_from)
+		if appearing:
+			prepare_child_for_appear(child)
 		if appearing and change_visible:
 			child.visible = true
 
@@ -120,6 +123,15 @@ func animate_child(child: Control, appearing: bool, delay: float) -> void:
 			animate_child_slide(child, appearing, delay, -1.0)
 		AnimType.SLIDE_IN_RIGHT:
 			animate_child_slide(child, appearing, delay, 1.0)
+
+
+func prepare_child_for_appear(child: Control) -> void:
+	match anim_type:
+		AnimType.SCALE:
+			child.scale = Vector2.ZERO
+			child.modulate.a = 0.0
+		AnimType.SLIDE_IN_LEFT, AnimType.SLIDE_IN_RIGHT:
+			child.modulate.a = 0.0
 
 
 func animate_child_scale(child: Control, appearing: bool, delay: float) -> void:
