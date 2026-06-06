@@ -1,6 +1,7 @@
 class_name PlayerShip extends Ship
 
 @export var local_player_index: int = 0
+@export var control_scheme: String = PlayerInput.CONTROL_KEYBOARD
 @export var allow_mouse_aim: bool = true
 @export_range(0.0, 0.2, 0.01) var gamepad_aim_release_snap_guard_duration: float = 0.08
 @export_range(0.0, 0.5, 0.01) var gamepad_aim_release_snap_window: float = 0.12
@@ -16,15 +17,28 @@ var gamepad_aim_release_snap_time_left := 0.0
 
 
 func _ready() -> void:
-	player_input.init_actions(local_player_index)
+	player_input.init_actions(local_player_index, control_scheme)
 	super._ready()
 
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventKey or event is InputEventMouse: 
+	if control_scheme == PlayerInput.CONTROL_KEYBOARD and (event is InputEventKey or event is InputEventMouse):
 		is_using_gamepad = false
-	elif event is InputEventJoypadMotion or event is InputEventJoypadButton:
+	elif is_selected_gamepad_event(event):
 		is_using_gamepad = true
+
+
+func is_selected_gamepad_event(event: InputEvent) -> bool:
+	if not (event is InputEventJoypadMotion or event is InputEventJoypadButton):
+		return false
+
+	var expected_device := -1
+	if control_scheme == PlayerInput.CONTROL_GAMEPAD_1:
+		expected_device = 0
+	elif control_scheme == PlayerInput.CONTROL_GAMEPAD_2:
+		expected_device = 1
+
+	return event.device == expected_device
 
 
 func get_move_input() -> Vector2:
@@ -76,7 +90,7 @@ func is_gamepad_aim_release_snap(aim: Vector2, aim_strength: float, last_strengt
 
 
 func should_use_mouse_aim(aim_input: Vector2) -> bool:
-	return allow_mouse_aim and local_player_index == 0 and aim_input.is_zero_approx() and not is_using_gamepad
+	return allow_mouse_aim and control_scheme == PlayerInput.CONTROL_KEYBOARD and aim_input.is_zero_approx() and not is_using_gamepad
 
 
 func should_keep_gamepad_aim_without_input() -> bool:

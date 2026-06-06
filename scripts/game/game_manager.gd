@@ -94,12 +94,76 @@ func replay_game_scene() -> void:
 
 
 func configure_local_game(player_count: int, player_device: String) -> void:
+	var configs: Array[Dictionary] = [{
+		"team": Ship.Team.GoodGuys,
+		"control_scheme": player_device,
+	}]
+	if player_count >= 2:
+		configs.append({
+			"team": Ship.Team.BadGuys,
+			"control_scheme": PlayerInput.CONTROL_GAMEPAD_1 if player_device != PlayerInput.CONTROL_GAMEPAD_1 else PlayerInput.CONTROL_GAMEPAD_2,
+		})
+
+	configure_local_game_players(configs)
+
+
+func configure_local_game_players(local_player_configs: Array[Dictionary]) -> void:
 	if game_settings == null:
 		return
+	if local_player_configs.is_empty():
+		return
 
-	game_settings.player_count = clampi(player_count, 1, 2)
-	game_settings.player_device = player_device
-	game_settings.game_mode = create_local_game_mode(game_settings.player_count)
+	game_settings.player_count = clampi(local_player_configs.size(), 1, 2)
+	game_settings.player_device = String(local_player_configs[0].get("control_scheme", PlayerInput.CONTROL_KEYBOARD))
+
+	if game_settings.game_mode == null:
+		game_settings.game_mode = create_local_game_mode(game_settings.player_count)
+
+	replace_local_players_in_mode(game_settings.game_mode, local_player_configs)
+
+
+func replace_local_players_in_mode(mode: GameMode, local_player_configs: Array[Dictionary]) -> void:
+	var good_team_max_count := mode.good_team_players.size()
+	var bad_team_max_count := mode.bad_team_players.size()
+
+	demote_local_players(mode.good_team_players)
+	demote_local_players(mode.bad_team_players)
+
+	var good_local_insert_index := 0
+	var bad_local_insert_index := 0
+	for i in range(local_player_configs.size()):
+		var config := local_player_configs[i]
+		var team: Ship.Team = int(config.get("team", Ship.Team.GoodGuys)) as Ship.Team
+		var control_scheme := String(config.get("control_scheme", PlayerInput.CONTROL_KEYBOARD))
+		var player := Player.new("Player %d" % [i + 1], team, true, control_scheme, i)
+		var team_players := mode.good_team_players if team == Ship.Team.GoodGuys else mode.bad_team_players
+		var insert_index := good_local_insert_index if team == Ship.Team.GoodGuys else bad_local_insert_index
+		if insert_index < team_players.size():
+			team_players[insert_index] = player
+		else:
+			team_players.append(player)
+		if team == Ship.Team.GoodGuys:
+			good_local_insert_index += 1
+		else:
+			bad_local_insert_index += 1
+
+	trim_team_players(mode.good_team_players, maxi(good_team_max_count, good_local_insert_index))
+	trim_team_players(mode.bad_team_players, maxi(bad_team_max_count, bad_local_insert_index))
+
+
+func demote_local_players(players: Array[Player]) -> void:
+	for player in players:
+		if player == null or not player.is_local:
+			continue
+
+		player.is_local = false
+		player.control_scheme = PlayerInput.CONTROL_KEYBOARD
+		player.local_player_index = -1
+
+
+func trim_team_players(players: Array[Player], max_count: int) -> void:
+	while players.size() > max_count:
+		players.remove_at(players.size() - 1)
 
 
 func create_local_game_mode(player_count: int) -> GameMode:

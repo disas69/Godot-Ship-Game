@@ -128,8 +128,9 @@ func spawn_players_from_game_mode() -> void:
 
 		var spawned_ship: Ship
 		if player.is_local:
-			spawned_ship = spawn_local_player(player.team, local_player_index)
-			local_player_index += 1
+			var assigned_local_index := player.local_player_index if player.local_player_index >= 0 else local_player_index
+			spawned_ship = spawn_local_player(player.team, assigned_local_index, player.control_scheme)
+			local_player_index = maxi(local_player_index, assigned_local_index + 1)
 		else:
 			spawned_ship = spawn_bot_player(player.team)
 
@@ -143,7 +144,7 @@ func get_selected_game_mode() -> GameMode:
 	return null
 
 
-func spawn_local_player(team: Ship.Team, local_player_index: int) -> PlayerShip:
+func spawn_local_player(team: Ship.Team, local_player_index: int, control_scheme: String = PlayerInput.CONTROL_KEYBOARD) -> PlayerShip:
 	if local_player_scene == null:
 		push_warning("Game: local_player_scene is not assigned.")
 		return null
@@ -155,6 +156,7 @@ func spawn_local_player(team: Ship.Team, local_player_index: int) -> PlayerShip:
 
 	player_instance.team = team
 	player_instance.local_player_index = local_player_index
+	player_instance.control_scheme = control_scheme
 	spawn_ship(player_instance, team)
 	register_tracked_ship(player_instance, true, local_player_index)
 	return player_instance
@@ -229,6 +231,7 @@ func register_tracked_ship(ship: Ship, is_local: bool, local_player_index: int) 
 		"team": ship.team,
 		"is_local": is_local,
 		"local_player_index": local_player_index,
+		"control_scheme": (ship as PlayerShip).control_scheme if ship is PlayerShip else PlayerInput.CONTROL_KEYBOARD,
 		"spawn_kind": spawn_kind,
 	}
 	tracked_ship_spawn_data[ship_id] = spawn_data
@@ -287,10 +290,11 @@ func respawn_ship_after_delay(spawn_data: Dictionary, destroyed_ship_id: int) ->
 	var team: Ship.Team = int(spawn_data.get("team", Ship.Team.GoodGuys)) as Ship.Team
 	var is_local: bool = bool(spawn_data.get("is_local", false))
 	var local_index: int = int(spawn_data.get("local_player_index", 0))
+	var control_scheme: String = String(spawn_data.get("control_scheme", PlayerInput.CONTROL_KEYBOARD))
 	var spawn_kind: String = String(spawn_data.get("spawn_kind", "none"))
 
 	if spawn_kind == "local" and is_local:
-		spawn_local_player(team, local_index)
+		spawn_local_player(team, local_index, control_scheme)
 	elif spawn_kind == "bot":
 		spawn_bot_player(team)
 

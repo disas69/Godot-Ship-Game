@@ -1,5 +1,9 @@
 class_name PlayerInput extends RefCounted
 
+const CONTROL_KEYBOARD := "keyboard"
+const CONTROL_GAMEPAD_1 := "gamepad_0"
+const CONTROL_GAMEPAD_2 := "gamepad_1"
+
 const ACTION_NAMES: PackedStringArray = [
 	"move_left",
 	"move_right",
@@ -13,23 +17,60 @@ const ACTION_NAMES: PackedStringArray = [
 ]
 
 var actions: Dictionary
+var control_scheme := CONTROL_KEYBOARD
 
-func init_actions(local_player_index: int) -> void:
-	var player_prefix: String = "p%d_" % (local_player_index + 1)
+
+func init_actions(local_player_index: int, new_control_scheme: String = CONTROL_KEYBOARD) -> void:
+	control_scheme = sanitize_control_scheme(new_control_scheme)
 	actions.clear()
 
 	for action_name in ACTION_NAMES:
-		var player_action: StringName = StringName(player_prefix + action_name)
-		if InputMap.has_action(player_action):
-			actions[action_name] = player_action
-			continue
+		actions[action_name] = setup_runtime_action(local_player_index, action_name)
 
-		if local_player_index == 0 and InputMap.has_action(action_name):
-			actions[action_name] = StringName(action_name)
-			continue
 
-		actions[action_name] = StringName("")
-		push_warning("Missing input action '%s'" % player_action)
+func sanitize_control_scheme(new_control_scheme: String) -> String:
+	if new_control_scheme == CONTROL_GAMEPAD_1 or new_control_scheme == CONTROL_GAMEPAD_2:
+		return new_control_scheme
+	return CONTROL_KEYBOARD
+
+
+func setup_runtime_action(local_player_index: int, action_name: String) -> StringName:
+	var source_action := get_source_action_name(action_name)
+	if not InputMap.has_action(source_action):
+		push_warning("Missing input action '%s'" % source_action)
+		return StringName("")
+
+	var runtime_action := StringName("runtime_p%d_%s" % [local_player_index + 1, action_name])
+	if InputMap.has_action(runtime_action):
+		InputMap.erase_action(runtime_action)
+	InputMap.add_action(runtime_action)
+
+	for event in InputMap.action_get_events(source_action):
+		if should_use_event(event):
+			InputMap.action_add_event(runtime_action, event)
+
+	if InputMap.action_get_events(runtime_action).is_empty() and not is_mouse_aim_action(action_name):
+		push_warning("No input events for control '%s' action '%s'" % [control_scheme, action_name])
+
+	return runtime_action
+
+
+func get_source_action_name(action_name: String) -> StringName:
+	if control_scheme == CONTROL_GAMEPAD_2:
+		return StringName("p2_" + action_name)
+	return StringName("p1_" + action_name)
+
+
+func should_use_event(event: InputEvent) -> bool:
+	if control_scheme == CONTROL_KEYBOARD:
+		return event is InputEventKey or event is InputEventMouse
+
+	var joypad_device := 0 if control_scheme == CONTROL_GAMEPAD_1 else 1
+	return (event is InputEventJoypadButton or event is InputEventJoypadMotion) and event.device == joypad_device
+
+
+func is_mouse_aim_action(action_name: String) -> bool:
+	return control_scheme == CONTROL_KEYBOARD and action_name.begins_with("aim_")
 
 
 func get_action(action_name: String) -> StringName:

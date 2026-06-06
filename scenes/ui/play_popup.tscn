@@ -5,14 +5,27 @@
 [ext_resource type="Script" path="res://scripts/ui/components/ui_auto_tween.gd" id="3_auto_tween"]
 [ext_resource type="Script" path="res://scripts/ui/components/ui_tween_container.gd" id="4_tween_container"]
 
-[node name="PlayPopup" type="CanvasLayer" node_paths=PackedStringArray("one_player_button", "two_players_button", "keyboard_button", "gamepad_button", "play_button", "back_button", "summary_label")]
+[node name="PlayPopup" type="CanvasLayer" node_paths=PackedStringArray("player_count_previous_button", "player_count_next_button", "player_count_value_label", "player_1_options", "player_1_controls_previous_button", "player_1_controls_next_button", "player_1_controls_value_label", "player_1_team_previous_button", "player_1_team_next_button", "player_1_team_value_label", "player_2_options", "player_2_controls_previous_button", "player_2_controls_next_button", "player_2_controls_value_label", "player_2_team_previous_button", "player_2_team_next_button", "player_2_team_value_label", "play_button", "back_button", "summary_label")]
 layer = 10
 process_mode = 3
 script = ExtResource("1_play_popup")
-one_player_button = NodePath("Root/Panel/Margin/VBox/PlayerButtons/OnePlayerButton")
-two_players_button = NodePath("Root/Panel/Margin/VBox/PlayerButtons/TwoPlayersButton")
-keyboard_button = NodePath("Root/Panel/Margin/VBox/DeviceButtons/KeyboardButton")
-gamepad_button = NodePath("Root/Panel/Margin/VBox/DeviceButtons/GamepadButton")
+player_count_previous_button = NodePath("Root/Panel/Margin/VBox/PlayerCountRow/PreviousButton")
+player_count_next_button = NodePath("Root/Panel/Margin/VBox/PlayerCountRow/NextButton")
+player_count_value_label = NodePath("Root/Panel/Margin/VBox/PlayerCountRow/Value")
+player_1_options = NodePath("Root/Panel/Margin/VBox/Player1Options")
+player_1_controls_previous_button = NodePath("Root/Panel/Margin/VBox/Player1Options/ControlsRow/PreviousButton")
+player_1_controls_next_button = NodePath("Root/Panel/Margin/VBox/Player1Options/ControlsRow/NextButton")
+player_1_controls_value_label = NodePath("Root/Panel/Margin/VBox/Player1Options/ControlsRow/Value")
+player_1_team_previous_button = NodePath("Root/Panel/Margin/VBox/Player1Options/TeamRow/PreviousButton")
+player_1_team_next_button = NodePath("Root/Panel/Margin/VBox/Player1Options/TeamRow/NextButton")
+player_1_team_value_label = NodePath("Root/Panel/Margin/VBox/Player1Options/TeamRow/Value")
+player_2_options = NodePath("Root/Panel/Margin/VBox/Player2Options")
+player_2_controls_previous_button = NodePath("Root/Panel/Margin/VBox/Player2Options/ControlsRow/PreviousButton")
+player_2_controls_next_button = NodePath("Root/Panel/Margin/VBox/Player2Options/ControlsRow/NextButton")
+player_2_controls_value_label = NodePath("Root/Panel/Margin/VBox/Player2Options/ControlsRow/Value")
+player_2_team_previous_button = NodePath("Root/Panel/Margin/VBox/Player2Options/TeamRow/PreviousButton")
+player_2_team_next_button = NodePath("Root/Panel/Margin/VBox/Player2Options/TeamRow/NextButton")
+player_2_team_value_label = NodePath("Root/Panel/Margin/VBox/Player2Options/TeamRow/Value")
 play_button = NodePath("Root/Panel/Margin/VBox/Actions/PlayButton")
 back_button = NodePath("Root/Panel/Margin/VBox/Actions/BackButton")
 summary_label = NodePath("Root/Panel/Margin/VBox/Summary")
@@ -52,9 +65,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -245.0
-offset_top = -190.0
+offset_top = -260.0
 offset_right = 245.0
-offset_bottom = 190.0
+offset_bottom = 260.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -90,47 +103,163 @@ layout_mode = 2
 text = "Play"
 horizontal_alignment = 1
 
-[node name="PlayerLabel" type="Label" parent="Root/Panel/Margin/VBox"]
+[node name="PlayerCountLabel" type="Label" parent="Root/Panel/Margin/VBox"]
 layout_mode = 2
 text = "Player count"
 
-[node name="PlayerButtons" type="HBoxContainer" parent="Root/Panel/Margin/VBox"]
+[node name="PlayerCountRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox"]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 8
 alignment = 1
 
-[node name="OnePlayerButton" parent="Root/Panel/Margin/VBox/PlayerButtons" instance=ExtResource("2_game_button")]
+[node name="PreviousButton" type="Button" parent="Root/Panel/Margin/VBox/PlayerCountRow"]
 layout_mode = 2
-label = "1"
-text = "1"
+custom_minimum_size = Vector2(44, 36)
+text = "<"
 
-[node name="TwoPlayersButton" parent="Root/Panel/Margin/VBox/PlayerButtons" instance=ExtResource("2_game_button")]
+[node name="Value" type="Label" parent="Root/Panel/Margin/VBox/PlayerCountRow"]
 layout_mode = 2
-label = "2"
-text = "2"
+custom_minimum_size = Vector2(180, 36)
+text = "1 Player"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="DeviceLabel" type="Label" parent="Root/Panel/Margin/VBox"]
+[node name="NextButton" type="Button" parent="Root/Panel/Margin/VBox/PlayerCountRow"]
 layout_mode = 2
-text = "Players device"
+custom_minimum_size = Vector2(44, 36)
+text = ">"
 
-[node name="DeviceButtons" type="HBoxContainer" parent="Root/Panel/Margin/VBox"]
+[node name="Player1Options" type="VBoxContainer" parent="Root/Panel/Margin/VBox"]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="Root/Panel/Margin/VBox/Player1Options"]
+layout_mode = 2
+text = "Player 1"
+
+[node name="ControlsRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox/Player1Options"]
+layout_mode = 2
+theme_override_constants/separation = 8
 alignment = 1
 
-[node name="KeyboardButton" parent="Root/Panel/Margin/VBox/DeviceButtons" instance=ExtResource("2_game_button")]
+[node name="Label" type="Label" parent="Root/Panel/Margin/VBox/Player1Options/ControlsRow"]
 layout_mode = 2
-label = "Keyboard"
+custom_minimum_size = Vector2(72, 36)
+text = "Controls"
+vertical_alignment = 1
+
+[node name="PreviousButton" type="Button" parent="Root/Panel/Margin/VBox/Player1Options/ControlsRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(44, 36)
+text = "<"
+
+[node name="Value" type="Label" parent="Root/Panel/Margin/VBox/Player1Options/ControlsRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 36)
 text = "Keyboard"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="GamepadButton" parent="Root/Panel/Margin/VBox/DeviceButtons" instance=ExtResource("2_game_button")]
+[node name="NextButton" type="Button" parent="Root/Panel/Margin/VBox/Player1Options/ControlsRow"]
 layout_mode = 2
-label = "Gamepad"
-text = "Gamepad"
+custom_minimum_size = Vector2(44, 36)
+text = ">"
+
+[node name="TeamRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox/Player1Options"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Label" type="Label" parent="Root/Panel/Margin/VBox/Player1Options/TeamRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(72, 36)
+text = "Team"
+vertical_alignment = 1
+
+[node name="PreviousButton" type="Button" parent="Root/Panel/Margin/VBox/Player1Options/TeamRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(44, 36)
+text = "<"
+
+[node name="Value" type="Label" parent="Root/Panel/Margin/VBox/Player1Options/TeamRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 36)
+text = "White"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NextButton" type="Button" parent="Root/Panel/Margin/VBox/Player1Options/TeamRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(44, 36)
+text = ">"
+
+[node name="Player2Options" type="VBoxContainer" parent="Root/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="Root/Panel/Margin/VBox/Player2Options"]
+layout_mode = 2
+text = "Player 2"
+
+[node name="ControlsRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox/Player2Options"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Label" type="Label" parent="Root/Panel/Margin/VBox/Player2Options/ControlsRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(72, 36)
+text = "Controls"
+vertical_alignment = 1
+
+[node name="PreviousButton" type="Button" parent="Root/Panel/Margin/VBox/Player2Options/ControlsRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(44, 36)
+text = "<"
+
+[node name="Value" type="Label" parent="Root/Panel/Margin/VBox/Player2Options/ControlsRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 36)
+text = "Gamepad 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NextButton" type="Button" parent="Root/Panel/Margin/VBox/Player2Options/ControlsRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(44, 36)
+text = ">"
+
+[node name="TeamRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox/Player2Options"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Label" type="Label" parent="Root/Panel/Margin/VBox/Player2Options/TeamRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(72, 36)
+text = "Team"
+vertical_alignment = 1
+
+[node name="PreviousButton" type="Button" parent="Root/Panel/Margin/VBox/Player2Options/TeamRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(44, 36)
+text = "<"
+
+[node name="Value" type="Label" parent="Root/Panel/Margin/VBox/Player2Options/TeamRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(160, 36)
+text = "Black"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NextButton" type="Button" parent="Root/Panel/Margin/VBox/Player2Options/TeamRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(44, 36)
+text = ">"
 
 [node name="Summary" type="Label" parent="Root/Panel/Margin/VBox"]
 layout_mode = 2
-text = "1 player / Keyboard"
+text = "Player 1: Keyboard / White"
 horizontal_alignment = 1
 
 [node name="Actions" type="HBoxContainer" parent="Root/Panel/Margin/VBox"]
