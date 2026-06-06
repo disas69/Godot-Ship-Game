@@ -5,6 +5,7 @@ var view_id := ""
 
 func open() -> void:
 	visible = true
+	prepare_focusable_controls_for_tree()
 	if UIManager.should_use_gamepad_focus():
 		focus_first_control.call_deferred()
 
@@ -21,6 +22,7 @@ func focus_first_control() -> void:
 	if not UIManager.should_use_gamepad_focus():
 		return
 
+	prepare_focusable_controls_for_tree()
 	var focusables := get_focusable_controls()
 	if focusables.is_empty():
 		return
@@ -32,11 +34,23 @@ func refresh_focus() -> void:
 	if not UIManager.should_use_gamepad_focus():
 		return
 
+	prepare_focusable_controls_for_tree()
 	var focus_owner := get_viewport().gui_get_focus_owner()
 	if focus_owner is Control and is_ancestor_of(focus_owner) and is_focusable_control(focus_owner):
 		return
 
 	focus_first_control()
+
+
+func prepare_focusable_controls_for_tree() -> void:
+	prepare_focusable_controls_recursive(self)
+
+
+func prepare_focusable_controls_recursive(node: Node) -> void:
+	for child in node.get_children():
+		if child is Control:
+			prepare_focusable_control(child as Control)
+		prepare_focusable_controls_recursive(child)
 
 
 func get_focusable_controls() -> Array[Control]:
@@ -64,6 +78,8 @@ func prepare_focusable_control(control: Control) -> void:
 
 func is_focusable_control(control: Control) -> bool:
 	if control == null or not control.is_visible_in_tree():
+		return false
+	if not (control is BaseButton or control is OptionButton):
 		return false
 	if control.focus_mode == Control.FOCUS_NONE:
 		return false

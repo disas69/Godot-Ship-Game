@@ -32,7 +32,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func should_use_gamepad_focus() -> bool:
-	return gamepad_ui_active and not Input.get_connected_joypads().is_empty()
+	return gamepad_ui_active
 
 
 func activate_gamepad_ui() -> void:
@@ -59,8 +59,6 @@ func clear_focus() -> void:
 
 
 func is_gamepad_ui_event(event: InputEvent) -> bool:
-	if Input.get_connected_joypads().is_empty():
-		return false
 	if event is InputEventJoypadButton:
 		var button_event := event as InputEventJoypadButton
 		return button_event.pressed

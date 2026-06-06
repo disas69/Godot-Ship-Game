@@ -67,6 +67,24 @@ texture_margin_right = 12.0
 texture_margin_bottom = 8.0
 modulate_color = Color(1.12, 1.12, 1.12, 1)
 
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_focus"]
+bg_color = Color(1, 1, 1, 0)
+draw_center = false
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 0.86, 0.35, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+
 [node name="PlayPopup" type="CanvasLayer" node_paths=PackedStringArray("player_count_previous_button", "player_count_next_button", "player_count_value_label", "player_1_options", "player_1_controls_previous_button", "player_1_controls_next_button", "player_1_controls_value_label", "player_1_team_previous_button", "player_1_team_next_button", "player_1_team_value_label", "player_2_options", "player_2_controls_previous_button", "player_2_controls_next_button", "player_2_controls_value_label", "player_2_team_previous_button", "player_2_team_next_button", "player_2_team_value_label", "play_button", "back_button", "summary_label")]
 process_mode = 3
 layer = 10
@@ -202,7 +220,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
 theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
-theme_override_styles/focus = SubResource("StyleBoxTexture_small_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
 text = "<"
 
 [node name="Value" type="Label" parent="Root/Panel/Margin/VBox/PlayerCountBlock/PlayerCountRow"]
@@ -227,7 +245,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
 theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
-theme_override_styles/focus = SubResource("StyleBoxTexture_small_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
 text = ">"
 
 [node name="Player1Options" type="VBoxContainer" parent="Root/Panel/Margin/VBox"]
@@ -269,7 +287,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
 theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
-theme_override_styles/focus = SubResource("StyleBoxTexture_small_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
 text = "<"
 
 [node name="Value" type="Label" parent="Root/Panel/Margin/VBox/Player1Options/ControlsBlock/ControlsRow"]
@@ -294,7 +312,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
 theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
-theme_override_styles/focus = SubResource("StyleBoxTexture_small_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
 text = ">"
 
 [node name="TeamBlock" type="VBoxContainer" parent="Root/Panel/Margin/VBox/Player1Options"]
@@ -326,7 +344,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
 theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
-theme_override_styles/focus = SubResource("StyleBoxTexture_small_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
 text = "<"
 
 [node name="Value" type="Label" parent="Root/Panel/Margin/VBox/Player1Options/TeamBlock/TeamRow"]
@@ -351,7 +369,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
 theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
-theme_override_styles/focus = SubResource("StyleBoxTexture_small_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
 text = ">"
 
 [node name="Player2Options" type="VBoxContainer" parent="Root/Panel/Margin/VBox"]
@@ -393,7 +411,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
 theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
-theme_override_styles/focus = SubResource("StyleBoxTexture_small_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
 text = "<"
 
 [node name="Value" type="Label" parent="Root/Panel/Margin/VBox/Player2Options/ControlsBlock/ControlsRow"]
@@ -418,7 +436,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
 theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
-theme_override_styles/focus = SubResource("StyleBoxTexture_small_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
 text = ">"
 
 [node name="TeamBlock" type="VBoxContainer" parent="Root/Panel/Margin/VBox/Player2Options"]
@@ -450,7 +468,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
 theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
-theme_override_styles/focus = SubResource("StyleBoxTexture_small_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
 text = "<"
 
 [node name="Value" type="Label" parent="Root/Panel/Margin/VBox/Player2Options/TeamBlock/TeamRow"]
@@ -475,7 +493,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
 theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
-theme_override_styles/focus = SubResource("StyleBoxTexture_small_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
 text = ">"
 
 [node name="Summary" type="Label" parent="Root/Panel/Margin/VBox"]
@@ -508,6 +526,6 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_red_normal")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_red_pressed")
 theme_override_styles/hover = SubResource("StyleBoxTexture_red_hover")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_red_normal")
-theme_override_styles/focus = SubResource("StyleBoxTexture_red_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
 text = "Back"
 label = "Back"
