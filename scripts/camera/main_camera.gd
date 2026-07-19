@@ -37,6 +37,10 @@ var target_size: float = 0.0
 var current_rig_position := Vector3.ZERO
 var split_rig_position_1 := Vector3.ZERO
 var split_rig_position_2 := Vector3.ZERO
+var _cached_frame: int = -1
+var _cached_player_1_uv: Vector2
+var _cached_player_2_uv: Vector2
+
 
 
 func _ready() -> void:
@@ -165,10 +169,15 @@ func is_screen_point_in_target_region(target: Node3D, screen_position: Vector2, 
 	if target_index < 0 or target_index > 1:
 		return true
 
+	var current_frame := Engine.get_frames_drawn()
+	if _cached_frame != current_frame:
+		_cached_frame = current_frame
+		_cached_player_1_uv = split_camera_1.unproject_position(targets[0].global_position) / screen_size
+		_cached_player_2_uv = split_camera_2.unproject_position(targets[1].global_position) / screen_size
+
 	var point_uv := Vector2(screen_position.x / screen_size.x, screen_position.y / screen_size.y)
-	var player_1_uv := split_camera_1.unproject_position(targets[0].global_position) / screen_size
-	var player_2_uv := split_camera_2.unproject_position(targets[1].global_position) / screen_size
-	return is_split_uv_owned_by_player_index(point_uv, target_index, player_1_uv, player_2_uv)
+	return is_split_uv_owned_by_player_index(point_uv, target_index, _cached_player_1_uv, _cached_player_2_uv)
+
 
 
 func is_split_uv_owned_by_player_index(point_uv: Vector2, player_index: int, player_1_uv: Vector2, player_2_uv: Vector2) -> bool:

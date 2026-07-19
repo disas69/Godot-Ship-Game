@@ -154,6 +154,13 @@ func instantiate_effect(entry: VfxEntry) -> Node3D:
 		particle_effect.auto_play = false
 		particle_effect.free_on_finished = false
 
+	var cached_particles: Array[GPUParticles3D] = []
+	if effect is GPUParticles3D:
+		cached_particles.append(effect as GPUParticles3D)
+	for child in effect.find_children("*", "GPUParticles3D", true, false):
+		cached_particles.append(child as GPUParticles3D)
+	effect.set_meta("cached_particles", cached_particles)
+
 	effect.set_meta("vfx_root_scale", effect.scale)
 	effect.tree_exiting.connect(on_effect_tree_exiting.bind(effect))
 	return effect
@@ -272,6 +279,15 @@ func get_spawn_parent(parent: Node) -> Node:
 
 
 func restart_particles(root: Node) -> void:
+	if root.has_meta("cached_particles"):
+		var particles: Array = root.get_meta("cached_particles")
+		for particle in particles:
+			if is_instance_valid(particle):
+				particle.emitting = false
+				particle.restart()
+				particle.emitting = true
+		return
+
 	if root is GPUParticles3D:
 		var root_particles := root as GPUParticles3D
 		root_particles.emitting = false
@@ -286,6 +302,15 @@ func restart_particles(root: Node) -> void:
 
 
 func stop_particles(root: Node) -> void:
+	if root.has_meta("cached_particles"):
+		var particles: Array = root.get_meta("cached_particles")
+		for particle in particles:
+			if is_instance_valid(particle):
+				particle.emitting = false
+				particle.restart()
+				particle.emitting = false
+		return
+
 	if root is GPUParticles3D:
 		var root_particles := root as GPUParticles3D
 		root_particles.emitting = false

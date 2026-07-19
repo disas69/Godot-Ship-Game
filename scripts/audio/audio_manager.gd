@@ -177,9 +177,6 @@ func play_sfx_internal(key: String, world_position: Vector3) -> void:
 	player.set_meta("audio_key", key)
 
 	active_sfx_players.append(player)
-	var finished_callback := on_sfx_finished.bind(player)
-	if not player.finished.is_connected(finished_callback):
-		player.finished.connect(finished_callback)
 	player.play()
 
 
@@ -216,6 +213,7 @@ func create_sfx_player() -> AudioStreamPlayer3D:
 	player.name = "SfxPlayer"
 	player.bus = sfx_bus
 	player.top_level = true
+	player.finished.connect(on_sfx_finished.bind(player))
 	return player
 
 

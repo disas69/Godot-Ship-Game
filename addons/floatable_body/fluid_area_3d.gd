@@ -38,4 +38,4 @@ func body_exit(body: PhysicsBody3D) -> void:
 
 
 func get_height(pos: Vector3) -> float:
-	return surface_height + 0.3 * noise.get_noise_3d(time * 2.0 + pos.x, pos.y, time * 5.0 + pos.z)	
+	return surface_height + 0.3 * noise.get_noise_2d(time * 2.0 + pos.x, time * 5.0 + pos.z)	

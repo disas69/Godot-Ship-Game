@@ -196,7 +196,7 @@ func get_marker_camera_position(game: Game, player: PlayerShip, flag_screen: Vec
 	var far_point := origin + direction.normalized() * camera_view_size.length() * 2.0
 	var low := 0.0
 	var high := 1.0
-	for i in range(24):
+	for i in range(12):
 		var mid := (low + high) * 0.5
 		var test_point := origin.lerp(far_point, mid)
 		if is_marker_point_allowed(game, player, test_point, camera_view_size):
