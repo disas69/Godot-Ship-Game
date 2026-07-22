@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://coei25wuug82c"
 path.s3tc="res://.godot/imported/Weapon_Lute_Atlas_Pirate.png-ce5d1f0a2663b6d823ca263f0fce5211.s3tc.ctex"
+path.etc2="res://.godot/imported/Weapon_Lute_Atlas_Pirate.png-ce5d1f0a2663b6d823ca263f0fce5211.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/PirateKit/Weapon_Lute_Atlas_Pirate.png"
-dest_files=["res://.godot/imported/Weapon_Lute_Atlas_Pirate.png-ce5d1f0a2663b6d823ca263f0fce5211.s3tc.ctex"]
+dest_files=["res://.godot/imported/Weapon_Lute_Atlas_Pirate.png-ce5d1f0a2663b6d823ca263f0fce5211.s3tc.ctex", "res://.godot/imported/Weapon_Lute_Atlas_Pirate.png-ce5d1f0a2663b6d823ca263f0fce5211.etc2.ctex"]
 
 [params]
 

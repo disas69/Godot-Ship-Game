@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cmh0xmly4lf48"
 path.s3tc="res://.godot/imported/UI_Paper_Atlas_Pirate.png-e27c1c9a3225270dfbbca3c797d57c91.s3tc.ctex"
+path.etc2="res://.godot/imported/UI_Paper_Atlas_Pirate.png-e27c1c9a3225270dfbbca3c797d57c91.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/PirateKit/UI_Paper_Atlas_Pirate.png"
-dest_files=["res://.godot/imported/UI_Paper_Atlas_Pirate.png-e27c1c9a3225270dfbbca3c797d57c91.s3tc.ctex"]
+dest_files=["res://.godot/imported/UI_Paper_Atlas_Pirate.png-e27c1c9a3225270dfbbca3c797d57c91.s3tc.ctex", "res://.godot/imported/UI_Paper_Atlas_Pirate.png-e27c1c9a3225270dfbbca3c797d57c91.etc2.ctex"]
 
 [params]
 

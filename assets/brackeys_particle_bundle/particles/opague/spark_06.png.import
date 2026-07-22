@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dphcv4c8fwi3f"
 path.s3tc="res://.godot/imported/spark_06.png-af27718af2768d6f9fe67a15af6a6181.s3tc.ctex"
+path.etc2="res://.godot/imported/spark_06.png-af27718af2768d6f9fe67a15af6a6181.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/brackeys_particle_bundle/particles/opague/spark_06.png"
-dest_files=["res://.godot/imported/spark_06.png-af27718af2768d6f9fe67a15af6a6181.s3tc.ctex"]
+dest_files=["res://.godot/imported/spark_06.png-af27718af2768d6f9fe67a15af6a6181.s3tc.ctex", "res://.godot/imported/spark_06.png-af27718af2768d6f9fe67a15af6a6181.etc2.ctex"]
 
 [params]
 

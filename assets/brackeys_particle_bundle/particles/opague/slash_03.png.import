@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://b1lhp5swkjnos"
 path.s3tc="res://.godot/imported/slash_03.png-09848b486fb9d650ced6b79a4343c786.s3tc.ctex"
+path.etc2="res://.godot/imported/slash_03.png-09848b486fb9d650ced6b79a4343c786.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/brackeys_particle_bundle/particles/opague/slash_03.png"
-dest_files=["res://.godot/imported/slash_03.png-09848b486fb9d650ced6b79a4343c786.s3tc.ctex"]
+dest_files=["res://.godot/imported/slash_03.png-09848b486fb9d650ced6b79a4343c786.s3tc.ctex", "res://.godot/imported/slash_03.png-09848b486fb9d650ced6b79a4343c786.etc2.ctex"]
 
 [params]
 

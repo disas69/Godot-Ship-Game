@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://da5hyoda1jlx2"
 path.s3tc="res://.godot/imported/PerlinNoise.png-9865b798a26f87f517f5f146ab9337be.s3tc.ctex"
+path.etc2="res://.godot/imported/PerlinNoise.png-9865b798a26f87f517f5f146ab9337be.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://addons/toon_water/Textures/PerlinNoise.png"
-dest_files=["res://.godot/imported/PerlinNoise.png-9865b798a26f87f517f5f146ab9337be.s3tc.ctex"]
+dest_files=["res://.godot/imported/PerlinNoise.png-9865b798a26f87f517f5f146ab9337be.s3tc.ctex", "res://.godot/imported/PerlinNoise.png-9865b798a26f87f517f5f146ab9337be.etc2.ctex"]
 
 [params]
 

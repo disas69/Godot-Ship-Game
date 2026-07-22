@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bg518lwyq5m2s"
 path.s3tc="res://.godot/imported/spotlight_03_a.png-19d6939b359bc76a5bf11a6c13d4ef62.s3tc.ctex"
+path.etc2="res://.godot/imported/spotlight_03_a.png-19d6939b359bc76a5bf11a6c13d4ef62.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/brackeys_particle_bundle/particles/alpha/spotlight_03_a.png"
-dest_files=["res://.godot/imported/spotlight_03_a.png-19d6939b359bc76a5bf11a6c13d4ef62.s3tc.ctex"]
+dest_files=["res://.godot/imported/spotlight_03_a.png-19d6939b359bc76a5bf11a6c13d4ef62.s3tc.ctex", "res://.godot/imported/spotlight_03_a.png-19d6939b359bc76a5bf11a6c13d4ef62.etc2.ctex"]
 
 [params]
 

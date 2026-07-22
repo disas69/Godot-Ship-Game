@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cxkpdpb1k5dkp"
 path.s3tc="res://.godot/imported/circle_01_a.png-90b7f331221f6798fbbf16138067d3cd.s3tc.ctex"
+path.etc2="res://.godot/imported/circle_01_a.png-90b7f331221f6798fbbf16138067d3cd.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/brackeys_particle_bundle/particles/alpha/circle_01_a.png"
-dest_files=["res://.godot/imported/circle_01_a.png-90b7f331221f6798fbbf16138067d3cd.s3tc.ctex"]
+dest_files=["res://.godot/imported/circle_01_a.png-90b7f331221f6798fbbf16138067d3cd.s3tc.ctex", "res://.godot/imported/circle_01_a.png-90b7f331221f6798fbbf16138067d3cd.etc2.ctex"]
 
 [params]
 

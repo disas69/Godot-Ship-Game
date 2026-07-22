@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://tmrgc2w3u8h7"
 path.s3tc="res://.godot/imported/UI_Red_Dash_Atlas_Pirate.png-5a1665c51f0353ff2106eae04745221d.s3tc.ctex"
+path.etc2="res://.godot/imported/UI_Red_Dash_Atlas_Pirate.png-5a1665c51f0353ff2106eae04745221d.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/PirateKit/UI_Red_Dash_Atlas_Pirate.png"
-dest_files=["res://.godot/imported/UI_Red_Dash_Atlas_Pirate.png-5a1665c51f0353ff2106eae04745221d.s3tc.ctex"]
+dest_files=["res://.godot/imported/UI_Red_Dash_Atlas_Pirate.png-5a1665c51f0353ff2106eae04745221d.s3tc.ctex", "res://.godot/imported/UI_Red_Dash_Atlas_Pirate.png-5a1665c51f0353ff2106eae04745221d.etc2.ctex"]
 
 [params]
 
