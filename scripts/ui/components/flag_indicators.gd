@@ -165,16 +165,17 @@ func is_dynamic_split_active(game: Game) -> bool:
 	return false
 
 
-func is_valid_local_player(player: PlayerShip) -> bool:
-	return player != null and is_instance_valid(player) and not player.is_destroyed
+func is_valid_local_player(player: Variant) -> bool:
+	return player != null and is_instance_valid(player) and (player is PlayerShip) and not (player as PlayerShip).is_destroyed
 
 
-func is_indicator_target_for_player(flag: Flag, player: PlayerShip) -> bool:
-	if flag == null or not is_instance_valid(flag):
+func is_indicator_target_for_player(flag: Variant, player: Variant) -> bool:
+	if flag == null or not is_instance_valid(flag) or not (flag is Flag):
 		return false
-	if player == null or not is_instance_valid(player):
+	if player == null or not is_instance_valid(player) or not (player is PlayerShip):
 		return false
-	return not flag.is_captured_by(player.team)
+	return not (flag as Flag).is_captured_by((player as PlayerShip).team)
+
 
 
 func is_flag_visible_for_player(game: Game, player: PlayerShip, flag: Flag, camera: Camera3D, flag_screen: Vector2, camera_view_size: Vector2) -> bool:
@@ -276,5 +277,7 @@ func get_marker_rotation(flag_screen: Vector2, player_screen: Vector2) -> float:
 	return (flag_screen - player_screen).angle() + PI * 0.5
 
 
-func get_indicator_key(player: PlayerShip, flag: Flag) -> String:
-	return "%d_%d" % [player.get_instance_id(), flag.get_instance_id()]
+func get_indicator_key(player: Variant, flag: Variant) -> String:
+	if player == null or not is_instance_valid(player) or flag == null or not is_instance_valid(flag):
+		return ""
+	return "%d_%d" % [(player as Object).get_instance_id(), (flag as Object).get_instance_id()]

@@ -140,8 +140,8 @@ func shake(amount: float = 1.0) -> void:
 	camera_shake.shake(amount)
 
 
-func get_camera_for_target(target: Node3D) -> Camera3D:
-	if target == null or not is_dynamic_split_available() or split_amount <= 0.001:
+func get_camera_for_target(target: Variant) -> Camera3D:
+	if target == null or not is_instance_valid(target) or not is_dynamic_split_available() or split_amount <= 0.001:
 		return camera
 
 	if target == targets[0]:
@@ -155,8 +155,8 @@ func is_dynamic_split_active() -> bool:
 	return is_dynamic_split_available() and split_amount > 0.001
 
 
-func is_screen_point_in_target_region(target: Node3D, screen_position: Vector2, screen_size: Vector2) -> bool:
-	if target == null:
+func is_screen_point_in_target_region(target: Variant, screen_position: Vector2, screen_size: Vector2) -> bool:
+	if target == null or not is_instance_valid(target):
 		return true
 	if not is_dynamic_split_active():
 		return true

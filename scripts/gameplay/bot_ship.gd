@@ -292,25 +292,29 @@ func get_valid_reach_targets() -> Array[Node3D]:
 	return valid_targets
 
 
-func is_reach_target_valid(candidate: Node3D) -> bool:
-	if candidate == null:
-		return false
-	return is_instance_valid(candidate)
-
-
-func is_target_valid(candidate: Node3D) -> bool:
+func is_reach_target_valid(candidate: Variant) -> bool:
 	if candidate == null or not is_instance_valid(candidate):
+		return false
+	return candidate is Node3D
+
+
+func is_target_valid(candidate: Variant) -> bool:
+	if candidate == null or not is_instance_valid(candidate):
+		return false
+
+	if not (candidate is Ship):
 		return false
 
 	var ship: Ship = candidate as Ship
 	return can_target_ship(ship)
 
 
-func is_target_lost(candidate: Node3D) -> bool:
+func is_target_lost(candidate: Variant) -> bool:
 	if not is_target_valid(candidate):
 		return true
 
-	return global_position.distance_to(candidate.global_position) > target_lose_radius
+	return global_position.distance_to((candidate as Node3D).global_position) > target_lose_radius
+
 
 
 func generate_patrol_points() -> void:
