@@ -17,7 +17,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 config/name="Ship Game"
 config/tags=PackedStringArray("starterkit")
 run/main_scene="res://scenes/main.tscn"
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.7", "Forward Plus")
 
 [audio]
 
@@ -180,7 +180,6 @@ p2_decrease_radius={
 
 [rendering]
 
-renderer/rendering_method.web="gl_compatibility"
 textures/canvas_textures/default_texture_filter=0
 shading/overrides/force_vertex_shading=true
 anti_aliasing/quality/msaa_3d=2
