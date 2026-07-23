@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://byqu6nrjq36ee"
 path.s3tc="res://.godot/imported/colormap.png-1a1e50b7852a8ee3edc5a927c4898a31.s3tc.ctex"
-path.etc2="res://.godot/imported/colormap.png-1a1e50b7852a8ee3edc5a927c4898a31.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/kenney_mini-arena/Models/GLB format/Textures/colormap.png"
-dest_files=["res://.godot/imported/colormap.png-1a1e50b7852a8ee3edc5a927c4898a31.s3tc.ctex", "res://.godot/imported/colormap.png-1a1e50b7852a8ee3edc5a927c4898a31.etc2.ctex"]
+dest_files=["res://.godot/imported/colormap.png-1a1e50b7852a8ee3edc5a927c4898a31.s3tc.ctex"]
 
 [params]
 

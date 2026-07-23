@@ -4,9 +4,8 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dhd86q6i7cmgi"
 path.s3tc="res://.godot/imported/Weapon_Dagger_Atlas_Pirate.png-cfccae134acef431bff6643d96049c82.s3tc.ctex"
-path.etc2="res://.godot/imported/Weapon_Dagger_Atlas_Pirate.png-cfccae134acef431bff6643d96049c82.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -16,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/PirateKit/Weapon_Dagger_Atlas_Pirate.png"
-dest_files=["res://.godot/imported/Weapon_Dagger_Atlas_Pirate.png-cfccae134acef431bff6643d96049c82.s3tc.ctex", "res://.godot/imported/Weapon_Dagger_Atlas_Pirate.png-cfccae134acef431bff6643d96049c82.etc2.ctex"]
+dest_files=["res://.godot/imported/Weapon_Dagger_Atlas_Pirate.png-cfccae134acef431bff6643d96049c82.s3tc.ctex"]
 
 [params]
 

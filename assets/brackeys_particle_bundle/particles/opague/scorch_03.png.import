@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://i84ssarq1roa"
 path.s3tc="res://.godot/imported/scorch_03.png-6e2b780b8b600340f6c151ea6eca295d.s3tc.ctex"
-path.etc2="res://.godot/imported/scorch_03.png-6e2b780b8b600340f6c151ea6eca295d.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/brackeys_particle_bundle/particles/opague/scorch_03.png"
-dest_files=["res://.godot/imported/scorch_03.png-6e2b780b8b600340f6c151ea6eca295d.s3tc.ctex", "res://.godot/imported/scorch_03.png-6e2b780b8b600340f6c151ea6eca295d.etc2.ctex"]
+dest_files=["res://.godot/imported/scorch_03.png-6e2b780b8b600340f6c151ea6eca295d.s3tc.ctex"]
 
 [params]
 

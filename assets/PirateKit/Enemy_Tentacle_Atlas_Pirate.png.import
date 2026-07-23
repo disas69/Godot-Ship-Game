@@ -4,9 +4,8 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cml1itqnedfkt"
 path.s3tc="res://.godot/imported/Enemy_Tentacle_Atlas_Pirate.png-07219a098e32b38c09fe6bf39da8a753.s3tc.ctex"
-path.etc2="res://.godot/imported/Enemy_Tentacle_Atlas_Pirate.png-07219a098e32b38c09fe6bf39da8a753.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -16,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/PirateKit/Enemy_Tentacle_Atlas_Pirate.png"
-dest_files=["res://.godot/imported/Enemy_Tentacle_Atlas_Pirate.png-07219a098e32b38c09fe6bf39da8a753.s3tc.ctex", "res://.godot/imported/Enemy_Tentacle_Atlas_Pirate.png-07219a098e32b38c09fe6bf39da8a753.etc2.ctex"]
+dest_files=["res://.godot/imported/Enemy_Tentacle_Atlas_Pirate.png-07219a098e32b38c09fe6bf39da8a753.s3tc.ctex"]
 
 [params]
 

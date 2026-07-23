@@ -4,9 +4,8 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cwdv25b5nhctx"
 path.s3tc="res://.godot/imported/UI_Gold_Atlas_Pirate.png-24cc049c100fa3883bba3bce8acd1e43.s3tc.ctex"
-path.etc2="res://.godot/imported/UI_Gold_Atlas_Pirate.png-24cc049c100fa3883bba3bce8acd1e43.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -16,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/PirateKit/UI_Gold_Atlas_Pirate.png"
-dest_files=["res://.godot/imported/UI_Gold_Atlas_Pirate.png-24cc049c100fa3883bba3bce8acd1e43.s3tc.ctex", "res://.godot/imported/UI_Gold_Atlas_Pirate.png-24cc049c100fa3883bba3bce8acd1e43.etc2.ctex"]
+dest_files=["res://.godot/imported/UI_Gold_Atlas_Pirate.png-24cc049c100fa3883bba3bce8acd1e43.s3tc.ctex"]
 
 [params]
 

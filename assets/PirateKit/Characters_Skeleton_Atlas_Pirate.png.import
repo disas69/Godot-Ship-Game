@@ -4,9 +4,8 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://x53rm58ash7o"
 path.s3tc="res://.godot/imported/Characters_Skeleton_Atlas_Pirate.png-ac846873aed0d9478adc794593a285b9.s3tc.ctex"
-path.etc2="res://.godot/imported/Characters_Skeleton_Atlas_Pirate.png-ac846873aed0d9478adc794593a285b9.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -16,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/PirateKit/Characters_Skeleton_Atlas_Pirate.png"
-dest_files=["res://.godot/imported/Characters_Skeleton_Atlas_Pirate.png-ac846873aed0d9478adc794593a285b9.s3tc.ctex", "res://.godot/imported/Characters_Skeleton_Atlas_Pirate.png-ac846873aed0d9478adc794593a285b9.etc2.ctex"]
+dest_files=["res://.godot/imported/Characters_Skeleton_Atlas_Pirate.png-ac846873aed0d9478adc794593a285b9.s3tc.ctex"]
 
 [params]
 

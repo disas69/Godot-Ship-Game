@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dxpfb2ike8vk1"
 path.s3tc="res://.godot/imported/muzzle_04_a.png-f635226eb066a141c28e62681f56e1ef.s3tc.ctex"
-path.etc2="res://.godot/imported/muzzle_04_a.png-f635226eb066a141c28e62681f56e1ef.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/brackeys_particle_bundle/particles/alpha/muzzle_04_a.png"
-dest_files=["res://.godot/imported/muzzle_04_a.png-f635226eb066a141c28e62681f56e1ef.s3tc.ctex", "res://.godot/imported/muzzle_04_a.png-f635226eb066a141c28e62681f56e1ef.etc2.ctex"]
+dest_files=["res://.godot/imported/muzzle_04_a.png-f635226eb066a141c28e62681f56e1ef.s3tc.ctex"]
 
 [params]
 

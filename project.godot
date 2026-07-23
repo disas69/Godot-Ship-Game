@@ -181,6 +181,5 @@ p2_decrease_radius={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
-textures/vram_compression/import_etc2_astc=true
 shading/overrides/force_vertex_shading=true
 anti_aliasing/quality/msaa_3d=2

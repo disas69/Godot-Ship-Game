@@ -4,9 +4,8 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cr4ll4nwn4bqf"
 path.s3tc="res://.godot/imported/Weapon_AxeRifle_Atlas_Pirate.png-1f998521a21be38b94d986192856415d.s3tc.ctex"
-path.etc2="res://.godot/imported/Weapon_AxeRifle_Atlas_Pirate.png-1f998521a21be38b94d986192856415d.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -16,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/PirateKit/Weapon_AxeRifle_Atlas_Pirate.png"
-dest_files=["res://.godot/imported/Weapon_AxeRifle_Atlas_Pirate.png-1f998521a21be38b94d986192856415d.s3tc.ctex", "res://.godot/imported/Weapon_AxeRifle_Atlas_Pirate.png-1f998521a21be38b94d986192856415d.etc2.ctex"]
+dest_files=["res://.godot/imported/Weapon_AxeRifle_Atlas_Pirate.png-1f998521a21be38b94d986192856415d.s3tc.ctex"]
 
 [params]
 

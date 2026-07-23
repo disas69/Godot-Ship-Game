@@ -4,9 +4,8 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://ca4p5t3uuee5d"
 path.s3tc="res://.godot/imported/Characters_Captain_Barbarossa_Atlas_Pirate.png-7c86a8bc44456ed877395c17036e9855.s3tc.ctex"
-path.etc2="res://.godot/imported/Characters_Captain_Barbarossa_Atlas_Pirate.png-7c86a8bc44456ed877395c17036e9855.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -16,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/PirateKit/Characters_Captain_Barbarossa_Atlas_Pirate.png"
-dest_files=["res://.godot/imported/Characters_Captain_Barbarossa_Atlas_Pirate.png-7c86a8bc44456ed877395c17036e9855.s3tc.ctex", "res://.godot/imported/Characters_Captain_Barbarossa_Atlas_Pirate.png-7c86a8bc44456ed877395c17036e9855.etc2.ctex"]
+dest_files=["res://.godot/imported/Characters_Captain_Barbarossa_Atlas_Pirate.png-7c86a8bc44456ed877395c17036e9855.s3tc.ctex"]
 
 [params]
 

@@ -4,9 +4,8 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cqckcovxx3bl1"
 path.s3tc="res://.godot/imported/UI_Swords_Atlas_Pirate.png-e859567b24aef0e9ed60a88a36d2a0d2.s3tc.ctex"
-path.etc2="res://.godot/imported/UI_Swords_Atlas_Pirate.png-e859567b24aef0e9ed60a88a36d2a0d2.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -16,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/PirateKit/UI_Swords_Atlas_Pirate.png"
-dest_files=["res://.godot/imported/UI_Swords_Atlas_Pirate.png-e859567b24aef0e9ed60a88a36d2a0d2.s3tc.ctex", "res://.godot/imported/UI_Swords_Atlas_Pirate.png-e859567b24aef0e9ed60a88a36d2a0d2.etc2.ctex"]
+dest_files=["res://.godot/imported/UI_Swords_Atlas_Pirate.png-e859567b24aef0e9ed60a88a36d2a0d2.s3tc.ctex"]
 
 [params]
 

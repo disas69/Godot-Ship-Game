@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://d2gj4kajayw6d"
 path.s3tc="res://.godot/imported/star_09_a.png-f997421ab239e03bf68d613f7ee287ff.s3tc.ctex"
-path.etc2="res://.godot/imported/star_09_a.png-f997421ab239e03bf68d613f7ee287ff.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/brackeys_particle_bundle/particles/alpha/star_09_a.png"
-dest_files=["res://.godot/imported/star_09_a.png-f997421ab239e03bf68d613f7ee287ff.s3tc.ctex", "res://.godot/imported/star_09_a.png-f997421ab239e03bf68d613f7ee287ff.etc2.ctex"]
+dest_files=["res://.godot/imported/star_09_a.png-f997421ab239e03bf68d613f7ee287ff.s3tc.ctex"]
 
 [params]
 

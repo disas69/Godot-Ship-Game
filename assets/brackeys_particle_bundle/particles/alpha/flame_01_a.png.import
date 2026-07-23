@@ -4,16 +4,15 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://d04ju851m6u7k"
 path.s3tc="res://.godot/imported/flame_01_a.png-181f297b6c02ad0ae8610bc1c52bbce9.s3tc.ctex"
-path.etc2="res://.godot/imported/flame_01_a.png-181f297b6c02ad0ae8610bc1c52bbce9.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/brackeys_particle_bundle/particles/alpha/flame_01_a.png"
-dest_files=["res://.godot/imported/flame_01_a.png-181f297b6c02ad0ae8610bc1c52bbce9.s3tc.ctex", "res://.godot/imported/flame_01_a.png-181f297b6c02ad0ae8610bc1c52bbce9.etc2.ctex"]
+dest_files=["res://.godot/imported/flame_01_a.png-181f297b6c02ad0ae8610bc1c52bbce9.s3tc.ctex"]
 
 [params]
 
