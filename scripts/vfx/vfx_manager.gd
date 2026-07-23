@@ -12,6 +12,8 @@ func _ready() -> void:
 	ensure_pool_root()
 	rebuild_vfx_map()
 	prewarm_pools()
+	call_deferred("prewarm_shaders")
+
 
 
 func spawn(key: String, world_position: Vector3 = Vector3.ZERO) -> Node3D:
@@ -120,6 +122,57 @@ func prewarm_pools() -> void:
 
 		var pool := pools[StringName(entry.key)]
 		pool.prewarm(entry.preload_count)
+
+
+func prewarm_shaders(extra_scenes: Array[PackedScene] = []) -> void:
+	if vfx_map.is_empty() and extra_scenes.is_empty():
+		return
+
+	var viewport := SubViewport.new()
+	viewport.name = "ShaderPrewarmViewport"
+	viewport.size = Vector2i(64, 64)
+	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	add_child(viewport)
+
+	var camera := Camera3D.new()
+	camera.position = Vector3(0, 0, 5)
+	viewport.add_child(camera)
+	camera.make_current()
+
+	var temp_instances: Array[Node3D] = []
+
+	for entry in vfx_map.values():
+		if entry == null or entry.scene == null:
+			continue
+		var instance := entry.scene.instantiate() as Node3D
+		if instance != null:
+			viewport.add_child(instance)
+			instance.position = Vector3.ZERO
+			instance.visible = true
+			start_effect(instance)
+			temp_instances.append(instance)
+
+	for scene in extra_scenes:
+		if scene == null:
+			continue
+		var instance := scene.instantiate()
+		if instance is Node3D:
+			var node3d := instance as Node3D
+			viewport.add_child(node3d)
+			node3d.position = Vector3.ZERO
+			node3d.visible = true
+			restart_particles(node3d)
+			temp_instances.append(node3d)
+
+	# Await 2 frames so RenderingServer submits draw calls and WebGL compiles shader pipelines
+	await get_tree().process_frame
+	await get_tree().process_frame
+
+	for inst in temp_instances:
+		if is_instance_valid(inst):
+			inst.queue_free()
+	viewport.queue_free()
+
 
 
 func get_entry_or_warn(key: String) -> VfxEntry:
