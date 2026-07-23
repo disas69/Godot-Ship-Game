@@ -103,6 +103,9 @@ void fragment(){
 	float foamDistance = mix(foam_max_distance, foam_min_distance, normalDot);
 	
 	float foamDepth = clamp(depth_difference / max(foamDistance, 0.0001), 0.0, 1.0);
+	if (scene_depth_raw >= 0.999 || depth_difference <= 0.0001) {
+		foamDepth = 1.0;
+	}
 	float surfaceNoiseCutoff = foamDepth * surface_noise_cutoff;
 	
 	vec4 distortNoiseSample = texture(distortNoise, distortUV);
