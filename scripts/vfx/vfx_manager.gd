@@ -154,11 +154,13 @@ func instantiate_effect(entry: VfxEntry) -> Node3D:
 		particle_effect.auto_play = false
 		particle_effect.free_on_finished = false
 
-	var cached_particles: Array[GPUParticles3D] = []
-	if effect is GPUParticles3D:
-		cached_particles.append(effect as GPUParticles3D)
+	var cached_particles: Array[Node] = []
+	if effect is GPUParticles3D or effect is CPUParticles3D:
+		cached_particles.append(effect)
 	for child in effect.find_children("*", "GPUParticles3D", true, false):
-		cached_particles.append(child as GPUParticles3D)
+		cached_particles.append(child)
+	for child in effect.find_children("*", "CPUParticles3D", true, false):
+		cached_particles.append(child)
 	effect.set_meta("cached_particles", cached_particles)
 
 	effect.set_meta("vfx_root_scale", effect.scale)
@@ -283,22 +285,24 @@ func restart_particles(root: Node) -> void:
 		var particles: Array = root.get_meta("cached_particles")
 		for particle in particles:
 			if is_instance_valid(particle):
-				particle.emitting = false
-				particle.restart()
-				particle.emitting = true
+				particle.set("emitting", false)
+				particle.call("restart")
+				particle.set("emitting", true)
 		return
 
-	if root is GPUParticles3D:
-		var root_particles := root as GPUParticles3D
-		root_particles.emitting = false
-		root_particles.restart()
-		root_particles.emitting = true
+	if root is GPUParticles3D or root is CPUParticles3D:
+		root.set("emitting", false)
+		root.call("restart")
+		root.set("emitting", true)
 
 	for child in root.find_children("*", "GPUParticles3D", true, false):
-		var particles := child as GPUParticles3D
-		particles.emitting = false
-		particles.restart()
-		particles.emitting = true
+		child.set("emitting", false)
+		child.call("restart")
+		child.set("emitting", true)
+	for child in root.find_children("*", "CPUParticles3D", true, false):
+		child.set("emitting", false)
+		child.call("restart")
+		child.set("emitting", true)
 
 
 func stop_particles(root: Node) -> void:
@@ -306,22 +310,24 @@ func stop_particles(root: Node) -> void:
 		var particles: Array = root.get_meta("cached_particles")
 		for particle in particles:
 			if is_instance_valid(particle):
-				particle.emitting = false
-				particle.restart()
-				particle.emitting = false
+				particle.set("emitting", false)
+				particle.call("restart")
+				particle.set("emitting", false)
 		return
 
-	if root is GPUParticles3D:
-		var root_particles := root as GPUParticles3D
-		root_particles.emitting = false
-		root_particles.restart()
-		root_particles.emitting = false
+	if root is GPUParticles3D or root is CPUParticles3D:
+		root.set("emitting", false)
+		root.call("restart")
+		root.set("emitting", false)
 
 	for child in root.find_children("*", "GPUParticles3D", true, false):
-		var particles := child as GPUParticles3D
-		particles.emitting = false
-		particles.restart()
-		particles.emitting = false
+		child.set("emitting", false)
+		child.call("restart")
+		child.set("emitting", false)
+	for child in root.find_children("*", "CPUParticles3D", true, false):
+		child.set("emitting", false)
+		child.call("restart")
+		child.set("emitting", false)
 
 
 func on_effect_finished(effect: Node3D) -> void:

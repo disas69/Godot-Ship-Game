@@ -3,7 +3,6 @@ render_mode unshaded, blend_mix, depth_draw_never, depth_test_disabled, cull_dis
 
 uniform sampler2D screen_texture : source_color, hint_screen_texture, filter_nearest;
 uniform sampler2D depth_texture : source_color, hint_depth_texture, filter_nearest;
-uniform sampler2D normal_texture : source_color, hint_normal_roughness_texture, filter_nearest;
 
 uniform float depth_threshold : hint_range(0, 1) = 0.05;
 uniform float reverse_depth_threshold : hint_range(0, 1) = 0.25;
@@ -50,7 +49,6 @@ void vertex() {
 
 vec3 get_outlined_color(ivec2 screen_pixel, mat4 inv_projection_matrix, mat4 inv_view_matrix, ivec2 texture_size) {
 	float depth = get_depth(screen_pixel, inv_projection_matrix, texture_size);
-	vec3 normal = texelFetch(normal_texture, screen_pixel, 0).xyz * 2.0 - 1.0;
 	int outline_offset = max(int(round(outline_thickness)), 1);
 
 	ivec2 pixels[4];
@@ -64,7 +62,9 @@ vec3 get_outlined_color(ivec2 screen_pixel, mat4 inv_projection_matrix, mat4 inv
 	float nearest_depth = depth;
 	ivec2 nearest_pixel = screen_pixel;
 
-	float normal_sum = 0.0;
+	vec3 original = texelFetch(screen_texture, screen_pixel, 0).rgb;
+	float color_diff_sum = 0.0;
+
 	for (int i = 0; i < 4; i++) {
 		float d = get_depth(pixels[i], inv_projection_matrix, texture_size);
 		depth_diff += depth - d;
@@ -75,39 +75,19 @@ vec3 get_outlined_color(ivec2 screen_pixel, mat4 inv_projection_matrix, mat4 inv
 			nearest_pixel = pixels[i];
 		}
 
-		vec3 n = texelFetch(normal_texture, pixels[i], 0).xyz * 2.0 - 1.0;
-		vec3 normal_diff = normal - n;
-
-		// Edge pixels should yield to the normal closest to the bias direction
-		float normal_bias_diff = dot(normal_diff, normal_edge_bias);
-		float normal_indicator = smoothstep(-0.01, 0.01, normal_bias_diff);
-
-		normal_sum += dot(normal_diff, normal_diff) * normal_indicator;
+		vec3 neighbor_col = texelFetch(screen_texture, pixels[i], 0).rgb;
+		color_diff_sum += distance(original, neighbor_col);
 	}
 	float depth_edge = step(depth_threshold, depth_diff);
-
-	// The reverse depth sum produces depth lines inside of the object, but they don't look as nice as the normal depth_diff
-	// Instead, we can use this value to mask the normal edge along the outside of the object
 	float reverse_depth_edge = step(reverse_depth_threshold, depth_diff_reversed);
+	float color_edge = step(0.15, (color_diff_sum / 4.0) - reverse_depth_edge * 0.5);
 
-	float indicator = sqrt(normal_sum);
-	float normal_edge = step(normal_threshold, indicator - reverse_depth_edge);
+	float edge = max(depth_edge, color_edge);
 
-	vec3 original = texelFetch(screen_texture, screen_pixel, 0).rgb;
 	vec3 nearest = texelFetch(screen_texture, nearest_pixel, 0).rgb;
+	vec3 edge_col = nearest * darken_amount;
 
-	mat3 view_to_world_normal_mat = mat3(
-		inv_view_matrix[0].xyz,
-		inv_view_matrix[1].xyz,
-		inv_view_matrix[2].xyz
-	);
-	float ld = dot((view_to_world_normal_mat * normal), normalize(light_direction));
-
-	vec3 depth_col = nearest * darken_amount;
-	vec3 normal_col = original * (ld > 0.0 ? darken_amount : lighten_amount);
-	vec3 edge_mix = mix(normal_col, depth_col, depth_edge);
-
-	return mix(original, edge_mix, (depth_edge > 0.0 ? depth_edge : normal_edge));
+	return mix(original, edge_col, edge);
 }
 
 void fragment() {

@@ -1,47 +1,7 @@
-[gd_scene format=3 uid="uid://brr472tdvooyw"]
+[gd_scene format=3]
 
-[ext_resource type="Script" uid="uid://bcyni047fem2n" path="res://scripts/vfx/vfx_animation_player.gd" id="1_rae34"]
-[ext_resource type="Texture2D" uid="uid://djkoi1qy46ydk" path="res://assets/brackeys_particle_bundle/particles/alpha/smoke_07_a.png" id="2_rae34"]
-
-[sub_resource type="Curve" id="Curve_ev17w"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.07239819, 0.8876405), 0.0, 0.0, 0, 0, Vector2(0.6036585, 0.874935), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 4
-
-[sub_resource type="CurveTexture" id="CurveTexture_d0eba"]
-curve = SubResource("Curve_ev17w")
-
-[sub_resource type="Gradient" id="Gradient_mi1lt"]
-offsets = PackedFloat32Array(0.00729927, 1)
-colors = PackedColorArray(0.054142177, 0.054142177, 0.05414214, 1, 0.0605303, 0.0605304, 0.0605303, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_ccwko"]
-gradient = SubResource("Gradient_mi1lt")
-
-[sub_resource type="Curve" id="Curve_nbeux"]
-_data = [Vector2(0, 0.359551), 0.0, 0.0, 0, 0, Vector2(0.0672269, 0.640449), 0.305618, 0.305618, 0, 0, Vector2(1, 1), 0.458427, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_3h01x"]
-curve = SubResource("Curve_nbeux")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lrn7k"]
-lifetime_randomness = 0.3
-emission_shape = 1
-emission_sphere_radius = 0.3
-angle_min = 1.07288e-05
-angle_max = 360.0
-direction = Vector3(0, 1, 0)
-spread = 30.0
-initial_velocity_min = 0.1
-initial_velocity_max = 0.3
-angular_velocity_min = -10.0
-angular_velocity_max = 9.99998
-gravity = Vector3(0, 0, 0)
-scale_min = 0.6
-scale_max = 0.9
-scale_curve = SubResource("CurveTexture_3h01x")
-color_initial_ramp = SubResource("GradientTexture1D_ccwko")
-alpha_curve = SubResource("CurveTexture_d0eba")
+[ext_resource type="Script" path="res://scripts/vfx/vfx_animation_player.gd" id="1_rae34"]
+[ext_resource type="Texture2D" path="res://assets/brackeys_particle_bundle/particles/alpha/smoke_07_a.png" id="2_rae34"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mhgpp"]
 transparency = 1
@@ -59,33 +19,13 @@ particles_anim_loop = false
 [sub_resource type="QuadMesh" id="QuadMesh_amgik"]
 material = SubResource("StandardMaterial3D_mhgpp")
 
-[sub_resource type="Gradient" id="Gradient_d0eba"]
-colors = PackedColorArray(1, 1, 1, 1, 1.732707e-06, 0.86739504, 0.9284206, 0)
+[sub_resource type="Curve" id="Curve_nbeux"]
+_data = [Vector2(0, 0.359551), 0.0, 0.0, 0, 0, Vector2(0.0672269, 0.640449), 0.305618, 0.305618, 0, 0, Vector2(1, 1), 0.458427, 0.0, 0, 0]
+point_count = 3
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_c2n8d"]
-gradient = SubResource("Gradient_d0eba")
-
-[sub_resource type="Curve" id="Curve_idgwf"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
-point_count = 1
-
-[sub_resource type="CurveTexture" id="CurveTexture_gx4rg"]
-curve = SubResource("Curve_idgwf")
-
-[sub_resource type="Curve" id="Curve_8kd5m"]
-_data = [Vector2(0, 0), 0.0, 2.54045, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_phcyf"]
-curve = SubResource("Curve_8kd5m")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1nk5o"]
-gravity = Vector3(0, 0, 0)
-scale_min = 0.5
-scale_max = 0.5
-scale_curve = SubResource("CurveTexture_phcyf")
-color_ramp = SubResource("GradientTexture1D_c2n8d")
-emission_curve = SubResource("CurveTexture_gx4rg")
+[sub_resource type="Gradient" id="Gradient_mi1lt"]
+offsets = PackedFloat32Array(0.00729927, 1)
+colors = PackedColorArray(0.054142177, 0.054142177, 0.05414214, 1, 0.0605303, 0.0605304, 0.0605303, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f1p13"]
 transparency = 1
@@ -94,6 +34,13 @@ vertex_color_use_as_albedo = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_ea5bc"]
 material = SubResource("StandardMaterial3D_f1p13")
+
+[sub_resource type="Curve" id="Curve_8kd5m"]
+_data = [Vector2(0, 0), 0.0, 2.54045, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_d0eba"]
+colors = PackedColorArray(1, 1, 1, 1, 1.732707e-06, 0.86739504, 0.9284206, 0)
 
 [sub_resource type="Animation" id="Animation_ev17w"]
 length = 0.001
@@ -160,26 +107,46 @@ _data = {
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 script = ExtResource("1_rae34")
 
-[node name="Smoke" type="GPUParticles3D" parent="." unique_id=1279659409]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+[node name="Smoke" type="CPUParticles3D" parent="." unique_id=1123143167]
 emitting = false
 amount = 32
 lifetime = 1.6
 one_shot = true
 explosiveness = 0.95
+lifetime_randomness = 0.3
+fixed_fps = 30
+visibility_aabb = AABB(-4, -4, -4, 8, 8, 8)
 local_coords = true
-process_material = SubResource("ParticleProcessMaterial_lrn7k")
-draw_pass_1 = SubResource("QuadMesh_amgik")
+mesh = SubResource("QuadMesh_amgik")
+emission_shape = 1
+emission_sphere_radius = 0.3
+direction = Vector3(0, 1, 0)
+spread = 30.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 0.1
+initial_velocity_max = 0.3
+angular_velocity_min = -10.0
+angular_velocity_max = 9.99998
+angle_min = 1.07288e-05
+angle_max = 360.0
+scale_amount_min = 0.6
+scale_amount_max = 0.9
+scale_amount_curve = SubResource("Curve_nbeux")
+color_initial_ramp = SubResource("Gradient_mi1lt")
 
-[node name="Shock" type="GPUParticles3D" parent="." unique_id=1720472608]
+[node name="Shock" type="CPUParticles3D" parent="." unique_id=1321151304]
 emitting = false
 amount = 1
 lifetime = 0.3
 one_shot = true
-fixed_fps = 0
+visibility_aabb = AABB(-4, -4, -4, 8, 8, 8)
 local_coords = true
-process_material = SubResource("ParticleProcessMaterial_1nk5o")
-draw_pass_1 = SubResource("SphereMesh_ea5bc")
+mesh = SubResource("SphereMesh_ea5bc")
+gravity = Vector3(0, 0, 0)
+scale_amount_min = 0.5
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_8kd5m")
+color_ramp = SubResource("Gradient_d0eba")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=95018318]
 libraries/ = SubResource("AnimationLibrary_mi1lt")

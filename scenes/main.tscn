@@ -64,7 +64,7 @@ script = ExtResource("1_sugp2")
 root = NodePath(".")
 scenes = Array[ExtResource("5_tipki")]([SubResource("Resource_85g3d"), SubResource("Resource_choun")])
 
-[node name="PostProcess" type="MeshInstance3D" parent="SubViewportContainer" unique_id=903116661]
+[node name="PostProcess" type="MeshInstance3D" parent="SubViewportContainer/SubViewport" unique_id=903116661]
 extra_cull_margin = 1000000.0
 ignore_occlusion_culling = true
 mesh = SubResource("QuadMesh_choun")

@@ -4,10 +4,10 @@ signal finished(effect: Node3D)
 
 @export var auto_play: bool = true
 @export var free_on_finished: bool = true
-@export var particles: Array[GPUParticles3D] = []
+@export var particles: Array[Node3D] = []
 @export var finish_padding: float = 0.05
 
-var playing_particles: Array[GPUParticles3D] = []
+var playing_particles: Array[Node3D] = []
 var is_playing: bool
 var play_id: int
 
@@ -28,15 +28,18 @@ func play() -> void:
 		if particle == null:
 			continue
 
-		particle.emitting = false
-		particle.restart()
-		particle.emitting = true
+		particle.set("emitting", false)
+		particle.call("restart")
+		particle.set("emitting", true)
 
-		if particle.one_shot:
+		var is_one_shot: bool = particle.get("one_shot") if particle.get("one_shot") != null else false
+		if is_one_shot:
 			playing_particles.append(particle)
 			finish_delay = maxf(finish_delay, get_particle_finish_delay(particle))
-			if not particle.finished.is_connected(on_particle_finished.bind(particle)):
-				particle.finished.connect(on_particle_finished.bind(particle))
+			if particle.has_signal("finished"):
+				var callable := on_particle_finished.bind(particle)
+				if not particle.is_connected("finished", callable):
+					particle.connect("finished", callable)
 
 	if playing_particles.is_empty():
 		finish()
@@ -51,26 +54,28 @@ func reset_for_pool() -> void:
 
 	for particle in playing_particles:
 		if particle != null and is_instance_valid(particle):
-			var callable := on_particle_finished.bind(particle)
-			if particle.finished.is_connected(callable):
-				particle.finished.disconnect(callable)
+			if particle.has_signal("finished"):
+				var callable := on_particle_finished.bind(particle)
+				if particle.is_connected("finished", callable):
+					particle.disconnect("finished", callable)
 
 	playing_particles.clear()
 
 	for particle in particles:
 		if particle != null and is_instance_valid(particle):
-			particle.emitting = false
-			particle.restart()
-			particle.emitting = false
+			particle.set("emitting", false)
+			particle.call("restart")
+			particle.set("emitting", false)
 
 
-func on_particle_finished(particle: GPUParticles3D) -> void:
+func on_particle_finished(particle: Node3D) -> void:
 	if not is_playing:
 		return
 
-	var callable := on_particle_finished.bind(particle)
-	if particle.finished.is_connected(callable):
-		particle.finished.disconnect(callable)
+	if particle.has_signal("finished"):
+		var callable := on_particle_finished.bind(particle)
+		if particle.is_connected("finished", callable):
+			particle.disconnect("finished", callable)
 
 	playing_particles.erase(particle)
 	if playing_particles.is_empty():
@@ -89,7 +94,9 @@ func on_finish_timer_timeout(id: int) -> void:
 		finish()
 
 
-func get_particle_finish_delay(particle: GPUParticles3D) -> float:
-	var speed_scale := maxf(particle.speed_scale, 0.001)
-	var emission_duration := particle.lifetime * (2.0 - particle.explosiveness)
+func get_particle_finish_delay(particle: Node3D) -> float:
+	var speed_scale: float = maxf(particle.get("speed_scale") if particle.get("speed_scale") != null else 1.0, 0.001)
+	var lifetime: float = particle.get("lifetime") if particle.get("lifetime") != null else 1.0
+	var explosiveness: float = particle.get("explosiveness") if particle.get("explosiveness") != null else 0.0
+	var emission_duration := lifetime * (2.0 - explosiveness)
 	return maxf(emission_duration / speed_scale, 0.0)

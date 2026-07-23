@@ -1,24 +1,7 @@
-[gd_scene format=3 uid="uid://ut43hdh8o11b"]
+[gd_scene format=3]
 
-[ext_resource type="Script" uid="uid://bcyni047fem2n" path="res://scripts/vfx/vfx_animation_player.gd" id="1_3luq3"]
-[ext_resource type="Texture2D" uid="uid://cwt4m883aselp" path="res://assets/brackeys_particle_bundle/particles/opague/circle_03.png" id="2_3luq3"]
-
-[sub_resource type="Curve" id="Curve_vsqf0"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.205882, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_ig7tw"]
-curve = SubResource("Curve_vsqf0")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_sm23p"]
-particle_flag_align_y = true
-direction = Vector3(0, 1, 0)
-initial_velocity_min = 2.0
-initial_velocity_max = 5.0
-gravity = Vector3(0, -1.7, 0)
-scale_min = 0.29999998
-scale_max = 0.5
-scale_curve = SubResource("CurveTexture_ig7tw")
+[ext_resource type="Script" path="res://scripts/vfx/vfx_animation_player.gd" id="1_3luq3"]
+[ext_resource type="Texture2D" path="res://assets/brackeys_particle_bundle/particles/opague/circle_03.png" id="2_3luq3"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2yge"]
 shading_mode = 0
@@ -31,27 +14,9 @@ bottom_radius = 0.0
 height = 3.0
 radial_segments = 16
 
-[sub_resource type="Curve" id="Curve_3luq3"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_272bh"]
-curve = SubResource("Curve_3luq3")
-
-[sub_resource type="Curve" id="Curve_0ujmq"]
-_data = [Vector2(0, 0.0561798), 0.0, 0.94382, 0, 0, Vector2(1, 1), 0.94382, 0.0, 1, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_7mycd"]
-curve = SubResource("Curve_0ujmq")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2c2dq"]
-gravity = Vector3(0, 0, 0)
-scale_min = 5.0
-scale_max = 5.0
-scale_curve = SubResource("CurveTexture_7mycd")
-color = Color(0.939823, 0.885553, 0.777574, 1)
-alpha_curve = SubResource("CurveTexture_272bh")
+[sub_resource type="Curve" id="Curve_vsqf0"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.205882, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_srses"]
 transparency = 1
@@ -66,6 +31,10 @@ albedo_texture = ExtResource("2_3luq3")
 [sub_resource type="QuadMesh" id="QuadMesh_cx35s"]
 material = SubResource("StandardMaterial3D_srses")
 orientation = 1
+
+[sub_resource type="Curve" id="Curve_0ujmq"]
+_data = [Vector2(0, 0.0561798), 0.0, 0.94382, 0, 0, Vector2(1, 1), 0.94382, 0.0, 1, 0]
+point_count = 2
 
 [sub_resource type="Animation" id="Animation_0ujmq"]
 length = 0.001
@@ -131,26 +100,39 @@ _data = {
 [node name="WaterSplash" type="Node3D" unique_id=1373246890]
 script = ExtResource("1_3luq3")
 
-[node name="Drops" type="GPUParticles3D" parent="." unique_id=1807041804]
+[node name="Drops" type="CPUParticles3D" parent="." unique_id=515867723]
 emitting = false
 amount = 20
 lifetime = 0.7
 one_shot = true
 explosiveness = 0.9
 fixed_fps = 60
+visibility_aabb = AABB(-4, -4, -4, 8, 8, 8)
 local_coords = true
-process_material = SubResource("ParticleProcessMaterial_sm23p")
-draw_pass_1 = SubResource("CylinderMesh_3luq3")
+mesh = SubResource("CylinderMesh_3luq3")
+particle_flag_align_y = true
+direction = Vector3(0, 1, 0)
+gravity = Vector3(0, -1.7, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 5.0
+scale_amount_min = 0.29999998
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_vsqf0")
 
-[node name="Shockwave" type="GPUParticles3D" parent="." unique_id=1674797497]
+[node name="Shockwave" type="CPUParticles3D" parent="." unique_id=965074204]
 emitting = false
 amount = 1
 lifetime = 0.3
 one_shot = true
 fixed_fps = 60
+visibility_aabb = AABB(-4, -4, -4, 8, 8, 8)
 local_coords = true
-process_material = SubResource("ParticleProcessMaterial_2c2dq")
-draw_pass_1 = SubResource("QuadMesh_cx35s")
+mesh = SubResource("QuadMesh_cx35s")
+gravity = Vector3(0, 0, 0)
+scale_amount_min = 5.0
+scale_amount_max = 5.0
+scale_amount_curve = SubResource("Curve_0ujmq")
+color = Color(0.939823, 0.885553, 0.777574, 1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=337386006]
 libraries/ = SubResource("AnimationLibrary_srses")
