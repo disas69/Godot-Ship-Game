@@ -43,6 +43,13 @@ var control_options: Array[String] = []
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	setup_signals()
+	Input.joy_connection_changed.connect(_on_joy_connection_changed)
+	refresh_control_options()
+	sanitize_selections()
+	refresh_view()
+
+
+func _on_joy_connection_changed(_device: int, _connected: bool) -> void:
 	refresh_control_options()
 	sanitize_selections()
 	refresh_view()
@@ -67,9 +74,9 @@ func refresh_control_options() -> void:
 	control_options = [PlayerInput.CONTROL_KEYBOARD]
 
 	var joypads := Input.get_connected_joypads()
-	if joypads.has(0):
+	if joypads.size() >= 1:
 		control_options.append(PlayerInput.CONTROL_GAMEPAD_1)
-	if joypads.has(1):
+	if joypads.size() >= 2:
 		control_options.append(PlayerInput.CONTROL_GAMEPAD_2)
 
 

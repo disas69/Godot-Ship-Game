@@ -28,6 +28,12 @@ func _ready() -> void:
 	super._ready()
 	if ignore_input:
 		disable_input_visuals()
+	Input.joy_connection_changed.connect(_on_joy_connection_changed)
+
+
+func _on_joy_connection_changed(_device: int, _connected: bool) -> void:
+	if not ignore_input:
+		player_input.init_actions(local_player_index, control_scheme)
 
 
 func _input(event: InputEvent) -> void:
@@ -44,12 +50,10 @@ func is_selected_gamepad_event(event: InputEvent) -> bool:
 	if not (event is InputEventJoypadMotion or event is InputEventJoypadButton):
 		return false
 
-	var expected_device := -1
-	if control_scheme == PlayerInput.CONTROL_GAMEPAD_1:
-		expected_device = 0
-	elif control_scheme == PlayerInput.CONTROL_GAMEPAD_2:
-		expected_device = 1
+	if control_scheme == PlayerInput.CONTROL_KEYBOARD:
+		return false
 
+	var expected_device := PlayerInput.get_target_joypad_device_id(control_scheme)
 	return event.device == expected_device
 
 

@@ -34,6 +34,19 @@ func sanitize_control_scheme(new_control_scheme: String) -> String:
 	return CONTROL_KEYBOARD
 
 
+static func get_target_joypad_device_id(scheme: String) -> int:
+	var joypads := Input.get_connected_joypads()
+	if scheme == CONTROL_GAMEPAD_1:
+		return joypads[0] if joypads.size() > 0 else 0
+	elif scheme == CONTROL_GAMEPAD_2:
+		if joypads.size() >= 2:
+			return joypads[1]
+		elif joypads.size() == 1:
+			return 0 if joypads[0] != 0 else 1
+		return 1
+	return 0
+
+
 func setup_runtime_action(local_player_index: int, action_name: String) -> StringName:
 	var source_action := get_source_action_name(action_name)
 	if not InputMap.has_action(source_action):
@@ -45,9 +58,14 @@ func setup_runtime_action(local_player_index: int, action_name: String) -> Strin
 		InputMap.erase_action(runtime_action)
 	InputMap.add_action(runtime_action)
 
+	var target_device := get_target_joypad_device_id(control_scheme)
+
 	for event in InputMap.action_get_events(source_action):
 		if should_use_event(event):
-			InputMap.action_add_event(runtime_action, event)
+			var event_copy := event.duplicate() as InputEvent
+			if event_copy is InputEventJoypadButton or event_copy is InputEventJoypadMotion:
+				event_copy.device = target_device
+			InputMap.action_add_event(runtime_action, event_copy)
 
 	if InputMap.action_get_events(runtime_action).is_empty() and not is_mouse_aim_action(action_name):
 		push_warning("No input events for control '%s' action '%s'" % [control_scheme, action_name])
@@ -65,8 +83,7 @@ func should_use_event(event: InputEvent) -> bool:
 	if control_scheme == CONTROL_KEYBOARD:
 		return event is InputEventKey or event is InputEventMouse
 
-	var joypad_device := 0 if control_scheme == CONTROL_GAMEPAD_1 else 1
-	return (event is InputEventJoypadButton or event is InputEventJoypadMotion) and event.device == joypad_device
+	return event is InputEventJoypadButton or event is InputEventJoypadMotion
 
 
 func is_mouse_aim_action(action_name: String) -> bool:

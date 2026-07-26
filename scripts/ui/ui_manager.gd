@@ -200,6 +200,8 @@ func close_all_popups() -> void:
 	for id in popup_ids:
 		close_popup(String(id))
 
+	clear_focus()
+
 
 func move_popup_to_top(id: String) -> void:
 	active_popup_stack.erase(id)
@@ -220,13 +222,20 @@ func handle_back_navigation() -> bool:
 
 func focus_top_view() -> void:
 	var top_view := get_top_view()
-	if top_view != null:
+	if top_view != null and not top_view.get_focusable_controls().is_empty():
 		top_view.focus_first_control()
+	else:
+		clear_focus()
 
 
 func focus_top_view_if_needed() -> void:
 	var top_view := get_top_view()
 	if top_view == null:
+		clear_focus()
+		return
+
+	if top_view.get_focusable_controls().is_empty():
+		clear_focus()
 		return
 
 	var focus_owner := get_viewport().gui_get_focus_owner()
