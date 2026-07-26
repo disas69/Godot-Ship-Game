@@ -9,21 +9,22 @@ const PLAYER_COUNT_OPTIONS: Array[int] = [1, 2]
 
 @export var player_count_previous_button: Button
 @export var player_count_next_button: Button
-@export var player_count_value_label: Label
+@export var player_count_value_label: Control
 @export var player_1_options: Control
 @export var player_1_controls_previous_button: Button
 @export var player_1_controls_next_button: Button
-@export var player_1_controls_value_label: Label
+@export var player_1_controls_value_label: Control
 @export var player_1_team_previous_button: Button
 @export var player_1_team_next_button: Button
-@export var player_1_team_value_label: Label
+@export var player_1_team_value_label: Control
 @export var player_2_options: Control
 @export var player_2_controls_previous_button: Button
 @export var player_2_controls_next_button: Button
-@export var player_2_controls_value_label: Label
+@export var player_2_controls_value_label: Control
 @export var player_2_team_previous_button: Button
 @export var player_2_team_next_button: Button
-@export var player_2_team_value_label: Label
+@export var player_2_team_value_label: Control
+@export var player_2_auto_tween: UiAutoTween
 @export var play_button: Button
 @export var back_button: Button
 @export var summary_label: Label
@@ -46,6 +47,14 @@ func _ready() -> void:
 	Input.joy_connection_changed.connect(_on_joy_connection_changed)
 	refresh_control_options()
 	sanitize_selections()
+
+	if selected_player_count == 1:
+		if player_2_options != null:
+			player_2_options.visible = false
+	else:
+		if player_2_options != null:
+			player_2_options.visible = true
+
 	refresh_view()
 
 
@@ -56,18 +65,45 @@ func _on_joy_connection_changed(_device: int, _connected: bool) -> void:
 
 
 func setup_signals() -> void:
-	player_count_previous_button.pressed.connect(change_player_count.bind(-1))
-	player_count_next_button.pressed.connect(change_player_count.bind(1))
-	player_1_controls_previous_button.pressed.connect(change_controls.bind(0, -1))
-	player_1_controls_next_button.pressed.connect(change_controls.bind(0, 1))
-	player_1_team_previous_button.pressed.connect(change_team.bind(0, -1))
-	player_1_team_next_button.pressed.connect(change_team.bind(0, 1))
-	player_2_controls_previous_button.pressed.connect(change_controls.bind(1, -1))
-	player_2_controls_next_button.pressed.connect(change_controls.bind(1, 1))
-	player_2_team_previous_button.pressed.connect(change_team.bind(1, -1))
-	player_2_team_next_button.pressed.connect(change_team.bind(1, 1))
-	play_button.pressed.connect(on_play_pressed)
-	back_button.pressed.connect(on_back_pressed)
+	if player_count_previous_button != null:
+		player_count_previous_button.pressed.connect(change_player_count.bind(-1))
+	if player_count_next_button != null:
+		player_count_next_button.pressed.connect(change_player_count.bind(1))
+	if player_count_value_label is BaseButton:
+		player_count_value_label.pressed.connect(change_player_count.bind(1))
+
+	if player_1_controls_previous_button != null:
+		player_1_controls_previous_button.pressed.connect(change_controls.bind(0, -1))
+	if player_1_controls_next_button != null:
+		player_1_controls_next_button.pressed.connect(change_controls.bind(0, 1))
+	if player_1_controls_value_label is BaseButton:
+		player_1_controls_value_label.pressed.connect(change_controls.bind(0, 1))
+
+	if player_1_team_previous_button != null:
+		player_1_team_previous_button.pressed.connect(change_team.bind(0, -1))
+	if player_1_team_next_button != null:
+		player_1_team_next_button.pressed.connect(change_team.bind(0, 1))
+	if player_1_team_value_label is BaseButton:
+		player_1_team_value_label.pressed.connect(change_team.bind(0, 1))
+
+	if player_2_controls_previous_button != null:
+		player_2_controls_previous_button.pressed.connect(change_controls.bind(1, -1))
+	if player_2_controls_next_button != null:
+		player_2_controls_next_button.pressed.connect(change_controls.bind(1, 1))
+	if player_2_controls_value_label is BaseButton:
+		player_2_controls_value_label.pressed.connect(change_controls.bind(1, 1))
+
+	if player_2_team_previous_button != null:
+		player_2_team_previous_button.pressed.connect(change_team.bind(1, -1))
+	if player_2_team_next_button != null:
+		player_2_team_next_button.pressed.connect(change_team.bind(1, 1))
+	if player_2_team_value_label is BaseButton:
+		player_2_team_value_label.pressed.connect(change_team.bind(1, 1))
+
+	if play_button != null:
+		play_button.pressed.connect(on_play_pressed)
+	if back_button != null:
+		back_button.pressed.connect(on_back_pressed)
 
 
 func refresh_control_options() -> void:
@@ -103,9 +139,23 @@ func get_first_unused_control(used_control: String) -> String:
 
 
 func change_player_count(direction: int) -> void:
+	var old_count := selected_player_count
 	var index := PLAYER_COUNT_OPTIONS.find(selected_player_count)
 	index = wrapi(index + direction, 0, PLAYER_COUNT_OPTIONS.size())
 	selected_player_count = PLAYER_COUNT_OPTIONS[index]
+
+	if selected_player_count != old_count and player_2_options != null:
+		if selected_player_count == 2:
+			if player_2_auto_tween != null:
+				player_2_auto_tween.show()
+			else:
+				player_2_options.visible = true
+		else:
+			if player_2_auto_tween != null:
+				player_2_auto_tween.hide()
+			else:
+				player_2_options.visible = false
+
 	refresh_control_options()
 	sanitize_selections()
 	refresh_view()
@@ -139,37 +189,33 @@ func change_team(player_index: int, direction: int) -> void:
 
 
 func refresh_view() -> void:
-	player_count_value_label.text = "%d Player%s" % [selected_player_count, "" if selected_player_count == 1 else "s"]
-	player_2_options.visible = selected_player_count == 2
+	if player_count_value_label != null:
+		player_count_value_label.text = "<  Players %d  >" % selected_player_count
 
-	player_1_controls_value_label.text = get_control_label(selected_controls[0])
-	player_1_team_value_label.text = get_team_label(selected_teams[0])
-	player_2_controls_value_label.text = get_control_label(selected_controls[1])
-	player_2_team_value_label.text = get_team_label(selected_teams[1])
+	if player_2_auto_tween == null and player_2_options != null:
+		player_2_options.visible = selected_player_count == 2
+
+	if player_1_controls_value_label != null:
+		player_1_controls_value_label.text = "<  %s  >" % get_control_label(selected_controls[0])
+	if player_1_team_value_label != null:
+		player_1_team_value_label.text = "<  %s  >" % get_team_label(selected_teams[0])
+	if player_2_controls_value_label != null:
+		player_2_controls_value_label.text = "<  %s  >" % get_control_label(selected_controls[1])
+	if player_2_team_value_label != null:
+		player_2_team_value_label.text = "<  %s  >" % get_team_label(selected_teams[1])
 
 	var can_play := selected_player_count == 1 or control_options.size() >= 2
-	play_button.disabled = not can_play
+	if play_button != null:
+		play_button.disabled = not can_play
 	refresh_focus.call_deferred()
 
-	if summary_label == null:
-		return
-
-	if not can_play:
-		summary_label.text = "Connect a gamepad for 2 players"
-		return
-
-	if selected_player_count == 1:
-		summary_label.text = "Player 1: %s / %s" % [
-			get_control_label(selected_controls[0]),
-			get_team_label(selected_teams[0]),
-		]
-	else:
-		summary_label.text = "P1: %s / %s   P2: %s / %s" % [
-			get_control_label(selected_controls[0]),
-			get_team_label(selected_teams[0]),
-			get_control_label(selected_controls[1]),
-			get_team_label(selected_teams[1]),
-		]
+	if summary_label != null:
+		if not can_play:
+			summary_label.text = "Connect a gamepad for 2 players"
+			summary_label.visible = true
+		else:
+			summary_label.text = ""
+			summary_label.visible = false
 
 
 func get_control_label(control_scheme: String) -> String:
@@ -187,10 +233,11 @@ func get_team_label(team: Ship.Team) -> String:
 
 
 func on_play_pressed() -> void:
-	if play_button.disabled:
+	if play_button != null and play_button.disabled:
 		return
 
-	play_button.disabled = true
+	if play_button != null:
+		play_button.disabled = true
 	GameManager.instance.configure_local_game_players(get_local_player_configs())
 	GameManager.instance.start_new_game_scene()
 

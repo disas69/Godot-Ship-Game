@@ -21,6 +21,13 @@ texture_margin_top = 18.0
 texture_margin_right = 18.0
 texture_margin_bottom = 18.0
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_card"]
+texture = ExtResource("7_panel_texture")
+texture_margin_left = 18.0
+texture_margin_top = 18.0
+texture_margin_right = 18.0
+texture_margin_bottom = 18.0
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_small_normal"]
 texture = ExtResource("8_button_normal")
 texture_margin_left = 12.0
@@ -67,7 +74,6 @@ texture_margin_right = 12.0
 texture_margin_bottom = 8.0
 modulate_color = Color(1.12, 1.12, 1.12, 1)
 
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_focus"]
 bg_color = Color(1, 1, 1, 0)
 draw_center = false
@@ -85,30 +91,20 @@ expand_margin_top = 4.0
 expand_margin_right = 4.0
 expand_margin_bottom = 4.0
 
-[node name="PlayPopup" type="CanvasLayer" node_paths=PackedStringArray("player_count_previous_button", "player_count_next_button", "player_count_value_label", "player_1_options", "player_1_controls_previous_button", "player_1_controls_next_button", "player_1_controls_value_label", "player_1_team_previous_button", "player_1_team_next_button", "player_1_team_value_label", "player_2_options", "player_2_controls_previous_button", "player_2_controls_next_button", "player_2_controls_value_label", "player_2_team_previous_button", "player_2_team_next_button", "player_2_team_value_label", "play_button", "back_button", "summary_label")]
+[node name="PlayPopup" type="CanvasLayer" node_paths=PackedStringArray("player_count_value_label", "player_1_options", "player_1_controls_value_label", "player_1_team_value_label", "player_2_options", "player_2_controls_value_label", "player_2_team_value_label", "player_2_auto_tween", "play_button", "back_button")]
 process_mode = 3
 layer = 10
 script = ExtResource("1_play_popup")
-player_count_previous_button = NodePath("Root/Panel/Margin/VBox/PlayerCountBlock/PlayerCountRow/PreviousButton")
-player_count_next_button = NodePath("Root/Panel/Margin/VBox/PlayerCountBlock/PlayerCountRow/NextButton")
-player_count_value_label = NodePath("Root/Panel/Margin/VBox/PlayerCountBlock/PlayerCountRow/Value")
-player_1_options = NodePath("Root/Panel/Margin/VBox/Player1Options")
-player_1_controls_previous_button = NodePath("Root/Panel/Margin/VBox/Player1Options/ControlsBlock/ControlsRow/PreviousButton")
-player_1_controls_next_button = NodePath("Root/Panel/Margin/VBox/Player1Options/ControlsBlock/ControlsRow/NextButton")
-player_1_controls_value_label = NodePath("Root/Panel/Margin/VBox/Player1Options/ControlsBlock/ControlsRow/Value")
-player_1_team_previous_button = NodePath("Root/Panel/Margin/VBox/Player1Options/TeamBlock/TeamRow/PreviousButton")
-player_1_team_next_button = NodePath("Root/Panel/Margin/VBox/Player1Options/TeamBlock/TeamRow/NextButton")
-player_1_team_value_label = NodePath("Root/Panel/Margin/VBox/Player1Options/TeamBlock/TeamRow/Value")
-player_2_options = NodePath("Root/Panel/Margin/VBox/Player2Options")
-player_2_controls_previous_button = NodePath("Root/Panel/Margin/VBox/Player2Options/ControlsBlock/ControlsRow/PreviousButton")
-player_2_controls_next_button = NodePath("Root/Panel/Margin/VBox/Player2Options/ControlsBlock/ControlsRow/NextButton")
-player_2_controls_value_label = NodePath("Root/Panel/Margin/VBox/Player2Options/ControlsBlock/ControlsRow/Value")
-player_2_team_previous_button = NodePath("Root/Panel/Margin/VBox/Player2Options/TeamBlock/TeamRow/PreviousButton")
-player_2_team_next_button = NodePath("Root/Panel/Margin/VBox/Player2Options/TeamBlock/TeamRow/NextButton")
-player_2_team_value_label = NodePath("Root/Panel/Margin/VBox/Player2Options/TeamBlock/TeamRow/Value")
+player_count_value_label = NodePath("Root/Panel/Margin/VBox/PlayerCountBlock/PlayerCountRow/ValueButton")
+player_1_options = NodePath("Root/Panel/Margin/VBox/CardsContainer/Player1Card")
+player_1_controls_value_label = NodePath("Root/Panel/Margin/VBox/CardsContainer/Player1Card/Margin/VBox/ControlsBlock/ControlsRow/ValueButton")
+player_1_team_value_label = NodePath("Root/Panel/Margin/VBox/CardsContainer/Player1Card/Margin/VBox/TeamBlock/TeamRow/ValueButton")
+player_2_options = NodePath("Root/Panel/Margin/VBox/CardsContainer/Player2Card")
+player_2_controls_value_label = NodePath("Root/Panel/Margin/VBox/CardsContainer/Player2Card/Margin/VBox/ControlsBlock/ControlsRow/ValueButton")
+player_2_team_value_label = NodePath("Root/Panel/Margin/VBox/CardsContainer/Player2Card/Margin/VBox/TeamBlock/TeamRow/ValueButton")
+player_2_auto_tween = NodePath("Root/Panel/Margin/VBox/CardsContainer/Player2Card/CardTween")
 play_button = NodePath("Root/Panel/Margin/VBox/Actions/PlayButton")
 back_button = NodePath("Root/Panel/Margin/VBox/Actions/BackButton")
-summary_label = NodePath("Root/Panel/Margin/VBox/Summary")
 
 [node name="Root" type="Control" parent="."]
 layout_mode = 3
@@ -143,10 +139,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -290.0
-offset_top = -310.0
-offset_right = 290.0
-offset_bottom = 310.0
+offset_left = -300.0
+offset_top = -220.0
+offset_right = 300.0
+offset_bottom = 220.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_panel")
@@ -170,14 +166,14 @@ delay_between_elements = 0.04
 
 [node name="Margin" type="MarginContainer" parent="Root/Panel"]
 layout_mode = 2
-theme_override_constants/margin_left = 34
-theme_override_constants/margin_top = 24
-theme_override_constants/margin_right = 34
-theme_override_constants/margin_bottom = 24
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 20
 
 [node name="VBox" type="VBoxContainer" parent="Root/Panel/Margin"]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 14
 alignment = 1
 
 [node name="Title" type="RichTextLabel" parent="Root/Panel/Margin/VBox"]
@@ -195,19 +191,12 @@ horizontal_alignment = 1
 layout_mode = 2
 theme_override_constants/separation = 4
 
-[node name="PlayerCountLabel" type="Label" parent="Root/Panel/Margin/VBox/PlayerCountBlock"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
-text = "Player count"
-horizontal_alignment = 1
-
 [node name="PlayerCountRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox/PlayerCountBlock"]
 layout_mode = 2
-theme_override_constants/separation = 12
 alignment = 1
 
-[node name="PreviousButton" type="Button" parent="Root/Panel/Margin/VBox/PlayerCountBlock/PlayerCountRow"]
-custom_minimum_size = Vector2(50, 40)
+[node name="ValueButton" type="Button" parent="Root/Panel/Margin/VBox/PlayerCountBlock/PlayerCountRow"]
+custom_minimum_size = Vector2(240, 44)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
 theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
@@ -215,272 +204,156 @@ theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
 theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
 theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
 theme_override_fonts/font = ExtResource("5_body_font")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
 theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
 theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
-text = "<"
+text = "<  Players 1  >"
 
-[node name="Value" type="Label" parent="Root/Panel/Margin/VBox/PlayerCountBlock/PlayerCountRow"]
-custom_minimum_size = Vector2(210, 40)
+[node name="CardsContainer" type="HBoxContainer" parent="Root/Panel/Margin/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
-text = "1 Player"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="NextButton" type="Button" parent="Root/Panel/Margin/VBox/PlayerCountBlock/PlayerCountRow"]
-custom_minimum_size = Vector2(50, 40)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
-theme_override_fonts/font = ExtResource("5_body_font")
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
-theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
-theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
-text = ">"
-
-[node name="Player1Options" type="VBoxContainer" parent="Root/Panel/Margin/VBox"]
-layout_mode = 2
-theme_override_constants/separation = 5
-
-[node name="Title" type="Label" parent="Root/Panel/Margin/VBox/Player1Options"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
-text = "Player 1"
-horizontal_alignment = 1
-
-[node name="ControlsBlock" type="VBoxContainer" parent="Root/Panel/Margin/VBox/Player1Options"]
-layout_mode = 2
-theme_override_constants/separation = 2
-
-[node name="Label" type="Label" parent="Root/Panel/Margin/VBox/Player1Options/ControlsBlock"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
-text = "Controls"
-horizontal_alignment = 1
-
-[node name="ControlsRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox/Player1Options/ControlsBlock"]
-layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 16
 alignment = 1
 
-[node name="PreviousButton" type="Button" parent="Root/Panel/Margin/VBox/Player1Options/ControlsBlock/ControlsRow"]
-custom_minimum_size = Vector2(50, 40)
+[node name="Player1Card" type="PanelContainer" parent="Root/Panel/Margin/VBox/CardsContainer"]
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
-theme_override_fonts/font = ExtResource("5_body_font")
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
-theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
-theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
-text = "<"
+theme_override_styles/panel = SubResource("StyleBoxTexture_card")
 
-[node name="Value" type="Label" parent="Root/Panel/Margin/VBox/Player1Options/ControlsBlock/ControlsRow"]
-custom_minimum_size = Vector2(210, 40)
+[node name="Margin" type="MarginContainer" parent="Root/Panel/Margin/VBox/CardsContainer/Player1Card"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="Root/Panel/Margin/VBox/CardsContainer/Player1Card/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Root/Panel/Margin/VBox/CardsContainer/Player1Card/Margin/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
-text = "Keyboard"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="NextButton" type="Button" parent="Root/Panel/Margin/VBox/Player1Options/ControlsBlock/ControlsRow"]
-custom_minimum_size = Vector2(50, 40)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
-theme_override_fonts/font = ExtResource("5_body_font")
+theme_override_fonts/font = ExtResource("6_title_font")
 theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
-theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
-theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
-text = ">"
-
-[node name="TeamBlock" type="VBoxContainer" parent="Root/Panel/Margin/VBox/Player1Options"]
-layout_mode = 2
-theme_override_constants/separation = 2
-
-[node name="Label" type="Label" parent="Root/Panel/Margin/VBox/Player1Options/TeamBlock"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
-text = "Team"
+text = "PLAYER 1"
 horizontal_alignment = 1
 
-[node name="TeamRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox/Player1Options/TeamBlock"]
+[node name="ControlsBlock" type="VBoxContainer" parent="Root/Panel/Margin/VBox/CardsContainer/Player1Card/Margin/VBox"]
 layout_mode = 2
-theme_override_constants/separation = 12
+
+[node name="ControlsRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox/CardsContainer/Player1Card/Margin/VBox/ControlsBlock"]
+layout_mode = 2
 alignment = 1
 
-[node name="PreviousButton" type="Button" parent="Root/Panel/Margin/VBox/Player1Options/TeamBlock/TeamRow"]
-custom_minimum_size = Vector2(50, 40)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
-theme_override_fonts/font = ExtResource("5_body_font")
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
-theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
-theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
-text = "<"
-
-[node name="Value" type="Label" parent="Root/Panel/Margin/VBox/Player1Options/TeamBlock/TeamRow"]
+[node name="ValueButton" type="Button" parent="Root/Panel/Margin/VBox/CardsContainer/Player1Card/Margin/VBox/ControlsBlock/ControlsRow"]
 custom_minimum_size = Vector2(210, 40)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
-text = "White"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="NextButton" type="Button" parent="Root/Panel/Margin/VBox/Player1Options/TeamBlock/TeamRow"]
-custom_minimum_size = Vector2(50, 40)
-layout_mode = 2
 theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
 theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
 theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
 theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
 theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
 theme_override_fonts/font = ExtResource("5_body_font")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
 theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
 theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
-text = ">"
+text = "<  Keyboard  >"
 
-[node name="Player2Options" type="VBoxContainer" parent="Root/Panel/Margin/VBox"]
+[node name="TeamBlock" type="VBoxContainer" parent="Root/Panel/Margin/VBox/CardsContainer/Player1Card/Margin/VBox"]
 layout_mode = 2
-theme_override_constants/separation = 5
 
-[node name="Title" type="Label" parent="Root/Panel/Margin/VBox/Player2Options"]
+[node name="TeamRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox/CardsContainer/Player1Card/Margin/VBox/TeamBlock"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
-text = "Player 2"
-horizontal_alignment = 1
-
-[node name="ControlsBlock" type="VBoxContainer" parent="Root/Panel/Margin/VBox/Player2Options"]
-layout_mode = 2
-theme_override_constants/separation = 2
-
-[node name="Label" type="Label" parent="Root/Panel/Margin/VBox/Player2Options/ControlsBlock"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
-text = "Controls"
-horizontal_alignment = 1
-
-[node name="ControlsRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox/Player2Options/ControlsBlock"]
-layout_mode = 2
-theme_override_constants/separation = 12
 alignment = 1
 
-[node name="PreviousButton" type="Button" parent="Root/Panel/Margin/VBox/Player2Options/ControlsBlock/ControlsRow"]
-custom_minimum_size = Vector2(50, 40)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
-theme_override_fonts/font = ExtResource("5_body_font")
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
-theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
-theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
-text = "<"
-
-[node name="Value" type="Label" parent="Root/Panel/Margin/VBox/Player2Options/ControlsBlock/ControlsRow"]
+[node name="ValueButton" type="Button" parent="Root/Panel/Margin/VBox/CardsContainer/Player1Card/Margin/VBox/TeamBlock/TeamRow"]
 custom_minimum_size = Vector2(210, 40)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
-text = "Gamepad 1"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="NextButton" type="Button" parent="Root/Panel/Margin/VBox/Player2Options/ControlsBlock/ControlsRow"]
-custom_minimum_size = Vector2(50, 40)
-layout_mode = 2
 theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
 theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
 theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
 theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
 theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
 theme_override_fonts/font = ExtResource("5_body_font")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
 theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
 theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
-text = ">"
+text = "<  White  >"
 
-[node name="TeamBlock" type="VBoxContainer" parent="Root/Panel/Margin/VBox/Player2Options"]
+[node name="Player2Card" type="PanelContainer" parent="Root/Panel/Margin/VBox/CardsContainer"]
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
-theme_override_constants/separation = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_card")
 
-[node name="Label" type="Label" parent="Root/Panel/Margin/VBox/Player2Options/TeamBlock"]
+[node name="CardTween" type="Node" parent="Root/Panel/Margin/VBox/CardsContainer/Player2Card" node_paths=PackedStringArray("target")]
+script = ExtResource("3_auto_tween")
+target = NodePath("..")
+anim_when = 0
+anim_type = 1
+duration = 0.2
+force_from = true
+
+[node name="Margin" type="MarginContainer" parent="Root/Panel/Margin/VBox/CardsContainer/Player2Card"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="Root/Panel/Margin/VBox/CardsContainer/Player2Card/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Root/Panel/Margin/VBox/CardsContainer/Player2Card/Margin/VBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
-text = "Team"
+theme_override_fonts/font = ExtResource("6_title_font")
+theme_override_font_sizes/font_size = 24
+text = "PLAYER 2"
 horizontal_alignment = 1
 
-[node name="TeamRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox/Player2Options/TeamBlock"]
+[node name="ControlsBlock" type="VBoxContainer" parent="Root/Panel/Margin/VBox/CardsContainer/Player2Card/Margin/VBox"]
 layout_mode = 2
-theme_override_constants/separation = 12
+
+[node name="ControlsRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox/CardsContainer/Player2Card/Margin/VBox/ControlsBlock"]
+layout_mode = 2
 alignment = 1
 
-[node name="PreviousButton" type="Button" parent="Root/Panel/Margin/VBox/Player2Options/TeamBlock/TeamRow"]
-custom_minimum_size = Vector2(50, 40)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
-theme_override_fonts/font = ExtResource("5_body_font")
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
-theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
-theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
-text = "<"
-
-[node name="Value" type="Label" parent="Root/Panel/Margin/VBox/Player2Options/TeamBlock/TeamRow"]
+[node name="ValueButton" type="Button" parent="Root/Panel/Margin/VBox/CardsContainer/Player2Card/Margin/VBox/ControlsBlock/ControlsRow"]
 custom_minimum_size = Vector2(210, 40)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
-text = "Black"
-horizontal_alignment = 1
-vertical_alignment = 1
+theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
+theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
+theme_override_fonts/font = ExtResource("5_body_font")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
+theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
+theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
+text = "<  Gamepad 1  >"
 
-[node name="NextButton" type="Button" parent="Root/Panel/Margin/VBox/Player2Options/TeamBlock/TeamRow"]
-custom_minimum_size = Vector2(50, 40)
+[node name="TeamBlock" type="VBoxContainer" parent="Root/Panel/Margin/VBox/CardsContainer/Player2Card/Margin/VBox"]
+layout_mode = 2
+
+[node name="TeamRow" type="HBoxContainer" parent="Root/Panel/Margin/VBox/CardsContainer/Player2Card/Margin/VBox/TeamBlock"]
+layout_mode = 2
+alignment = 1
+
+[node name="ValueButton" type="Button" parent="Root/Panel/Margin/VBox/CardsContainer/Player2Card/Margin/VBox/TeamBlock/TeamRow"]
+custom_minimum_size = Vector2(210, 40)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
 theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
@@ -488,20 +361,13 @@ theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
 theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
 theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
 theme_override_fonts/font = ExtResource("5_body_font")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_small_pressed")
 theme_override_styles/hover = SubResource("StyleBoxTexture_small_hover")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_small_normal")
 theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
-text = ">"
-
-[node name="Summary" type="Label" parent="Root/Panel/Margin/VBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
-text = "Player 1: Keyboard / White"
-horizontal_alignment = 1
-autowrap_mode = 3
+text = "<  Black  >"
 
 [node name="Actions" type="HBoxContainer" parent="Root/Panel/Margin/VBox"]
 layout_mode = 2
