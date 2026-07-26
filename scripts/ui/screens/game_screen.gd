@@ -196,4 +196,3 @@ func should_open_pause(event: InputEvent) -> bool:
 		var joy_event := event as InputEventJoypadButton
 		return joy_event.pressed and joy_event.button_index == JOY_BUTTON_START
 	return false
-
