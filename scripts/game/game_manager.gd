@@ -19,7 +19,29 @@ func _exit_tree() -> void:
 
 
 func _ready() -> void:
+	if OS.has_feature("web"):
+		setup_web_rendering()
 	call_deferred("load_initial_scene")
+
+
+func setup_web_rendering() -> void:
+	var env := load("res://scenes/main-environment.tres") as Environment
+	if env != null:
+		env.ambient_light_energy = 0.95
+		env.adjustment_enabled = false
+		env.glow_intensity = 1.2
+
+
+func adjust_scene_lights_for_web(scene_instance: Node) -> void:
+	if not OS.has_feature("web") or scene_instance == null:
+		return
+	for light in scene_instance.find_children("*", "DirectionalLight3D", true, false):
+		if light is DirectionalLight3D:
+			light.light_energy = 0.95
+
+
+
+
 
 
 func load_initial_scene() -> void:
@@ -32,12 +54,14 @@ func load_initial_scene() -> void:
 
 
 func on_initial_scene_loaded(initial_scene_instance: Node) -> void:
+	adjust_scene_lights_for_web(initial_scene_instance)
 	if initial_scene_instance is Game:
 		active_game = initial_scene_instance as Game
 		activate_game(active_game)
 	else:
 		UIManager.open_screen("menu")
 		play_music()
+
 
 
 func resolve_active_game() -> void:
@@ -193,6 +217,7 @@ func on_game_scene_loaded(game_scene_instance: Node) -> void:
 
 func activate_game(game: Game) -> void:
 	active_game = game
+	adjust_scene_lights_for_web(active_game)
 	if scene_manager != null:
 		scene_manager.set_active_scene(game)
 	setup_game(active_game)
@@ -229,10 +254,12 @@ func return_to_menu() -> void:
 	is_loading_menu_scene = false
 
 
-func on_menu_scene_loaded(_menu_scene_instance: Node) -> void:
+func on_menu_scene_loaded(menu_scene_instance: Node) -> void:
 	active_game = null
+	adjust_scene_lights_for_web(menu_scene_instance)
 	UIManager.open_screen("menu")
 	play_music()
+
 
 
 func play_music() -> void:
