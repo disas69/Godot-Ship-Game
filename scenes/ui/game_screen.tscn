@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://wx8ope6lojqp" path="res://images/ui/scroll/pngs/tall.png" id="1_nt7q6"]
 [ext_resource type="Script" uid="uid://brxhyxdpm8kqu" path="res://scripts/ui/screens/game_screen.gd" id="1_ooiym"]
+[ext_resource type="PackedScene" uid="uid://cnv1q44x5xwit" path="res://scenes/ui/components/game_button.tscn" id="2_game_button"]
 [ext_resource type="Texture2D" uid="uid://d1gdygxngma58" path="res://images/ui/white flag.png" id="3_8dubc"]
 [ext_resource type="Texture2D" uid="uid://bs8shad370uqb" path="res://assets/kenney_ui-pack-adventure/PNG/Default/minimap_arrow_a.png" id="4_nktmq"]
 [ext_resource type="Texture2D" uid="uid://gy1gdbscgbmr" path="res://images/ui/black flag.png" id="4_p7vwb"]
@@ -21,7 +22,7 @@ font_size = 17
 font = ExtResource("10_body_font")
 font_size = 19
 
-[node name="UI" type="CanvasLayer" unique_id=976727756 node_paths=PackedStringArray("timer_label", "flags_1_label", "flags_2_label", "kills_1_label", "kills_2_label", "flag_indicators", "touch_controls")]
+[node name="UI" type="CanvasLayer" unique_id=976727756 node_paths=PackedStringArray("timer_label", "flags_1_label", "flags_2_label", "kills_1_label", "kills_2_label", "flag_indicators", "touch_controls", "pause_button")]
 script = ExtResource("1_ooiym")
 timer_label = NodePath("Control/Control/Timer")
 flags_1_label = NodePath("Control/Control/HBoxContainer/Flags1")
@@ -30,6 +31,7 @@ kills_1_label = NodePath("Control/Control/HBoxContainer3/Kills1")
 kills_2_label = NodePath("Control/Control/HBoxContainer4/Kills2")
 flag_indicators = NodePath("FlagIndicators")
 touch_controls = NodePath("TouchControls")
+pause_button = NodePath("Control/PauseButton")
 
 [node name="TouchControls" parent="." instance=ExtResource("11_touch")]
 visible = false
@@ -61,6 +63,17 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="PauseButton" parent="Control" unique_id=1987654321 instance=ExtResource("2_game_button")]
+layout_mode = 1
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 60.0
+offset_bottom = 60.0
+custom_minimum_size = Vector2(44, 44)
+focus_mode = 0
+text = "II"
+label = "II"
 
 [node name="TextureRect" type="TextureRect" parent="Control" unique_id=1646761443]
 layout_mode = 1
