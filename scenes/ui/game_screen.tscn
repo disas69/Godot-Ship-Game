@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://cvdwtdp4jmdxh" path="res://scripts/ui/components/flag_indicators.gd" id="8_cgfq5"]
 [ext_resource type="PackedScene" path="res://scenes/ui/components/flag_indicator.tscn" id="9_tjkec"]
 [ext_resource type="FontFile" uid="uid://daa5h725j1fj7" path="res://fonts/Pixelify_Sans/static/PixelifySans-Medium.ttf" id="10_body_font"]
+[ext_resource type="PackedScene" path="res://scenes/ui/components/touch_controls.tscn" id="11_touch"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ktti3"]
 font = ExtResource("10_body_font")
@@ -20,7 +21,7 @@ font_size = 17
 font = ExtResource("10_body_font")
 font_size = 19
 
-[node name="UI" type="CanvasLayer" unique_id=976727756 node_paths=PackedStringArray("timer_label", "flags_1_label", "flags_2_label", "kills_1_label", "kills_2_label", "flag_indicators")]
+[node name="UI" type="CanvasLayer" unique_id=976727756 node_paths=PackedStringArray("timer_label", "flags_1_label", "flags_2_label", "kills_1_label", "kills_2_label", "flag_indicators", "touch_controls")]
 script = ExtResource("1_ooiym")
 timer_label = NodePath("Control/Control/Timer")
 flags_1_label = NodePath("Control/Control/HBoxContainer/Flags1")
@@ -28,6 +29,10 @@ flags_2_label = NodePath("Control/Control/HBoxContainer2/Flags2")
 kills_1_label = NodePath("Control/Control/HBoxContainer3/Kills1")
 kills_2_label = NodePath("Control/Control/HBoxContainer4/Kills2")
 flag_indicators = NodePath("FlagIndicators")
+touch_controls = NodePath("TouchControls")
+
+[node name="TouchControls" parent="." instance=ExtResource("11_touch")]
+visible = false
 
 [node name="FlagIndicators" type="Control" parent="." unique_id=57190261]
 layout_mode = 3

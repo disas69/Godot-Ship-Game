@@ -73,6 +73,9 @@ func setup_signals() -> void:
 func refresh_control_options() -> void:
 	control_options = [PlayerInput.CONTROL_KEYBOARD]
 
+	if selected_player_count == 1:
+		control_options.append(PlayerInput.CONTROL_TOUCH)
+
 	var joypads := Input.get_connected_joypads()
 	if joypads.size() >= 1:
 		control_options.append(PlayerInput.CONTROL_GAMEPAD_1)
@@ -100,10 +103,10 @@ func get_first_unused_control(used_control: String) -> String:
 
 
 func change_player_count(direction: int) -> void:
-	refresh_control_options()
 	var index := PLAYER_COUNT_OPTIONS.find(selected_player_count)
 	index = wrapi(index + direction, 0, PLAYER_COUNT_OPTIONS.size())
 	selected_player_count = PLAYER_COUNT_OPTIONS[index]
+	refresh_control_options()
 	sanitize_selections()
 	refresh_view()
 
@@ -174,6 +177,8 @@ func get_control_label(control_scheme: String) -> String:
 		return "Gamepad 1"
 	if control_scheme == PlayerInput.CONTROL_GAMEPAD_2:
 		return "Gamepad 2"
+	if control_scheme == PlayerInput.CONTROL_TOUCH:
+		return "Touchscreen"
 	return "Keyboard"
 
 

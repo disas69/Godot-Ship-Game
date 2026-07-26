@@ -6,6 +6,7 @@ class_name GameScreen extends UiView
 @export var kills_1_label: Label
 @export var kills_2_label: Label
 @export var flag_indicators: FlagIndicators
+@export var touch_controls: TouchControls
 
 
 func _ready() -> void:
@@ -30,6 +31,7 @@ func open() -> void:
 
 
 func sync_from_game(game: Game) -> void:
+	refresh_touch_controls_visibility(game)
 	on_team_kills_changed(game.good_team_kills, game.bad_team_kills)
 
 	var good_captured: int = 0
@@ -46,6 +48,19 @@ func sync_from_game(game: Game) -> void:
 			neutral += 1
 
 	on_flags_status_changed(good_captured, bad_captured, neutral)
+
+
+func refresh_touch_controls_visibility(game: Game) -> void:
+	if touch_controls == null:
+		return
+
+	var is_touch_active := false
+	if game != null and game.local_players.size() == 1:
+		var p1 := game.local_players[0]
+		if p1 != null and is_instance_valid(p1) and p1.control_scheme == PlayerInput.CONTROL_TOUCH:
+			is_touch_active = true
+
+	touch_controls.visible = is_touch_active
 
 
 func on_timer_changed(remaining_time_sec: float) -> void:

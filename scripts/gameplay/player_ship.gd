@@ -120,7 +120,7 @@ func should_use_mouse_aim(aim_input: Vector2) -> bool:
 func should_keep_gamepad_aim_without_input() -> bool:
 	if ignore_input:
 		return false
-	return is_using_gamepad
+	return is_using_gamepad or control_scheme == PlayerInput.CONTROL_TOUCH
 
 
 func can_shoot() -> bool:

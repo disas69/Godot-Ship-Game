@@ -3,6 +3,7 @@ class_name PlayerInput extends RefCounted
 const CONTROL_KEYBOARD := "keyboard"
 const CONTROL_GAMEPAD_1 := "gamepad_0"
 const CONTROL_GAMEPAD_2 := "gamepad_1"
+const CONTROL_TOUCH := "touch"
 
 const ACTION_NAMES: PackedStringArray = [
 	"move_left",
@@ -29,7 +30,7 @@ func init_actions(local_player_index: int, new_control_scheme: String = CONTROL_
 
 
 func sanitize_control_scheme(new_control_scheme: String) -> String:
-	if new_control_scheme == CONTROL_GAMEPAD_1 or new_control_scheme == CONTROL_GAMEPAD_2:
+	if new_control_scheme == CONTROL_GAMEPAD_1 or new_control_scheme == CONTROL_GAMEPAD_2 or new_control_scheme == CONTROL_TOUCH:
 		return new_control_scheme
 	return CONTROL_KEYBOARD
 
@@ -67,7 +68,7 @@ func setup_runtime_action(local_player_index: int, action_name: String) -> Strin
 				event_copy.device = target_device
 			InputMap.action_add_event(runtime_action, event_copy)
 
-	if InputMap.action_get_events(runtime_action).is_empty() and not is_mouse_aim_action(action_name):
+	if InputMap.action_get_events(runtime_action).is_empty() and not is_mouse_aim_action(action_name) and control_scheme != CONTROL_TOUCH:
 		push_warning("No input events for control '%s' action '%s'" % [control_scheme, action_name])
 
 	return runtime_action
@@ -80,6 +81,8 @@ func get_source_action_name(action_name: String) -> StringName:
 
 
 func should_use_event(event: InputEvent) -> bool:
+	if control_scheme == CONTROL_TOUCH:
+		return false
 	if control_scheme == CONTROL_KEYBOARD:
 		return event is InputEventKey or event is InputEventMouse
 
