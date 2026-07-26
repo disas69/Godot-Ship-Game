@@ -9,6 +9,21 @@ class_name GameScreen extends UiView
 @export var touch_controls: TouchControls
 @export var pause_button: Button
 
+@export_group("HUD Animation Controls")
+@export var hud_panel: Control
+@export var timer_container: Control
+@export var flags_1_container: Control
+@export var flags_2_container: Control
+@export var kills_1_container: Control
+@export var kills_2_container: Control
+
+var _last_flags_1: int = -1
+var _last_flags_2: int = -1
+var _last_kills_1: int = -1
+var _last_kills_2: int = -1
+var _last_time_sec: int = -1
+var _active_tweens: Dictionary = {}
+
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -18,6 +33,9 @@ func _ready() -> void:
 
 func open() -> void:
 	super.open()
+
+	_reset_anim_tracking()
+	_animate_hud_entrance()
 
 	var game: Game = GameManager.instance.active_game
 	while game == null:
@@ -31,6 +49,27 @@ func open() -> void:
 		flag_indicators.set_game(game)
 
 	sync_from_game(game)
+
+
+func _reset_anim_tracking() -> void:
+	_last_flags_1 = -1
+	_last_flags_2 = -1
+	_last_kills_1 = -1
+	_last_kills_2 = -1
+	_last_time_sec = -1
+
+
+func _animate_hud_entrance() -> void:
+	if hud_panel == null or not is_instance_valid(hud_panel):
+		return
+
+	hud_panel.pivot_offset = Vector2(hud_panel.size.x / 2.0, hud_panel.size.y)
+	hud_panel.scale = Vector2(0.7, 0.7)
+	hud_panel.modulate.a = 0.0
+
+	var tween := create_tween().set_parallel(true).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	tween.tween_property(hud_panel, "scale", Vector2.ONE, 0.35)
+	tween.tween_property(hud_panel, "modulate:a", 1.0, 0.25)
 
 
 func sync_from_game(game: Game) -> void:
@@ -67,8 +106,20 @@ func refresh_touch_controls_visibility(game: Game) -> void:
 
 
 func on_timer_changed(remaining_time_sec: float) -> void:
+	var total_sec := int(maxf(0.0, remaining_time_sec))
+	var minutes := total_sec / 60
+	var seconds := total_sec % 60
+	var formatted_text := "%d:%02d" % [minutes, seconds]
+
 	if timer_label != null:
-		timer_label.text = str(int(remaining_time_sec))
+		timer_label.text = formatted_text
+		if total_sec <= 15 and total_sec > 0 and total_sec != _last_time_sec:
+			timer_label.modulate = Color(0.9, 0.15, 0.15, 1.0)
+			_punch_control(timer_container if timer_container != null else timer_label, 1.25, 0.25)
+		elif total_sec > 15:
+			timer_label.modulate = Color(0.28, 0.18, 0.1, 1.0)
+
+	_last_time_sec = total_sec
 
 
 func on_team_kills_changed(good_team_kills: int, bad_team_kills: int) -> void:
@@ -77,12 +128,45 @@ func on_team_kills_changed(good_team_kills: int, bad_team_kills: int) -> void:
 	if kills_2_label != null:
 		kills_2_label.text = str(bad_team_kills)
 
+	if _last_kills_1 >= 0 and good_team_kills != _last_kills_1:
+		_punch_control(kills_1_container if kills_1_container != null else kills_1_label, 1.35, 0.3)
+	if _last_kills_2 >= 0 and bad_team_kills != _last_kills_2:
+		_punch_control(kills_2_container if kills_2_container != null else kills_2_label, 1.35, 0.3)
+
+	_last_kills_1 = good_team_kills
+	_last_kills_2 = bad_team_kills
+
 
 func on_flags_status_changed(good_captured: int, bad_captured: int, _neutral: int) -> void:
 	if flags_1_label != null:
 		flags_1_label.text = str(good_captured)
 	if flags_2_label != null:
 		flags_2_label.text = str(bad_captured)
+
+	if _last_flags_1 >= 0 and good_captured != _last_flags_1:
+		_punch_control(flags_1_container if flags_1_container != null else flags_1_label, 1.4, 0.35)
+	if _last_flags_2 >= 0 and bad_captured != _last_flags_2:
+		_punch_control(flags_2_container if flags_2_container != null else flags_2_label, 1.4, 0.35)
+
+	_last_flags_1 = good_captured
+	_last_flags_2 = bad_captured
+
+
+func _punch_control(target_node: Control, punch_scale: float = 1.3, duration: float = 0.3) -> void:
+	if target_node == null or not is_instance_valid(target_node):
+		return
+
+	target_node.pivot_offset = target_node.size / 2.0
+
+	var tween_key := target_node.get_instance_id()
+	if _active_tweens.has(tween_key) and _active_tweens[tween_key] != null and _active_tweens[tween_key].is_running():
+		_active_tweens[tween_key].kill()
+
+	var tween := create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	_active_tweens[tween_key] = tween
+
+	tween.tween_property(target_node, "scale", Vector2.ONE * punch_scale, duration * 0.45)
+	tween.tween_property(target_node, "scale", Vector2.ONE, duration * 0.55)
 
 
 func on_pause_button_pressed() -> void:
@@ -112,3 +196,4 @@ func should_open_pause(event: InputEvent) -> bool:
 		var joy_event := event as InputEventJoypadButton
 		return joy_event.pressed and joy_event.button_index == JOY_BUTTON_START
 	return false
+
