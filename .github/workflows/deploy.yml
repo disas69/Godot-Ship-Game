@@ -32,9 +32,6 @@ jobs:
       - name: Create Web Export Directory
         run: mkdir -v -p builds/web
 
-      - name: Import Assets
-        run: godot --headless --editor --quit
-
       - name: Godot Web Export
         run: godot --headless --verbose --export-release "Web" builds/web/index.html
 
