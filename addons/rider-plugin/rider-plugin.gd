@@ -10,6 +10,9 @@ var _plugin_cfg_path: String
 var _presets_json_path: String
 
 func _enter_tree() -> void:
+	if DisplayServer.get_name() == "headless":
+		return
+
 	editor_settings = EditorInterface.get_editor_settings()
 	var script_path := (get_script() as Script).resource_path
 	var plugin_dir := script_path.get_base_dir()
