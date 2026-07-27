@@ -32,7 +32,7 @@ jobs:
 
       - name: Add Cross-Origin Isolation (coi-serviceworker) for GitHub Pages
         run: |
-          curl -sL https://raw.githubusercontent.com/gzguidotti/coi-serviceworker/main/coi-serviceworker.js -o builds/web/coi-serviceworker.js
+          python3 -c "import urllib.request; urllib.request.urlretrieve('https://raw.githubusercontent.com/gzguidotti/coi-serviceworker/main/coi-serviceworker.js', 'builds/web/coi-serviceworker.js')"
           sed -i 's/<head>/<head><script src="coi-serviceworker.js"><\/script>/g' builds/web/index.html
 
       - name: Deploy to GitHub Pages Branch
