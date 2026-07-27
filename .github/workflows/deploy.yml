@@ -13,7 +13,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     container:
-      image: barichello/godot-ci:4.3
+      image: barichello/godot-ci:4.7.1-stable
 
     steps:
       - name: Checkout Repository
@@ -22,7 +22,7 @@ jobs:
       - name: Setup Export Templates
         run: |
           mkdir -v -p ~/.local/share/godot/export_templates
-          mv /root/.local/share/godot/export_templates/4.3.stable ~/.local/share/godot/export_templates/ 2>/dev/null || true
+          mv /root/.local/share/godot/export_templates/* ~/.local/share/godot/export_templates/ 2>/dev/null || true
 
       - name: Create Web Export Directory
         run: mkdir -v -p builds/web
