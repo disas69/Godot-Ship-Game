@@ -178,9 +178,11 @@ func cache_base_state(child: Control) -> void:
 	if not base_positions.has(instance_id):
 		base_positions[instance_id] = child.position
 	if not base_scales.has(instance_id):
-		base_scales[instance_id] = child.scale
+		if not is_zero_approx(child.scale.x) and not is_zero_approx(child.scale.y):
+			base_scales[instance_id] = child.scale
 	if not base_modulates.has(instance_id):
-		base_modulates[instance_id] = child.modulate
+		if child.modulate.a > 0.0:
+			base_modulates[instance_id] = child.modulate
 
 
 func get_base_position(child: Control) -> Vector2:
@@ -193,15 +195,24 @@ func get_base_position(child: Control) -> Vector2:
 func get_base_scale(child: Control) -> Vector2:
 	var instance_id := child.get_instance_id()
 	if base_scales.has(instance_id):
-		return base_scales[instance_id]
-	return child.scale
+		var s: Vector2 = base_scales[instance_id]
+		if not is_zero_approx(s.x) and not is_zero_approx(s.y):
+			return s
+	if not is_zero_approx(child.scale.x) and not is_zero_approx(child.scale.y):
+		return child.scale
+	return Vector2.ONE
 
 
 func get_base_modulate(child: Control) -> Color:
 	var instance_id := child.get_instance_id()
 	if base_modulates.has(instance_id):
-		return base_modulates[instance_id]
-	return child.modulate
+		var c: Color = base_modulates[instance_id]
+		if c.a > 0.0:
+			return c
+	var col := child.modulate
+	if col.a == 0.0:
+		col.a = 1.0
+	return col
 
 
 func set_pivot(control: Control, pivot: ScaleFrom) -> void:
