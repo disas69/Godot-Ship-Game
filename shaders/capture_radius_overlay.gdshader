@@ -8,6 +8,10 @@ uniform float intensity = 1.0;
 uniform float radial_scroll_speed = 0.35;
 uniform float radial_tiling = 1.0;
 
+void vertex() {
+	VERTEX.y += 0.02;
+}
+
 void fragment() {
 	vec2 centered_uv = UV - vec2(0.5);
 	float radius = length(centered_uv);
@@ -20,6 +24,6 @@ void fragment() {
 	vec4 mask = use_texture ? texture(albedo_tex, UV) : vec4(1.0);
 	vec4 base = use_texture ? texture(albedo_tex, scrolled_uv) : vec4(1.0);
 
-	ALBEDO = base.rgb * tint_color.rgb * intensity;
+	ALBEDO = clamp(base.rgb * tint_color.rgb * intensity, vec3(0.0), vec3(1.0));
 	ALPHA = base.a * mask.a * tint_color.a;
 }

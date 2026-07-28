@@ -14,12 +14,12 @@
 radius = 3.5
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8qiel"]
-render_priority = 0
+render_priority = 10
 shader = ExtResource("6_3m36u")
 shader_parameter/use_texture = true
 shader_parameter/albedo_tex = ExtResource("5_gudjc")
 shader_parameter/tint_color = Color(1, 1, 1, 1)
-shader_parameter/intensity = 3.0
+shader_parameter/intensity = 1.0
 
 [node name="PlayerShip" type="CharacterBody3D" unique_id=1389603216 node_paths=PackedStringArray("view", "good_view", "bad_view", "hit_flash_targets", "cannon_view", "cannon_root", "cannon_anchor", "aim_indicator")]
 collision_mask = 3

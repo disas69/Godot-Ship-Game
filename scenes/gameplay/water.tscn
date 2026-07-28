@@ -9,7 +9,7 @@
 size = Vector3(500, 10, 500)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ss84j"]
-render_priority = 1
+render_priority = -1
 shader = ExtResource("2_s3811")
 shader_parameter/surfaceNoise = ExtResource("4_fiwy5")
 shader_parameter/distortNoise = ExtResource("3_ewrsg")

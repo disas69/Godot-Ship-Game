@@ -12,17 +12,17 @@
 radius = 18.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_q5okl"]
-render_priority = 0
+render_priority = 5
 shader = ExtResource("5_arcgr")
 shader_parameter/use_texture = true
 shader_parameter/albedo_tex = ExtResource("6_8x4ci")
 shader_parameter/tint_color = Color(1, 1, 1, 0.78431374)
-shader_parameter/intensity = 3.0
+shader_parameter/intensity = 1.0
 shader_parameter/radial_scroll_speed = 0.35
 shader_parameter/radial_tiling = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_28xoc"]
-render_priority = 1
+render_priority = 6
 shader = ExtResource("7_pj1pu")
 shader_parameter/progress = 0.370000017575
 shader_parameter/fill_color = Color(1, 1, 1, 0.9)

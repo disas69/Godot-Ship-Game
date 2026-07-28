@@ -38,7 +38,7 @@ func _ready() -> void:
 	var material := ShaderMaterial.new()
 	material.shader = TRAIL_DRAW_SHADER
 	material.resource_local_to_scene = true
-	material.render_priority = 1
+	material.render_priority = 3
 	quad.material = material
 	draw_pass_1 = quad
 

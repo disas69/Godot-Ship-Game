@@ -415,10 +415,11 @@ func setup_aim_line() -> void:
 	dot_mesh.rings = 4
 
 	var dot_material := ShaderMaterial.new()
+	dot_material.render_priority = 10
 	dot_material.shader = AIM_OVERLAY_SHADER
 	dot_material.set_shader_parameter("use_texture", false)
 	dot_material.set_shader_parameter("tint_color", Color(1.0, 1.0, 1.0, 0.6))
-	dot_material.set_shader_parameter("intensity", 3.0)
+	dot_material.set_shader_parameter("intensity", 1.0)
 	dot_mesh.material = dot_material
 
 	var multimesh := MultiMesh.new()

@@ -8,6 +8,10 @@ uniform float inner_radius : hint_range(0.0, 1.0) = 0.58;
 uniform float outer_radius : hint_range(0.0, 1.0) = 0.95;
 uniform float edge_softness : hint_range(0.0, 0.1) = 0.02;
 
+void vertex() {
+	VERTEX.y += 0.02;
+}
+
 void fragment() {
 	vec2 centered_uv = UV - vec2(0.5);
 	float radius = length(centered_uv) * 2.0;
@@ -20,6 +24,6 @@ void fragment() {
 	float fill_mask = step(normalized_angle, progress);
 	vec4 color = mix(background_color, fill_color, fill_mask);
 
-	ALBEDO = color.rgb;
+	ALBEDO = clamp(color.rgb, vec3(0.0), vec3(1.0));
 	ALPHA = color.a * ring_mask;
 }
