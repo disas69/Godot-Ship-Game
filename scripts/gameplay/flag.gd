@@ -23,6 +23,17 @@ enum State {
 @export var captured_bad_view: Node3D
 @export var capture_progress_view: Sprite3D
 
+@export_category("Outline")
+@export var enable_outline: bool = true
+@export var outline_color: Color = Color.BLACK
+@export var outline_thickness: float = 0.045
+@export_category("Flag Animation")
+@export var enable_wave_animation: bool = true
+@export var wave_amplitude: float = 0.15
+@export var wave_speed: float = 4.0
+@export var wave_frequency: float = 3.0
+@export var wave_height_threshold: float = 0.4
+@export var wave_height_falloff: float = 0.6
 @export_category("Capture FX")
 @export var capture_push_scale: float = 0.82
 @export var capture_pop_scale: float = 1.18
@@ -38,12 +49,15 @@ var capture_state_tween: Tween
 var capture_flash_tween: Tween
 var capture_flash_material_instance: ShaderMaterial
 var capture_progress_material_instance: ShaderMaterial
+var outline_material_instance: ShaderMaterial
 
 
 func _ready() -> void:
 	collision_shape.shape.radius = capture_radius
 	setup_view_base_scales()
 	setup_capture_flash_material_instance()
+	setup_outline_material_instance()
+	setup_flag_wave_animation()
 	setup_capture_progress_view()
 	set_capture_flash_strength(0.0)
 	ensure_capture_hooks()
@@ -317,3 +331,32 @@ func update_capture_progress_view() -> void:
 
 	if capture_progress_material_instance:
 		capture_progress_material_instance.set_shader_parameter(&"progress", progress)
+
+
+func setup_outline_material_instance() -> void:
+	if not enable_outline:
+		return
+	outline_material_instance = OutlineHelper.create_outline_material(outline_color, outline_thickness)
+	OutlineHelper.apply_outline_to_nodes([self], outline_material_instance)
+
+
+func set_outline_color(color: Color) -> void:
+	outline_color = color
+	OutlineHelper.update_outline_color(outline_material_instance, color)
+
+
+func set_outline_thickness(thickness: float) -> void:
+	outline_thickness = thickness
+	OutlineHelper.update_outline_thickness(outline_material_instance, thickness)
+
+
+func setup_flag_wave_animation() -> void:
+	if enable_wave_animation:
+		FlagWaveHelper.apply_flag_wave(
+			self,
+			wave_amplitude,
+			wave_speed,
+			wave_frequency,
+			wave_height_threshold,
+			wave_height_falloff
+		)

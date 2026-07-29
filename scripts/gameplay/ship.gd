@@ -20,6 +20,10 @@ enum Team {
 @export var bad_view: Node3D
 @export var forward_incline: Vector2
 @export var side_incline: Vector3
+@export_category("Outline")
+@export var enable_outline: bool = true
+@export var outline_color: Color = Color.BLACK
+@export var outline_thickness: float = 0.075
 @export_category("Hit FX")
 @export var hit_punch_scale: float = 1.12
 @export var hit_flash_strength: float = 0.8
@@ -65,6 +69,7 @@ var view_base_scale: Vector3
 var hit_scale_tween: Tween
 var hit_flash_tween: Tween
 var hit_flash_material_instance: ShaderMaterial
+var outline_material_instance: ShaderMaterial
 var is_destroyed: bool
 var gameplay_enabled: bool = true
 var manual_aim_offset := Vector3.ZERO
@@ -81,6 +86,7 @@ func _ready() -> void:
 	view_base_scale = view.scale
 	setup_hit_flash_material_instance()
 	set_hit_flash_strength(0.0)
+	setup_outline_material_instance()
 	setup_aim_line()
 	initialize_aim_offset()
 	setup_cannon_ball_pool()
@@ -738,3 +744,20 @@ func set_hit_flash_color(color: Color) -> void:
 func set_hit_flash_strength(value: float) -> void:
 	if hit_flash_material_instance:
 		hit_flash_material_instance.set_shader_parameter(&"flash_strength", value)
+
+
+func setup_outline_material_instance() -> void:
+	if not enable_outline:
+		return
+	outline_material_instance = OutlineHelper.create_outline_material(outline_color, outline_thickness)
+	OutlineHelper.apply_outline_to_nodes([self], outline_material_instance)
+
+
+func set_outline_color(color: Color) -> void:
+	outline_color = color
+	OutlineHelper.update_outline_color(outline_material_instance, color)
+
+
+func set_outline_thickness(thickness: float) -> void:
+	outline_thickness = thickness
+	OutlineHelper.update_outline_thickness(outline_material_instance, thickness)

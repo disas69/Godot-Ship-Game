@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dcdacrpn62beh"]
+
+[ext_resource type="Shader" uid="uid://dsjqrhytnwn0s" path="res://shaders/outline.gdshader" id="1_outline"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_outline")
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/outline_thickness = 0.075
+shader_parameter/wave_speed = 4.0
+shader_parameter/wave_frequency = 3.0
+shader_parameter/wave_amplitude = 0.0
+shader_parameter/height_threshold = 0.4
+shader_parameter/height_falloff = 0.6

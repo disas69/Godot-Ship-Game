@@ -41,6 +41,11 @@ neutral_view = NodePath("NEUTRAL FLAG")
 captured_good_view = NodePath("WHITE FLAG")
 captured_bad_view = NodePath("BLACK FLAG")
 capture_progress_view = NodePath("CaptureProgress")
+wave_amplitude = 0.1
+wave_speed = 2.0
+wave_frequency = 2.0
+wave_height_threshold = 0.8
+wave_height_falloff = 0.9
 capture_push_scale = 0.3
 capture_pop_scale = 1.5
 

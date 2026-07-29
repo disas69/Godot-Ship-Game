@@ -3,6 +3,11 @@ class_name CannonBall extends RigidBody3D
 @export var max_lifetime: float = 5.0
 @export var cannon_view: Node3D
 
+@export_category("Outline")
+@export var enable_outline: bool = true
+@export var outline_color: Color = Color.WHITE
+@export var outline_thickness: float = 0.05
+
 var shooter: Ship
 var release_callback: Callable
 var lifetime_remaining: float
@@ -11,10 +16,12 @@ var default_gravity_scale: float
 var default_cannon_view_scale: Vector3
 var scale_tween: Tween
 var default_state_cached: bool
+var outline_material_instance: ShaderMaterial
 
 
 func _ready() -> void:
 	cache_default_state()
+	setup_outline_material_instance()
 	if is_zero_approx(lifetime_remaining):
 		lifetime_remaining = max_lifetime
 
@@ -137,3 +144,20 @@ func play_water_splash(pos: Vector3) -> void:
 
 func play_hit(pos: Vector3) -> void:
 	VfxManager.spawn("cannon_hit", pos)
+
+
+func setup_outline_material_instance() -> void:
+	if not enable_outline:
+		return
+	outline_material_instance = OutlineHelper.create_outline_material(outline_color, outline_thickness)
+	OutlineHelper.apply_outline_to_nodes([self], outline_material_instance)
+
+
+func set_outline_color(color: Color) -> void:
+	outline_color = color
+	OutlineHelper.update_outline_color(outline_material_instance, color)
+
+
+func set_outline_thickness(thickness: float) -> void:
+	outline_thickness = thickness
+	OutlineHelper.update_outline_thickness(outline_material_instance, thickness)
