@@ -19,13 +19,21 @@ texture_margin_top = 18.0
 texture_margin_right = 18.0
 texture_margin_bottom = 18.0
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_card"]
+texture = ExtResource("7_panel_texture")
+texture_margin_left = 14.0
+texture_margin_top = 14.0
+texture_margin_right = 14.0
+texture_margin_bottom = 14.0
+modulate_color = Color(0.85, 0.85, 0.85, 0.9)
+
 [node name="GameEndPopup" type="CanvasLayer" unique_id=545473189 node_paths=PackedStringArray("title_label", "message_label", "stats_label", "replay_button", "menu_button")]
 process_mode = 3
 layer = 10
 script = ExtResource("1_game_end_popup")
 title_label = NodePath("Root/Panel/Margin/VBox/Title")
-message_label = NodePath("Root/Panel/Margin/VBox/Message")
-stats_label = NodePath("Root/Panel/Margin/VBox/Stats")
+message_label = NodePath("Root/Panel/Margin/VBox/Card/Margin/InfoVBox/Message")
+stats_label = NodePath("Root/Panel/Margin/VBox/Card/Margin/InfoVBox/Stats")
 replay_button = NodePath("Root/Panel/Margin/VBox/Actions/ReplayButton")
 menu_button = NodePath("Root/Panel/Margin/VBox/Actions/MenuButton")
 
@@ -63,9 +71,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -240.0
-offset_top = -150.0
+offset_top = -160.0
 offset_right = 240.0
-offset_bottom = 150.0
+offset_bottom = 160.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_panel")
@@ -75,64 +83,105 @@ script = ExtResource("3_auto_tween")
 target = NodePath("..")
 anim_when = 1
 anim_type = 1
-duration = 0.18
+duration = 0.22
 force_from = true
-
-[node name="ListTween" type="Control" parent="Root/Panel" unique_id=1634285580 node_paths=PackedStringArray("target")]
-layout_mode = 2
-script = ExtResource("4_tween_container")
-target = NodePath("../Margin/VBox")
-anim_type = 0
-delay_appear = 0.08
-delay_between_elements = 0.05
 
 [node name="Margin" type="MarginContainer" parent="Root/Panel" unique_id=246067022]
 layout_mode = 2
-theme_override_constants/margin_left = 28
-theme_override_constants/margin_top = 24
-theme_override_constants/margin_right = 28
-theme_override_constants/margin_bottom = 24
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 20
 
 [node name="VBox" type="VBoxContainer" parent="Root/Panel/Margin" unique_id=2057616469]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 16
 alignment = 1
 
 [node name="Title" type="RichTextLabel" parent="Root/Panel/Margin/VBox" unique_id=620209410]
 layout_mode = 2
-theme_override_colors/default_color = Color(0.32, 0.22, 0.13, 1)
+theme_override_colors/default_color = Color(0.98, 0.82, 0.28, 1)
 theme_override_fonts/normal_font = ExtResource("6_title_font")
-theme_override_font_sizes/normal_font_size = 36
+theme_override_font_sizes/normal_font_size = 44
 bbcode_enabled = true
-text = "[wave amp=10 freq=5]Game Over[/wave]"
+text = "[wave amp=15 freq=6][center][outline_color=#2d1b0e][outline_size=8]GAME OVER[/outline_size][/outline_color][/center][/wave]"
 fit_content = true
 scroll_active = false
 horizontal_alignment = 1
 
-[node name="Message" type="Label" parent="Root/Panel/Margin/VBox" unique_id=2122354251]
+[node name="TitleTween" type="Node" parent="Root/Panel/Margin/VBox/Title" unique_id=620209411 node_paths=PackedStringArray("target")]
+script = ExtResource("3_auto_tween")
+target = NodePath("..")
+anim_when = 1
+anim_type = 1
+start_delay = 0.05
+duration = 0.25
+force_from = true
+
+[node name="Card" type="PanelContainer" parent="Root/Panel/Margin/VBox" unique_id=448966816]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
+theme_override_styles/panel = SubResource("StyleBoxTexture_card")
+
+[node name="CardTween" type="Node" parent="Root/Panel/Margin/VBox/Card" unique_id=448966817 node_paths=PackedStringArray("target")]
+script = ExtResource("3_auto_tween")
+target = NodePath("..")
+anim_when = 1
+anim_type = 1
+start_delay = 0.15
+duration = 0.22
+force_from = true
+
+[node name="Margin" type="MarginContainer" parent="Root/Panel/Margin/VBox/Card" unique_id=448966818]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="InfoVBox" type="VBoxContainer" parent="Root/Panel/Margin/VBox/Card/Margin" unique_id=448966819]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="Message" type="Label" parent="Root/Panel/Margin/VBox/Card/Margin/InfoVBox" unique_id=2122354251]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.28, 0.18, 0.1, 1)
+theme_override_fonts/font = ExtResource("6_title_font")
+theme_override_font_sizes/font_size = 22
 text = "Time is up"
 horizontal_alignment = 1
 
-[node name="Stats" type="Label" parent="Root/Panel/Margin/VBox" unique_id=448966815]
+[node name="Stats" type="Label" parent="Root/Panel/Margin/VBox/Card/Margin/InfoVBox" unique_id=448966815]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
+theme_override_font_sizes/font_size = 20
 text = "White kills: 0
 Black kills: 0"
 horizontal_alignment = 1
 
 [node name="Actions" type="HBoxContainer" parent="Root/Panel/Margin/VBox" unique_id=24811132]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 24
 alignment = 1
 
+[node name="ActionsTween" type="Control" parent="Root/Panel/Margin/VBox/Actions" unique_id=1634285580 node_paths=PackedStringArray("target")]
+layout_mode = 2
+script = ExtResource("4_tween_container")
+target = NodePath("..")
+anim_type = 0
+delay_appear = 0.28
+delay_between_elements = 0.06
+
 [node name="ReplayButton" parent="Root/Panel/Margin/VBox/Actions" unique_id=1418214113 instance=ExtResource("2_game_button")]
+custom_minimum_size = Vector2(170, 46)
 layout_mode = 2
 text = "Replay"
 label = "Replay"
+button_type = "Primary"
 
 [node name="MenuButton" parent="Root/Panel/Margin/VBox/Actions" unique_id=2052357224 instance=ExtResource("2_game_button")]
+custom_minimum_size = Vector2(170, 46)
 layout_mode = 2
-text = "Back"
-label = "Back"
+text = "Back to Menu"
+label = "Back to Menu"
+button_type = "Danger"

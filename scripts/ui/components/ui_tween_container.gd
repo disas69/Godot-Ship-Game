@@ -205,25 +205,30 @@ func get_base_modulate(child: Control) -> Color:
 
 
 func set_pivot(control: Control, pivot: ScaleFrom) -> void:
+	if control == null:
+		return
+	var sz := control.size
+	if sz.x <= 2.0 or sz.y <= 2.0:
+		sz = control.get_combined_minimum_size()
 	match pivot:
 		ScaleFrom.CENTER:
-			control.pivot_offset = control.size / 2.0
+			control.pivot_offset = sz / 2.0
 		ScaleFrom.TOP_LEFT:
 			control.pivot_offset = Vector2.ZERO
 		ScaleFrom.TOP_CENTER:
-			control.pivot_offset = Vector2(control.size.x / 2.0, 0.0)
+			control.pivot_offset = Vector2(sz.x / 2.0, 0.0)
 		ScaleFrom.TOP_RIGHT:
-			control.pivot_offset = Vector2(control.size.x, 0.0)
+			control.pivot_offset = Vector2(sz.x, 0.0)
 		ScaleFrom.CENTER_LEFT:
-			control.pivot_offset = Vector2(0.0, control.size.y / 2.0)
+			control.pivot_offset = Vector2(0.0, sz.y / 2.0)
 		ScaleFrom.CENTER_RIGHT:
-			control.pivot_offset = Vector2(control.size.x, control.size.y / 2.0)
+			control.pivot_offset = Vector2(sz.x, sz.y / 2.0)
 		ScaleFrom.BOTTOM_LEFT:
-			control.pivot_offset = Vector2(0.0, control.size.y)
+			control.pivot_offset = Vector2(0.0, sz.y)
 		ScaleFrom.BOTTOM_CENTER:
-			control.pivot_offset = Vector2(control.size.x / 2.0, control.size.y)
+			control.pivot_offset = Vector2(sz.x / 2.0, sz.y)
 		ScaleFrom.BOTTOM_RIGHT:
-			control.pivot_offset = control.size
+			control.pivot_offset = sz
 
 
 func get_control_children() -> Array[Control]:

@@ -1,12 +1,12 @@
 [gd_resource type="Resource" script_class="VfxLibrary" format=3 uid="uid://cq30yw7feblwg"]
 
 [ext_resource type="Script" uid="uid://ccn7n8lfhj7mn" path="res://scripts/vfx/vfx_entry.gd" id="1_nm03b"]
-[ext_resource type="PackedScene" uid="uid://yrmvw60puafh" path="res://vfx/cannon_smoke.tscn" id="2_osu37"]
-[ext_resource type="PackedScene" uid="uid://ut43hdh8o11b" path="res://vfx/water_splash.tscn" id="3_rp0qm"]
-[ext_resource type="PackedScene" uid="uid://brr472tdvooyw" path="res://vfx/cannon_hit.tscn" id="4_knumm"]
-[ext_resource type="PackedScene" uid="uid://diclxrnistp1f" path="res://vfx/big_explosion.tscn" id="5_5xi6b"]
-[ext_resource type="PackedScene" uid="uid://dgllcx1ffloe4" path="res://vfx/fire.tscn" id="6_2eijb"]
-[ext_resource type="PackedScene" uid="uid://dd462bu6gsbpq" path="res://vfx/fire_combined.tscn" id="7_xedpo"]
+[ext_resource type="PackedScene" path="res://vfx/cannon_smoke.tscn" id="2_osu37"]
+[ext_resource type="PackedScene" path="res://vfx/water_splash.tscn" id="3_rp0qm"]
+[ext_resource type="PackedScene" path="res://vfx/cannon_hit.tscn" id="4_knumm"]
+[ext_resource type="PackedScene" path="res://vfx/big_explosion.tscn" id="5_5xi6b"]
+[ext_resource type="PackedScene" path="res://vfx/fire.tscn" id="6_2eijb"]
+[ext_resource type="PackedScene" path="res://vfx/fire_combined.tscn" id="7_xedpo"]
 [ext_resource type="Script" uid="uid://dtox6c54i05os" path="res://scripts/vfx/vfx_library.gd" id="8_afslv"]
 
 [sub_resource type="Resource" id="Resource_0aams"]

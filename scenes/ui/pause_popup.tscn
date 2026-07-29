@@ -7,7 +7,6 @@
 [ext_resource type="FontFile" uid="uid://daa5h725j1fj7" path="res://fonts/Pixelify_Sans/static/PixelifySans-Medium.ttf" id="5_body_font"]
 [ext_resource type="FontFile" uid="uid://bef8jlqfff473" path="res://fonts/Pixelify_Sans/static/PixelifySans-Bold.ttf" id="6_title_font"]
 [ext_resource type="Texture2D" uid="uid://dr1sy2vjpyuiv" path="res://assets/kenney_ui-pack-adventure/PNG/Default/panel_brown_corners_a.png" id="7_panel_texture"]
-[ext_resource type="Texture2D" uid="uid://c0hj411sc8hj3" path="res://assets/kenney_ui-pack-adventure/PNG/Default/button_red.png" id="10_button_red"]
 
 [sub_resource type="Theme" id="Theme_ui"]
 default_font = ExtResource("5_body_font")
@@ -20,53 +19,12 @@ texture_margin_top = 18.0
 texture_margin_right = 18.0
 texture_margin_bottom = 18.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_red_normal"]
-texture = ExtResource("10_button_red")
-texture_margin_left = 12.0
-texture_margin_top = 8.0
-texture_margin_right = 12.0
-texture_margin_bottom = 8.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_red_pressed"]
-texture = ExtResource("10_button_red")
-texture_margin_left = 12.0
-texture_margin_top = 8.0
-texture_margin_right = 12.0
-texture_margin_bottom = 8.0
-modulate_color = Color(0.82, 0.82, 0.82, 1)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_red_hover"]
-texture = ExtResource("10_button_red")
-texture_margin_left = 12.0
-texture_margin_top = 8.0
-texture_margin_right = 12.0
-texture_margin_bottom = 8.0
-modulate_color = Color(1.12, 1.12, 1.12, 1)
-
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_focus"]
-bg_color = Color(1, 1, 1, 0)
-draw_center = false
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(1, 0.86, 0.35, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-expand_margin_left = 4.0
-expand_margin_top = 4.0
-expand_margin_right = 4.0
-expand_margin_bottom = 4.0
-
 [node name="PausePopup" type="CanvasLayer" unique_id=2004472859 node_paths=PackedStringArray("continue_button", "quit_button")]
 process_mode = 3
 layer = 10
 script = ExtResource("1_pause_popup")
-continue_button = NodePath("Root/Panel/Margin/VBox/ContinueButton")
-quit_button = NodePath("Root/Panel/Margin/VBox/QuitButton")
+continue_button = NodePath("Root/Panel/Margin/VBox/Actions/ContinueButton")
+quit_button = NodePath("Root/Panel/Margin/VBox/Actions/QuitButton")
 
 [node name="Root" type="Control" parent="." unique_id=1683264573]
 layout_mode = 3
@@ -101,12 +59,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -190.0
-offset_top = -115.0
-offset_right = 190.0
-offset_bottom = 115.0
+offset_left = -150.0
+offset_top = -110.0
+offset_right = 150.0
+offset_bottom = 110.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(150, 110)
 theme_override_styles/panel = SubResource("StyleBoxTexture_panel")
 
 [node name="PanelTween" type="Node" parent="Root/Panel" unique_id=1258051775 node_paths=PackedStringArray("target")]
@@ -114,56 +73,64 @@ script = ExtResource("3_auto_tween")
 target = NodePath("..")
 anim_when = 1
 anim_type = 1
-duration = 0.18
+duration = 0.22
 force_from = true
-
-[node name="ListTween" type="Control" parent="Root/Panel" unique_id=513554687 node_paths=PackedStringArray("target")]
-layout_mode = 2
-script = ExtResource("4_tween_container")
-target = NodePath("../Margin/VBox")
-anim_type = 0
-delay_appear = 0.08
-delay_between_elements = 0.05
 
 [node name="Margin" type="MarginContainer" parent="Root/Panel" unique_id=1630913478]
 layout_mode = 2
-theme_override_constants/margin_left = 28
-theme_override_constants/margin_top = 24
-theme_override_constants/margin_right = 28
-theme_override_constants/margin_bottom = 24
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 18
 
 [node name="VBox" type="VBoxContainer" parent="Root/Panel/Margin" unique_id=1712795396]
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 16
 alignment = 1
 
 [node name="Title" type="RichTextLabel" parent="Root/Panel/Margin/VBox" unique_id=1664187768]
 layout_mode = 2
-theme_override_colors/default_color = Color(0.32, 0.22, 0.13, 1)
+theme_override_colors/default_color = Color(0.98, 0.82, 0.28, 1)
 theme_override_fonts/normal_font = ExtResource("6_title_font")
-theme_override_font_sizes/normal_font_size = 36
+theme_override_font_sizes/normal_font_size = 42
 bbcode_enabled = true
-text = "[wave amp=10 freq=5]Pause[/wave]"
+text = "[wave amp=14 freq=5][center][outline_color=#2d1b0e][outline_size=8]PAUSED[/outline_size][/outline_color][/center][/wave]"
 fit_content = true
 scroll_active = false
 horizontal_alignment = 1
 
-[node name="ContinueButton" parent="Root/Panel/Margin/VBox" unique_id=1738088523 instance=ExtResource("2_game_button")]
+[node name="TitleTween" type="Node" parent="Root/Panel/Margin/VBox/Title" unique_id=1664187769 node_paths=PackedStringArray("target")]
+script = ExtResource("3_auto_tween")
+target = NodePath("..")
+anim_when = 1
+anim_type = 1
+start_delay = 0.05
+duration = 0.25
+force_from = true
+
+[node name="Actions" type="VBoxContainer" parent="Root/Panel/Margin/VBox" unique_id=418606735]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="ActionsTween" type="Control" parent="Root/Panel/Margin/VBox/Actions" unique_id=513554687 node_paths=PackedStringArray("target")]
+layout_mode = 2
+script = ExtResource("4_tween_container")
+target = NodePath("..")
+anim_type = 0
+delay_appear = 0.15
+delay_between_elements = 0.06
+
+[node name="ContinueButton" parent="Root/Panel/Margin/VBox/Actions" unique_id=1738088523 instance=ExtResource("2_game_button")]
+custom_minimum_size = Vector2(210, 46)
 layout_mode = 2
 text = "Continue"
 label = "Continue"
+button_type = "Primary"
 
-[node name="QuitButton" parent="Root/Panel/Margin/VBox" unique_id=418606734 instance=ExtResource("2_game_button")]
+[node name="QuitButton" parent="Root/Panel/Margin/VBox/Actions" unique_id=418606734 instance=ExtResource("2_game_button")]
+custom_minimum_size = Vector2(210, 46)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.28, 0.12, 0.08, 1)
-theme_override_colors/font_focus_color = Color(0.28, 0.12, 0.08, 1)
-theme_override_colors/font_pressed_color = Color(0.28, 0.12, 0.08, 1)
-theme_override_colors/font_hover_color = Color(0.28, 0.12, 0.08, 1)
-theme_override_colors/font_disabled_color = Color(0.28, 0.12, 0.08, 0.55)
-theme_override_styles/normal = SubResource("StyleBoxTexture_red_normal")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_red_pressed")
-theme_override_styles/hover = SubResource("StyleBoxTexture_red_hover")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_red_normal")
-theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
 text = "Quit to Menu"
 label = "Quit to Menu"
+button_type = "Danger"

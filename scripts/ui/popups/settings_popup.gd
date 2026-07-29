@@ -11,6 +11,7 @@ const RESOLUTIONS: Array[Vector2i] = [
 @export var windowed_button: Button
 @export var resolution_option: OptionButton
 @export var save_button: Button
+@export var back_button: Button
 
 var fullscreen := false
 
@@ -19,6 +20,7 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	fullscreen = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
 	setup_resolution_options()
+	update_mode_button_visuals()
 
 	if fullscreen_button != null:
 		fullscreen_button.pressed.connect(set_fullscreen.bind(true))
@@ -26,6 +28,8 @@ func _ready() -> void:
 		windowed_button.pressed.connect(set_fullscreen.bind(false))
 	if save_button != null:
 		save_button.pressed.connect(on_save_pressed)
+	if back_button != null:
+		back_button.pressed.connect(on_back_pressed)
 
 
 func setup_resolution_options() -> void:
@@ -47,6 +51,18 @@ func setup_resolution_options() -> void:
 
 func set_fullscreen(enabled: bool) -> void:
 	fullscreen = enabled
+	update_mode_button_visuals()
+
+
+func update_mode_button_visuals() -> void:
+	if fullscreen_button is GameButton:
+		(fullscreen_button as GameButton).button_type = "Primary"
+	if windowed_button is GameButton:
+		(windowed_button as GameButton).button_type = "Primary"
+
+
+func on_back_pressed() -> void:
+	UIManager.close_popup(view_id)
 
 
 func on_back_requested() -> bool:

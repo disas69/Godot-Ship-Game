@@ -2,57 +2,16 @@
 
 [ext_resource type="Script" uid="uid://b3axxaohvxqbj" path="res://scripts/ui/screens/menu_screen.gd" id="1_menu_screen"]
 [ext_resource type="PackedScene" uid="uid://cnv1q44x5xwit" path="res://scenes/ui/components/game_button.tscn" id="2_game_button"]
-[ext_resource type="Script" uid="uid://d0a0jyecd51my" path="res://scripts/ui/components/ui_tween_container.gd" id="3_tween_container"]
-[ext_resource type="FontFile" uid="uid://bef8jlqfff473" path="res://fonts/Pixelify_Sans/static/PixelifySans-Bold.ttf" id="3_u5qb7"]
-[ext_resource type="FontFile" uid="uid://daa5h725j1fj7" path="res://fonts/Pixelify_Sans/static/PixelifySans-Medium.ttf" id="4_body_font"]
-[ext_resource type="Texture2D" uid="uid://c0hj411sc8hj3" path="res://assets/kenney_ui-pack-adventure/PNG/Default/button_red.png" id="6_button_red"]
+[ext_resource type="Script" uid="uid://dle7mknyn3t7x" path="res://scripts/ui/components/ui_auto_tween.gd" id="3_auto_tween"]
+[ext_resource type="Script" uid="uid://d0a0jyecd51my" path="res://scripts/ui/components/ui_tween_container.gd" id="4_tween_container"]
+[ext_resource type="FontFile" uid="uid://bef8jlqfff473" path="res://fonts/Pixelify_Sans/static/PixelifySans-Bold.ttf" id="5_title_font"]
+[ext_resource type="FontFile" uid="uid://daa5h725j1fj7" path="res://fonts/Pixelify_Sans/static/PixelifySans-Medium.ttf" id="6_body_font"]
 
 [sub_resource type="Theme" id="Theme_ui"]
-default_font = ExtResource("4_body_font")
+default_font = ExtResource("6_body_font")
 default_font_size = 22
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uyapm"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_red_normal"]
-texture = ExtResource("6_button_red")
-texture_margin_left = 12.0
-texture_margin_top = 8.0
-texture_margin_right = 12.0
-texture_margin_bottom = 8.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_red_pressed"]
-texture = ExtResource("6_button_red")
-texture_margin_left = 12.0
-texture_margin_top = 8.0
-texture_margin_right = 12.0
-texture_margin_bottom = 8.0
-modulate_color = Color(0.82, 0.82, 0.82, 1)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_red_hover"]
-texture = ExtResource("6_button_red")
-texture_margin_left = 12.0
-texture_margin_top = 8.0
-texture_margin_right = 12.0
-texture_margin_bottom = 8.0
-modulate_color = Color(1.12, 1.12, 1.12, 1)
-
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_focus"]
-bg_color = Color(1, 1, 1, 0)
-draw_center = false
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(1, 0.86, 0.35, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-expand_margin_left = 4.0
-expand_margin_top = 4.0
-expand_margin_right = 4.0
-expand_margin_bottom = 4.0
 
 [node name="MenuScreen" type="CanvasLayer" unique_id=65748089 node_paths=PackedStringArray("play_button", "settings_button", "quit_button")]
 script = ExtResource("1_menu_screen")
@@ -82,47 +41,51 @@ grow_vertical = 2
 pivot_offset = Vector2(0, 250)
 
 [node name="Title" type="RichTextLabel" parent="Root/Control" unique_id=167779249]
-clip_contents = false
 custom_minimum_size = Vector2(700, 0)
+clip_contents = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -350.0
-offset_top = 20.0
+offset_top = -19.2
 offset_right = 350.0
-offset_bottom = 530.0
+offset_bottom = 164.8
 grow_horizontal = 2
-pivot_offset = Vector2(350, 0)
-theme_override_colors/font_outline_color = Color(0.32, 0.22, 0.13, 1)
-theme_override_constants/outline_size = 12
-theme_override_fonts/normal_font = ExtResource("3_u5qb7")
-theme_override_font_sizes/normal_font_size = 80
-theme_override_font_sizes/bold_font_size = 20
+pivot_offset = Vector2(350, 55.2)
+theme_override_colors/font_outline_color = Color(0.18, 0.1, 0.05, 1)
+theme_override_constants/outline_size = 14
+theme_override_fonts/normal_font = ExtResource("5_title_font")
+theme_override_font_sizes/normal_font_size = 76
 bbcode_enabled = true
-text = "[wave amp=20 freq=5]Cannon Battle[/wave]"
+text = "[wave amp=22 freq=5][center][outline_color=#1c1007][outline_size=14][color=#ffd700]CANNON[/color] [color=#ff4444]BATTLE[/color][/outline_size][/outline_color][/center][/wave]"
 fit_content = true
 horizontal_alignment = 1
 
+[node name="TitleTween" type="Node" parent="Root/Control/Title" unique_id=167779250 node_paths=PackedStringArray("target")]
+script = ExtResource("3_auto_tween")
+target = NodePath("..")
+anim_when = 1
+anim_type = 1
+duration = 0.35
+force_from = true
+
 [node name="Panel" type="PanelContainer" parent="Root/Control" unique_id=560762698]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
 offset_left = -140.0
-offset_top = -129.0
+offset_top = 150.0
 offset_right = 140.0
-offset_bottom = 129.0
+offset_bottom = 400.0
 grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(140, 129)
+pivot_offset = Vector2(140, 125)
 theme_override_styles/panel = SubResource("StyleBoxEmpty_uyapm")
 
 [node name="PanelTween" type="Control" parent="Root/Control/Panel" unique_id=1109571755 node_paths=PackedStringArray("target")]
 layout_mode = 2
-script = ExtResource("3_tween_container")
+script = ExtResource("4_tween_container")
 target = NodePath("../Margin/VBox")
 anim_type = 0
 delay_between_elements = 0.06
@@ -130,9 +93,9 @@ delay_between_elements = 0.06
 [node name="Margin" type="MarginContainer" parent="Root/Control/Panel" unique_id=1484106015]
 layout_mode = 2
 theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 28
+theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 32
-theme_override_constants/margin_bottom = 28
+theme_override_constants/margin_bottom = 16
 
 [node name="VBox" type="VBoxContainer" parent="Root/Control/Panel/Margin" unique_id=754745267]
 layout_mode = 2
@@ -148,17 +111,10 @@ label = "Play"
 layout_mode = 2
 text = "Settings"
 label = "Settings"
+button_type = "Primary"
 
 [node name="QuitButton" parent="Root/Control/Panel/Margin/VBox" unique_id=900281481 instance=ExtResource("2_game_button")]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.28, 0.12, 0.08, 1)
-theme_override_colors/font_focus_color = Color(0.28, 0.12, 0.08, 1)
-theme_override_colors/font_pressed_color = Color(0.28, 0.12, 0.08, 1)
-theme_override_colors/font_hover_color = Color(0.28, 0.12, 0.08, 1)
-theme_override_colors/font_disabled_color = Color(0.28, 0.12, 0.08, 0.55)
-theme_override_styles/normal = SubResource("StyleBoxTexture_red_normal")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_red_pressed")
-theme_override_styles/hover = SubResource("StyleBoxTexture_red_hover")
-theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
 text = "Quit"
 label = "Quit"
+button_type = "Negative"

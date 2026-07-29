@@ -4,10 +4,10 @@
 [ext_resource type="Script" uid="uid://bkhms8eml0gjx" path="res://scripts/ui/ui_entry.gd" id="2_entry"]
 [ext_resource type="PackedScene" uid="uid://brvjfuw01q78n" path="res://scenes/ui/menu_screen.tscn" id="3_menu"]
 [ext_resource type="PackedScene" uid="uid://fvsww5ojowtu" path="res://scenes/ui/game_screen.tscn" id="4_game"]
-[ext_resource type="PackedScene" path="res://scenes/ui/game_end_popup.tscn" id="5_game_end"]
-[ext_resource type="PackedScene" path="res://scenes/ui/play_popup.tscn" id="6_play"]
-[ext_resource type="PackedScene" path="res://scenes/ui/settings_popup.tscn" id="7_settings"]
-[ext_resource type="PackedScene" path="res://scenes/ui/pause_popup.tscn" id="8_pause"]
+[ext_resource type="PackedScene" uid="uid://ckj884cbx70mb" path="res://scenes/ui/game_end_popup.tscn" id="5_game_end"]
+[ext_resource type="PackedScene" uid="uid://nwxeasv06kq" path="res://scenes/ui/play_popup.tscn" id="6_play"]
+[ext_resource type="PackedScene" uid="uid://p5ucy15s0sqj" path="res://scenes/ui/settings_popup.tscn" id="7_settings"]
+[ext_resource type="PackedScene" uid="uid://c247o5qug5owq" path="res://scenes/ui/pause_popup.tscn" id="8_pause"]
 
 [sub_resource type="Resource" id="Resource_menu"]
 script = ExtResource("2_entry")

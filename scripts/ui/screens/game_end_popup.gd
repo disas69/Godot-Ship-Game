@@ -44,7 +44,7 @@ func sync_from_game() -> void:
 
 
 func set_title_text(title: String) -> void:
-	title_label.text = "[wave amp=10 freq=5]%s[/wave]" % title
+	title_label.text = "[wave amp=15 freq=6][center][outline_color=#2d1b0e][outline_size=8]%s[/outline_size][/outline_color][/center][/wave]" % title
 
 
 func on_replay_button_pressed() -> void:

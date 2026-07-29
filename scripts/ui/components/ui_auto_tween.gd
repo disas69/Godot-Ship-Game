@@ -39,6 +39,8 @@ enum ScaleFrom {
 @export var auto_hide_after: float = -1.0
 @export var change_visible: bool = true
 @export var force_from: bool = false
+@export var trans_type: Tween.TransitionType = Tween.TRANS_BACK
+@export var ease_type: Tween.EaseType = Tween.EASE_OUT
 
 var tween: Tween
 var ignore_visibility_change: bool = false
@@ -82,7 +84,7 @@ func show() -> void:
 	set_pivot(scale_from)
 	kill_tween()
 
-	tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween = create_tween().set_ease(ease_type).set_trans(trans_type)
 	if start_delay > 0.0:
 		tween.tween_interval(start_delay)
 
@@ -116,7 +118,7 @@ func hide() -> void:
 	set_pivot(scale_from)
 	kill_tween()
 
-	tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween = create_tween().set_ease(ease_type).set_trans(trans_type)
 	if start_delay > 0.0:
 		tween.tween_interval(start_delay)
 
@@ -203,25 +205,30 @@ func cache_base_state() -> void:
 
 
 func set_pivot(pivot: ScaleFrom) -> void:
+	if target == null:
+		return
+	var sz := target.size
+	if sz.x <= 2.0 or sz.y <= 2.0:
+		sz = target.get_combined_minimum_size()
 	match pivot:
 		ScaleFrom.CENTER:
-			target.pivot_offset = target.size / 2.0
+			target.pivot_offset = sz / 2.0
 		ScaleFrom.TOP_LEFT:
 			target.pivot_offset = Vector2.ZERO
 		ScaleFrom.TOP_CENTER:
-			target.pivot_offset = Vector2(target.size.x / 2.0, 0.0)
+			target.pivot_offset = Vector2(sz.x / 2.0, 0.0)
 		ScaleFrom.TOP_RIGHT:
-			target.pivot_offset = Vector2(target.size.x, 0.0)
+			target.pivot_offset = Vector2(sz.x, 0.0)
 		ScaleFrom.CENTER_LEFT:
-			target.pivot_offset = Vector2(0.0, target.size.y / 2.0)
+			target.pivot_offset = Vector2(0.0, sz.y / 2.0)
 		ScaleFrom.CENTER_RIGHT:
-			target.pivot_offset = Vector2(target.size.x, target.size.y / 2.0)
+			target.pivot_offset = Vector2(sz.x, sz.y / 2.0)
 		ScaleFrom.BOTTOM_LEFT:
-			target.pivot_offset = Vector2(0.0, target.size.y)
+			target.pivot_offset = Vector2(0.0, sz.y)
 		ScaleFrom.BOTTOM_CENTER:
-			target.pivot_offset = Vector2(target.size.x / 2.0, target.size.y)
+			target.pivot_offset = Vector2(sz.x / 2.0, sz.y)
 		ScaleFrom.BOTTOM_RIGHT:
-			target.pivot_offset = target.size
+			target.pivot_offset = sz
 
 
 func kill_tween() -> void:
