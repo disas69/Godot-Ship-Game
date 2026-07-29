@@ -7,7 +7,7 @@
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.4191103, 0)
 
 [node name="structure-fence-sides2" parent="." unique_id=863034411 instance=ExtResource("2_75apk")]
-transform = Transform3D(1.1890414, 0, 0, 0, 2.075621, 0, 0, 0, 1.1336881, 0.01693833, -4.5283666, -0.37807763)
+transform = Transform3D(2.075621, 0, 0, 0, 2.075621, 0, 0, 0, 2.075621, 0.01693833, -4.528367, -0.3780776)
 
 [node name="flag2" parent="structure-fence-sides2" unique_id=972306963 instance=ExtResource("1_0vmcc")]
-transform = Transform3D(2.6200428, 0, 0, 0, 1.618787, 0, 0, 0, 2.0853498, -0.014245368, 2.1816926, -0.030853122)
+transform = Transform3D(2.620043, 0, 0, 0, 2.620043, 0, 0, 0, 2.620043, -0.01424537, 2.181693, -0.03085312)

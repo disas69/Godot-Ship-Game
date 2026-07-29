@@ -6,7 +6,7 @@
 [node name="BLACK FLAG" type="Node3D" unique_id=345538538]
 
 [node name="structure-fence-sides2" parent="." unique_id=863034411 instance=ExtResource("1_khab3")]
-transform = Transform3D(1.0079528, 0, 0.6091708, 0, 1.9809453, 0, -0.63771856, 0, 0.9628313, -0.26263168, 0.10077095, -0.3287317)
+transform = Transform3D(1.651539, -0, 1.093875, 0, 1.980945, 0, -1.093875, 0, 1.651539, -0.2626317, 0.1007709, -0.3287317)
 
 [node name="flag-pirate2" parent="structure-fence-sides2" unique_id=91289683 instance=ExtResource("2_7u7td")]
-transform = Transform3D(2.460279, 0, -0.070488736, 0, 1.7108289, 0, 0.16691637, 0, 1.1386365, 0.12188721, 2.1736927, 0.12857056)
+transform = Transform3D(2.435262, 0, -0.3569929, 0, 2.461289, 0, 0.3569929, 0, 2.435262, 0.1218872, 2.173693, 0.1285706)
