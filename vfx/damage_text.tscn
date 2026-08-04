@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bfwrkxs4dqbhn"]
+
+[ext_resource type="Script" uid="uid://651widr88k3q" path="res://scripts/vfx/damage_text_fx.gd" id="1_damage_text_fx"]
+[ext_resource type="FontFile" uid="uid://bef8jlqfff473" path="res://fonts/Pixelify_Sans/static/PixelifySans-Bold.ttf" id="2_bold_font"]
+
+[node name="DamageText" type="Node3D" unique_id=1159161787]
+script = ExtResource("1_damage_text_fx")
+hit_font_size = 85
+destroyed_font_size = 100
+
+[node name="Label3D" type="Label3D" parent="." unique_id=1051683067]
+pixel_size = 0.015
+billboard = 1
+double_sided = false
+no_depth_test = true
+render_priority = 100
+outline_render_priority = 99
+outline_modulate = Color(0.08, 0.05, 0.04, 1)
+text = "HIT!"
+font = ExtResource("2_bold_font")
+font_size = 80
+outline_size = 18

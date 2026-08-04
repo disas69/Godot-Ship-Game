@@ -631,12 +631,16 @@ func take_hit(hit_velocity: Vector3, attacker: Ship = null) -> void:
 	hit_velocity.y = 0
 	velocity += hit_velocity
 	
+	var text_spawn_pos := global_position + Vector3.UP * 2.5
+
 	if hit_ponts > 0:
+		VfxManager.spawn_damage_text(text_spawn_pos, false)
 		play_hit_feedback(Color.WHITE)
 		on_hit_taken(false)
 	else:
 		is_destroyed = true
 		destroyed.emit(self)
+		VfxManager.spawn_damage_text(text_spawn_pos, true)
 		play_hit_feedback(Color.RED)
 		on_hit_taken(true)
 		play_destroyed_feedback()

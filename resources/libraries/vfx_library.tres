@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" path="res://vfx/fire.tscn" id="6_2eijb"]
 [ext_resource type="PackedScene" path="res://vfx/fire_combined.tscn" id="7_xedpo"]
 [ext_resource type="Script" uid="uid://dtox6c54i05os" path="res://scripts/vfx/vfx_library.gd" id="8_afslv"]
+[ext_resource type="PackedScene" uid="uid://bfwrkxs4dqbhn" path="res://vfx/damage_text.tscn" id="8_dmg_txt"]
 
 [sub_resource type="Resource" id="Resource_0aams"]
 script = ExtResource("1_nm03b")
@@ -54,7 +55,14 @@ script = ExtResource("1_nm03b")
 key = "fire_combined"
 scene = ExtResource("7_xedpo")
 
+[sub_resource type="Resource" id="Resource_dmg_txt"]
+script = ExtResource("1_nm03b")
+key = "damage_text"
+scene = ExtResource("8_dmg_txt")
+use_pool = true
+preload_count = 6
+
 [resource]
 script = ExtResource("8_afslv")
-entries = Array[ExtResource("1_nm03b")]([SubResource("Resource_0aams"), SubResource("Resource_s8lij"), SubResource("Resource_o32xv"), SubResource("Resource_hl3cp"), SubResource("Resource_f1m4w"), SubResource("Resource_tl48x")])
+entries = Array[ExtResource("1_nm03b")]([SubResource("Resource_0aams"), SubResource("Resource_s8lij"), SubResource("Resource_o32xv"), SubResource("Resource_hl3cp"), SubResource("Resource_f1m4w"), SubResource("Resource_tl48x"), SubResource("Resource_dmg_txt")])
 metadata/_custom_type_script = "uid://dtox6c54i05os"

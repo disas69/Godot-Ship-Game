@@ -19,6 +19,9 @@ class_name BotShip extends Ship
 @export var shoot_interval_range: Vector2
 @export var target_search_radius: float = 60.0
 @export var target_lose_radius: float = 85.0
+@export var target_tracking_timeout: float = 10.0
+@export var target_max_pursuit_distance: float = 60.0
+@export var target_reacquire_cooldown: float = 5.0
 @export var idle_wait_time_range: Vector2 = Vector2(0.5, 2.0)
 @export var attack_min_distance: float = 8.0
 @export var attack_preferred_distance: float = 16.0
@@ -35,6 +38,9 @@ var patrol_index: int = 0
 var current_reach_target: Node3D
 var reach_target_attempt_count: int = 0
 var closest_reach_target_attempt_limit: int = 0
+var target_tracking_timer: float = 0.0
+var target_tracking_start_position: Vector3 = Vector3.ZERO
+var target_cooldowns: Dictionary = {}
 
 enum BotState {
 	IDLE_WAIT,
@@ -67,6 +73,16 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	target_update_timer -= delta
+
+	if not target_cooldowns.is_empty():
+		var cooldown_keys := target_cooldowns.keys()
+		for k in cooldown_keys:
+			target_cooldowns[k] -= delta
+			if target_cooldowns[k] <= 0.0:
+				target_cooldowns.erase(k)
+
+	if state == BotState.ATTACK and is_target_valid(target):
+		target_tracking_timer += delta
 
 	if state == BotState.IDLE_WAIT:
 		update_idle_wait(delta)
@@ -150,20 +166,35 @@ func update_navigation_target() -> void:
 	navigation_agent.set_target_position(current_target_position)
 
 
+func set_tracked_target(new_target: Node3D) -> void:
+	if target != new_target:
+		target = new_target
+		target_tracking_timer = 0.0
+		target_tracking_start_position = global_position
+
+
 func refresh_target_state() -> void:
 	var previous_state: BotState = state
 	var previous_reach_target: Node3D = current_reach_target
 
 	if is_target_lost(target):
-		target = null
+		if is_instance_valid(target) and target is Node3D:
+			var dist_from_start := global_position.distance_to(target_tracking_start_position)
+			var is_timeout := target_tracking_timeout > 0.0 and target_tracking_timer >= target_tracking_timeout
+			var is_dist_limit := target_max_pursuit_distance > 0.0 and dist_from_start >= target_max_pursuit_distance
+			if (is_timeout or is_dist_limit) and target_reacquire_cooldown > 0.0:
+				target_cooldowns[target] = target_reacquire_cooldown
+
+		set_tracked_target(null)
 		if previous_state == BotState.ATTACK:
 			enter_idle_wait()
 			return
 
 	if target == null:
-		target = find_target_in_radius()
-		if target == null and use_auto_target_when_empty:
-			target = find_any_target()
+		var candidate = find_target_in_radius()
+		if candidate == null and use_auto_target_when_empty:
+			candidate = find_any_target()
+		set_tracked_target(candidate)
 
 	if is_target_valid(target):
 		state = BotState.ATTACK
@@ -187,6 +218,10 @@ func refresh_target_state() -> void:
 	state = BotState.IDLE_PATROL
 
 
+func is_target_on_cooldown(ship: Ship) -> bool:
+	return target_cooldowns.has(ship) and target_cooldowns[ship] > 0.0
+
+
 func find_target_in_radius() -> Ship:
 	var closest_ship: Ship = null
 	var closest_distance: float = target_search_radius
@@ -197,7 +232,7 @@ func find_target_in_radius() -> Ship:
 	for node in get_tree().get_nodes_in_group("Ship"):
 		var ship := node as Ship
 
-		if not can_target_ship(ship):
+		if not can_target_ship(ship) or is_target_on_cooldown(ship):
 			continue
 
 		var distance := global_position.distance_to(ship.global_position)
@@ -212,10 +247,13 @@ func find_any_target() -> Ship:
 	var closest_ship: Ship = null
 	var closest_distance: float = INF
 
+	if get_tree() == null:
+		return null
+
 	for node in get_tree().get_nodes_in_group("Ship"):
 		var ship := node as Ship
 
-		if not can_target_ship(ship):
+		if not can_target_ship(ship) or is_target_on_cooldown(ship):
 			continue
 
 		var distance := global_position.distance_to(ship.global_position)
@@ -313,7 +351,16 @@ func is_target_lost(candidate: Variant) -> bool:
 	if not is_target_valid(candidate):
 		return true
 
-	return global_position.distance_to((candidate as Node3D).global_position) > target_lose_radius
+	if global_position.distance_to((candidate as Node3D).global_position) > target_lose_radius:
+		return true
+
+	if target_tracking_timeout > 0.0 and target_tracking_timer >= target_tracking_timeout:
+		return true
+
+	if target_max_pursuit_distance > 0.0 and global_position.distance_to(target_tracking_start_position) >= target_max_pursuit_distance:
+		return true
+
+	return false
 
 
 
@@ -403,7 +450,8 @@ func on_attacked_by(attacker: Ship) -> void:
 	if not can_target_ship(attacker):
 		return
 
-	target = attacker
+	target_cooldowns.erase(attacker)
+	set_tracked_target(attacker)
 	current_reach_target = null
 	patrol_points.clear()
 	state = BotState.ATTACK

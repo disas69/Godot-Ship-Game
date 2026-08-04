@@ -227,6 +227,25 @@ func get_spawn_transform(effect: Node3D, spawn_transform: Transform3D) -> Transf
 	return Transform3D(basis, spawn_transform.origin)
 
 
+func spawn_damage_text(pos: Vector3, is_destroyed: bool = false, custom_text: String = "") -> DamageTextFX:
+	var entry := get_entry_or_warn("damage_text")
+	if entry == null:
+		return null
+
+	var effect := get_effect_instance(entry)
+	if effect == null:
+		return null
+
+	if effect is DamageTextFX:
+		(effect as DamageTextFX).configure(is_destroyed, custom_text)
+
+	move_effect_to_parent(effect, get_spawn_parent(null))
+	effect.global_transform = get_spawn_transform(effect, Transform3D(Basis(), pos))
+	prepare_effect_for_spawn(effect, entry)
+	start_effect(effect)
+	return effect as DamageTextFX
+
+
 func prepare_effect_for_spawn(effect: Node3D, entry: VfxEntry) -> void:
 	active_effects[effect] = entry
 	effect.visible = true
@@ -243,6 +262,10 @@ func prepare_effect_for_spawn(effect: Node3D, entry: VfxEntry) -> void:
 		particle_effect.free_on_finished = false
 		if not particle_effect.finished.is_connected(on_effect_finished):
 			particle_effect.finished.connect(on_effect_finished)
+	elif effect is DamageTextFX:
+		var damage_effect := effect as DamageTextFX
+		if not damage_effect.finished.is_connected(on_effect_finished):
+			damage_effect.finished.connect(on_effect_finished)
 
 
 func start_effect(effect: Node3D) -> void:
@@ -250,6 +273,8 @@ func start_effect(effect: Node3D) -> void:
 		(effect as VfxAnimationPlayer).play()
 	elif effect is VfxPlayer:
 		(effect as VfxPlayer).play()
+	elif effect is DamageTextFX:
+		(effect as DamageTextFX).play()
 	else:
 		restart_particles(effect)
 
@@ -270,6 +295,11 @@ func release_effect(effect: Node3D) -> void:
 		if particle_effect.finished.is_connected(on_effect_finished):
 			particle_effect.finished.disconnect(on_effect_finished)
 		particle_effect.reset_for_pool()
+	elif effect is DamageTextFX:
+		var damage_effect := effect as DamageTextFX
+		if damage_effect.finished.is_connected(on_effect_finished):
+			damage_effect.finished.disconnect(on_effect_finished)
+		damage_effect.reset_for_pool()
 
 	if entry.use_pool:
 		return_to_pool(effect, entry)
@@ -308,8 +338,11 @@ func reset_effect_state(effect: Node3D) -> void:
 		(effect as VfxAnimationPlayer).reset_for_pool()
 	elif effect is VfxPlayer:
 		(effect as VfxPlayer).reset_for_pool()
+	elif effect is DamageTextFX:
+		(effect as DamageTextFX).reset_for_pool()
 	else:
 		stop_particles(effect)
+
 
 
 func discard_effect(effect: Node3D) -> void:
