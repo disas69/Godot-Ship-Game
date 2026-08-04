@@ -13,6 +13,9 @@ enum State {
 @export var state: State = State.Neutral
 @export var captured_team: int = -1
 
+@export_category("Spawn Points")
+@export var spawn_points: Array[Node3D] = []
+
 @export_category("Capture")
 @export var capture_radius: float = 10.0
 @export var capture_duration_sec: float = 10.0
@@ -53,6 +56,7 @@ var outline_material_instance: ShaderMaterial
 
 
 func _ready() -> void:
+	ensure_spawn_points()
 	collision_shape.shape.radius = capture_radius
 	setup_view_base_scales()
 	setup_capture_flash_material_instance()
@@ -63,6 +67,22 @@ func _ready() -> void:
 	ensure_capture_hooks()
 	update_view()
 	state_changed.emit(self, state, captured_team)
+
+
+func ensure_spawn_points() -> void:
+	var clean_points: Array[Node3D] = []
+	for point in spawn_points:
+		if point != null and is_instance_valid(point):
+			clean_points.append(point)
+
+	if clean_points.is_empty():
+		var container := get_node_or_null("SpawnPoints")
+		if container != null:
+			for child in container.get_children():
+				if child is Node3D and is_instance_valid(child):
+					clean_points.append(child as Node3D)
+
+	spawn_points = clean_points
 
 
 func _process(delta: float) -> void:
@@ -88,6 +108,19 @@ func is_captured() -> bool:
 
 func is_captured_by(team: Ship.Team) -> bool:
 	return state == State.Captured and captured_team == int(team)
+
+
+func get_valid_spawn_points() -> Array[Node3D]:
+	ensure_spawn_points()
+	var valid: Array[Node3D] = []
+	for point in spawn_points:
+		if point != null and is_instance_valid(point):
+			valid.append(point)
+
+	if valid.is_empty():
+		valid.append(self)
+
+	return valid
 
 
 func on_capture_area_body_entered(body: Node) -> void:

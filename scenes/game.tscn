@@ -27,8 +27,8 @@ radius = 15.0
 
 [node name="Game" type="Node3D" unique_id=317664930 node_paths=PackedStringArray("spawn_ponts_good_team", "spawn_ponts_bad_team", "flags", "camera")]
 script = ExtResource("1_game")
-spawn_ponts_good_team = [NodePath("Logic/SpawnPoints - Good Team/Marker3D"), NodePath("Logic/SpawnPoints - Good Team/Marker3D2"), NodePath("Logic/SpawnPoints - Good Team/Marker3D3")]
-spawn_ponts_bad_team = [NodePath("Logic/SpawnPoints - Bad Team/Marker3D"), NodePath("Logic/SpawnPoints - Bad Team/Marker3D2"), NodePath("Logic/SpawnPoints - Bad Team/Marker3D3")]
+spawn_ponts_good_team = [NodePath(""), NodePath(""), NodePath("")]
+spawn_ponts_bad_team = [NodePath(""), NodePath(""), NodePath("")]
 flags = [NodePath("Logic/Flags/Flag"), NodePath("Logic/Flags/Flag2"), NodePath("Logic/Flags/Flag3"), NodePath("Logic/Flags/Flag4"), NodePath("Logic/Flags/Flag5"), NodePath("Logic/Flags/Flag6"), NodePath("Logic/Flags/Flag7")]
 camera = NodePath("MainCamera")
 local_player_scene = ExtResource("7_local")
@@ -57,54 +57,95 @@ max_bounds = Vector3(150, 150, 150)
 
 [node name="Logic" type="Node3D" parent="." unique_id=975565131]
 
-[node name="SpawnPoints - Good Team" type="Node3D" parent="Logic" unique_id=1597792549]
-
-[node name="Marker3D" type="Marker3D" parent="Logic/SpawnPoints - Good Team" unique_id=480035955]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -85.76807, 7, 65.32394)
-
-[node name="Marker3D2" type="Marker3D" parent="Logic/SpawnPoints - Good Team" unique_id=749005965]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -63.073395, 7, 67.98978)
-
-[node name="Marker3D3" type="Marker3D" parent="Logic/SpawnPoints - Good Team" unique_id=9001929]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.625465, 7, 63.656544)
-
-[node name="SpawnPoints - Bad Team" type="Node3D" parent="Logic" unique_id=619320917]
-
-[node name="Marker3D" type="Marker3D" parent="Logic/SpawnPoints - Bad Team" unique_id=345925859]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.586685, 7, 46.88083)
-
-[node name="Marker3D2" type="Marker3D" parent="Logic/SpawnPoints - Bad Team" unique_id=323116483]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.61087, 7, 55.39734)
-
-[node name="Marker3D3" type="Marker3D" parent="Logic/SpawnPoints - Bad Team" unique_id=1580911993]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 84.93911, 7, 58.503033)
-
 [node name="Flags" type="Node3D" parent="Logic" unique_id=763229856]
 
 [node name="Flag" parent="Logic/Flags" unique_id=2133819521 instance=ExtResource("5_0tnpc")]
-transform = Transform3D(0.99064094, 0, -0.13649365, 0, 1, 0, 0.13649365, 0, 0.99064094, -62.635033, 5.677475, 51.043125)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -62.635033, 5.677475, 51.043125)
 state = 1
 captured_team = 0
+
+[node name="Marker3D_1" parent="Logic/Flags/Flag/SpawnPoints" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.391468, 0, 10.498177)
+
+[node name="Marker3D_2" parent="Logic/Flags/Flag/SpawnPoints" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.32499, 0, 17.147835)
+
+[node name="Marker3D_3" parent="Logic/Flags/Flag/SpawnPoints" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.39006424, 0, 17.83097)
+
+[node name="Marker3D_4" parent="Logic/Flags/Flag/SpawnPoints" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.6992, 0, 15.788307)
 
 [node name="Flag2" parent="Logic/Flags" unique_id=1149426167 instance=ExtResource("5_0tnpc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -123.090195, 5.5, 96.46055)
 
+[node name="Marker3D_2" parent="Logic/Flags/Flag2/SpawnPoints" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 13.336006)
+
+[node name="Marker3D_4" parent="Logic/Flags/Flag2/SpawnPoints" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.455078, 0, 8.576157)
+
 [node name="Flag3" parent="Logic/Flags" unique_id=78786283 instance=ExtResource("5_0tnpc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -121.60532, 5.5, 0.4227333)
+
+[node name="Marker3D_2" parent="Logic/Flags/Flag3/SpawnPoints" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.999992, 0, 8.454076)
+
+[node name="Marker3D_4" parent="Logic/Flags/Flag3/SpawnPoints" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.026222, 0, 5.718443)
 
 [node name="Flag4" parent="Logic/Flags" unique_id=1708097022 instance=ExtResource("5_0tnpc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.883642, 5.5, -80.00445)
 
+[node name="Marker3D_1" parent="Logic/Flags/Flag4/SpawnPoints" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 0, 4.524727)
+
+[node name="Marker3D_2" parent="Logic/Flags/Flag4/SpawnPoints" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 12.264366)
+
+[node name="Marker3D_4" parent="Logic/Flags/Flag4/SpawnPoints" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.406654, 0, 12.267372)
+
 [node name="Flag5" parent="Logic/Flags" unique_id=45029587 instance=ExtResource("5_0tnpc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 136.16557, 5.5, -22.136456)
+
+[node name="Marker3D_2" parent="Logic/Flags/Flag5/SpawnPoints" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 7.9777927)
+
+[node name="Marker3D_4" parent="Logic/Flags/Flag5/SpawnPoints" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.383423, 0, 9.409657)
 
 [node name="Flag6" parent="Logic/Flags" unique_id=352441255 instance=ExtResource("5_0tnpc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.480186, 5.5, 94.35593)
 
+[node name="Marker3D_1" parent="Logic/Flags/Flag6/SpawnPoints" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.358212, 0, 6.1917114)
+
+[node name="Marker3D_2" parent="Logic/Flags/Flag6/SpawnPoints" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 5.953575)
+
+[node name="Marker3D_3" parent="Logic/Flags/Flag6/SpawnPoints" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 17.500496)
+
+[node name="Marker3D_4" parent="Logic/Flags/Flag6/SpawnPoints" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.145287, 0, 13.458084)
+
 [node name="Flag7" parent="Logic/Flags" unique_id=1269444661 instance=ExtResource("5_0tnpc")]
-transform = Transform3D(0.5599451, 0, -0.8285297, 0, 1, 0, 0.8285297, 0, 0.5599451, 81.28292, 5.5, 45.07475)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 81.28292, 5.5, 45.07475)
 state = 1
 captured_team = 1
+
+[node name="Marker3D_1" parent="Logic/Flags/Flag7/SpawnPoints" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.143486, 0, 2.8002853)
+
+[node name="Marker3D_2" parent="Logic/Flags/Flag7/SpawnPoints" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.470551, 0, 11.753973)
+
+[node name="Marker3D_3" parent="Logic/Flags/Flag7/SpawnPoints" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.933632, 0, 19.340786)
+
+[node name="Marker3D_4" parent="Logic/Flags/Flag7/SpawnPoints" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.004303, 0, 13.807701)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1310328268]
 navigation_mesh = SubResource("NavigationMesh_o6xl0")
@@ -604,3 +645,10 @@ shape = SubResource("SphereShape3D_tipki")
 debug_color = Color(1, 1, 1, 1)
 
 [editable path="MainCamera"]
+[editable path="Logic/Flags/Flag"]
+[editable path="Logic/Flags/Flag2"]
+[editable path="Logic/Flags/Flag3"]
+[editable path="Logic/Flags/Flag4"]
+[editable path="Logic/Flags/Flag5"]
+[editable path="Logic/Flags/Flag6"]
+[editable path="Logic/Flags/Flag7"]

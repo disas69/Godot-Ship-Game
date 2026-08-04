@@ -207,11 +207,17 @@ func get_next_spawn_point(team: Ship.Team) -> Node3D:
 
 
 func get_valid_spawn_points(team: Ship.Team) -> Array[Node3D]:
-	var source_points: Array[Node3D] = spawn_ponts_good_team if team == Ship.Team.GoodGuys else spawn_ponts_bad_team
 	var valid_points: Array[Node3D] = []
-	for point in source_points:
-		if point != null and is_instance_valid(point):
-			valid_points.append(point)
+
+	for flag in valid_flags:
+		if flag != null and is_instance_valid(flag) and flag.is_captured_by(team):
+			valid_points.append_array(flag.get_valid_spawn_points())
+
+	if valid_points.is_empty():
+		var source_points: Array[Node3D] = spawn_ponts_good_team if team == Ship.Team.GoodGuys else spawn_ponts_bad_team
+		for point in source_points:
+			if point != null and is_instance_valid(point):
+				valid_points.append(point)
 
 	return valid_points
 

@@ -35,7 +35,7 @@
 [ext_resource type="PackedScene" uid="uid://25nq07drfg3l" path="res://assets/kenney_pirate-kit/Models/GLB format/cannon.glb" id="36_kqsg1"]
 [ext_resource type="PackedScene" uid="uid://bplbqjnhsj2lg" path="res://assets/kenney_pirate-kit/Models/GLB format/mast-ropes.glb" id="37_vpfg1"]
 [ext_resource type="PackedScene" uid="uid://dapgoqcb4j5ol" path="res://assets/PirateKit/Prop_Skull.gltf" id="43_8rf5n"]
-[ext_resource type="PackedScene" path="res://scenes/environment/Bareers.tscn" id="44_7iu1j"]
+[ext_resource type="PackedScene" uid="uid://dhgy3sgna0wef" path="res://scenes/environment/Bareers.tscn" id="44_7iu1j"]
 [ext_resource type="PackedScene" uid="uid://csb1hlge0bc6o" path="res://assets/kenney_pirate-kit/Models/GLB format/ship-medium.glb" id="44_xooey"]
 [ext_resource type="PackedScene" uid="uid://b58nfv30xeok8" path="res://assets/kenney_pirate-kit/Models/GLB format/ship-large.glb" id="45_1i722"]
 [ext_resource type="PackedScene" uid="uid://dmfgm6pwiewoo" path="res://assets/PirateKit/Environment_LargeBones.gltf" id="47_0fuu8"]
@@ -127,7 +127,7 @@ transform = Transform3D(-0.04172305, 0.251976, -0.4855133, -0.09296981, 0.476572
 transform = Transform3D(0.1543956, -0.01931888, 0.3240693, -0.003079663, 0.3587483, 0.02285345, -0.32463, -0.01259149, 0.1539122, -3.36034, -0.1023819, 14.30023)
 
 [node name="grass-plant3" parent="MAIN ISLAND 1/grass-plant7" unique_id=666038107 instance=ExtResource("8_8rf5n")]
-transform = Transform3D(0.8360819, -0, 0.3631152, 0, 0.9115292, 0, -0.3631152, 0, 0.8360819, 4.875611, -0.05638551, 2.061384)
+transform = Transform3D(0.8360819, 0, 0.3631152, 0, 0.9115292, 0, -0.3631152, 0, 0.8360819, 4.875611, -0.05638551, 2.061384)
 
 [node name="grass3" parent="MAIN ISLAND 1/grass-plant7/grass-plant3" unique_id=629337375 instance=ExtResource("9_7iu1j")]
 transform = Transform3D(1.703195, -7.196198e-09, -0.9241567, 8.18729e-09, 1.937766, 0, 0.9241567, -3.90467e-09, 1.703195, -1.082527, 0.3493981, -1.346626)
@@ -154,7 +154,7 @@ transform = Transform3D(1.008559, -0.008438172, -0.1269058, 0.01530428, 1.014988
 transform = Transform3D(0.1736196, -0.02294046, 0.3138753, 0.005754841, 0.3586423, 0.0230291, -0.3146599, -0.006098597, 0.1736079, 7.101402, -0.204236, 6.390566)
 
 [node name="grass-plant3" parent="MAIN ISLAND 1/grass-plant8" unique_id=57470911 instance=ExtResource("8_8rf5n")]
-transform = Transform3D(0.8360819, -0, 0.3631152, 0, 0.9115292, 0, -0.3631152, 0, 0.8360819, 4.875611, -0.05638551, 2.061384)
+transform = Transform3D(0.8360819, 0, 0.3631152, 0, 0.9115292, 0, -0.3631152, 0, 0.8360819, 4.875611, -0.05638551, 2.061384)
 
 [node name="grass3" parent="MAIN ISLAND 1/grass-plant8/grass-plant3" unique_id=2078945560 instance=ExtResource("9_7iu1j")]
 transform = Transform3D(1.703195, -7.196198e-09, -0.9241567, 8.18729e-09, 1.937766, 0, 0.9241567, -3.90467e-09, 1.703195, -2.747042, 0.02086946, -0.9424692)
@@ -187,7 +187,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.333927, 0.263916, 0.9791822
 transform = Transform3D(0.8566315, 0, -0.5338257, 0, 1.00935, 0, 0.5338257, 0, 0.8566315, -0.7942963, 0.4114641, 1.720935)
 
 [node name="chest2" parent="MAIN ISLAND 1/palm-detailed-straight7" unique_id=1951921213 instance=ExtResource("12_0fuu8")]
-transform = Transform3D(0.4991111, 0.2507974, -0, -0.2507974, 0.4991111, 0, 0, 0, 0.5585797, 0.1376286, 0.3596213, 1.173665)
+transform = Transform3D(0.4991111, 0.2507974, 0, -0.2507974, 0.4991111, 0, 0, 0, 0.5585797, 0.1376286, 0.3596213, 1.173665)
 
 [node name="tool-shovel2" parent="MAIN ISLAND 1/palm-detailed-straight7" unique_id=1143995365 instance=ExtResource("13_ev8el")]
 transform = Transform3D(0.1316412, 0, -0.4143749, 0, 0.4347827, 0, 0.4143749, 0, 0.1316412, 0.861742, 0.4287413, 0.6477909)
@@ -252,7 +252,7 @@ transform = Transform3D(-0.01822961, 0.1596279, 0.9356632, -0.1912672, 0.9160212
 [node name="bottle-large7" parent="MAIN ISLAND 1/Pile of furnitures 2/platform-planks7" unique_id=516289224 instance=ExtResource("28_xuopw")]
 transform = Transform3D(-0.01163696, 0.07580341, 0.5198938, -0.07979825, 0.5137332, -0.07669132, -0.5192957, -0.08064218, 0.0001345098, 1.677204, -0.4996757, 0.7895699)
 
-[node name="bottle-large" parent="MAIN ISLAND 1/Pile of furnitures 2/platform-planks7/bottle-large7" index="0" unique_id=1231471400]
+[node name="bottle-large" parent="MAIN ISLAND 1/Pile of furnitures 2/platform-planks7/bottle-large7" index="0" unique_id=36755648]
 transform = Transform3D(1, -3.7252903e-09, 0, 0, 1, 0, -2.9802322e-08, 3.7252903e-09, 1, 4.877907, 0.7925463, 3.8078003)
 visible = false
 material_override = SubResource("StandardMaterial3D_rlnmy")
@@ -335,7 +335,7 @@ transform = Transform3D(-0.01822964, 0.1596279, 0.9356633, -0.1912672, 0.9160213
 [node name="bottle-large7" parent="MAIN ISLAND 1/Pile of furnitures" unique_id=1320834453 instance=ExtResource("28_xuopw")]
 transform = Transform3D(-0.01163696, 0.07580341, 0.5198938, -0.07979825, 0.5137332, -0.07669132, -0.5192957, -0.08064218, 0.0001345098, 1.677204, -0.4996757, 0.7895699)
 
-[node name="bottle-large" parent="MAIN ISLAND 1/Pile of furnitures/bottle-large7" index="0" unique_id=1231471400]
+[node name="bottle-large" parent="MAIN ISLAND 1/Pile of furnitures/bottle-large7" index="0" unique_id=36755648]
 material_override = SubResource("StandardMaterial3D_rlnmy")
 
 [node name="bottle4" parent="MAIN ISLAND 1/Pile of furnitures" unique_id=1221323696 instance=ExtResource("29_qhrke")]
@@ -395,7 +395,7 @@ transform = Transform3D(-0.01822964, 0.1596279, 0.9356633, -0.1912672, 0.9160213
 [node name="bottle-large7" parent="MAIN ISLAND 1/platform-planks5" unique_id=636494290 instance=ExtResource("28_xuopw")]
 transform = Transform3D(-0.01163696, 0.07580341, 0.5198938, -0.07979825, 0.5137332, -0.07669132, -0.5192957, -0.08064218, 0.0001345098, 1.677204, -0.4996757, 0.7895699)
 
-[node name="bottle-large" parent="MAIN ISLAND 1/platform-planks5/bottle-large7" index="0" unique_id=1231471400]
+[node name="bottle-large" parent="MAIN ISLAND 1/platform-planks5/bottle-large7" index="0" unique_id=36755648]
 material_override = SubResource("StandardMaterial3D_rlnmy")
 
 [node name="bottle4" parent="MAIN ISLAND 1/platform-planks5" unique_id=866378067 instance=ExtResource("29_qhrke")]
@@ -453,10 +453,10 @@ transform = Transform3D(1.03586, 0.1781144, -0.07337525, -0.1762549, 1.038276, 0
 transform = Transform3D(1.09177, 0.02394736, -0.01601712, -0.02510093, 1.088684, -0.08324509, 0.01414098, 0.08358424, 1.088856, 0.8918476, 2.204391, -0.1164551)
 
 [node name="platform3" parent="MAIN ISLAND 1/structure7" unique_id=276992646 instance=ExtResource("48_uksd4")]
-transform = Transform3D(1.094228, -0, 0.001641724, 0, 1.094229, 0, -0.001641724, 0, 1.094228, 0.02333641, 2.210414, -0.1470304)
+transform = Transform3D(1.094228, 0, 0.001641724, 0, 1.094229, 0, -0.001641724, 0, 1.094228, 0.02333641, 2.210414, -0.1470304)
 
 [node name="platform4" parent="MAIN ISLAND 1/structure7" unique_id=1440148319 instance=ExtResource("48_uksd4")]
-transform = Transform3D(1.094228, -0, 0.001641724, 0, 1.094229, 0, -0.001641724, 0, 1.094228, -0.7977676, 2.210414, -0.1470304)
+transform = Transform3D(1.094228, 0, 0.001641724, 0, 1.094229, 0, -0.001641724, 0, 1.094228, -0.7977676, 2.210414, -0.1470304)
 
 [node name="barrel13" parent="MAIN ISLAND 1" unique_id=748029755 instance=ExtResource("24_c85x0")]
 transform = Transform3D(0.04305086, -1.295268e-09, -0.4428426, 1.250744e-09, 0.4449303, -1.179783e-09, 0.4428426, -1.130721e-09, 0.04305086, 15.74898, 0.4280994, 9.767139)
@@ -486,10 +486,10 @@ transform = Transform3D(0.6904269, -5.305202e-09, -1.182249, 5.63681e-09, 1.3690
 transform = Transform3D(1.09177, 0.02394736, -0.01601712, -0.02510093, 1.088684, -0.08324509, 0.01414098, 0.08358424, 1.088856, 0.8868944, 2.202573, -0.04871475)
 
 [node name="platform3" parent="MAIN ISLAND 1/structure5" unique_id=1077372929 instance=ExtResource("48_uksd4")]
-transform = Transform3D(1.094228, -0, 0.001641724, 0, 1.094229, 0, -0.001641724, 0, 1.094228, 0.02432413, 2.210414, -0.01495378)
+transform = Transform3D(1.094228, 0, 0.001641724, 0, 1.094229, 0, -0.001641724, 0, 1.094228, 0.02432413, 2.210414, -0.01495378)
 
 [node name="platform4" parent="MAIN ISLAND 1/structure5" unique_id=56168088 instance=ExtResource("48_uksd4")]
-transform = Transform3D(1.094228, -0, 0.001641724, 0, 1.094229, 0, -0.001641724, 0, 1.094228, -0.7966595, 2.210414, 0.001147911)
+transform = Transform3D(1.094228, 0, 0.001641724, 0, 1.094229, 0, -0.001641724, 0, 1.094228, -0.7966595, 2.210414, 0.001147911)
 
 [node name="platform17" parent="MAIN ISLAND 1/structure5" unique_id=1182566940 instance=ExtResource("48_uksd4")]
 transform = Transform3D(0.3923152, 0.003949118, -0.05013763, -0.0039678, 0.3955058, 0.000105129, 0.05013615, 0.0003986906, 0.392335, 0.3525124, -0.03185248, -0.5724859)
@@ -510,7 +510,7 @@ transform = Transform3D(-0.38835, 0.02289696, 0.07533756, 0.01715859, 0.3946262,
 transform = Transform3D(0.390697, 0.03422797, -0.04946224, -0.03334985, 0.3937863, 0.009073995, 0.05005851, -0.004795405, 0.3920884, -0.5189953, -0.05608582, 0.7102413)
 
 [node name="platform-planks2" parent="MAIN ISLAND 1/structure5" unique_id=1103076447 instance=ExtResource("26_sjhm2")]
-transform = Transform3D(0.1423812, -0, 0.1955488, 0, 0.241892, 0, -0.1955488, 0, 0.1423812, 5.089785, -0.09967136, 0.8029628)
+transform = Transform3D(0.1423812, 0, 0.1955488, 0, 0.241892, 0, -0.1955488, 0, 0.1423812, 5.089785, -0.09967136, 0.8029628)
 
 [node name="platform-planks3" parent="MAIN ISLAND 1/structure5" unique_id=239730523 instance=ExtResource("26_sjhm2")]
 transform = Transform3D(0.2698952, 0.05244497, -0.009902568, -0.05011021, 0.2665731, 0.04604011, 0.01837125, -0.04336185, 0.2710612, 5.113403, -0.04029918, 0.7309771)
@@ -525,10 +525,10 @@ transform = Transform3D(-1.091145, -4.491035e-09, -0.6340949, -1.414389e-09, 1.2
 transform = Transform3D(1.09177, 0.02394736, -0.01601712, -0.02510093, 1.088684, -0.08324509, 0.01414098, 0.08358424, 1.088856, 0.8868944, 2.202573, -0.04871475)
 
 [node name="platform3" parent="MAIN ISLAND 1/structure6" unique_id=784195956 instance=ExtResource("48_uksd4")]
-transform = Transform3D(1.094228, -0, 0.001641724, 0, 1.094229, 0, -0.001641724, 0, 1.094228, 0.02432413, 2.210414, -0.01495378)
+transform = Transform3D(1.094228, 0, 0.001641724, 0, 1.094229, 0, -0.001641724, 0, 1.094228, 0.02432413, 2.210414, -0.01495378)
 
 [node name="platform4" parent="MAIN ISLAND 1/structure6" unique_id=1585305023 instance=ExtResource("48_uksd4")]
-transform = Transform3D(1.094228, -0, 0.001641724, 0, 1.094229, 0, -0.001641724, 0, 1.094228, -0.7966595, 2.210414, 0.001147911)
+transform = Transform3D(1.094228, 0, 0.001641724, 0, 1.094229, 0, -0.001641724, 0, 1.094228, -0.7966595, 2.210414, 0.001147911)
 
 [node name="platform17" parent="MAIN ISLAND 1/structure6" unique_id=137661184 instance=ExtResource("48_uksd4")]
 transform = Transform3D(0.3923152, 0.003949118, -0.05013763, -0.0039678, 0.3955058, 0.000105129, 0.05013615, 0.0003986906, 0.392335, 0.3525124, -0.03185248, -0.5724859)
@@ -567,10 +567,10 @@ transform = Transform3D(0.6710121, -0.03953785, 0.03271165, 0.03965922, 0.671800
 transform = Transform3D(1.09177, 0.02394736, -0.01601712, -0.02510093, 1.088684, -0.08324509, 0.01414098, 0.08358424, 1.088856, 0.8918476, 2.204391, -0.1164551)
 
 [node name="platform3" parent="MAIN ISLAND 1/structure4" unique_id=138729829 instance=ExtResource("48_uksd4")]
-transform = Transform3D(1.094228, -0, 0.001641724, 0, 1.094229, 0, -0.001641724, 0, 1.094228, 0.02333641, 2.210414, -0.1470304)
+transform = Transform3D(1.094228, 0, 0.001641724, 0, 1.094229, 0, -0.001641724, 0, 1.094228, 0.02333641, 2.210414, -0.1470304)
 
 [node name="platform4" parent="MAIN ISLAND 1/structure4" unique_id=25189605 instance=ExtResource("48_uksd4")]
-transform = Transform3D(1.094228, -0, 0.001641724, 0, 1.094229, 0, -0.001641724, 0, 1.094228, -0.7977676, 2.210414, -0.1470304)
+transform = Transform3D(1.094228, 0, 0.001641724, 0, 1.094229, 0, -0.001641724, 0, 1.094228, -0.7977676, 2.210414, -0.1470304)
 
 [node name="structure3" parent="MAIN ISLAND 1" unique_id=2109776203 instance=ExtResource("47_w2r2j")]
 transform = Transform3D(1.204583, -4.123786e-09, -0.152351, 4.593113e-09, 1.214179, 3.451047e-09, 0.152351, -4.0001e-09, 1.204583, 8.514696, -0.09446025, -11.75843)
@@ -579,10 +579,10 @@ transform = Transform3D(1.204583, -4.123786e-09, -0.152351, 4.593113e-09, 1.2141
 transform = Transform3D(1.09177, 0.02394736, -0.01601712, -0.02510093, 1.088684, -0.08324509, 0.01414098, 0.08358424, 1.088856, 0.88034, 2.200167, 0.04092388)
 
 [node name="platform3" parent="MAIN ISLAND 1/structure3" unique_id=390970154 instance=ExtResource("48_uksd4")]
-transform = Transform3D(1.094228, -0, 0.001641724, 0, 1.094229, 0, -0.001641724, 0, 1.094228, 0.02333641, 2.210414, -0.1470304)
+transform = Transform3D(1.094228, 0, 0.001641724, 0, 1.094229, 0, -0.001641724, 0, 1.094228, 0.02333641, 2.210414, -0.1470304)
 
 [node name="platform4" parent="MAIN ISLAND 1/structure3" unique_id=601658007 instance=ExtResource("48_uksd4")]
-transform = Transform3D(1.094228, -0, 0.001641724, 0, 1.094229, 0, -0.001641724, 0, 1.094228, -0.7966474, 2.210414, 0.00276883)
+transform = Transform3D(1.094228, 0, 0.001641724, 0, 1.094229, 0, -0.001641724, 0, 1.094228, -0.7966474, 2.210414, 0.00276883)
 
 [node name="platform5" parent="MAIN ISLAND 1/structure3" unique_id=647196661 instance=ExtResource("48_uksd4")]
 transform = Transform3D(0.38271, 0.003832456, -0.02434563, -0.003906093, 0.3834814, -0.001036128, 0.02433393, 0.001281954, 0.3827278, -0.4670487, 0.03328466, 0.6794701)
@@ -648,7 +648,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.333927, 0.263916, 0.9791822
 transform = Transform3D(0.8566315, 0, -0.5338257, 0, 1.00935, 0, 0.5338257, 0, 0.8566315, -0.7942963, 0.4114641, 1.720935)
 
 [node name="chest2" parent="MAIN ISLAND 1/palm-detailed-straight4" unique_id=1530346266 instance=ExtResource("12_0fuu8")]
-transform = Transform3D(0.4991111, 0.2507974, -0, -0.2507974, 0.4991111, 0, 0, 0, 0.5585797, 0.1376286, 0.3596213, 1.173665)
+transform = Transform3D(0.4991111, 0.2507974, 0, -0.2507974, 0.4991111, 0, 0, 0, 0.5585797, 0.1376286, 0.3596213, 1.173665)
 
 [node name="tool-shovel2" parent="MAIN ISLAND 1/palm-detailed-straight4" unique_id=1650521985 instance=ExtResource("13_ev8el")]
 transform = Transform3D(0.1316412, 0, -0.4143749, 0, 0.4347827, 0, 0.4143749, 0, 0.1316412, 0.861742, 0.4287413, 0.6477909)
@@ -696,10 +696,10 @@ transform = Transform3D(0.1376296, 0, -5.998421, 0, 6, 0, 5.998413, 0, 0.1379701
 transform = Transform3D(5.8909197, 0, -1.1388904, 0, 6, 0, 1.1388904, 0, 5.8909197, 49.3434, 4.6797256, -72.465096)
 
 [node name="patch-sand10" parent="MAIN ISLAND 2" unique_id=879886818 instance=ExtResource("2_351pn")]
-transform = Transform3D(2.423988, -0, 6.203617, 0, 6.660374, 0, -6.203617, 0, 2.423988, 74.4307, 4.680895, 11.70384)
+transform = Transform3D(2.423988, 0, 6.203617, 0, 6.660374, 0, -6.203617, 0, 2.423988, 74.4307, 4.680895, 11.70384)
 
 [node name="patch-sand-foliage2" parent="MAIN ISLAND 2" unique_id=1329419001 instance=ExtResource("3_hp76w")]
-transform = Transform3D(2.504837, -0, 5.388732, 0, 5.942444, 0, -5.388732, 0, 2.504837, 74.71526, 5.020003, -5.982289)
+transform = Transform3D(2.504837, 0, 5.388732, 0, 5.942444, 0, -5.388732, 0, 2.504837, 74.71526, 5.020003, -5.982289)
 
 [node name="patch-sand-foliage5" parent="MAIN ISLAND 2" unique_id=714670915 instance=ExtResource("3_hp76w")]
 transform = Transform3D(0.8142396, -0.024959123, 4.9331927, 0.0051183295, 4.9999375, 0.024452098, -4.9332542, 0.0010679954, 0.8142549, 37.30726, 4.4988604, -58.24243)
@@ -780,7 +780,7 @@ transform = Transform3D(1.008559, -0.008438172, -0.1269058, 0.01530428, 1.014988
 transform = Transform3D(1.437689, 0, 0, -2.677904e-09, 1.437689, -2.142323e-08, -1.490116e-08, 0, 1.437689, 27.76019, 5.861157, -53.25687)
 
 [node name="ship-wreck3" parent="MAIN ISLAND 2" unique_id=1157749751 instance=ExtResource("15_mpaoa")]
-transform = Transform3D(-1.738152, -1.516439, -0.6206608, -1.481731, 1.84095, -0.3483621, 0.6994859, 0.1315124, -2.280221, 80.2541, 5.17624, -31.98206)
+transform = Transform3D(-1.5334738, -1.269971, -0.18876272, -1.2406069, 1.5413702, -0.29167256, 0.33068419, -0.106546104, -1.9695926, 85.51501, 5.17624, -30.868439)
 
 [node name="structure-platform-dock-small4" parent="MAIN ISLAND 2" unique_id=1738872904 instance=ExtResource("17_lne43")]
 transform = Transform3D(0.50913155, 0, 0.8606886, 0, 1, 0, -0.8606886, 0, 0.50913155, 32.70227, 4.6591163, -38.20008)
@@ -789,7 +789,7 @@ transform = Transform3D(0.50913155, 0, 0.8606886, 0, 1, 0, -0.8606886, 0, 0.5091
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8664398, 0, -0.011595726)
 
 [node name="rocks-a2" parent="MAIN ISLAND 2" unique_id=592191868 instance=ExtResource("20_mkcqu")]
-transform = Transform3D(0.03866042, -0, 3.149885, 0, 3.150122, 0, -3.149885, 0, 0.03866042, 72.38023, 5.83411, -41.12728)
+transform = Transform3D(0.03866042, 0, 3.149885, 0, 3.150122, 0, -3.149885, 0, 0.03866042, 72.38023, 5.83411, -41.12728)
 
 [node name="rocks-a3" parent="MAIN ISLAND 2" unique_id=1387773764 instance=ExtResource("20_mkcqu")]
 transform = Transform3D(-2.584362, 0, -0.9999962, 0, 2.771087, 0, 0.9999962, 0, -2.584362, 70.42498, 5.303691, 27.99085)
@@ -801,7 +801,7 @@ transform = Transform3D(-1.626805, 0.2489203, 2.199188, 0.07925175, 2.734169, -0
 transform = Transform3D(0.2729788, 0, -0.9650531, 0, 1.002918, 0, 0.9650531, 0, 0.2729788, 75.60413, 5.828373, -11.5422)
 
 [node name="structure-roof2" parent="MAIN ISLAND 2" unique_id=1082081856 instance=ExtResource("22_ym5yl")]
-transform = Transform3D(-3.383491, -0, 2.424925, 0, 4.162724, 0, 2.424925, 0, 3.383491, 58.41165, 6.885783, -60.3984)
+transform = Transform3D(-3.383491, 0, 2.424925, 0, 4.162724, 0, 2.424925, 0, 3.383491, 58.41165, 6.885783, -60.3984)
 
 [node name="structure-platform-dock5" parent="MAIN ISLAND 2/structure-roof2" unique_id=1739803789 instance=ExtResource("23_vtt46")]
 transform = Transform3D(-0.4788822, 0, 0, 0, 0.4788822, 0, 0, 0, 0.4788822, 0.4743452, -0.3260585, -0.5795851)
@@ -831,7 +831,7 @@ transform = Transform3D(-0.4788822, 0, 0, 0, 0.4788822, 0, 0, 0, 0.4788822, -0.6
 transform = Transform3D(-0.4788822, 0, 0, 0, 0.4788822, 0, 0, 0, 0.4788822, -0.6484756, -0.3213702, -0.6506448)
 
 [node name="structure-roof6" parent="MAIN ISLAND 2" unique_id=763131027 instance=ExtResource("22_ym5yl")]
-transform = Transform3D(-1.197275, -0, 4.076588, 0, 4.248769, 0, 4.076588, 0, 1.197275, 39.35331, 6.153856, -62.97619)
+transform = Transform3D(-1.197275, 0, 4.076588, 0, 4.248769, 0, 4.076588, 0, 1.197275, 39.35331, 6.153856, -62.97619)
 
 [node name="structure-platform-dock5" parent="MAIN ISLAND 2/structure-roof6" unique_id=1952317804 instance=ExtResource("23_vtt46")]
 transform = Transform3D(-0.4788822, 0, 0, 0, 0.4788822, 0, 0, 0, 0.4788822, 0.4743452, -0.3260585, -0.5795851)
@@ -893,7 +893,7 @@ transform = Transform3D(-0.01822964, 0.1596279, 0.9356633, -0.1912672, 0.9160213
 [node name="bottle-large7" parent="MAIN ISLAND 2/platform-planks3" unique_id=862610338 instance=ExtResource("28_xuopw")]
 transform = Transform3D(-0.01163696, 0.07580341, 0.5198938, -0.07979825, 0.5137332, -0.07669132, -0.5192957, -0.08064218, 0.0001345098, 1.677204, -0.4996757, 0.7895699)
 
-[node name="bottle-large" parent="MAIN ISLAND 2/platform-planks3/bottle-large7" index="0" unique_id=1231471400]
+[node name="bottle-large" parent="MAIN ISLAND 2/platform-planks3/bottle-large7" index="0" unique_id=36755648]
 material_override = SubResource("StandardMaterial3D_rlnmy")
 
 [node name="bottle4" parent="MAIN ISLAND 2/platform-planks3" unique_id=497429520 instance=ExtResource("29_qhrke")]
@@ -1053,7 +1053,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.333927, 0.263916, 0.9791822
 transform = Transform3D(0.8566315, 0, -0.5338257, 0, 1.00935, 0, 0.5338257, 0, 0.8566315, -0.7942963, 0.4114641, 1.720935)
 
 [node name="chest2" parent="SMALL ISLAND 1/palm-detailed-straight4" unique_id=1265305337 instance=ExtResource("12_0fuu8")]
-transform = Transform3D(0.4991111, 0.2507974, -0, -0.2507974, 0.4991111, 0, 0, 0, 0.5585797, 0.2342388, 0.3125268, 1.173665)
+transform = Transform3D(0.4991111, 0.2507974, 0, -0.2507974, 0.4991111, 0, 0, 0, 0.5585797, 0.2342388, 0.3125268, 1.173665)
 
 [node name="tool-shovel2" parent="SMALL ISLAND 1/palm-detailed-straight4" unique_id=1094979379 instance=ExtResource("13_ev8el")]
 transform = Transform3D(0.1316412, 0, -0.4143749, 0, 0.4347827, 0, 0.4143749, 0, 0.1316412, 0.9042063, 0.4287413, 0.7279768)
@@ -1095,7 +1095,7 @@ transform = Transform3D(0.06897934, 0.1786573, -0.5457342, -0.2536262, 0.5026172
 transform = Transform3D(0.7602815, -1.125068, 0.7642809, 1.353445, 0.7123958, -0.2976729, -0.1344954, 0.8091016, 1.324838, 0.6436234, 2.135624, 0.2135773)
 
 [node name="ship-wreck2" parent="SMALL ISLAND 1/Boat in the sand" unique_id=486646460 instance=ExtResource("15_mpaoa")]
-transform = Transform3D(-1.541642, -0.199812, 0.2807478, -0.2057541, 1.566155, -0.01518365, -0.2764225, -0.0513854, -1.554463, -0.09987356, -0.3429928, 4.148354)
+transform = Transform3D(-0.97591716, -0.12648848, 0.17772412, -0.13025007, 0.9914346, -0.009611875, -0.17498583, -0.032528974, -0.9840336, -2.167015, -1.1998158, 3.4416504)
 
 [node name="patch-sand16" parent="SMALL ISLAND 1" unique_id=270534002 instance=ExtResource("2_351pn")]
 transform = Transform3D(-0.7397484, 0, -0.6728835, 4.374824e-16, 1, 6.219597e-17, 0.67288345, 0, -0.7397484, -3.2756584, 0.081707, 3.559569)
@@ -1122,7 +1122,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.333927, 0.263916, 0.9791822
 transform = Transform3D(0.8566315, 0, -0.5338257, 0, 1.00935, 0, 0.5338257, 0, 0.8566315, -0.7942963, 0.4114641, 1.720935)
 
 [node name="chest2" parent="SMALL ISLAND 2/palm-detailed-straight4" unique_id=771655961 instance=ExtResource("12_0fuu8")]
-transform = Transform3D(0.4991111, 0.2507974, -0, -0.2507974, 0.4991111, 0, 0, 0, 0.5585797, 0.2342388, 0.3125268, 1.173665)
+transform = Transform3D(0.4991111, 0.2507974, 0, -0.2507974, 0.4991111, 0, 0, 0, 0.5585797, 0.2342388, 0.3125268, 1.173665)
 
 [node name="tool-shovel2" parent="SMALL ISLAND 2/palm-detailed-straight4" unique_id=358861596 instance=ExtResource("13_ev8el")]
 transform = Transform3D(0.1316412, 0, -0.4143749, 0, 0.4347827, 0, 0.4143749, 0, 0.1316412, 0.9042063, 0.4287413, 0.7279768)
@@ -1176,7 +1176,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.333927, 0.263916, 0.9791822
 transform = Transform3D(0.8566315, 0, -0.5338257, 0, 1.00935, 0, 0.5338257, 0, 0.8566315, -1.171088, 0.1186896, 2.519225)
 
 [node name="chest2" parent="SMALL ISLAND 3/palm-detailed-straight4" unique_id=760917240 instance=ExtResource("12_0fuu8")]
-transform = Transform3D(0.4991111, 0.2507974, -0, -0.2507974, 0.4991111, 0, 0, 0, 0.5585797, 0.2342388, 0.3125268, 1.173665)
+transform = Transform3D(0.4991111, 0.2507974, 0, -0.2507974, 0.4991111, 0, 0, 0, 0.5585797, 0.2342388, 0.3125268, 1.173665)
 
 [node name="tool-shovel2" parent="SMALL ISLAND 3/palm-detailed-straight4" unique_id=1524374220 instance=ExtResource("13_ev8el")]
 transform = Transform3D(0.1316412, 0, -0.4143749, 0, 0.4347827, 0, 0.4143749, 0, 0.1316412, 0.9042063, 0.4287413, 0.7279768)
@@ -1223,7 +1223,7 @@ transform = Transform3D(0.5436286, 0, -0.83932567, 4.374824e-16, 1, 6.219597e-17
 [node name="Environment_LargeBones2" parent="SMALL ISLAND 3" unique_id=1869708156 instance=ExtResource("47_0fuu8")]
 transform = Transform3D(0.2551352, 0.04007625, -0.7276761, 0.01285853, 0.7706121, 0.04694933, 0.7286654, -0.02763107, 0.2539604, -4.045261, 0.3299429, 2.398877)
 
-[node name="Environment_LargeBones" parent="SMALL ISLAND 3/Environment_LargeBones2" index="0" unique_id=1975594457]
+[node name="Environment_LargeBones" parent="SMALL ISLAND 3/Environment_LargeBones2" index="0" unique_id=920248411]
 material_override = SubResource("StandardMaterial3D_7iu1j")
 
 [node name="Prop_GoldBag2" parent="SMALL ISLAND 3" unique_id=1096592832 instance=ExtResource("48_ev8el")]
@@ -1277,7 +1277,7 @@ transform = Transform3D(0.6205292, 0, 0, 0, 0.6205292, 0, 0, 0, 0.6205292, 0.180
 [node name="Prop_Skull2" parent="SMALL ISLAND 4" unique_id=1755359027 instance=ExtResource("43_8rf5n")]
 transform = Transform3D(5.666305, -1.8678095, 1.861924, 1.9566524, 5.9358234, 2.4835266e-08, -1.7683287, 0.582902, 5.966216, -3.356216, 1.1820127, 2.9940548)
 
-[node name="Prop_Skull" parent="SMALL ISLAND 4/Prop_Skull2" index="0" unique_id=704959497]
+[node name="Prop_Skull" parent="SMALL ISLAND 4/Prop_Skull2" index="0" unique_id=1183920665]
 transform = Transform3D(0.94571984, -0.2545975, 0.20197609, 0.11028369, 0.8360401, 0.53747064, -0.30569878, -0.48602203, 0.8187373, -0.16389048, 0.041824296, -0.08627248)
 material_override = SubResource("StandardMaterial3D_sn871")
 
@@ -1635,7 +1635,7 @@ transform = Transform3D(-0.8082933, -0.02073795, -0.01083314, -0.0209695, 0.8081
 transform = Transform3D(0.02034121, -0.01164657, 0.2820449, 0.00499291, 0.2827468, 0.01131546, -0.2822411, 0.004162484, 0.02052724, -2.452639, -0.2962808, 3.537185)
 
 [node name="rocks-a49" parent="MAP LIMITS" unique_id=960437898 instance=ExtResource("20_mkcqu")]
-transform = Transform3D(1.599594, -0, 1.555504, 0, 2.231209, 0, -1.555504, 0, 1.599594, 113.8171, 0.8153866, 133.967)
+transform = Transform3D(1.599594, 0, 1.555504, 0, 2.231209, 0, -1.555504, 0, 1.599594, 113.8171, 0.8153866, 133.967)
 
 [node name="rocks-a8" parent="MAP LIMITS/rocks-a49" unique_id=452950889 instance=ExtResource("20_mkcqu")]
 transform = Transform3D(-0.9815795, -0.04908144, 0.2726999, -0.04197024, 1.018563, 0.03225308, -0.2738845, 0.01981855, -0.9822764, 8.952744, 0.708683, -3.400276)
@@ -1704,7 +1704,7 @@ transform = Transform3D(-0.8082933, -0.02073795, -0.01083314, -0.0209695, 0.8081
 transform = Transform3D(0.02034121, -0.01164657, 0.2820449, 0.00499291, 0.2827468, 0.01131546, -0.2822411, 0.004162484, 0.02052724, -2.452639, -0.2962808, 3.537185)
 
 [node name="rocks-a50" parent="MAP LIMITS" unique_id=78529603 instance=ExtResource("20_mkcqu")]
-transform = Transform3D(1.599594, -0, 1.555504, 0, 2.231209, 0, -1.555504, 0, 1.599594, 177.3863, 0.8153866, 69.52839)
+transform = Transform3D(1.599594, 0, 1.555504, 0, 2.231209, 0, -1.555504, 0, 1.599594, 177.3863, 0.8153866, 69.52839)
 
 [node name="rocks-a8" parent="MAP LIMITS/rocks-a50" unique_id=891405596 instance=ExtResource("20_mkcqu")]
 transform = Transform3D(-0.9815795, -0.04908144, 0.2726999, -0.04197024, 1.018563, 0.03225308, -0.2738845, 0.01981855, -0.9822764, 8.952744, 0.708683, -3.400276)
@@ -1773,7 +1773,7 @@ transform = Transform3D(-0.8082933, -0.02073795, -0.01083314, -0.0209695, 0.8081
 transform = Transform3D(0.02034121, -0.01164657, 0.2820449, 0.00499291, 0.2827468, 0.01131546, -0.2822411, 0.004162484, 0.02052724, -2.452639, -0.2962808, 3.537185)
 
 [node name="rocks-a51" parent="MAP LIMITS" unique_id=927609328 instance=ExtResource("20_mkcqu")]
-transform = Transform3D(1.599594, -0, 1.555504, 0, 2.231209, 0, -1.555504, 0, 1.599594, 191.6908, 0.8153866, -48.50038)
+transform = Transform3D(1.599594, 0, 1.555504, 0, 2.231209, 0, -1.555504, 0, 1.599594, 191.6908, 0.8153866, -48.50038)
 
 [node name="rocks-a8" parent="MAP LIMITS/rocks-a51" unique_id=1030253595 instance=ExtResource("20_mkcqu")]
 transform = Transform3D(-0.9815795, -0.04908144, 0.2726999, -0.04197024, 1.018563, 0.03225308, -0.2738845, 0.01981855, -0.9822764, 8.952744, 0.708683, -3.400276)
