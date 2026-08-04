@@ -60,7 +60,8 @@ script = ExtResource("1_nm03b")
 key = "damage_text"
 scene = ExtResource("8_dmg_txt")
 use_pool = true
-preload_count = 6
+preload_count = 8
+max_pool_size = 24
 
 [resource]
 script = ExtResource("8_afslv")
