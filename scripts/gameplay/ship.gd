@@ -3,6 +3,7 @@ class_name Ship extends FloatablePlayer3D
 const AIM_OVERLAY_SHADER := preload("res://shaders/aim_overlay.gdshader")
 
 signal destroyed(ship: Ship)
+signal health_changed(current_hp: int, max_hp: int)
 
 enum Team {
 	GoodGuys,
@@ -12,6 +13,7 @@ enum Team {
 @export_category("Settings")
 @export var team: Team = Team.GoodGuys
 @export var hit_ponts: int = 3
+@export var health_bar_ui: ShipHealthBarUI
 @export var aim_help_check_radius: float = 5.0
 
 @export_category("View")
@@ -75,6 +77,7 @@ var gameplay_enabled: bool = true
 var manual_aim_offset := Vector3.ZERO
 var cannon_ball_pool: ObjectPool
 var cannon_ball_pool_root: Node3D
+var max_hit_points: int = 3
 
 
 func _ready() -> void:
@@ -90,6 +93,7 @@ func _ready() -> void:
 	setup_aim_line()
 	initialize_aim_offset()
 	setup_cannon_ball_pool()
+	setup_health_bar()
 	super._ready()
 
 
@@ -98,6 +102,26 @@ func update_team_view() -> void:
 		good_view.visible = team == Team.GoodGuys
 	if bad_view != null:
 		bad_view.visible = team == Team.BadGuys
+
+
+func setup_health_bar() -> void:
+	max_hit_points = hit_ponts
+
+	if health_bar_ui == null:
+		health_bar_ui = get_node_or_null("ShipHealthBarUI") as ShipHealthBarUI
+	if health_bar_ui == null:
+		health_bar_ui = ShipHealthBarUI.new()
+		health_bar_ui.name = "ShipHealthBarUI"
+		add_child(health_bar_ui)
+
+	health_bar_ui.setup(self)
+	health_bar_ui.update_health(hit_ponts, max_hit_points, false)
+
+
+func _exit_tree() -> void:
+	if health_bar_ui != null and is_instance_valid(health_bar_ui):
+		health_bar_ui.queue_free()
+		health_bar_ui = null
 
 
 func _physics_process(delta: float) -> void:
@@ -628,16 +652,23 @@ func take_hit(hit_velocity: Vector3, attacker: Ship = null) -> void:
 
 	on_attacked_by(attacker)
 	hit_ponts -= 1
+	health_changed.emit(hit_ponts, max_hit_points)
 	hit_velocity.y = 0
 	velocity += hit_velocity
 	
 	var text_spawn_pos := global_position + Vector3.UP * 2.5
 
 	if hit_ponts > 0:
+		if health_bar_ui != null:
+			health_bar_ui.update_health(hit_ponts, max_hit_points, true)
 		VfxManager.spawn_damage_text(text_spawn_pos, false)
 		play_hit_feedback(Color.WHITE)
 		on_hit_taken(false)
 	else:
+		if health_bar_ui != null:
+			health_bar_ui.update_health(0, max_hit_points, true)
+			health_bar_ui.fade_out_and_destroy(0.4)
+			health_bar_ui = null
 		is_destroyed = true
 		destroyed.emit(self)
 		VfxManager.spawn_damage_text(text_spawn_pos, true)
