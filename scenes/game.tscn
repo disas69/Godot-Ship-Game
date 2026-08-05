@@ -64,91 +64,91 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -62.635033, 5.677475, 51.0431
 state = 1
 captured_team = 0
 
-[node name="Marker3D_1" parent="Logic/Flags/Flag/SpawnPoints" index="0"]
+[node name="Marker3D_1" parent="Logic/Flags/Flag/SpawnPoints" parent_id_path=PackedInt32Array(2133819521, 256734151) index="0" unique_id=1808449853]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.384579, 0, 13.644695)
 
-[node name="Marker3D_2" parent="Logic/Flags/Flag/SpawnPoints" index="1"]
+[node name="Marker3D_2" parent="Logic/Flags/Flag/SpawnPoints" parent_id_path=PackedInt32Array(2133819521, 256734151) index="1" unique_id=1160345086]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.954292, 0, 19.350399)
 
-[node name="Marker3D_3" parent="Logic/Flags/Flag/SpawnPoints" index="2"]
+[node name="Marker3D_3" parent="Logic/Flags/Flag/SpawnPoints" parent_id_path=PackedInt32Array(2133819521, 256734151) index="2" unique_id=1027013446]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.51592636, 0, 20.662846)
 
-[node name="Marker3D_4" parent="Logic/Flags/Flag/SpawnPoints" index="3"]
+[node name="Marker3D_4" parent="Logic/Flags/Flag/SpawnPoints" parent_id_path=PackedInt32Array(2133819521, 256734151) index="3" unique_id=695370595]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.006966, 0, 20.00465)
 
 [node name="Flag2" parent="Logic/Flags" unique_id=1149426167 instance=ExtResource("5_0tnpc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -123.090195, 5.5, 96.46055)
 
-[node name="Marker3D_1" parent="Logic/Flags/Flag2/SpawnPoints" index="0"]
+[node name="Marker3D_1" parent="Logic/Flags/Flag2/SpawnPoints" parent_id_path=PackedInt32Array(1149426167, 256734151) index="0" unique_id=1808449853]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.51033, 0, 0.37758636)
 
-[node name="Marker3D_2" parent="Logic/Flags/Flag2/SpawnPoints" index="1"]
+[node name="Marker3D_2" parent="Logic/Flags/Flag2/SpawnPoints" parent_id_path=PackedInt32Array(1149426167, 256734151) index="1" unique_id=1160345086]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.636185, 0, 14.405823)
 
-[node name="Marker3D_3" parent="Logic/Flags/Flag2/SpawnPoints" index="2"]
+[node name="Marker3D_3" parent="Logic/Flags/Flag2/SpawnPoints" parent_id_path=PackedInt32Array(1149426167, 256734151) index="2" unique_id=1027013446]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.37757874, 0, 17.32843)
 
-[node name="Marker3D_4" parent="Logic/Flags/Flag2/SpawnPoints" index="3"]
+[node name="Marker3D_4" parent="Logic/Flags/Flag2/SpawnPoints" parent_id_path=PackedInt32Array(1149426167, 256734151) index="3" unique_id=695370595]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.839539, 0, 10.841652)
 
 [node name="Flag3" parent="Logic/Flags" unique_id=78786283 instance=ExtResource("5_0tnpc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -121.60532, 5.5, 0.4227333)
 
-[node name="Marker3D_1" parent="Logic/Flags/Flag3/SpawnPoints" index="0"]
+[node name="Marker3D_1" parent="Logic/Flags/Flag3/SpawnPoints" parent_id_path=PackedInt32Array(78786283, 256734151) index="0" unique_id=1808449853]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.195671, 0, -0.18879008)
 
-[node name="Marker3D_2" parent="Logic/Flags/Flag3/SpawnPoints" index="1"]
+[node name="Marker3D_2" parent="Logic/Flags/Flag3/SpawnPoints" parent_id_path=PackedInt32Array(78786283, 256734151) index="1" unique_id=1160345086]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.195671, 0, 11.285946)
 
-[node name="Marker3D_3" parent="Logic/Flags/Flag3/SpawnPoints" index="2"]
+[node name="Marker3D_3" parent="Logic/Flags/Flag3/SpawnPoints" parent_id_path=PackedInt32Array(78786283, 256734151) index="2" unique_id=1027013446]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12585449, 0, 16.76205)
 
-[node name="Marker3D_4" parent="Logic/Flags/Flag3/SpawnPoints" index="3"]
+[node name="Marker3D_4" parent="Logic/Flags/Flag3/SpawnPoints" parent_id_path=PackedInt32Array(78786283, 256734151) index="3" unique_id=695370595]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.914139, 0, 7.921007)
 
 [node name="Flag4" parent="Logic/Flags" unique_id=1708097022 instance=ExtResource("5_0tnpc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.883642, 5.5, -80.00445)
 
-[node name="Marker3D_1" parent="Logic/Flags/Flag4/SpawnPoints" index="0"]
+[node name="Marker3D_1" parent="Logic/Flags/Flag4/SpawnPoints" parent_id_path=PackedInt32Array(1708097022, 256734151) index="0" unique_id=1808449853]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.461176, 0, 7.7341766)
 
-[node name="Marker3D_2" parent="Logic/Flags/Flag4/SpawnPoints" index="1"]
+[node name="Marker3D_2" parent="Logic/Flags/Flag4/SpawnPoints" parent_id_path=PackedInt32Array(1708097022, 256734151) index="1" unique_id=1160345086]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.3146515, 0, 16.54364)
 
-[node name="Marker3D_3" parent="Logic/Flags/Flag4/SpawnPoints" index="2"]
+[node name="Marker3D_3" parent="Logic/Flags/Flag4/SpawnPoints" parent_id_path=PackedInt32Array(1708097022, 256734151) index="2" unique_id=1027013446]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.37758255, 0, 18.461174)
 
-[node name="Marker3D_4" parent="Logic/Flags/Flag4/SpawnPoints" index="3"]
+[node name="Marker3D_4" parent="Logic/Flags/Flag4/SpawnPoints" parent_id_path=PackedInt32Array(1708097022, 256734151) index="3" unique_id=695370595]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.930759, 0, 16.73544)
 
 [node name="Flag5" parent="Logic/Flags" unique_id=45029587 instance=ExtResource("5_0tnpc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 136.16557, 5.5, -22.136456)
 
-[node name="Marker3D_1" parent="Logic/Flags/Flag5/SpawnPoints" index="0"]
+[node name="Marker3D_1" parent="Logic/Flags/Flag5/SpawnPoints" parent_id_path=PackedInt32Array(45029587, 256734151) index="0" unique_id=1808449853]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.22322, 0, 1.3844719)
 
-[node name="Marker3D_2" parent="Logic/Flags/Flag5/SpawnPoints" index="1"]
+[node name="Marker3D_2" parent="Logic/Flags/Flag5/SpawnPoints" parent_id_path=PackedInt32Array(45029587, 256734151) index="1" unique_id=1160345086]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.824982, 0, 11.753615)
 
-[node name="Marker3D_3" parent="Logic/Flags/Flag5/SpawnPoints" index="2"]
+[node name="Marker3D_3" parent="Logic/Flags/Flag5/SpawnPoints" parent_id_path=PackedInt32Array(45029587, 256734151) index="2" unique_id=1027013446]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.062942505, 0, 18.083591)
 
-[node name="Marker3D_4" parent="Logic/Flags/Flag5/SpawnPoints" index="3"]
+[node name="Marker3D_4" parent="Logic/Flags/Flag5/SpawnPoints" parent_id_path=PackedInt32Array(45029587, 256734151) index="3" unique_id=695370595]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.90065, 0, 11.549291)
 
 [node name="Flag6" parent="Logic/Flags" unique_id=352441255 instance=ExtResource("5_0tnpc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32.480186, 5.5, 94.35593)
 
-[node name="Marker3D_1" parent="Logic/Flags/Flag6/SpawnPoints" index="0"]
+[node name="Marker3D_1" parent="Logic/Flags/Flag6/SpawnPoints" parent_id_path=PackedInt32Array(352441255, 256734151) index="0" unique_id=1808449853]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.127151, 0, 6.8210144)
 
-[node name="Marker3D_2" parent="Logic/Flags/Flag6/SpawnPoints" index="1"]
+[node name="Marker3D_2" parent="Logic/Flags/Flag6/SpawnPoints" parent_id_path=PackedInt32Array(352441255, 256734151) index="1" unique_id=1160345086]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.46806, 0, 9.414749)
 
-[node name="Marker3D_3" parent="Logic/Flags/Flag6/SpawnPoints" index="2"]
+[node name="Marker3D_3" parent="Logic/Flags/Flag6/SpawnPoints" parent_id_path=PackedInt32Array(352441255, 256734151) index="2" unique_id=1027013446]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.56637573, 0, 20.269432)
 
-[node name="Marker3D_4" parent="Logic/Flags/Flag6/SpawnPoints" index="3"]
+[node name="Marker3D_4" parent="Logic/Flags/Flag6/SpawnPoints" parent_id_path=PackedInt32Array(352441255, 256734151) index="3" unique_id=695370595]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.347855, 0, 16.667534)
 
 [node name="Flag7" parent="Logic/Flags" unique_id=1269444661 instance=ExtResource("5_0tnpc")]
@@ -156,16 +156,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 81.28292, 5.5, 45.07475)
 state = 1
 captured_team = 1
 
-[node name="Marker3D_1" parent="Logic/Flags/Flag7/SpawnPoints" index="0"]
+[node name="Marker3D_1" parent="Logic/Flags/Flag7/SpawnPoints" parent_id_path=PackedInt32Array(1269444661, 256734151) index="0" unique_id=1808449853]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.617088, 0, 17.778488)
 
-[node name="Marker3D_2" parent="Logic/Flags/Flag7/SpawnPoints" index="1"]
+[node name="Marker3D_2" parent="Logic/Flags/Flag7/SpawnPoints" parent_id_path=PackedInt32Array(1269444661, 256734151) index="1" unique_id=1160345086]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.953415, 0, 14.664917)
 
-[node name="Marker3D_3" parent="Logic/Flags/Flag7/SpawnPoints" index="2"]
+[node name="Marker3D_3" parent="Logic/Flags/Flag7/SpawnPoints" parent_id_path=PackedInt32Array(1269444661, 256734151) index="2" unique_id=1027013446]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.933632, 0, 21.309963)
 
-[node name="Marker3D_4" parent="Logic/Flags/Flag7/SpawnPoints" index="3"]
+[node name="Marker3D_4" parent="Logic/Flags/Flag7/SpawnPoints" parent_id_path=PackedInt32Array(1269444661, 256734151) index="3" unique_id=695370595]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.918686, 0, 18.859055)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1310328268]

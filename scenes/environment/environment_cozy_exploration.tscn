@@ -53,6 +53,8 @@
 [ext_resource type="PackedScene" uid="uid://c68gwltirwt8n" path="res://assets/kenney_pirate-kit/Models/GLB format/structure-platform-small.glb" id="51_6r0n0"]
 [ext_resource type="PackedScene" uid="uid://60or8obmfqc7" path="res://assets/kenney_pirate-kit/Models/GLB format/tool-paddle.glb" id="52_6r0n0"]
 [ext_resource type="PackedScene" uid="uid://c5muu6iy5y5oh" path="res://assets/kenney_pirate-kit/Models/GLB format/tower-watch.glb" id="53_3wnr2"]
+[ext_resource type="PackedScene" path="res://scenes/vfx/bird_flock_spawner.tscn" id="54_birds"]
+[ext_resource type="PackedScene" path="res://scenes/vfx/fish_flock.tscn" id="55_fish"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rlnmy"]
 albedo_color = Color(0.21876383, 0.5804217, 0.5978579, 1)
@@ -2001,6 +2003,28 @@ transform = Transform3D(2.578848, -0, 1.030046, 0, 2.77695, 0, -1.030046, 0, 2.5
 
 [node name="tower-middle-windows3" parent="." unique_id=1912707143 instance=ExtResource("40_fobrl")]
 transform = Transform3D(2.738017, -0, 1.141584, 0, 2.966471, 0, -1.141584, 0, 2.738017, -21.00834, 10.25546, -83.08081)
+
+[node name="BirdFlockSpawner" parent="." instance=ExtResource("54_birds")]
+spawn_interval_min = 6.0
+spawn_interval_max = 12.0
+
+[node name="FishFlock_NearReef1" parent="." instance=ExtResource("55_fish")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30, 0, 40)
+fish_count = 18
+roaming_radius = 15.0
+fish_color = Color(0.02, 0.03, 0.04, 1)
+
+[node name="FishFlock_NearReef2" parent="." instance=ExtResource("55_fish")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, -30)
+fish_count = 22
+roaming_radius = 18.0
+fish_color = Color(0.02, 0.03, 0.04, 1)
+
+[node name="FishFlock_OpenSea" parent="." instance=ExtResource("55_fish")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60, 0, -40)
+fish_count = 25
+roaming_radius = 22.0
+fish_color = Color(0.02, 0.03, 0.04, 1)
 
 [editable path="barrel8/crate-bottles2"]
 [editable path="barrel10/crate-bottles2"]

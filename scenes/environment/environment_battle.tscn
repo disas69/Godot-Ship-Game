@@ -47,6 +47,8 @@
 [ext_resource type="PackedScene" uid="uid://cl4fm7jlpy4pd" path="res://assets/kenney_pirate-kit/Models/GLB format/tower-complete-small.glb" id="50_351pn"]
 [ext_resource type="PackedScene" uid="uid://bp0dmo1mpmant" path="res://assets/kenney_pirate-kit/Models/GLB format/tower-middle.glb" id="51_hp76w"]
 [ext_resource type="PackedScene" uid="uid://c68gwltirwt8n" path="res://assets/kenney_pirate-kit/Models/GLB format/structure-platform-small.glb" id="51_rpfn1"]
+[ext_resource type="PackedScene" path="res://scenes/vfx/bird_flock_spawner.tscn" id="53_yaonc"]
+[ext_resource type="PackedScene" path="res://scenes/vfx/fish_flock.tscn" id="54_gp84x"]
 [ext_resource type="PackedScene" uid="uid://b84icebwdcdje" path="res://assets/kenney_mini-arena/Models/GLB format/column-damaged.glb" id="54_nrup1"]
 [ext_resource type="PackedScene" uid="uid://2k6ixn05hixw" path="res://scenes/environment/tower_destroyed.tscn" id="55_hp76w"]
 [ext_resource type="PackedScene" uid="uid://tey464fsxeso" path="res://assets/kenney_mini-arena/Models/GLB format/statue.glb" id="55_mpaoa"]
@@ -2125,6 +2127,25 @@ transform = Transform3D(0.02034121, -0.01164657, 0.2820449, 0.00499291, 0.282746
 
 [node name="TOWER DESTROYED" parent="." unique_id=1431508293 instance=ExtResource("55_hp76w")]
 transform = Transform3D(0.6632423, -2.642791e-08, -0.6851809, 4.177538e-08, 0.9536054, 3.656556e-09, 0.6851809, -3.255946e-08, 0.6632423, -57.37188, -6.952054e-07, 26.36682)
+
+[node name="BirdFlockSpawner" parent="." unique_id=1065028377 instance=ExtResource("53_yaonc")]
+spawn_interval_min = 6.0
+spawn_interval_max = 12.0
+spawn_radius_from_camera = 100.0
+
+[node name="FishFlock_NearReef1" parent="." unique_id=1113498350 instance=ExtResource("54_gp84x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.050934, 0, 86.33481)
+roaming_radius = 15.0
+
+[node name="FishFlock_NearReef2" parent="." unique_id=1485490263 instance=ExtResource("54_gp84x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.50177, 0, -47.461914)
+fish_count = 22
+roaming_radius = 18.0
+
+[node name="FishFlock_OpenSea" parent="." unique_id=1300548298 instance=ExtResource("54_gp84x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -75.403915, 0, -47.792736)
+fish_count = 25
+roaming_radius = 22.0
 
 [editable path="MAIN ISLAND 1/Pile of furnitures 2/platform-planks7/bottle-large7"]
 [editable path="MAIN ISLAND 1/Pile of furnitures/bottle-large7"]
