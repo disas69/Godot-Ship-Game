@@ -89,8 +89,8 @@ func add_collision_shape(collision: CollisionShape3D) -> void:
 		volume += (4.0 / 3.0) * PI * pow(shape.radius, 3.0) + PI * pow(shape.radius, 2.0) * shape.height
 
 
-func add_floater(position: Vector3, radius: float = 0.0) -> void:
-	floaters.push_back(Floater3D.new(position, radius))
+func add_floater(target_pos: Vector3, radius: float = 0.0) -> void:
+	floaters.push_back(Floater3D.new(target_pos, radius))
 
 
 func clear_floaters() -> void:

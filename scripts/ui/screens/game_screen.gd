@@ -107,7 +107,7 @@ func refresh_touch_controls_visibility(game: Game) -> void:
 
 func on_timer_changed(remaining_time_sec: float) -> void:
 	var total_sec := int(maxf(0.0, remaining_time_sec))
-	var minutes := total_sec / 60
+	var minutes := floori(float(total_sec) / 60.0)
 	var seconds := total_sec % 60
 	var formatted_text := "%d:%02d" % [minutes, seconds]
 

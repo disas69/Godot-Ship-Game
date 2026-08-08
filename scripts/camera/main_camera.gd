@@ -205,7 +205,7 @@ func setup_dynamic_split_screen() -> void:
 	split_layer.name = "DynamicSplitScreenLayer"
 	split_layer.layer = 128
 	get_viewport().add_child.call_deferred(split_layer)
-	tree_exiting.connect(cleanup_dynamic_split_screen, CONNECT_ONE_SHOT)
+	tree_exiting.connect(cleanup_dynamic_split_screen, CONNECT_ONE_SHOT as Object.ConnectFlags)
 
 	split_material = ShaderMaterial.new()
 	split_material.shader = DYNAMIC_SPLIT_SCREEN_SHADER
@@ -406,11 +406,12 @@ func apply_split_camera_transform(target_camera: Camera3D, rig_position: Vector3
 	target_camera.global_transform = rig_transform * camera.transform
 
 
-func clamp_position(position: Vector3) -> Vector3:
-	position.x = clamp(position.x, min_bounds.x, max_bounds.x)
-	position.y = clamp(position.y, min_bounds.y, max_bounds.y)
-	position.z = clamp(position.z, min_bounds.z, max_bounds.z)
-	return position
+func clamp_position(target_pos: Vector3) -> Vector3:
+	var res := target_pos
+	res.x = clamp(res.x, min_bounds.x, max_bounds.x)
+	res.y = clamp(res.y, min_bounds.y, max_bounds.y)
+	res.z = clamp(res.z, min_bounds.z, max_bounds.z)
+	return res
 
 
 func get_horizontal_length(vec: Vector3) -> float:

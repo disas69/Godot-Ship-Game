@@ -131,7 +131,7 @@ func on_capture_area_body_entered(body: Node) -> void:
 	ships_in_radius[ship.get_instance_id()] = ship
 	var on_exit_callable: Callable = on_tracked_ship_tree_exited.bind(ship.get_instance_id())
 	if not ship.tree_exited.is_connected(on_exit_callable):
-		ship.tree_exited.connect(on_exit_callable, CONNECT_ONE_SHOT)
+		ship.tree_exited.connect(on_exit_callable, CONNECT_ONE_SHOT as Object.ConnectFlags)
 
 
 func on_capture_area_body_exited(body: Node) -> void:

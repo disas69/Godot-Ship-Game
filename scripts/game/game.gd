@@ -249,7 +249,7 @@ func register_tracked_ship(ship: Ship, is_local: bool, local_player_index: int) 
 		refresh_bot_reach_targets()
 
 	ship.destroyed.connect(on_ship_destroyed)
-	ship.tree_exited.connect(on_tracked_ship_tree_exited.bind(ship_id), CONNECT_ONE_SHOT)
+	ship.tree_exited.connect(on_tracked_ship_tree_exited.bind(ship_id), CONNECT_ONE_SHOT as Object.ConnectFlags)
 
 
 func on_ship_destroyed(ship: Ship) -> void:

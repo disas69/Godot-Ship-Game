@@ -214,7 +214,7 @@ func clean_up_children_previews():
 func get_play_time() -> float:
 	if not is_playing:
 		return 0.0
-	return min((Time.get_ticks_msec() - start_time_msec) / 1000, get_longest_sim_sime())
+	return min((Time.get_ticks_msec() - start_time_msec) / 1000.0, get_longest_sim_sime())
 
 func get_longest_sim_sime() -> float:
 	var max_time: float = sel_preview.get_total_sim_time()

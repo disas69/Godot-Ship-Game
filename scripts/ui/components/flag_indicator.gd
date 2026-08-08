@@ -62,17 +62,17 @@ func set_target_visual(alpha: float, display_scale: Vector2) -> void:
 	scale = target_shown_scale
 
 
-func play_tween(alpha: float, target_scale: Vector2, duration: float, ease: int, finished_callback: Callable = Callable()) -> void:
+func play_tween(alpha: float, target_scale: Vector2, duration: float, ease_type: int, finished_callback: Callable = Callable()) -> void:
 	if active_tween != null and active_tween.is_valid():
 		active_tween.kill()
 
 	active_tween = create_tween()
 	active_tween.set_parallel(true)
-	active_tween.tween_property(self, "modulate:a", alpha, duration).set_trans(Tween.TRANS_QUAD).set_ease(ease)
-	active_tween.tween_property(self, "scale", target_scale, duration).set_trans(Tween.TRANS_BACK).set_ease(ease)
+	active_tween.tween_property(self, "modulate:a", alpha, duration).set_trans(Tween.TRANS_QUAD).set_ease(ease_type)
+	active_tween.tween_property(self, "scale", target_scale, duration).set_trans(Tween.TRANS_BACK).set_ease(ease_type)
 	if finished_callback.is_valid():
-		active_tween.finished.connect(finished_callback, CONNECT_ONE_SHOT)
-	active_tween.finished.connect(clear_active_tween, CONNECT_ONE_SHOT)
+		active_tween.finished.connect(finished_callback, CONNECT_ONE_SHOT as Object.ConnectFlags)
+	active_tween.finished.connect(clear_active_tween, CONNECT_ONE_SHOT as Object.ConnectFlags)
 
 
 func clear_active_tween() -> void:

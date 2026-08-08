@@ -182,7 +182,10 @@ func update_boids(delta: float) -> void:
 		var look_vel = Vector3(vel.x, vel.y * 0.15, vel.z)
 		if look_vel.length_squared() > 0.001:
 			var target_rot = Transform3D().looking_at(look_vel, Vector3.UP).basis
-			fish.node.basis = fish.node.basis.slerp(target_rot, delta * 6.0)
+			var current_scale: Vector3 = fish.node.scale
+			var current_basis_norm: Basis = fish.node.basis.orthonormalized()
+			var new_basis: Basis = current_basis_norm.slerp(target_rot.orthonormalized(), delta * 6.0).orthonormalized()
+			fish.node.basis = new_basis.scaled(current_scale)
 
 static func get_or_create_primitive_fish_mesh() -> ArrayMesh:
 	if primitive_fish_mesh_cache != null:

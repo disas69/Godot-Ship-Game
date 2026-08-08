@@ -63,18 +63,18 @@ func _ensure_textures() -> void:
 
 
 static func _generate_circle_texture(is_filled: bool) -> ImageTexture:
-	var size := 128
-	var center := float(size) / 2.0
+	var tex_size := 128
+	var center := float(tex_size) / 2.0
 	var radius := 54.0
 	var border_width := 8.0
-	var img := Image.create(size, size, false, Image.FORMAT_RGBA8)
+	var img := Image.create(tex_size, tex_size, false, Image.FORMAT_RGBA8)
 
 	var color_fill := Color(0.22, 0.88, 0.36, 1.0) if is_filled else Color(0.12, 0.13, 0.16, 0.75)
 	var color_border := Color(0.08, 0.45, 0.15, 1.0) if is_filled else Color(0.5, 0.52, 0.58, 0.85)
 	var color_highlight := Color(0.48, 0.96, 0.58, 1.0) if is_filled else Color(0.22, 0.23, 0.28, 0.6)
 
-	for y in range(size):
-		for x in range(size):
+	for y in range(tex_size):
+		for x in range(tex_size):
 			var dx := float(x) - center + 0.5
 			var dy := float(y) - center + 0.5
 			var dist := sqrt(dx * dx + dy * dy)

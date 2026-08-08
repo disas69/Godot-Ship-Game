@@ -18,7 +18,7 @@ func all(signals: Array) -> void:
 
 	for signal_to_wait: Signal in signals:
 		var callback := Callable(self, "_on_all_signal_complete")
-		signal_to_wait.connect(callback, CONNECT_ONE_SHOT)
+		signal_to_wait.connect(callback, CONNECT_ONE_SHOT as Object.ConnectFlags)
 		_connections.append({
 			"signal": signal_to_wait,
 			"callback": callback
@@ -36,7 +36,7 @@ func any(signals: Array) -> void:
 
 	for signal_to_wait: Signal in signals:
 		var callback := Callable(self, "_on_any_signal_complete")
-		signal_to_wait.connect(callback, CONNECT_ONE_SHOT)
+		signal_to_wait.connect(callback, CONNECT_ONE_SHOT as Object.ConnectFlags)
 		_connections.append({
 			"signal": signal_to_wait,
 			"callback": callback
