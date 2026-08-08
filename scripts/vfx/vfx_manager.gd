@@ -222,9 +222,27 @@ func instantiate_effect(entry: VfxEntry) -> Node3D:
 
 
 func get_spawn_transform(effect: Node3D, spawn_transform: Transform3D) -> Transform3D:
+	var origin := spawn_transform.origin
+	if is_nan(origin.x) or is_nan(origin.y) or is_nan(origin.z) or is_inf(origin.x) or is_inf(origin.y) or is_inf(origin.z):
+		origin = Vector3.ZERO
+
 	var root_scale := effect.get_meta("vfx_root_scale", effect.scale) as Vector3
-	var basis := spawn_transform.basis.orthonormalized().scaled(root_scale)
-	return Transform3D(basis, spawn_transform.origin)
+	if is_nan(root_scale.x) or is_nan(root_scale.y) or is_nan(root_scale.z):
+		root_scale = Vector3.ONE
+	if root_scale.x <= 0.0001 or root_scale.y <= 0.0001 or root_scale.z <= 0.0001:
+		root_scale = Vector3.ONE
+
+	var src_basis := spawn_transform.basis
+	var det := src_basis.determinant()
+	if absf(det) < 0.0001 or is_nan(det) or is_inf(det):
+		src_basis = Basis.IDENTITY
+
+	var norm_basis := src_basis.orthonormalized()
+	if is_nan(norm_basis.x.x) or is_nan(norm_basis.y.y) or is_nan(norm_basis.z.z) or norm_basis.determinant() < 0.0001:
+		norm_basis = Basis.IDENTITY
+
+	var final_basis := norm_basis.scaled(root_scale)
+	return Transform3D(final_basis, origin)
 
 
 func spawn_damage_text(pos: Vector3, is_destroyed: bool = false, custom_text: String = "") -> DamageTextFX:
@@ -269,14 +287,13 @@ func prepare_effect_for_spawn(effect: Node3D, entry: VfxEntry) -> void:
 
 
 func start_effect(effect: Node3D) -> void:
+	restart_particles(effect)
 	if effect is VfxAnimationPlayer:
 		(effect as VfxAnimationPlayer).play()
 	elif effect is VfxPlayer:
 		(effect as VfxPlayer).play()
 	elif effect is DamageTextFX:
 		(effect as DamageTextFX).play()
-	else:
-		restart_particles(effect)
 
 
 func release_effect(effect: Node3D) -> void:
@@ -329,6 +346,7 @@ func reset_effect_for_pool(effect: Node3D, _entry: VfxEntry) -> void:
 			effect.get_parent().remove_child(effect)
 		pool_root.add_child(effect)
 
+	effect.transform = Transform3D.IDENTITY
 	effect.visible = false
 	effect.process_mode = Node.PROCESS_MODE_DISABLED
 
