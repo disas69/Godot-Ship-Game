@@ -32,6 +32,13 @@ class_name BotShip extends Ship
 @export var attack_position_tolerance: float = 2.0
 @export var closest_reach_target_attempts: Vector2i = Vector2i(0, 2)
 
+@export_category("Attack Movement")
+@export var enable_attack_orbit: bool = true
+@export var attack_orbit_chance: float = 0.5
+@export var attack_orbit_change_interval_range: Vector2 = Vector2(3.0, 6.0)
+@export var attack_orbit_angle_degrees: float = 60.0
+@export var attack_orbit_update_interval: float = 0.2
+
 var time: float
 var target_update_timer: float = 0.0
 var next_shoot_time: float = 0.0
@@ -54,7 +61,15 @@ enum BotState {
 	ATTACK
 }
 
+enum AttackMovementMode {
+	STATIONARY,
+	ORBIT_CW,
+	ORBIT_CCW
+}
+
 var state: BotState = BotState.IDLE_WAIT
+var attack_movement_mode: AttackMovementMode = AttackMovementMode.STATIONARY
+var attack_orbit_timer: float = 0.0
 
 func _ready() -> void:
 	show_aim_helpers = false
@@ -88,6 +103,9 @@ func _physics_process(delta: float) -> void:
 
 	if state == BotState.ATTACK and is_target_valid(target):
 		target_tracking_timer += delta
+		attack_orbit_timer -= delta
+		if attack_orbit_timer <= 0.0:
+			update_attack_movement_mode()
 
 	if state == BotState.IDLE_WAIT:
 		update_idle_wait(delta)
@@ -96,7 +114,8 @@ func _physics_process(delta: float) -> void:
 		update_patrol_progress()
 
 	if state != BotState.IDLE_WAIT and target_update_timer <= 0.0:
-		target_update_timer = target_update_interval
+		var is_orbiting: bool = state == BotState.ATTACK and attack_movement_mode != AttackMovementMode.STATIONARY
+		target_update_timer = attack_orbit_update_interval if is_orbiting else target_update_interval
 		refresh_target_state()
 		update_navigation_target()
 
@@ -202,6 +221,8 @@ func refresh_target_state() -> void:
 		set_tracked_target(candidate)
 
 	if is_target_valid(target):
+		if state != BotState.ATTACK:
+			update_attack_movement_mode()
 		state = BotState.ATTACK
 		current_reach_target = null
 		patrol_points.clear()
@@ -427,6 +448,9 @@ func get_stop_distance() -> float:
 
 
 func get_attack_position() -> Vector3:
+	if target == null or not is_instance_valid(target):
+		return global_position
+
 	var target_position: Vector3 = target.global_position
 	target_position.y = global_position.y
 
@@ -444,7 +468,33 @@ func get_attack_position() -> Vector3:
 	if distance_to_target < attack_min_distance or distance_to_target > attack_max_distance:
 		return target_position + away_from_target.normalized() * preferred_distance
 
-	return global_position
+	if attack_movement_mode == AttackMovementMode.STATIONARY or not enable_attack_orbit:
+		return global_position
+
+	var current_dir: Vector3 = away_from_target.normalized()
+	var angle_rad: float = deg_to_rad(attack_orbit_angle_degrees)
+	if attack_movement_mode == AttackMovementMode.ORBIT_CCW:
+		angle_rad = -angle_rad
+
+	var orbit_dir: Vector3 = current_dir.rotated(Vector3.UP, angle_rad)
+	var orbit_radius: float = clamp(distance_to_target, attack_min_distance, preferred_distance)
+
+	return target_position + orbit_dir * orbit_radius
+
+
+func update_attack_movement_mode(is_reaction: bool = false) -> void:
+	var chance: float = attack_orbit_chance
+	if is_reaction:
+		chance = maxf(chance, 0.8)
+
+	if enable_attack_orbit and randf() < chance:
+		attack_movement_mode = AttackMovementMode.ORBIT_CW if randf() < 0.5 else AttackMovementMode.ORBIT_CCW
+	else:
+		attack_movement_mode = AttackMovementMode.STATIONARY
+
+	var min_time: float = minf(attack_orbit_change_interval_range.x, attack_orbit_change_interval_range.y)
+	var max_time: float = maxf(attack_orbit_change_interval_range.x, attack_orbit_change_interval_range.y)
+	attack_orbit_timer = randf_range(min_time, max_time)
 
 
 func get_attack_max_distance() -> float:
@@ -459,7 +509,12 @@ func on_attacked_by(attacker: Ship) -> void:
 	set_tracked_target(attacker)
 	current_reach_target = null
 	patrol_points.clear()
-	state = BotState.ATTACK
+	if state != BotState.ATTACK:
+		state = BotState.ATTACK
+		update_attack_movement_mode(true)
+	else:
+		if randf() < 0.75:
+			update_attack_movement_mode(true)
 	target_update_timer = 0.0
 	update_navigation_target()
 
