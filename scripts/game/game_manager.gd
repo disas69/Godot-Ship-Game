@@ -238,7 +238,7 @@ func connect_game_signals(game: Game) -> void:
 		game.game_finished.connect(on_game_finished)
 
 
-func on_game_finished(_winner_team: int, _reason: int, _good_team_kills: int, _bad_team_kills: int) -> void:
+func on_game_finished(_winner_team: int, _reason: Game.FinishReason, _good_team_kills: int, _bad_team_kills: int) -> void:
 	UIManager.open_popup("game_end")
 
 

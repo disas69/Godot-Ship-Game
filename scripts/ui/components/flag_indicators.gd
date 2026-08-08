@@ -42,7 +42,7 @@ func connect_flag_state_signals() -> void:
 			flag.state_changed.connect(on_flag_state_changed)
 
 
-func on_flag_state_changed(_flag: Flag, _state: int, _team: int) -> void:
+func on_flag_state_changed(_flag: Flag, _state: Flag.State, _team: int) -> void:
 	update_indicators()
 
 

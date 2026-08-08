@@ -236,8 +236,8 @@ func _apply_instance_transform(mm: MultiMesh, i: int, px: float, py: float, pz: 
 	var b_x = aux.cross(b_z).normalized()
 	var b_y = b_z.cross(b_x).normalized()
 
-	var basis = Basis(b_x * sx, b_y * sy, b_z * sz)
-	mm.set_instance_transform(i, Transform3D(basis, Vector3(px, py, pz)))
+	var fish_basis = Basis(b_x * sx, b_y * sy, b_z * sz)
+	mm.set_instance_transform(i, Transform3D(fish_basis, Vector3(px, py, pz)))
 
 static func get_or_create_primitive_fish_mesh() -> ArrayMesh:
 	if primitive_fish_mesh_cache != null:
