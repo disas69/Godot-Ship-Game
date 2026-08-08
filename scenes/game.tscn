@@ -42,7 +42,11 @@ environment = ExtResource("1_iywne")
 [node name="Sun" type="DirectionalLight3D" parent="View" unique_id=1107726886]
 transform = Transform3D(-0.76604444, -0.49240386, 0.41317594, 0, 0.64278764, 0.76604444, -0.64278764, 0.58682406, -0.4924039, 0, 0, 0)
 shadow_enabled = true
-directional_shadow_mode = 1
+shadow_bias = 0.03
+shadow_normal_bias = 2.0
+directional_shadow_mode = 0
+directional_shadow_pancake_size = 0.0
+directional_shadow_max_distance = 250.0
 
 [node name="Water" parent="View" unique_id=196760504 instance=ExtResource("2_p57ef")]
 
