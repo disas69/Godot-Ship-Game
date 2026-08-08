@@ -18,6 +18,54 @@ func _ready() -> void:
 	rebuild_entry_map()
 	create_scene_transition()
 
+	get_tree().node_added.connect(_on_node_added_to_tree)
+	wire_all_existing_buttons(get_tree().root)
+
+
+func _on_node_added_to_tree(node: Node) -> void:
+	if node is BaseButton:
+		wire_button_sfx(node as BaseButton)
+
+
+func wire_all_existing_buttons(node: Node) -> void:
+	if node == null:
+		return
+	if node is BaseButton:
+		wire_button_sfx(node as BaseButton)
+	for child in node.get_children():
+		wire_all_existing_buttons(child)
+
+
+func wire_button_sfx(btn: BaseButton) -> void:
+	if btn == null or not is_instance_valid(btn):
+		return
+	if btn is UiTweenButton:
+		return
+	if btn.has_meta("sfx_setup_done"):
+		return
+
+	btn.set_meta("sfx_setup_done", true)
+
+	if not btn.mouse_entered.is_connected(_on_generic_button_hover.bind(btn)):
+		btn.mouse_entered.connect(_on_generic_button_hover.bind(btn))
+	if not btn.focus_entered.is_connected(_on_generic_button_hover.bind(btn)):
+		btn.focus_entered.connect(_on_generic_button_hover.bind(btn))
+	if not btn.pressed.is_connected(_on_generic_button_pressed.bind(btn)):
+		btn.pressed.connect(_on_generic_button_pressed.bind(btn))
+
+
+func _on_generic_button_hover(btn: BaseButton) -> void:
+	if btn == null or not is_instance_valid(btn) or btn.disabled or not btn.is_visible_in_tree():
+		return
+	AudioManager.play("ui_hover")
+
+
+func _on_generic_button_pressed(btn: BaseButton) -> void:
+	if btn == null or not is_instance_valid(btn) or btn.disabled:
+		return
+	AudioManager.play("ui_click")
+
+
 
 func _input(event: InputEvent) -> void:
 	if is_gamepad_ui_event(event):

@@ -199,8 +199,13 @@ func play_sfx_internal(key: String, world_position: Vector3) -> void:
 	player.unit_size = entry.unit_size
 	player.pitch_scale = final_pitch
 	player.max_distance = entry.max_distance
+	if entry.unit_size <= 0.0 or key.begins_with("ui_"):
+		player.attenuation_model = AudioStreamPlayer3D.ATTENUATION_DISABLED
+	else:
+		player.attenuation_model = AudioStreamPlayer3D.ATTENUATION_INVERSE_DISTANCE
 	player.top_level = true
 	player.global_position = world_position
+
 	player.process_mode = Node.PROCESS_MODE_INHERIT
 	player.set_meta("audio_key", key)
 

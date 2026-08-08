@@ -10,12 +10,14 @@
 [ext_resource type="AudioStream" uid="uid://1iisya1lxe4m" path="res://audio/sfx/freesound_community-medium-explosion-40472.mp3" id="8_bjmqb"]
 [ext_resource type="AudioStream" uid="uid://3chrt1yqjnxk" path="res://audio/sfx/freesound_community-water-splash-46402.mp3" id="9_lkows"]
 [ext_resource type="AudioStream" uid="uid://c8500k80s3ti" path="res://audio/sfx/coin_collect.wav" id="10_ok6aq"]
+[ext_resource type="AudioStream" uid="uid://cbc87wlsp11nv" path="res://audio/sfx/mouseclick1.ogg" id="11_ui_hover"]
+[ext_resource type="AudioStream" uid="uid://bwem0ryqy8ru2" path="res://audio/sfx/click1.ogg" id="12_ui_click"]
 
 [sub_resource type="Resource" id="Resource_music_main"]
 script = ExtResource("1_hauhh")
 key = "cannon_battle_main"
 stream = ExtResource("2_o0u5u")
-volume = -10.0
+volume = -15.0
 
 [sub_resource type="Resource" id="Resource_xfatc"]
 script = ExtResource("1_hauhh")
@@ -71,9 +73,25 @@ unit_size = 30.0
 max_distance = 300.0
 metadata/_custom_type_script = "uid://c0m20eaomryhb"
 
+[sub_resource type="Resource" id="Resource_ui_hover"]
+script = ExtResource("1_hauhh")
+key = "ui_hover"
+stream = ExtResource("11_ui_hover")
+volume = -6.0
+unit_size = 0.0
+metadata/_custom_type_script = "uid://c0m20eaomryhb"
+
+[sub_resource type="Resource" id="Resource_ui_click"]
+script = ExtResource("1_hauhh")
+key = "ui_click"
+stream = ExtResource("12_ui_click")
+volume = -4.0
+unit_size = 0.01
+metadata/_custom_type_script = "uid://c0m20eaomryhb"
+
 [resource]
 script = ExtResource("4_iao2u")
 sfx_preload_count = 12
-sfx_entries = Array[ExtResource("1_hauhh")]([SubResource("Resource_ai8j6"), SubResource("Resource_8igxg"), SubResource("Resource_gkxuj"), SubResource("Resource_abf41")])
+sfx_entries = Array[ExtResource("1_hauhh")]([SubResource("Resource_ai8j6"), SubResource("Resource_8igxg"), SubResource("Resource_gkxuj"), SubResource("Resource_abf41"), SubResource("Resource_ui_hover"), SubResource("Resource_ui_click")])
 music_entries = Array[ExtResource("1_hauhh")]([SubResource("Resource_music_main"), SubResource("Resource_xfatc")])
 metadata/_custom_type_script = "uid://dy6boqjp4xj7h"
