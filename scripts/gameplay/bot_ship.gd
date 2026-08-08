@@ -16,7 +16,11 @@ class_name BotShip extends Ship
 
 @export_category("Behavior")
 @export var shoot_radius: float = 15.0
-@export var shoot_interval_range: Vector2
+@export var shoot_interval_range: Vector2 = Vector2(0.6, 1.2)
+@export var burst_chance: float = 0.5
+@export var burst_count_range: Vector2i = Vector2i(2, 4)
+@export var burst_delay_range: Vector2 = Vector2(0.08, 0.18)
+@export var enter_idle_after_shot_chance: float = 0.25
 @export var target_search_radius: float = 60.0
 @export var target_lose_radius: float = 85.0
 @export var target_tracking_timeout: float = 10.0
@@ -41,6 +45,7 @@ var closest_reach_target_attempt_limit: int = 0
 var target_tracking_timer: float = 0.0
 var target_tracking_start_position: Vector3 = Vector3.ZERO
 var target_cooldowns: Dictionary = {}
+var burst_remaining: int = 0
 
 enum BotState {
 	IDLE_WAIT,
@@ -465,7 +470,30 @@ func can_shoot() -> bool:
 	if state == BotState.ATTACK and is_target_valid(target):
 		var distance_to_target: float = global_position.distance_to(target.global_position)
 		if distance_to_target >= attack_min_distance and distance_to_target <= get_attack_max_distance() and time >= next_shoot_time:
-			next_shoot_time = time + randf_range(shoot_interval_range.x, shoot_interval_range.y)
-			enter_idle_wait()
-			return true
+			if burst_remaining > 0:
+				burst_remaining -= 1
+				if burst_remaining > 0:
+					next_shoot_time = time + randf_range(burst_delay_range.x, burst_delay_range.y)
+				else:
+					var min_interval: float = minf(shoot_interval_range.x, shoot_interval_range.y)
+					var max_interval: float = maxf(shoot_interval_range.x, shoot_interval_range.y)
+					next_shoot_time = time + randf_range(min_interval, max_interval)
+					if randf() < enter_idle_after_shot_chance:
+						enter_idle_wait()
+				return true
+			else:
+				if randf() < burst_chance and current_ammo >= 2.0:
+					var min_cnt: int = mini(burst_count_range.x, burst_count_range.y)
+					var max_cnt: int = maxi(burst_count_range.x, burst_count_range.y)
+					var count: int = randi_range(min_cnt, max_cnt)
+					burst_remaining = count - 1
+					next_shoot_time = time + randf_range(burst_delay_range.x, burst_delay_range.y)
+					return true
+				else:
+					var min_interval: float = minf(shoot_interval_range.x, shoot_interval_range.y)
+					var max_interval: float = maxf(shoot_interval_range.x, shoot_interval_range.y)
+					next_shoot_time = time + randf_range(min_interval, max_interval)
+					if randf() < enter_idle_after_shot_chance:
+						enter_idle_wait()
+					return true
 	return false
