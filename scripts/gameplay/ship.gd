@@ -1,6 +1,8 @@
 class_name Ship extends FloatablePlayer3D
 
 const AIM_OVERLAY_SHADER := preload("res://shaders/aim_overlay.gdshader")
+const FADE_BLACK_SHADER := preload("res://shaders/fade_black.gdshader")
+
 
 signal destroyed(ship: Ship)
 signal health_changed(current_hp: int, max_hp: int)
@@ -40,11 +42,14 @@ enum Team {
 @export_category("Destroyed FX")
 @export var destroyed_sink_distance: float = 3.0
 @export var destroyed_sink_duration: float = 2.5
+@export var destroyed_fade_duration: float = 1.0
 @export var destroyed_shake_strength: float = 0.2
 @export_range(0.01, 1.0, 0.01) var destroyed_shake_step_duration: float = 0.1
-@export var destroyed_destroy_delay: float = 1.0
+@export var destroyed_destroy_delay: float = 0.2
 @export var destroyed_push_radius: float = 25.0
 @export var destroyed_push_strength: float = 25.0
+
+
 
 @export_category("Cannon")
 @export var cannon_ball: PackedScene
@@ -87,9 +92,12 @@ var max_hit_points: int = 3
 var current_ammo: float = 10.0
 
 
+
+
 func _ready() -> void:
 	add_to_group("Ship")
 	update_team_view()
+
 	default_gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 	cannon_start_position = cannon_view.position
 	cannon_start_scale = cannon_view.scale
@@ -103,6 +111,7 @@ func _ready() -> void:
 	setup_health_bar()
 	setup_ammo_bar()
 	super._ready()
+
 
 
 func update_team_view() -> void:
@@ -555,6 +564,11 @@ func shoot(target_position: Vector3) -> void:
 	play_cannon_smoke_particles()
 	on_shot_fired()
 	AudioManager.play_sfx("cannon_shoot", start_pos)
+	if self is PlayerShip:
+		get_tree().call_group("MainCamera", "shake_for_target", self, 0.05)
+		Input.start_joy_vibration(0, 0.2, 0.2, 0.12)
+
+
 
 
 func spawn_cannon_ball() -> CannonBall:
@@ -702,6 +716,10 @@ func take_hit(hit_velocity: Vector3, attacker: Ship = null) -> void:
 		VfxManager.spawn_damage_text(text_spawn_pos, false)
 		play_hit_feedback(Color.WHITE)
 		on_hit_taken(false)
+		if self is PlayerShip:
+			get_tree().call_group("MainCamera", "shake_for_target", self, 0.12)
+			Input.start_joy_vibration(0, 0.35, 0.45, 0.18)
+
 	else:
 		if health_bar_ui != null:
 			health_bar_ui.update_health(0, max_hit_points, true)
@@ -712,7 +730,12 @@ func take_hit(hit_velocity: Vector3, attacker: Ship = null) -> void:
 		VfxManager.spawn_damage_text(text_spawn_pos, true)
 		play_hit_feedback(Color.RED)
 		on_hit_taken(true)
+		if self is PlayerShip:
+			get_tree().call_group("MainCamera", "shake_for_target", self, 0.25)
+			Input.start_joy_vibration(0, 0.6, 0.8, 0.35)
 		play_destroyed_feedback()
+
+
 		
 
 func on_attacked_by(_attacker: Ship) -> void:
@@ -731,11 +754,25 @@ func play_destroyed_feedback() -> void:
 	velocity = Vector3.ZERO
 	collision_layer = 0
 	collision_mask = 0
-	
-	VfxManager.spawn_at_transform("fire", Transform3D(Basis(), cannon_root.global_position + Vector3.UP), self)
 
-	var sink_tween: Tween = create_tween()
+	set_ship_sorting_offset(-20.0)
+	set_outline_thickness(0.0)
+	disable_ship_shadows()
+	set_hit_flash_color(Color.BLACK)
+	set_hit_flash_strength(0.0)
+	set_hit_flash_alpha_fade(1.0)
+
+
+	var explosion_position: Vector3 = global_position + Vector3.UP * 0.5
+	var fire_vfx := VfxManager.spawn_at_transform("fire", Transform3D(Basis(), cannon_root.global_position + Vector3.UP), self)
+	VfxManager.spawn("ship_explosion", explosion_position)
+	AudioManager.play_sfx("ship_explosion", explosion_position)
+	push_ships_from_explosion(explosion_position)
+
+	var sink_tween: Tween = create_tween().set_parallel(true)
 	sink_tween.tween_property(self, "position", position + Vector3.DOWN * destroyed_sink_distance, destroyed_sink_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	var flash_setter := Callable(self, "set_hit_flash_strength")
+	sink_tween.tween_method(flash_setter, 0.0, 1.0, destroyed_sink_duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
 	var shake_tween: Tween = create_tween()
 	var base_view_position: Vector3 = view.position
@@ -748,19 +785,108 @@ func play_destroyed_feedback() -> void:
 
 		shake_tween.tween_property(view, "position", base_view_position + shake_offset, shake_step_duration * 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 		shake_tween.tween_property(view, "position", base_view_position, shake_step_duration * 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	
-	await get_tree().create_timer(destroyed_sink_duration - 0.5).timeout
-	view.position = base_view_position
-	
-	var explosion_position: Vector3 = global_position + Vector3.UP * destroyed_sink_distance
-	VfxManager.spawn("ship_explosion", explosion_position)
-	
-	await get_tree().create_timer(0.25).timeout
-	push_ships_from_explosion(explosion_position)
-	AudioManager.play_sfx("ship_explosion", global_position)
-	
-	await get_tree().create_timer(destroyed_destroy_delay).timeout
+
+	var fire_stop_delay: float = destroyed_sink_duration * 0.75
+	await get_tree().create_timer(fire_stop_delay).timeout
+	if fire_vfx != null and is_instance_valid(fire_vfx):
+		VfxManager.stop(fire_vfx)
+
+	var remaining_sink_time: float = maxf(0.0, destroyed_sink_duration - fire_stop_delay)
+	if remaining_sink_time > 0.0:
+		await get_tree().create_timer(remaining_sink_time).timeout
+
+	if destroyed_fade_duration > 0.0:
+		fade_out_black_ship_geometry(destroyed_fade_duration)
+		await get_tree().create_timer(destroyed_fade_duration).timeout
+
+
+	if destroyed_destroy_delay > 0.0:
+		await get_tree().create_timer(destroyed_destroy_delay).timeout
+
 	queue_free()
+
+
+func disable_ship_shadows() -> void:
+	if view == null or not is_instance_valid(view):
+		return
+
+	var geoms := view.find_children("*", "GeometryInstance3D", true, false)
+	for child in geoms:
+		var geom := child as GeometryInstance3D
+		if geom != null and is_instance_valid(geom):
+			geom.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+
+
+func set_ship_sorting_offset(offset: float) -> void:
+	if view == null or not is_instance_valid(view):
+		return
+	var geoms := view.find_children("*", "GeometryInstance3D", true, false)
+	for child in geoms:
+		var geom := child as GeometryInstance3D
+		if geom != null and is_instance_valid(geom):
+			geom.sorting_offset = offset
+
+
+
+func fade_out_black_ship_geometry(duration: float) -> void:
+	if view == null or not is_instance_valid(view):
+		return
+
+	set_outline_thickness(0.0)
+	disable_ship_shadows()
+
+	var alpha_materials: Array[StandardMaterial3D] = []
+	var meshes := view.find_children("*", "MeshInstance3D", true, false)
+
+	for child in meshes:
+		var mesh_inst := child as MeshInstance3D
+		if mesh_inst == null or mesh_inst.mesh == null:
+			continue
+
+		mesh_inst.sorting_offset = -20.0
+		mesh_inst.material_overlay = null
+		mesh_inst.material_override = null
+
+		var surface_count: int = mesh_inst.mesh.get_surface_count()
+		for i in surface_count:
+			var orig_mat: Material = mesh_inst.get_surface_override_material(i)
+			if orig_mat == null:
+				orig_mat = mesh_inst.mesh.surface_get_material(i)
+
+			var alpha_mat := StandardMaterial3D.new()
+			if orig_mat is StandardMaterial3D:
+				alpha_mat = (orig_mat as StandardMaterial3D).duplicate() as StandardMaterial3D
+
+			alpha_mat.render_priority = -10
+			alpha_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+			alpha_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+			alpha_mat.blend_mode = BaseMaterial3D.BLEND_MODE_MIX
+			alpha_mat.depth_draw_mode = BaseMaterial3D.DEPTH_DRAW_ALWAYS
+			alpha_mat.albedo_color = Color(0.0, 0.0, 0.0, 1.0)
+			mesh_inst.set_surface_override_material(i, alpha_mat)
+			alpha_materials.append(alpha_mat)
+
+
+	var fade_tween := create_tween().set_parallel(true).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	fade_tween.tween_property(self, "position", position + Vector3.DOWN * 2.0, duration)
+
+	var setter := Callable(self, "_update_alpha_materials").bind(alpha_materials)
+	fade_tween.tween_method(setter, 1.0, 0.0, duration)
+
+
+func _update_alpha_materials(alpha: float, materials: Array[StandardMaterial3D]) -> void:
+	for mat in materials:
+		if mat != null and is_instance_valid(mat):
+			mat.albedo_color = Color(0.0, 0.0, 0.0, alpha)
+
+
+
+
+
+
+
+
+
 
 
 func push_ships_from_explosion(explosion_position: Vector3) -> void:
@@ -805,8 +931,10 @@ func play_hit_feedback(color: Color) -> void:
 
 func setup_hit_flash_material_instance() -> void:
 	hit_flash_material_instance = hit_flash_material_template.duplicate(true) as ShaderMaterial
+	hit_flash_material_instance.render_priority = -5
 	for mesh in hit_flash_targets:
 		mesh.material_overlay = hit_flash_material_instance
+
 
 
 func set_hit_flash_color(color: Color) -> void:
@@ -817,6 +945,12 @@ func set_hit_flash_color(color: Color) -> void:
 func set_hit_flash_strength(value: float) -> void:
 	if hit_flash_material_instance:
 		hit_flash_material_instance.set_shader_parameter(&"flash_strength", value)
+
+
+func set_hit_flash_alpha_fade(value: float) -> void:
+	if hit_flash_material_instance:
+		hit_flash_material_instance.set_shader_parameter(&"alpha_fade", value)
+
 
 
 func setup_outline_material_instance() -> void:

@@ -5,6 +5,9 @@ class_name GameEndPopup extends UiView
 @export var stats_label: Label
 @export var replay_button: Button
 @export var menu_button: Button
+@export var confetti_scene: PackedScene = preload("res://scenes/vfx/confetti_particles.tscn")
+
+var confetti_instance: CPUParticles2D
 
 
 func _ready() -> void:
@@ -27,7 +30,8 @@ func sync_from_game() -> void:
 
 	if title_label != null:
 		if game.winner_team == int(Ship.Team.GoodGuys):
-			set_title_text("White Fleet Wins")
+			set_title_text("White Fleet Wins!")
+			spawn_confetti()
 		elif game.winner_team == int(Ship.Team.BadGuys):
 			set_title_text("Black Fleet Wins")
 		else:
@@ -41,6 +45,23 @@ func sync_from_game() -> void:
 
 	if stats_label != null:
 		stats_label.text = "White kills: %d\nBlack kills: %d" % [game.good_team_kills, game.bad_team_kills]
+
+
+func spawn_confetti() -> void:
+	if confetti_scene == null:
+		return
+
+	if confetti_instance != null and is_instance_valid(confetti_instance):
+		confetti_instance.queue_free()
+
+	confetti_instance = confetti_scene.instantiate() as CPUParticles2D
+	if confetti_instance != null:
+		add_child(confetti_instance)
+		var viewport_size := get_viewport().get_visible_rect().size
+		confetti_instance.position = Vector2(viewport_size.x / 2.0, -20)
+		confetti_instance.restart()
+		confetti_instance.emitting = true
+
 
 
 func set_title_text(title: String) -> void:

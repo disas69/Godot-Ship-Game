@@ -19,10 +19,11 @@ signal hover_ended
 @export var press_duration: float = 0.08
 
 @export_group("Feedback")
-@export var silent: bool = true
-@export var hover_sfx_key: String = ""
-@export var press_sfx_key: String = ""
-@export var joy_vibration_device: int = -1
+@export var silent: bool = false
+@export var hover_sfx_key: String = "ui_hover"
+@export var press_sfx_key: String = "ui_click"
+@export var joy_vibration_device: int = 0
+
 @export var hover_vibration_strength: float = 0.25
 @export var hover_vibration_duration: float = 0.1
 @export var press_vibration_strength: float = 0.35

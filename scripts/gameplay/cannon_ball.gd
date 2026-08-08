@@ -39,9 +39,13 @@ func _on_body_entered(body: Node) -> void:
 	var ship: Ship = body as Ship
 	if ship != null and ship != shooter and (shooter == null or shooter.can_target_ship(ship)):
 		ship.take_hit(linear_velocity, shooter)
+		if not ship.is_destroyed:
+			play_hit(global_position)
+	else:
 		play_hit(global_position)
 	
 	release()
+
 
 
 func set_shooter(ship: Ship) -> void:
@@ -88,6 +92,15 @@ func reset_for_spawn() -> void:
 	if cannon_view != null:
 		cannon_view.scale = default_cannon_view_scale
 
+	var trail := get_node_or_null("CannonBallTrail")
+	if trail != null:
+		if trail.has_method("reset_trail"):
+			trail.call("reset_trail")
+		elif trail is GPUParticles3D:
+			(trail as GPUParticles3D).restart()
+			(trail as GPUParticles3D).emitting = true
+
+
 
 func reset_for_pool() -> void:
 	cache_default_state()
@@ -103,8 +116,15 @@ func reset_for_pool() -> void:
 	scale_tween = null
 	if cannon_view != null:
 		cannon_view.scale = default_cannon_view_scale
+
+	var trail := get_node_or_null("CannonBallTrail") as GPUParticles3D
+	if trail != null:
+		trail.emitting = false
+
+
 	visible = false
 	process_mode = Node.PROCESS_MODE_DISABLED
+
 
 
 func release() -> void:

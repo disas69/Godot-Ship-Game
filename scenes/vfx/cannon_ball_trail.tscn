@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/vfx/cannon_ball_trail_3d.gd" id="1_trail"]
+
+[node name="CannonBallTrail" type="GPUParticles3D"]
+script = ExtResource("1_trail")

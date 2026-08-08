@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://d1xn1vohxsqi5" path="res://assets/kenney_pirate-kit/Models/GLB format/cannon-ball.glb" id="1_4105j"]
 [ext_resource type="Script" uid="uid://dh2kdoiubky88" path="res://scripts/gameplay/cannon_ball.gd" id="1_tqdv6"]
+[ext_resource type="PackedScene" path="res://scenes/vfx/cannon_ball_trail.tscn" id="3_trail"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_tqdv6"]
 radius = 0.55
@@ -21,6 +22,9 @@ transform = Transform3D(1.7, 0, 0, 0, 1.7, 0, 0, 0, 1.7, 0, 0, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=149342509]
 shape = SubResource("SphereShape3D_tqdv6")
 
+[node name="CannonBallTrail" parent="." instance=ExtResource("3_trail")]
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+
 
 [editable path="cannon-ball2"]

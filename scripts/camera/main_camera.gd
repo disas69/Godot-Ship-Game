@@ -31,7 +31,10 @@ var split_viewport_1: SubViewport
 var split_viewport_2: SubViewport
 var split_camera_1: Camera3D
 var split_camera_2: Camera3D
+var split_camera_shake_1: CameraShake
+var split_camera_shake_2: CameraShake
 var split_amount: float = 0.0
+
 var desired_split_amount: float = 0.0
 var target_size: float = 0.0
 var current_rig_position := Vector3.ZERO
@@ -140,6 +143,23 @@ func shake(amount: float = 1.0) -> void:
 	camera_shake.shake(amount)
 
 
+func shake_for_target(target: Node3D, amount: float = 1.0) -> void:
+	if target == null or not is_instance_valid(target):
+		shake(amount)
+		return
+
+	if is_dynamic_split_active() and targets.size() >= 2:
+		if target == targets[0] and split_camera_shake_1 != null:
+			split_camera_shake_1.shake(amount)
+			return
+		elif target == targets[1] and split_camera_shake_2 != null:
+			split_camera_shake_2.shake(amount)
+			return
+
+	shake(amount)
+
+
+
 func get_camera_for_target(target: Variant) -> Camera3D:
 	if target == null or not is_instance_valid(target) or not is_dynamic_split_available() or split_amount <= 0.001:
 		return camera
@@ -228,6 +248,15 @@ func setup_dynamic_split_screen() -> void:
 	split_camera_2 = create_split_camera("DynamicSplitCamera2")
 	split_viewport_1.add_child(split_camera_1)
 	split_viewport_2.add_child(split_camera_2)
+
+	split_camera_shake_1 = CameraShake.new()
+	split_camera_shake_1.name = "CameraShake1"
+	split_camera_1.add_child(split_camera_shake_1)
+
+	split_camera_shake_2 = CameraShake.new()
+	split_camera_shake_2.name = "CameraShake2"
+	split_camera_2.add_child(split_camera_shake_2)
+
 
 	split_view.texture = split_viewport_1.get_texture()
 	split_material.set_shader_parameter("viewport1", split_viewport_1.get_texture())

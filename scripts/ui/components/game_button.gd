@@ -16,9 +16,14 @@ const TEX_RED = preload("res://assets/kenney_ui-pack-adventure/PNG/Default/butto
 
 func _ready() -> void:
 	text = label
-	silent = true
+	silent = false
+	if hover_sfx_key.is_empty():
+		hover_sfx_key = "ui_hover"
+	if press_sfx_key.is_empty():
+		press_sfx_key = "ui_click"
 	apply_button_style()
 	super._ready()
+
 
 
 func apply_button_style() -> void:

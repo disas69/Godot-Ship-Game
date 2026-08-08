@@ -9,11 +9,13 @@ var sfx_map: Dictionary[String, AudioEntry] = {}
 var music_map: Dictionary[String, AudioEntry] = {}
 var active_music_players: Dictionary[String, AudioStreamPlayer] = {}
 var active_sfx_players: Array[AudioStreamPlayer3D] = []
+var sfx_last_play_time: Dictionary[String, float] = {}
 var music_bus: StringName = MUSIC_BUS
 var sfx_bus: StringName = SFX_BUS
 var music_root: Node
 var sfx_player_pool: ObjectPool
 var sfx_pool_root: Node3D
+
 
 
 func _ready() -> void:
@@ -159,17 +161,43 @@ func play_sfx_internal(key: String, world_position: Vector3) -> void:
 	if entry == null:
 		return
 
+	var current_time := Time.get_ticks_msec() / 1000.0
+	var min_interval: float = float(entry.get("min_interval_sec")) if entry.get("min_interval_sec") != null else 0.04
+	var last_play: float = sfx_last_play_time.get(key, -1.0)
+	if last_play >= 0.0 and (current_time - last_play) < min_interval:
+		return
+
+	var active_players_for_key: Array[AudioStreamPlayer3D] = []
+	for p in active_sfx_players:
+		if is_instance_valid(p) and String(p.get_meta("audio_key", "")) == key:
+			active_players_for_key.append(p)
+
+	var max_poly: int = int(entry.get("max_polyphony")) if entry.get("max_polyphony") != null else 3
+	if active_players_for_key.size() >= max_poly:
+		var oldest := active_players_for_key[0]
+		release_sfx_player(oldest, true)
+
+	sfx_last_play_time[key] = current_time
+
 	var player := sfx_player_pool.acquire() as AudioStreamPlayer3D
 	if player == null:
 		return
 
 	move_sfx_player_to_parent(player, get_sfx_playback_parent())
 
+	var pitch_rand: float = float(entry.get("pitch_randomness")) if entry.get("pitch_randomness") != null else 0.06
+	var final_pitch: float = entry.pitch_scale
+	if pitch_rand > 0.0:
+		final_pitch *= randf_range(1.0 - pitch_rand, 1.0 + pitch_rand)
+
+	var volume_attenuation: float = float(active_players_for_key.size()) * -2.5
+	var final_volume: float = entry.volume + volume_attenuation
+
 	player.stream = entry.stream
 	player.bus = sfx_bus
-	player.volume_db = entry.volume
+	player.volume_db = final_volume
 	player.unit_size = entry.unit_size
-	player.pitch_scale = entry.pitch_scale
+	player.pitch_scale = final_pitch
 	player.max_distance = entry.max_distance
 	player.top_level = true
 	player.global_position = world_position
@@ -178,6 +206,7 @@ func play_sfx_internal(key: String, world_position: Vector3) -> void:
 
 	active_sfx_players.append(player)
 	player.play()
+
 
 
 func get_or_create_music_player(key: String) -> AudioStreamPlayer:

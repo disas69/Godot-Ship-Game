@@ -35,4 +35,5 @@ player_name = "Good Bot 2"
 script = ExtResource("2_0lls0")
 good_team_players = Array[ExtResource("1_8am23")]([SubResource("Resource_good_local_1"), SubResource("Resource_good_bot_1"), SubResource("Resource_good_bot_2")])
 bad_team_players = Array[ExtResource("1_8am23")]([SubResource("Resource_bad_bot_1"), SubResource("Resource_bad_bot_2"), SubResource("Resource_bad_bot_3")])
+game_duration_sec = 90
 respawn_delay_sec = 5.0

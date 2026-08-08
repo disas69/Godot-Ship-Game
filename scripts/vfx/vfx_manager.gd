@@ -287,13 +287,15 @@ func prepare_effect_for_spawn(effect: Node3D, entry: VfxEntry) -> void:
 
 
 func start_effect(effect: Node3D) -> void:
-	restart_particles(effect)
 	if effect is VfxAnimationPlayer:
 		(effect as VfxAnimationPlayer).play()
-	elif effect is VfxPlayer:
-		(effect as VfxPlayer).play()
-	elif effect is DamageTextFX:
-		(effect as DamageTextFX).play()
+	else:
+		restart_particles(effect)
+		if effect is VfxPlayer:
+			(effect as VfxPlayer).play()
+		elif effect is DamageTextFX:
+			(effect as DamageTextFX).play()
+
 
 
 func release_effect(effect: Node3D) -> void:
