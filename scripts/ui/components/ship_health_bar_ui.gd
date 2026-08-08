@@ -14,7 +14,7 @@ class_name ShipHealthBarUI extends Control
 @export var empty_alpha: float = 0.5
 @export var flash_modulate: Color = Color(3.5, 3.5, 3.5, 1.0)
 
-var _target_ship: Ship
+var _target_ship: Node
 var _container: HBoxContainer
 var _slots: Array[TextureRect] = []
 var _current_hp: int = -1
@@ -33,10 +33,11 @@ func _ready() -> void:
 	_ensure_textures()
 
 
-func setup(ship: Ship) -> void:
+func setup(ship: Node) -> void:
 	_target_ship = ship
-	if _target_ship != null and not _target_ship.health_changed.is_connected(on_ship_health_changed):
-		_target_ship.health_changed.connect(on_ship_health_changed)
+	if _target_ship != null and _target_ship.has_signal("health_changed"):
+		if not _target_ship.is_connected("health_changed", on_ship_health_changed):
+			_target_ship.connect("health_changed", on_ship_health_changed)
 
 
 func _ensure_container() -> void:
@@ -100,7 +101,11 @@ static func _generate_circle_texture(is_filled: bool) -> ImageTexture:
 
 
 func _process(_delta: float) -> void:
-	if _target_ship == null or not is_instance_valid(_target_ship) or _target_ship.is_destroyed:
+	if _target_ship == null or not is_instance_valid(_target_ship):
+		visible = false
+		return
+
+	if "is_destroyed" in _target_ship and _target_ship.get("is_destroyed"):
 		visible = false
 		return
 
@@ -113,7 +118,12 @@ func _process(_delta: float) -> void:
 		visible = false
 		return
 
-	var world_pos := _target_ship.global_position + Vector3(0, height_offset, 0)
+	var ship_3d := _target_ship as Node3D
+	if ship_3d == null:
+		visible = false
+		return
+
+	var world_pos: Vector3 = ship_3d.global_position + Vector3(0, height_offset, 0)
 	if camera.is_position_behind(world_pos):
 		visible = false
 		return

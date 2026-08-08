@@ -124,7 +124,7 @@ func should_keep_gamepad_aim_without_input() -> bool:
 
 
 func can_shoot() -> bool:
-	if ignore_input:
+	if ignore_input or current_ammo < 1.0:
 		return false
 	var action: StringName = player_input.get_action("shoot")
 	return action != StringName("") and Input.is_action_just_pressed(action)

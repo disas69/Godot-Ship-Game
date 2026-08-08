@@ -460,6 +460,8 @@ func on_attacked_by(attacker: Ship) -> void:
 
 
 func can_shoot() -> bool:
+	if current_ammo < 1.0:
+		return false
 	if state == BotState.ATTACK and is_target_valid(target):
 		var distance_to_target: float = global_position.distance_to(target.global_position)
 		if distance_to_target >= attack_min_distance and distance_to_target <= get_attack_max_distance() and time >= next_shoot_time:

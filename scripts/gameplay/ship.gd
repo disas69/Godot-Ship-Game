@@ -4,6 +4,7 @@ const AIM_OVERLAY_SHADER := preload("res://shaders/aim_overlay.gdshader")
 
 signal destroyed(ship: Ship)
 signal health_changed(current_hp: int, max_hp: int)
+signal ammo_changed(current_ammo: float, max_ammo: int)
 
 enum Team {
 	GoodGuys,
@@ -13,8 +14,13 @@ enum Team {
 @export_category("Settings")
 @export var team: Team = Team.GoodGuys
 @export var hit_ponts: int = 3
-@export var health_bar_ui: ShipHealthBarUI
+@export var health_bar_ui: Control
 @export var aim_help_check_radius: float = 5.0
+@export_category("Ammo")
+@export var max_ammo: int = 10
+@export var ammo_recharge_time: float = 1.0
+@export var ammo_ui_enabled: bool = true
+@export var ammo_bar_ui: Control
 
 @export_category("View")
 @export var view: Node3D
@@ -78,6 +84,7 @@ var manual_aim_offset := Vector3.ZERO
 var cannon_ball_pool: ObjectPool
 var cannon_ball_pool_root: Node3D
 var max_hit_points: int = 3
+var current_ammo: float = 10.0
 
 
 func _ready() -> void:
@@ -94,6 +101,7 @@ func _ready() -> void:
 	initialize_aim_offset()
 	setup_cannon_ball_pool()
 	setup_health_bar()
+	setup_ammo_bar()
 	super._ready()
 
 
@@ -118,10 +126,30 @@ func setup_health_bar() -> void:
 	health_bar_ui.update_health(hit_ponts, max_hit_points, false)
 
 
+func setup_ammo_bar() -> void:
+	current_ammo = float(max_ammo)
+
+	if not ammo_ui_enabled:
+		return
+
+	if ammo_bar_ui == null:
+		ammo_bar_ui = get_node_or_null("ShipAmmoUI") as Control
+	if ammo_bar_ui == null:
+		ammo_bar_ui = ShipAmmoUI.new()
+		ammo_bar_ui.name = "ShipAmmoUI"
+		add_child(ammo_bar_ui)
+
+	if ammo_bar_ui.has_method("setup"):
+		ammo_bar_ui.call("setup", self)
+
+
 func _exit_tree() -> void:
 	if health_bar_ui != null and is_instance_valid(health_bar_ui):
 		health_bar_ui.queue_free()
 		health_bar_ui = null
+	if ammo_bar_ui != null and is_instance_valid(ammo_bar_ui):
+		ammo_bar_ui.queue_free()
+		ammo_bar_ui = null
 
 
 func _physics_process(delta: float) -> void:
@@ -153,6 +181,10 @@ func _physics_process(delta: float) -> void:
 func _process(delta: float) -> void:
 	if is_destroyed or not gameplay_enabled:
 		return
+
+	if current_ammo < float(max_ammo):
+		current_ammo = minf(float(max_ammo), current_ammo + delta / ammo_recharge_time)
+		ammo_changed.emit(current_ammo, max_ammo)
 
 	if !last_move_dir.is_zero_approx():
 		incline_view_x(delta)
@@ -220,7 +252,7 @@ func should_keep_gamepad_aim_without_input() -> bool:
 
 
 func can_shoot() -> bool:
-	return false
+	return current_ammo >= 1.0
 
 
 func set_gameplay_enabled(enabled: bool) -> void:
@@ -500,6 +532,12 @@ func rotate_cannon_towards(target_position: Vector3) -> void:
 	
 
 func shoot(target_position: Vector3) -> void:
+	if current_ammo < 1.0:
+		return
+
+	current_ammo = maxf(0.0, current_ammo - 1.0)
+	ammo_changed.emit(current_ammo, max_ammo)
+
 	var cannon_ball_inst: CannonBall = spawn_cannon_ball()
 	if cannon_ball_inst == null:
 		return
