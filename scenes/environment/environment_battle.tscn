@@ -2134,17 +2134,53 @@ spawn_interval_max = 12.0
 spawn_radius_from_camera = 100.0
 
 [node name="FishFlock_NearReef1" parent="." unique_id=1113498350 instance=ExtResource("54_gp84x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.050934, 0, 86.33481)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.238525, 0, 60.235596)
+fish_count = 40
+roaming_radius = 15.0
+
+[node name="FishFlock_NearReef8" parent="." unique_id=2001254198 instance=ExtResource("54_gp84x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69.40524, 0, 73.765434)
+fish_count = 40
+roaming_radius = 15.0
+
+[node name="FishFlock_NearReef3" parent="." unique_id=1005303379 instance=ExtResource("54_gp84x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -105.361176, 0, 80.89748)
+fish_count = 40
+roaming_radius = 15.0
+
+[node name="FishFlock_NearReef4" parent="." unique_id=1264793416 instance=ExtResource("54_gp84x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.375122, 0, 44.528526)
+fish_count = 40
+roaming_radius = 15.0
+
+[node name="FishFlock_NearReef5" parent="." unique_id=594565616 instance=ExtResource("54_gp84x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 69.35849, 0, 65.67294)
+fish_count = 40
 roaming_radius = 15.0
 
 [node name="FishFlock_NearReef2" parent="." unique_id=1485490263 instance=ExtResource("54_gp84x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.50177, 0, -47.461914)
-fish_count = 22
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.676727, 0, -18.4628)
+fish_count = 40
 roaming_radius = 18.0
 
 [node name="FishFlock_OpenSea" parent="." unique_id=1300548298 instance=ExtResource("54_gp84x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -75.403915, 0, -47.792736)
-fish_count = 25
+fish_count = 40
+roaming_radius = 22.0
+
+[node name="FishFlock_OpenSea2" parent="." unique_id=490477628 instance=ExtResource("54_gp84x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -61.629333, 0, -70.992035)
+fish_count = 40
+roaming_radius = 22.0
+
+[node name="FishFlock_OpenSea3" parent="." unique_id=1332260123 instance=ExtResource("54_gp84x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.882324, 0, -69.840775)
+fish_count = 40
+roaming_radius = 22.0
+
+[node name="FishFlock_OpenSea4" parent="." unique_id=1682734512 instance=ExtResource("54_gp84x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.31276, 0, -46.28363)
+fish_count = 40
 roaming_radius = 22.0
 
 [editable path="MAIN ISLAND 1/Pile of furnitures 2/platform-planks7/bottle-large7"]

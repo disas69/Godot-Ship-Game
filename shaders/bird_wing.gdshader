@@ -16,8 +16,9 @@ varying vec3 world_pos;
 void vertex() {
 	world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
 	if (enable_flap_anim) {
-		// Flap wings up and down based on distance from center along local X axis
-		float flap = sin(TIME * flap_speed + phase_offset + (world_pos.x + world_pos.z) * 0.1);
+		// Flap wings up and down based on distance from center along local X axis and instance phase offset
+		float inst_phase = phase_offset + float(INSTANCE_ID) * 1.618;
+		float flap = sin(TIME * flap_speed + inst_phase + (world_pos.x + world_pos.z) * 0.1);
 		VERTEX.y += flap * abs(VERTEX.x) * flap_amplitude;
 	}
 }

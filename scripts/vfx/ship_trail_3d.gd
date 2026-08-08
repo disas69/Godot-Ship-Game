@@ -92,7 +92,13 @@ func _get_horizontal_velocity(current_position: Vector3, delta: float) -> Vector
 	return velocity
 
 
+static var _cached_color_ramp: GradientTexture1D = null
+static var _cached_width_curve: CurveTexture = null
+
+
 func _create_color_ramp() -> GradientTexture1D:
+	if _cached_color_ramp != null:
+		return _cached_color_ramp
 	var gradient := Gradient.new()
 	gradient.set_offset(0, 0.0)
 	gradient.set_color(0, Color(1.0, 1.0, 1.0, 1.0))
@@ -103,10 +109,13 @@ func _create_color_ramp() -> GradientTexture1D:
 	var texture := GradientTexture1D.new()
 	texture.gradient = gradient
 	texture.width = 128
-	return texture
+	_cached_color_ramp = texture
+	return _cached_color_ramp
 
 
 func _create_width_curve() -> CurveTexture:
+	if _cached_width_curve != null:
+		return _cached_width_curve
 	var curve := Curve.new()
 	curve.add_point(Vector2(0.0, 1.0), 0.0, 0.0)
 	curve.add_point(Vector2(0.65, 0.72), 0.0, 0.0)
@@ -115,4 +124,5 @@ func _create_width_curve() -> CurveTexture:
 	var texture := CurveTexture.new()
 	texture.curve = curve
 	texture.width = 128
-	return texture
+	_cached_width_curve = texture
+	return _cached_width_curve

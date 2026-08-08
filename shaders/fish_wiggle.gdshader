@@ -16,7 +16,8 @@ void vertex() {
 		// Head is towards -Z (forward) and tail extends towards +Z (backward).
 		// Bends X displacement stronger toward the rear (+Z).
 		float rear_factor = clamp(VERTEX.z + 0.1, 0.0, 1.0);
-		float wiggle = sin(TIME * swim_speed + phase_offset - VERTEX.z * wiggle_frequency);
+		float inst_phase = phase_offset + float(INSTANCE_ID) * 2.39996;
+		float wiggle = sin(TIME * swim_speed + inst_phase - VERTEX.z * wiggle_frequency);
 		VERTEX.x += wiggle * rear_factor * wiggle_amplitude;
 	}
 }

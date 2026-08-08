@@ -25,167 +25,222 @@ extends Node3D
 @export var weight_alignment: float = 1.0
 @export var weight_bounds: float = 2.0
 
-class FishInstance:
-	var node: Node3D
-	var velocity: Vector3
-	var mesh_inst: MeshInstance3D
+var _multimesh_instance: MultiMeshInstance3D = null
+var _visibility_notifier: VisibleOnScreenNotifier3D = null
 
-var fish_list: Array[FishInstance] = []
+# Per-fish schooling parameters
+var _rad_x: PackedFloat32Array = PackedFloat32Array()
+var _rad_z: PackedFloat32Array = PackedFloat32Array()
+var _phase: PackedFloat32Array = PackedFloat32Array()
+var _orbit_speed: PackedFloat32Array = PackedFloat32Array()
+
+var _px: PackedFloat32Array = PackedFloat32Array()
+var _py: PackedFloat32Array = PackedFloat32Array()
+var _pz: PackedFloat32Array = PackedFloat32Array()
+
+var _dir_x: PackedFloat32Array = PackedFloat32Array()
+var _dir_y: PackedFloat32Array = PackedFloat32Array()
+var _dir_z: PackedFloat32Array = PackedFloat32Array()
+
+var _scl_x: PackedFloat32Array = PackedFloat32Array()
+var _scl_y: PackedFloat32Array = PackedFloat32Array()
+var _scl_z: PackedFloat32Array = PackedFloat32Array()
+
+var _center_x: float = 0.0
+var _center_z: float = 0.0
 var target_roam_point: Vector3 = Vector3.ZERO
 var roam_change_timer: float = 0.0
+var _time_passed: float = 0.0
 
 static var primitive_fish_mesh_cache: ArrayMesh = null
 
 func _ready() -> void:
 	target_roam_point = global_position
+	_center_x = 0.0
+	_center_z = 0.0
 	spawn_fish_flock()
 
 func spawn_fish_flock() -> void:
-	for fish in fish_list:
-		if is_instance_valid(fish.node):
-			fish.node.queue_free()
-	fish_list.clear()
+	if _multimesh_instance != null and is_instance_valid(_multimesh_instance):
+		_multimesh_instance.queue_free()
+	if _visibility_notifier != null and is_instance_valid(_visibility_notifier):
+		_visibility_notifier.queue_free()
 
-	var fish_mesh = custom_fish_mesh
-	if fish_mesh == null and custom_fish_scene == null:
+	_rad_x.clear(); _rad_z.clear(); _phase.clear(); _orbit_speed.clear()
+	_px.clear(); _py.clear(); _pz.clear()
+	_dir_x.clear(); _dir_y.clear(); _dir_z.clear()
+	_scl_x.clear(); _scl_y.clear(); _scl_z.clear()
+
+	var fish_mesh: Mesh = custom_fish_mesh
+	if fish_mesh == null and custom_fish_scene != null:
+		var temp_inst = custom_fish_scene.instantiate()
+		if temp_inst is MeshInstance3D:
+			fish_mesh = temp_inst.mesh
+		else:
+			var mi = temp_inst.find_child("*", true, false) as MeshInstance3D
+			if mi != null:
+				fish_mesh = mi.mesh
+		temp_inst.free()
+
+	if fish_mesh == null:
 		fish_mesh = get_or_create_primitive_fish_mesh()
 
+	_multimesh_instance = MultiMeshInstance3D.new()
+	var mm := MultiMesh.new()
+	mm.transform_format = MultiMesh.TRANSFORM_3D
+	mm.mesh = fish_mesh
+	mm.instance_count = fish_count
+	_multimesh_instance.multimesh = mm
+
 	var fish_shader = preload("res://shaders/fish_wiggle.gdshader")
+	var mat := ShaderMaterial.new()
+	mat.shader = fish_shader
+	mat.set_shader_parameter("albedo_color", fish_color)
+	mat.set_shader_parameter("swim_speed", 8.0)
+	mat.set_shader_parameter("wiggle_amplitude", 0.25)
+	if custom_fish_texture != null:
+		mat.set_shader_parameter("albedo_texture", custom_fish_texture)
+		mat.set_shader_parameter("use_texture", true)
+	_multimesh_instance.material_override = mat
+	add_child(_multimesh_instance)
+
+	_visibility_notifier = VisibleOnScreenNotifier3D.new()
+	var r = maxf(roaming_radius, 5.0)
+	_visibility_notifier.aabb = AABB(Vector3(-r, -vertical_range - 2.0, -r), Vector3(r * 2.0, vertical_range * 2.0 + 4.0, r * 2.0))
+	add_child(_visibility_notifier)
+
+	_rad_x.resize(fish_count); _rad_z.resize(fish_count); _phase.resize(fish_count); _orbit_speed.resize(fish_count)
+	_px.resize(fish_count); _py.resize(fish_count); _pz.resize(fish_count)
+	_dir_x.resize(fish_count); _dir_y.resize(fish_count); _dir_z.resize(fish_count)
+	_scl_x.resize(fish_count); _scl_y.resize(fish_count); _scl_z.resize(fish_count)
 
 	for i in range(fish_count):
-		var fish_data = FishInstance.new()
-		var fish_node: Node3D = null
+		var rx = randf_range(1.5, roaming_radius * 0.6)
+		var rz = randf_range(1.5, roaming_radius * 0.6)
+		var ph = randf() * TAU
+		var ospd = randf_range(0.3, 0.6) * (swim_speed / 3.5)
 
-		if custom_fish_scene != null:
-			fish_node = custom_fish_scene.instantiate() as Node3D
+		_rad_x[i] = rx; _rad_z[i] = rz; _phase[i] = ph; _orbit_speed[i] = ospd
+
+		var rand_scl = randf_range(0.85, 1.15)
+		var sx = fish_scale.x * rand_scl
+		var sy = fish_scale.y * rand_scl
+		var sz = fish_scale.z * rand_scl
+		_scl_x[i] = sx; _scl_y[i] = sy; _scl_z[i] = sz
+
+		var px = cos(ph) * rx
+		var py = sin(ph * 2.0) * (vertical_range * 0.5)
+		var pz = sin(ph) * rz
+		_px[i] = px; _py[i] = py; _pz[i] = pz
+
+		var fx = -sin(ph) * rx
+		var fy = 0.0
+		var fz = cos(ph) * rz
+		var flen = sqrt(fx * fx + fz * fz)
+		if flen > 0.0001:
+			fx /= flen; fz /= flen
 		else:
-			var mi = MeshInstance3D.new()
-			mi.mesh = fish_mesh
-			var mat = ShaderMaterial.new()
-			mat.shader = fish_shader
-			mat.set_shader_parameter("albedo_color", fish_color)
-			mat.set_shader_parameter("swim_speed", randf_range(6.0, 10.0))
-			mat.set_shader_parameter("wiggle_amplitude", 0.25)
-			mat.set_shader_parameter("phase_offset", randf() * TAU)
-			if custom_fish_texture != null:
-				mat.set_shader_parameter("albedo_texture", custom_fish_texture)
-				mat.set_shader_parameter("use_texture", true)
-			mi.material_override = mat
-			fish_data.mesh_inst = mi
-			fish_node = mi
+			fx = 0.0; fz = -1.0
+		_dir_x[i] = fx; _dir_y[i] = fy; _dir_z[i] = fz
 
-		fish_node.scale = fish_scale * randf_range(0.85, 1.15)
-		add_child(fish_node)
-
-		# Initial local position relative to FishFlock node position
-		var offset = Vector3(
-			randf_range(-roaming_radius * 0.5, roaming_radius * 0.5),
-			randf_range(-vertical_range * 0.5, vertical_range * 0.5),
-			randf_range(-roaming_radius * 0.5, roaming_radius * 0.5)
-		)
-		fish_node.position = offset
-		
-		var angle = randf() * TAU
-		fish_data.velocity = Vector3(cos(angle), randf_range(-0.05, 0.05), sin(angle)).normalized() * swim_speed
-		fish_data.node = fish_node
-
-		fish_list.append(fish_data)
+		_apply_instance_transform(mm, i, px, py, pz, fx, fy, fz, sx, sy, sz)
 
 func _process(delta: float) -> void:
+	# Frustum & Camera Distance Culling
+	if _visibility_notifier != null and not _visibility_notifier.is_on_screen():
+		var camera = get_viewport().get_camera_3d()
+		if camera != null and global_position.distance_squared_to(camera.global_transform.origin) > 14400.0:
+			return
+
+	_time_passed += delta
+
 	roam_change_timer -= delta
 	if roam_change_timer <= 0.0:
 		roam_change_timer = randf_range(4.0, 9.0)
 		var rand_offset = Vector3(
-			randf_range(-roaming_radius * 0.6, roaming_radius * 0.6),
+			randf_range(-roaming_radius * 0.4, roaming_radius * 0.4),
 			0.0,
-			randf_range(-roaming_radius * 0.6, roaming_radius * 0.6)
+			randf_range(-roaming_radius * 0.4, roaming_radius * 0.4)
 		)
 		target_roam_point = global_position + rand_offset
 
-	update_boids(delta)
+	# Move school center toward target roam point
+	var local_target = to_local(target_roam_point)
+	_center_x = move_toward(_center_x, local_target.x, delta * (swim_speed * 0.4))
+	_center_z = move_toward(_center_z, local_target.z, delta * (swim_speed * 0.4))
 
-func update_boids(delta: float) -> void:
-	var count = fish_list.size()
-	if count == 0:
+	_update_school_positions(delta)
+
+func _update_school_positions(delta: float) -> void:
+	var count = _px.size()
+	if count == 0 or _multimesh_instance == null or _multimesh_instance.multimesh == null:
 		return
 
-	var base_y = global_position.y
+	var mm = _multimesh_instance.multimesh
 
 	for i in range(count):
-		var fish = fish_list[i]
-		var pos = fish.node.global_position
-		var vel = fish.velocity
+		var t = _time_passed * _orbit_speed[i] + _phase[i]
+		var rx = _rad_x[i]
+		var rz = _rad_z[i]
 
-		var cohesion := Vector3.ZERO
-		var separation := Vector3.ZERO
-		var alignment := Vector3.ZERO
-		var neighbors: int = 0
+		var target_px = _center_x + cos(t) * rx
+		var target_pz = _center_z + sin(t) * rz
+		var target_py = sin(t * 1.7) * vertical_range
 
-		for j in range(count):
-			if i == j:
-				continue
-			var other = fish_list[j]
-			var dist = pos.distance_to(other.node.global_position)
+		var cur_px = move_toward(_px[i], target_px, delta * swim_speed * 2.0)
+		var cur_py = move_toward(_py[i], target_py, delta * 2.0)
+		var cur_pz = move_toward(_pz[i], target_pz, delta * swim_speed * 2.0)
 
-			if dist < neighbor_distance:
-				cohesion += other.node.global_position
-				alignment += other.velocity
-				neighbors += 1
+		# Velocity vector for orientation
+		var vx = cur_px - _px[i]
+		var vy = cur_py - _py[i]
+		var vz = cur_pz - _pz[i]
 
-				if dist < separation_distance and dist > 0.001:
-					separation += (pos - other.node.global_position).normalized() / dist
+		_px[i] = cur_px
+		_py[i] = cur_py
+		_pz[i] = cur_pz
 
-		var accel := Vector3.ZERO
+		var vlen = sqrt(vx * vx + vy * vy + vz * vz)
+		var fx = _dir_x[i]
+		var fy = _dir_y[i]
+		var fz = _dir_z[i]
 
-		if neighbors > 0:
-			cohesion = (cohesion / float(neighbors) - pos).normalized() * swim_speed
-			alignment = (alignment / float(neighbors)).normalized() * swim_speed
+		if vlen > 0.0001:
+			var n_fx = vx / vlen
+			var n_fy = (vy / vlen) * 0.2
+			var n_fz = vz / vlen
+			var turn = delta * 6.0
+			fx = move_toward(fx, n_fx, turn)
+			fy = move_toward(fy, n_fy, turn)
+			fz = move_toward(fz, n_fz, turn)
+			var flen = sqrt(fx * fx + fy * fy + fz * fz)
+			if flen > 0.0001:
+				fx /= flen; fy /= flen; fz /= flen
+			else:
+				fx = 0.0; fy = 0.0; fz = -1.0
 
-			accel += (cohesion - vel) * weight_cohesion
-			accel += separation * weight_separation * 5.0
-			accel += (alignment - vel) * weight_alignment
+		_dir_x[i] = fx
+		_dir_y[i] = fy
+		_dir_z[i] = fz
 
-		# Return towards roaming center on XZ plane
-		var target_xz = Vector3(target_roam_point.x, pos.y, target_roam_point.z)
-		var dist_to_target = pos.distance_to(target_xz)
-		if dist_to_target > roaming_radius:
-			var return_dir = (target_xz - pos).normalized() * swim_speed
-			accel += (return_dir - vel) * weight_bounds
+		_apply_instance_transform(mm, i, cur_px, cur_py, cur_pz, fx, fy, fz, _scl_x[i], _scl_y[i], _scl_z[i])
 
-		# Dampen Y vertical movement so fish swim flat underwater at node Y height
-		var y_diff = base_y - pos.y
-		accel.y += y_diff * 4.0
+func _apply_instance_transform(mm: MultiMesh, i: int, px: float, py: float, pz: float, fx: float, fy: float, fz: float, sx: float, sy: float, sz: float) -> void:
+	var f_len_sq = fx * fx + fy * fy + fz * fz
+	if f_len_sq < 0.0001:
+		fx = 0.0; fy = 0.0; fz = -1.0
 
-		# Apply acceleration
-		vel += accel * delta
-		
-		# Clamp Y velocity to keep swimming horizontal underwater
-		vel.y = clamp(vel.y, -0.4, 0.4)
+	var fwd = Vector3(fx, fy, fz).normalized()
+	var b_z = -fwd
+	var b_x = Vector3.UP.cross(b_z)
+	if b_x.length_squared() < 0.0001:
+		b_x = Vector3.RIGHT
+	else:
+		b_x = b_x.normalized()
+	var b_y = b_z.cross(b_x).normalized()
 
-		var horizontal_speed = Vector2(vel.x, vel.z).length()
-		if horizontal_speed > max_speed:
-			var h_norm = Vector2(vel.x, vel.z).normalized() * max_speed
-			vel.x = h_norm.x
-			vel.z = h_norm.y
-		elif horizontal_speed < swim_speed * 0.5:
-			var h_norm = Vector2(vel.x, vel.z).normalized() * (swim_speed * 0.5)
-			vel.x = h_norm.x
-			vel.z = h_norm.y
-
-		fish.velocity = vel
-		fish.node.global_position += vel * delta
-
-		# Strictly clamp global Y position to stay near node Y position
-		fish.node.global_position.y = clamp(fish.node.global_position.y, base_y - vertical_range, base_y + vertical_range)
-
-		# Yaw & slight bank rotation (flatten Y component so fish points forward without pitching up into air)
-		var look_vel = Vector3(vel.x, vel.y * 0.15, vel.z)
-		if look_vel.length_squared() > 0.001:
-			var target_rot = Transform3D().looking_at(look_vel, Vector3.UP).basis
-			var current_scale: Vector3 = fish.node.scale
-			var current_basis_norm: Basis = fish.node.basis.orthonormalized()
-			var new_basis: Basis = current_basis_norm.slerp(target_rot.orthonormalized(), delta * 6.0).orthonormalized()
-			fish.node.basis = new_basis.scaled(current_scale)
+	var basis = Basis(b_x * sx, b_y * sy, b_z * sz)
+	mm.set_instance_transform(i, Transform3D(basis, Vector3(px, py, pz)))
 
 static func get_or_create_primitive_fish_mesh() -> ArrayMesh:
 	if primitive_fish_mesh_cache != null:
@@ -194,16 +249,15 @@ static func get_or_create_primitive_fish_mesh() -> ArrayMesh:
 	var st = SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 
-	var head = Vector3(0.0, 0.0, -0.5) # Forward is -Z
+	var head = Vector3(0.0, 0.0, -0.5)
 	var body_top = Vector3(0.0, 0.18, -0.05)
 	var body_bottom = Vector3(0.0, -0.18, -0.05)
 	var body_left = Vector3(-0.12, 0.0, -0.05)
 	var body_right = Vector3(0.12, 0.0, -0.05)
-	var tail_base = Vector3(0.0, 0.0, 0.4) # Backward is +Z
+	var tail_base = Vector3(0.0, 0.0, 0.4)
 	var tail_top = Vector3(0.0, 0.25, 0.7)
 	var tail_bottom = Vector3(0.0, -0.25, 0.7)
 
-	# Head pyramid facing -Z
 	st.set_normal(Vector3(-0.5, 0.5, -0.7).normalized())
 	st.add_vertex(head); st.add_vertex(body_top); st.add_vertex(body_left)
 	st.set_normal(Vector3(0.5, 0.5, -0.7).normalized())
@@ -213,7 +267,6 @@ static func get_or_create_primitive_fish_mesh() -> ArrayMesh:
 	st.set_normal(Vector3(0.5, -0.5, -0.7).normalized())
 	st.add_vertex(head); st.add_vertex(body_bottom); st.add_vertex(body_right)
 
-	# Body section to tail base
 	st.set_normal(Vector3(0, 1, 0))
 	st.add_vertex(body_top); st.add_vertex(tail_base); st.add_vertex(body_left)
 	st.add_vertex(body_top); st.add_vertex(body_right); st.add_vertex(tail_base)
@@ -221,7 +274,6 @@ static func get_or_create_primitive_fish_mesh() -> ArrayMesh:
 	st.add_vertex(body_bottom); st.add_vertex(body_left); st.add_vertex(tail_base)
 	st.add_vertex(body_bottom); st.add_vertex(tail_base); st.add_vertex(body_right)
 
-	# Tail fin (double sided)
 	st.set_normal(Vector3(1, 0, 0))
 	st.add_vertex(tail_base); st.add_vertex(tail_bottom); st.add_vertex(tail_top)
 	st.set_normal(Vector3(-1, 0, 0))
