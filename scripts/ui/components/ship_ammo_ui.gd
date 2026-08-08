@@ -14,17 +14,25 @@ class_name ShipAmmoUI extends Control
 @export var fill_color: Color = Color(0.2, 0.85, 1.0, 0.65)
 @export var bg_color: Color = Color(0.1, 0.12, 0.16, 0.4)
 @export var low_ammo_color: Color = Color(1.0, 0.35, 0.2, 0.65)
-@export var tick_color: Color = Color(0.05, 0.05, 0.08, 0.5)
+
+@export_category("Appearance Animations")
+@export var fade_in_duration: float = 0.2
+@export var fade_out_duration: float = 0.3
 
 var _target_ship: Node
 var _current_ammo: float = 10.0
 var _max_ammo: int = 10
+var _is_showing: bool = false
+var _visibility_tween: Tween
 
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	top_level = true
 	z_index = 100
+	modulate.a = 0.0
+	scale = Vector2(0.4, 0.4)
+	visible = false
 
 
 func setup(ship: Node) -> void:
@@ -37,6 +45,8 @@ func setup(ship: Node) -> void:
 			_current_ammo = float(_target_ship.get("current_ammo"))
 		if "max_ammo" in _target_ship:
 			_max_ammo = int(_target_ship.get("max_ammo"))
+
+	update_visibility_state(true)
 
 
 func on_ship_ammo_changed(current_ammo: float, max_ammo: int) -> void:
@@ -83,7 +93,43 @@ func _process(_delta: float) -> void:
 
 	var screen_pos := camera.unproject_position(world_pos)
 	global_position = screen_pos + screen_offset
-	visible = true
+	
+	update_visibility_state(false)
+
+
+func update_visibility_state(instant: bool = false) -> void:
+	var is_full := (_current_ammo >= float(_max_ammo) - 0.001)
+
+	if not is_full:
+		if not _is_showing:
+			_is_showing = true
+			visible = true
+			if instant:
+				modulate.a = 1.0
+				scale = Vector2.ONE
+			else:
+				if _visibility_tween != null and _visibility_tween.is_running():
+					_visibility_tween.kill()
+				_visibility_tween = create_tween().set_parallel(true)
+				_visibility_tween.tween_property(self, "modulate:a", 1.0, fade_in_duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+				_visibility_tween.tween_property(self, "scale", Vector2.ONE, fade_in_duration).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	else:
+		if _is_showing:
+			_is_showing = false
+			if instant:
+				modulate.a = 0.0
+				scale = Vector2(0.4, 0.4)
+				visible = false
+			else:
+				if _visibility_tween != null and _visibility_tween.is_running():
+					_visibility_tween.kill()
+				_visibility_tween = create_tween().set_parallel(true)
+				_visibility_tween.tween_property(self, "modulate:a", 0.0, fade_out_duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+				_visibility_tween.tween_property(self, "scale", Vector2(0.4, 0.4), fade_out_duration).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+				_visibility_tween.chain().tween_callback(func():
+					if not _is_showing:
+						visible = false
+				)
 
 
 func is_in_menu() -> bool:
