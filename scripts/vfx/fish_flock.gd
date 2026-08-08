@@ -232,11 +232,8 @@ func _apply_instance_transform(mm: MultiMesh, i: int, px: float, py: float, pz: 
 
 	var fwd = Vector3(fx, fy, fz).normalized()
 	var b_z = -fwd
-	var b_x = Vector3.UP.cross(b_z)
-	if b_x.length_squared() < 0.0001:
-		b_x = Vector3.RIGHT
-	else:
-		b_x = b_x.normalized()
+	var aux = Vector3.FORWARD if absf(b_z.y) > 0.99 else Vector3.UP
+	var b_x = aux.cross(b_z).normalized()
 	var b_y = b_z.cross(b_x).normalized()
 
 	var basis = Basis(b_x * sx, b_y * sy, b_z * sz)

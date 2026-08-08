@@ -88,7 +88,8 @@ func _process(delta: float) -> void:
 		distance_traveled += move_amount
 
 		if flight_direction.length_squared() > 0.001:
-			look_at(global_position + flight_direction, Vector3.UP)
+			var up_vec = Vector3.FORWARD if absf(flight_direction.y) > 0.99 else Vector3.UP
+			look_at(global_position + flight_direction, up_vec)
 
 		if distance_traveled >= total_distance:
 			var camera = get_viewport().get_camera_3d()
