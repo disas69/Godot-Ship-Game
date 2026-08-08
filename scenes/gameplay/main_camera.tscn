@@ -24,6 +24,7 @@ projection = 1
 current = true
 fov = 40.0
 size = 45.0
+far = 250.0
 
 [node name="CameraShake" type="Node" parent="Camera" unique_id=183772160 node_paths=PackedStringArray("target")]
 script = ExtResource("3_xe2wr")
