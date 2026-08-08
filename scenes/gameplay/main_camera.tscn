@@ -18,13 +18,14 @@ max_bounds = Vector3(15, 100, 100)
 split_line_color = Color(1, 1, 1, 1)
 
 [node name="Camera" type="Camera3D" parent="." unique_id=1875357754]
-transform = Transform3D(1.0000005, 0, 0, 0, 0.81915206, 0.5735768, 0, -0.57357645, 0.81915253, 0, 60, 65)
+transform = Transform3D(1.0000005, 0, 0, 0, 0.81915206, 0.5735768, 0, -0.57357645, 0.81915253, 0, 346.7884, 474.57626)
 environment = ExtResource("2_qvmr3")
 projection = 1
 current = true
 fov = 40.0
 size = 45.0
-far = 250.0
+far = 2000.0
+near = 0.1
 
 [node name="CameraShake" type="Node" parent="Camera" unique_id=183772160 node_paths=PackedStringArray("target")]
 script = ExtResource("3_xe2wr")
@@ -32,3 +33,7 @@ target = NodePath("..")
 max_offset = Vector2(5, 5)
 shake_decay_rate = 1.0
 trauma_power = 1.0
+
+[node name="AudioListener" type="AudioListener3D" parent="." unique_id=1875357755]
+transform = Transform3D(1.0000005, 0, 0, 0, 0.81915206, 0.5735768, 0, -0.57357645, 0.81915253, 0, 60, 65)
+current = true

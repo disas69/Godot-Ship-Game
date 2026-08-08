@@ -149,8 +149,11 @@ func _process(delta: float) -> void:
 	# Frustum & Camera Distance Culling
 	if _visibility_notifier != null and not _visibility_notifier.is_on_screen():
 		var camera = get_viewport().get_camera_3d()
-		if camera != null and global_position.distance_squared_to(camera.global_transform.origin) > 14400.0:
-			return
+		if camera != null:
+			var cam_parent = camera.get_parent()
+			var cam_pos = cam_parent.global_position if cam_parent is Node3D else camera.global_transform.origin
+			if global_position.distance_squared_to(cam_pos) > 14400.0:
+				return
 
 	_time_passed += delta
 

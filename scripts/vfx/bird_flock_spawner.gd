@@ -47,7 +47,8 @@ func spawn_flock() -> BirdFlock:
 	var center_origin = global_position
 	var camera = get_viewport().get_camera_3d()
 	if camera != null:
-		center_origin = camera.global_transform.origin
+		var cam_parent = camera.get_parent()
+		center_origin = cam_parent.global_position if cam_parent is Node3D else camera.global_transform.origin
 
 	# Choose random flight angle
 	var angle = randf() * TAU

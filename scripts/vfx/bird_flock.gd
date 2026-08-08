@@ -94,7 +94,9 @@ func _process(delta: float) -> void:
 		if distance_traveled >= total_distance:
 			var camera = get_viewport().get_camera_3d()
 			if camera != null:
-				var dist_to_cam = global_position.distance_to(camera.global_transform.origin)
+				var cam_parent = camera.get_parent()
+				var cam_pos = cam_parent.global_position if cam_parent is Node3D else camera.global_transform.origin
+				var dist_to_cam = global_position.distance_to(cam_pos)
 				if dist_to_cam > 90.0:
 					queue_free()
 			else:

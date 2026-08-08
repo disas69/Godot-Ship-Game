@@ -4,6 +4,7 @@ const DYNAMIC_SPLIT_SCREEN_SHADER := preload("res://shaders/dynamic_split_screen
 
 @export var camera: Camera3D
 @export var camera_shake: CameraShake
+@export var audio_listener: AudioListener3D
 @export var targets: Array[Node3D]
 @export var smooth_speed: float = 10.0
 @export var camera_size: float = 55.0
@@ -54,7 +55,20 @@ func _ready() -> void:
 		if target == null or not target.visible:
 			targets.erase(target)
 		
-	camera.size = camera_size
+	if camera != null:
+		camera.size = camera_size
+
+	if audio_listener == null:
+		audio_listener = get_node_or_null("AudioListener") as AudioListener3D
+	if audio_listener == null and camera != null:
+		audio_listener = AudioListener3D.new()
+		audio_listener.name = "AudioListener"
+		audio_listener.transform = Transform3D(camera.transform.basis, Vector3(0, 60, 65))
+		add_child(audio_listener)
+
+	if audio_listener != null:
+		audio_listener.make_current()
+
 	target_size = camera_size
 	current_rig_position = global_position
 	split_rig_position_1 = global_position
