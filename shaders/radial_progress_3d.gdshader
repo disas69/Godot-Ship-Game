@@ -19,8 +19,8 @@ void fragment() {
 	float inner_mask = smoothstep(inner_radius - edge_softness, inner_radius, radius);
 	float ring_mask = outer_mask * inner_mask;
 
-	float angle = atan(centered_uv.x, -centered_uv.y);
-	float normalized_angle = fract(angle / TAU + 1.0);
+	float angle = atan(centered_uv.y, centered_uv.x);
+	float normalized_angle = fract((-angle - PI / 2.0) / TAU);
 	float fill_mask = step(normalized_angle, progress);
 	vec4 color = mix(background_color, fill_color, fill_mask);
 
