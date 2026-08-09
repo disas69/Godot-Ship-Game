@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://d0a0jyecd51my" path="res://scripts/ui/components/ui_tween_container.gd" id="4_tween_container"]
 [ext_resource type="FontFile" uid="uid://daa5h725j1fj7" path="res://fonts/Pixelify_Sans/static/PixelifySans-Medium.ttf" id="5_body_font"]
 [ext_resource type="FontFile" uid="uid://bef8jlqfff473" path="res://fonts/Pixelify_Sans/static/PixelifySans-Bold.ttf" id="6_title_font"]
-[ext_resource type="Texture2D" uid="uid://dr1sy2vjpyuiv" path="res://assets/kenney_ui-pack-adventure/PNG/Default/panel_brown_corners_a.png" id="7_panel_texture"]
+[ext_resource type="Texture2D" uid="uid://8k1t33ks6i85" path="res://assets/ui_pirate/panel_frame_pirate.png" id="7_panel_texture"]
 
 [sub_resource type="Theme" id="Theme_ui"]
 default_font = ExtResource("5_body_font")
@@ -14,17 +14,17 @@ default_font_size = 22
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_panel"]
 texture = ExtResource("7_panel_texture")
-texture_margin_left = 18.0
-texture_margin_top = 18.0
-texture_margin_right = 18.0
-texture_margin_bottom = 18.0
+texture_margin_left = 38.0
+texture_margin_top = 38.0
+texture_margin_right = 38.0
+texture_margin_bottom = 38.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_card"]
 texture = ExtResource("7_panel_texture")
-texture_margin_left = 14.0
-texture_margin_top = 14.0
-texture_margin_right = 14.0
-texture_margin_bottom = 14.0
+texture_margin_left = 38.0
+texture_margin_top = 38.0
+texture_margin_right = 38.0
+texture_margin_bottom = 38.0
 modulate_color = Color(0.85, 0.85, 0.85, 0.9)
 
 [node name="GameEndPopup" type="CanvasLayer" unique_id=545473189 node_paths=PackedStringArray("title_label", "message_label", "stats_label", "replay_button", "menu_button")]
@@ -145,7 +145,9 @@ alignment = 1
 
 [node name="Message" type="Label" parent="Root/Panel/Margin/VBox/Card/Margin/InfoVBox" unique_id=2122354251]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.28, 0.18, 0.1, 1)
+theme_override_colors/font_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.06, 0.02, 1)
+theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("6_title_font")
 theme_override_font_sizes/font_size = 22
 text = "Time is up"
@@ -153,7 +155,9 @@ horizontal_alignment = 1
 
 [node name="Stats" type="Label" parent="Root/Panel/Margin/VBox/Card/Margin/InfoVBox" unique_id=448966815]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
+theme_override_colors/font_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.06, 0.02, 1)
+theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 20
 text = "White kills: 0
 Black kills: 0"

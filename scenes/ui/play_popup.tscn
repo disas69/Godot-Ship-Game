@@ -6,8 +6,8 @@
 [ext_resource type="Script" uid="uid://d0a0jyecd51my" path="res://scripts/ui/components/ui_tween_container.gd" id="4_tween_container"]
 [ext_resource type="FontFile" uid="uid://daa5h725j1fj7" path="res://fonts/Pixelify_Sans/static/PixelifySans-Medium.ttf" id="5_body_font"]
 [ext_resource type="FontFile" uid="uid://bef8jlqfff473" path="res://fonts/Pixelify_Sans/static/PixelifySans-Bold.ttf" id="6_title_font"]
-[ext_resource type="Texture2D" uid="uid://dr1sy2vjpyuiv" path="res://assets/kenney_ui-pack-adventure/PNG/Default/panel_brown_corners_a.png" id="7_panel_texture"]
-[ext_resource type="Texture2D" uid="uid://clvy6s0djiqry" path="res://assets/kenney_ui-pack-adventure/PNG/Default/button_grey.png" id="8_button_normal"]
+[ext_resource type="Texture2D" uid="uid://8k1t33ks6i85" path="res://assets/ui_pirate/panel_frame_pirate.png" id="7_panel_texture"]
+[ext_resource type="Texture2D" uid="uid://b3f3cnm38eu0o" path="res://assets/ui_pirate/button_wood_normal.png" id="8_button_normal"]
 
 [sub_resource type="Theme" id="Theme_ui"]
 default_font = ExtResource("5_body_font")
@@ -15,40 +15,40 @@ default_font_size = 22
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_panel"]
 texture = ExtResource("7_panel_texture")
-texture_margin_left = 18.0
-texture_margin_top = 18.0
-texture_margin_right = 18.0
-texture_margin_bottom = 18.0
+texture_margin_left = 38.0
+texture_margin_top = 38.0
+texture_margin_right = 38.0
+texture_margin_bottom = 38.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_card"]
 texture = ExtResource("7_panel_texture")
-texture_margin_left = 14.0
-texture_margin_top = 14.0
-texture_margin_right = 14.0
-texture_margin_bottom = 14.0
+texture_margin_left = 38.0
+texture_margin_top = 38.0
+texture_margin_right = 38.0
+texture_margin_bottom = 38.0
 modulate_color = Color(0.9, 0.9, 0.9, 0.95)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_small_normal"]
 texture = ExtResource("8_button_normal")
-texture_margin_left = 12.0
-texture_margin_top = 8.0
-texture_margin_right = 12.0
-texture_margin_bottom = 8.0
+texture_margin_left = 32.0
+texture_margin_top = 12.0
+texture_margin_right = 32.0
+texture_margin_bottom = 12.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_small_pressed"]
 texture = ExtResource("8_button_normal")
-texture_margin_left = 12.0
-texture_margin_top = 8.0
-texture_margin_right = 12.0
-texture_margin_bottom = 8.0
+texture_margin_left = 32.0
+texture_margin_top = 12.0
+texture_margin_right = 32.0
+texture_margin_bottom = 12.0
 modulate_color = Color(0.82, 0.82, 0.82, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_small_hover"]
 texture = ExtResource("8_button_normal")
-texture_margin_left = 12.0
-texture_margin_top = 8.0
-texture_margin_right = 12.0
-texture_margin_bottom = 8.0
+texture_margin_left = 32.0
+texture_margin_top = 12.0
+texture_margin_right = 32.0
+texture_margin_bottom = 12.0
 modulate_color = Color(1.12, 1.12, 1.12, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_focus"]
@@ -189,11 +189,13 @@ alignment = 1
 [node name="ValueButton" type="Button" parent="Root/Panel/Margin/VBox/Content/PlayerCountBlock/PlayerCountRow"]
 custom_minimum_size = Vector2(240, 44)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
+theme_override_colors/font_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_focus_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_pressed_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_hover_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_disabled_color = Color(0.98, 0.92, 0.78, 0.55)
+theme_override_colors/font_outline_color = Color(0.12, 0.06, 0.02, 1)
+theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("5_body_font")
 theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
@@ -226,7 +228,9 @@ theme_override_constants/separation = 10
 
 [node name="Title" type="Label" parent="Root/Panel/Margin/VBox/Content/CardsContainer/Player1Card/Margin/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
+theme_override_colors/font_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.06, 0.02, 1)
+theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("6_title_font")
 theme_override_font_sizes/font_size = 24
 text = "PLAYER 1"
@@ -242,11 +246,13 @@ alignment = 1
 [node name="ValueButton" type="Button" parent="Root/Panel/Margin/VBox/Content/CardsContainer/Player1Card/Margin/VBox/ControlsBlock/ControlsRow"]
 custom_minimum_size = Vector2(210, 40)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
+theme_override_colors/font_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_focus_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_pressed_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_hover_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_disabled_color = Color(0.98, 0.92, 0.78, 0.55)
+theme_override_colors/font_outline_color = Color(0.12, 0.06, 0.02, 1)
+theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("5_body_font")
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
@@ -266,11 +272,13 @@ alignment = 1
 [node name="ValueButton" type="Button" parent="Root/Panel/Margin/VBox/Content/CardsContainer/Player1Card/Margin/VBox/TeamBlock/TeamRow"]
 custom_minimum_size = Vector2(210, 40)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
+theme_override_colors/font_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_focus_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_pressed_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_hover_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_disabled_color = Color(0.98, 0.92, 0.78, 0.55)
+theme_override_colors/font_outline_color = Color(0.12, 0.06, 0.02, 1)
+theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("5_body_font")
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
@@ -306,7 +314,9 @@ theme_override_constants/separation = 10
 
 [node name="Title" type="Label" parent="Root/Panel/Margin/VBox/Content/CardsContainer/Player2Card/Margin/VBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.32, 0.22, 0.13, 1)
+theme_override_colors/font_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_outline_color = Color(0.12, 0.06, 0.02, 1)
+theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("6_title_font")
 theme_override_font_sizes/font_size = 24
 text = "PLAYER 2"
@@ -322,11 +332,13 @@ alignment = 1
 [node name="ValueButton" type="Button" parent="Root/Panel/Margin/VBox/Content/CardsContainer/Player2Card/Margin/VBox/ControlsBlock/ControlsRow"]
 custom_minimum_size = Vector2(210, 40)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
+theme_override_colors/font_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_focus_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_pressed_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_hover_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_disabled_color = Color(0.98, 0.92, 0.78, 0.55)
+theme_override_colors/font_outline_color = Color(0.12, 0.06, 0.02, 1)
+theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("5_body_font")
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")
@@ -346,11 +358,13 @@ alignment = 1
 [node name="ValueButton" type="Button" parent="Root/Panel/Margin/VBox/Content/CardsContainer/Player2Card/Margin/VBox/TeamBlock/TeamRow"]
 custom_minimum_size = Vector2(210, 40)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
+theme_override_colors/font_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_focus_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_pressed_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_hover_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_disabled_color = Color(0.98, 0.92, 0.78, 0.55)
+theme_override_colors/font_outline_color = Color(0.12, 0.06, 0.02, 1)
+theme_override_constants/outline_size = 5
 theme_override_fonts/font = ExtResource("5_body_font")
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxTexture_small_normal")

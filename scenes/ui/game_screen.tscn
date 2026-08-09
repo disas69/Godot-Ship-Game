@@ -12,24 +12,28 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/components/flag_indicator.tscn" id="9_tjkec"]
 [ext_resource type="FontFile" uid="uid://bef8jlqfff473" path="res://fonts/Pixelify_Sans/static/PixelifySans-Bold.ttf" id="10_bold_font"]
 [ext_resource type="PackedScene" path="res://scenes/ui/components/touch_controls.tscn" id="11_touch"]
-[ext_resource type="Texture2D" uid="uid://dr1sy2vjpyuiv" path="res://assets/kenney_ui-pack-adventure/PNG/Default/panel_brown_corners_a.png" id="12_panel_texture"]
+[ext_resource type="Texture2D" uid="uid://8k1t33ks6i85" path="res://assets/ui_pirate/panel_frame_pirate.png" id="12_panel_texture"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_panel"]
 texture = ExtResource("12_panel_texture")
-texture_margin_left = 18.0
-texture_margin_top = 18.0
-texture_margin_right = 18.0
-texture_margin_bottom = 18.0
+texture_margin_left = 38.0
+texture_margin_top = 38.0
+texture_margin_right = 38.0
+texture_margin_bottom = 38.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_stat"]
 font = ExtResource("10_bold_font")
 font_size = 36
-font_color = Color(0.28, 0.18, 0.1, 1)
+font_color = Color(0.98, 0.92, 0.78, 1)
+outline_size = 5
+outline_color = Color(0.12, 0.06, 0.02, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_timer"]
 font = ExtResource("10_bold_font")
 font_size = 30
-font_color = Color(0.28, 0.18, 0.1, 1)
+font_color = Color(0.98, 0.92, 0.78, 1)
+outline_size = 5
+outline_color = Color(0.12, 0.06, 0.02, 1)
 
 [node name="UI" type="CanvasLayer" unique_id=976727756 node_paths=PackedStringArray("timer_label", "flags_1_label", "flags_2_label", "kills_1_label", "kills_2_label", "flag_indicators", "touch_controls", "pause_button", "hud_panel", "timer_container", "flags_1_container", "flags_2_container", "kills_1_container", "kills_2_container")]
 script = ExtResource("1_ooiym")

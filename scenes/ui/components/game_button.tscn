@@ -2,38 +2,38 @@
 
 [ext_resource type="FontFile" uid="uid://daa5h725j1fj7" path="res://fonts/Pixelify_Sans/static/PixelifySans-Medium.ttf" id="1_1peqo"]
 [ext_resource type="Script" uid="uid://cu1tbno1nfqjl" path="res://scripts/ui/components/game_button.gd" id="1_game_button"]
-[ext_resource type="Texture2D" uid="uid://clvy6s0djiqry" path="res://assets/kenney_ui-pack-adventure/PNG/Default/button_grey.png" id="2_lkoix"]
+[ext_resource type="Texture2D" uid="uid://b3f3cnm38eu0o" path="res://assets/ui_pirate/button_wood_normal.png" id="2_lkoix"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_normal"]
 texture = ExtResource("2_lkoix")
-texture_margin_left = 12.0
-texture_margin_top = 8.0
-texture_margin_right = 12.0
-texture_margin_bottom = 8.0
+texture_margin_left = 14.0
+texture_margin_top = 12.0
+texture_margin_right = 14.0
+texture_margin_bottom = 12.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hover"]
 texture = ExtResource("2_lkoix")
-texture_margin_left = 12.0
-texture_margin_top = 8.0
-texture_margin_right = 12.0
-texture_margin_bottom = 8.0
-modulate_color = Color(1.12, 1.12, 1.12, 1)
+texture_margin_left = 14.0
+texture_margin_top = 12.0
+texture_margin_right = 14.0
+texture_margin_bottom = 12.0
+modulate_color = Color(1.15, 1.15, 1.15, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pressed"]
 texture = ExtResource("2_lkoix")
-texture_margin_left = 12.0
-texture_margin_top = 8.0
-texture_margin_right = 12.0
-texture_margin_bottom = 8.0
-modulate_color = Color(0.82, 0.82, 0.82, 1)
+texture_margin_left = 14.0
+texture_margin_top = 12.0
+texture_margin_right = 14.0
+texture_margin_bottom = 12.0
+modulate_color = Color(0.85, 0.85, 0.85, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_disabled"]
 texture = ExtResource("2_lkoix")
-texture_margin_left = 12.0
-texture_margin_top = 8.0
-texture_margin_right = 12.0
-texture_margin_bottom = 8.0
-modulate_color = Color(0.45, 0.45, 0.45, 0.9)
+texture_margin_left = 14.0
+texture_margin_top = 12.0
+texture_margin_right = 14.0
+texture_margin_bottom = 12.0
+modulate_color = Color(0.6, 0.6, 0.6, 0.6)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_focus"]
 bg_color = Color(1, 1, 1, 0)
@@ -56,11 +56,13 @@ expand_margin_bottom = 4.0
 custom_minimum_size = Vector2(180, 44)
 theme_override_fonts/font = ExtResource("1_1peqo")
 theme_override_font_sizes/font_size = 25
-theme_override_colors/font_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_hover_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_pressed_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_focus_color = Color(0.13, 0.2, 0.25, 1)
-theme_override_colors/font_disabled_color = Color(0.13, 0.2, 0.25, 0.55)
+theme_override_colors/font_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_hover_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_pressed_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_focus_color = Color(0.98, 0.92, 0.78, 1)
+theme_override_colors/font_disabled_color = Color(0.98, 0.92, 0.78, 0.55)
+theme_override_colors/font_outline_color = Color(0.12, 0.06, 0.02, 1)
+theme_override_constants/outline_size = 5
 theme_override_styles/normal = SubResource("StyleBoxTexture_normal")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_pressed")
 theme_override_styles/hover = SubResource("StyleBoxTexture_hover")
