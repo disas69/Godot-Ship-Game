@@ -2,8 +2,8 @@ shader_type canvas_item;
 render_mode unshaded;
 
 uniform vec2 viewport_size = vec2(1.0, 1.0);
-uniform sampler2D viewport1 : source_color, filter_nearest;
-uniform sampler2D viewport2 : source_color, filter_nearest;
+uniform sampler2D viewport1 : filter_nearest;
+uniform sampler2D viewport2 : filter_nearest;
 uniform float split_amount : hint_range(0.0, 1.0, 0.01) = 0.0;
 uniform vec2 player1_position = vec2(0.5, 0.5);
 uniform vec2 player2_position = vec2(0.5, 0.5);

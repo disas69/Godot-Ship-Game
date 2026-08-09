@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c18rqxpn0ybja" path="res://scripts/game/game.gd" id="1_game"]
 [ext_resource type="Environment" uid="uid://cm77bbr0io118" path="res://scenes/main-environment.tres" id="1_iywne"]
+[ext_resource type="Script" path="res://scripts/tools/web_environment_adjuster.gd" id="2_webenv"]
 [ext_resource type="PackedScene" uid="uid://t0rocmbnigpa" path="res://scenes/gameplay/water.tscn" id="2_p57ef"]
 [ext_resource type="PackedScene" uid="uid://djcyh712ps6xh" path="res://scenes/environment/environment_battle.tscn" id="3_u5sy4"]
 [ext_resource type="PackedScene" uid="uid://brwr25ogu6wpj" path="res://scenes/gameplay/main_camera.tscn" id="4_gee14"]
@@ -38,6 +39,7 @@ bot_player_scene = ExtResource("8_bot")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="View" unique_id=2023717212]
 environment = ExtResource("1_iywne")
+script = ExtResource("2_webenv")
 
 [node name="Sun" type="DirectionalLight3D" parent="View" unique_id=1107726886]
 transform = Transform3D(-0.76604444, -0.49240386, 0.41317594, 0, 0.64278764, 0.76604444, -0.64278764, 0.58682406, -0.4924039, 0, 0, 0)
