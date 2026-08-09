@@ -18,8 +18,8 @@ func is_web_platform() -> bool:
 func apply_web_overrides() -> void:
 	if environment != null:
 		environment = environment.duplicate()
-		environment.ambient_light_energy = 0.75
-		environment.tonemap_exposure = 0.8
+		environment.ambient_light_energy = 1.15
+		environment.tonemap_exposure = 0.78
 		environment.adjustment_enabled = true
 		environment.adjustment_contrast = 1.05
 		environment.adjustment_saturation = 1.05
@@ -28,7 +28,7 @@ func apply_web_overrides() -> void:
 		directional_light = get_parent().get_node_or_null("Sun") as DirectionalLight3D
 
 	if directional_light != null:
-		directional_light.light_energy = 0.85
+		directional_light.light_energy = 0.95
 
 	# Water override for Web builds ONLY
 	var water_mesh_node: MeshInstance3D = null
