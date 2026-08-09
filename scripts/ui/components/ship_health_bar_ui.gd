@@ -6,8 +6,8 @@ class_name ShipHealthBarUI extends Control
 
 @export_category("Layout & Positioning")
 @export var height_offset: float = -2.3
-@export var circle_size: Vector2 = Vector2(14, 14)
-@export var circle_spacing: float = 3.0
+@export var circle_size: Vector2 = Vector2(22, 22)
+@export var circle_spacing: float = 4.0
 
 @export_category("Colors & Effects")
 @export var filled_alpha: float = 0.85
@@ -58,16 +58,16 @@ func _ensure_container() -> void:
 		add_child(_container)
 
 
+const TEX_SHIELD_FILLED = preload("res://assets/ui_pirate/shield_filled.png")
+const TEX_SHIELD_EMPTY = preload("res://assets/ui_pirate/shield_empty.png")
+
+
 func _ensure_textures() -> void:
 	if filled_shield_texture == null:
-		if _cached_filled_texture == null:
-			_cached_filled_texture = _generate_circle_texture(true)
-		filled_shield_texture = _cached_filled_texture
+		filled_shield_texture = TEX_SHIELD_FILLED
 
 	if empty_shield_texture == null:
-		if _cached_empty_texture == null:
-			_cached_empty_texture = _generate_circle_texture(false)
-		empty_shield_texture = _cached_empty_texture
+		empty_shield_texture = TEX_SHIELD_EMPTY
 
 
 static func _generate_circle_texture(is_filled: bool) -> ImageTexture:

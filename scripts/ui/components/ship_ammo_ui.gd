@@ -11,9 +11,9 @@ class_name ShipAmmoUI extends Control
 @export var ring_width: float = 9.0
 
 @export_category("Colors & Half-Transparency")
-@export var fill_color: Color = Color(0.2, 0.85, 1.0, 0.65)
-@export var bg_color: Color = Color(0.1, 0.12, 0.16, 0.4)
-@export var low_ammo_color: Color = Color(1.0, 0.35, 0.2, 0.65)
+@export var fill_color: Color = Color(0.98, 0.92, 0.78, 0.9)
+@export var bg_color: Color = Color(0.12, 0.08, 0.04, 0.65)
+@export var low_ammo_color: Color = Color(0.85, 0.22, 0.16, 0.9)
 
 @export_category("Appearance Animations")
 @export var fade_in_duration: float = 0.2

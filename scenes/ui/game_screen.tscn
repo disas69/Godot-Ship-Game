@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://brxhyxdpm8kqu" path="res://scripts/ui/screens/game_screen.gd" id="1_ooiym"]
 [ext_resource type="PackedScene" uid="uid://cnv1q44x5xwit" path="res://scenes/ui/components/game_button.tscn" id="2_game_button"]
 [ext_resource type="Texture2D" uid="uid://d1gdygxngma58" path="res://images/ui/white flag.png" id="3_8dubc"]
-[ext_resource type="Texture2D" uid="uid://bs8shad370uqb" path="res://assets/kenney_ui-pack-adventure/PNG/Default/minimap_arrow_a.png" id="4_nktmq"]
+[ext_resource type="Texture2D" path="res://assets/ui_pirate/flag_arrow_pirate.png" id="4_nktmq"]
 [ext_resource type="Texture2D" uid="uid://gy1gdbscgbmr" path="res://images/ui/black flag.png" id="4_p7vwb"]
 [ext_resource type="Texture2D" uid="uid://dqfdmmixda6q6" path="res://images/ui/white skull.png" id="5_ktti3"]
 [ext_resource type="Texture2D" uid="uid://mywykogdvj0y" path="res://images/ui/black skull.png" id="6_cgfq5"]

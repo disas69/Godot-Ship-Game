@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://oaqs51ls0q0r"]
 
 [ext_resource type="Environment" uid="uid://cm77bbr0io118" path="res://scenes/main-environment.tres" id="1_con2f"]
-[ext_resource type="Script" path="res://scripts/tools/web_environment_adjuster.gd" id="2_webenv"]
 [ext_resource type="PackedScene" uid="uid://t0rocmbnigpa" path="res://scenes/gameplay/water.tscn" id="2_mhnvy"]
+[ext_resource type="Script" uid="uid://b163cqrrthppu" path="res://scripts/tools/web_environment_adjuster.gd" id="2_webenv"]
 [ext_resource type="PackedScene" uid="uid://bdfkvq5s1kdti" path="res://assets/kenney_pirate-kit/Models/GLB format/patch-sand.glb" id="3_moj2y"]
 [ext_resource type="PackedScene" uid="uid://hjouhumleskw" path="res://assets/kenney_pirate-kit/Models/GLB format/grass.glb" id="7_p2357"]
 [ext_resource type="PackedScene" uid="uid://c6bdodimma34p" path="res://assets/kenney_pirate-kit/Models/GLB format/palm-detailed-straight.glb" id="8_rlbjc"]
@@ -36,10 +36,9 @@ script = ExtResource("2_webenv")
 transform = Transform3D(-0.76604444, -0.49240386, 0.41317594, 0, 0.64278764, 0.76604444, -0.64278764, 0.58682406, -0.4924039, 0, 0, 0)
 shadow_enabled = true
 shadow_bias = 0.03
-shadow_normal_bias = 2.0
 directional_shadow_mode = 0
-directional_shadow_pancake_size = 0.0
 directional_shadow_max_distance = 250.0
+directional_shadow_pancake_size = 0.0
 
 [node name="Water" parent="View" unique_id=196760504 instance=ExtResource("2_mhnvy")]
 
@@ -868,6 +867,11 @@ transform = Transform3D(0.02034121, -0.01164657, 0.2820449, 0.00499291, 0.282746
 
 [node name="FishFlock_NearReef1" parent="View" unique_id=1288393918 instance=ExtResource("18_81l6r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.217773, 0, -68.206894)
+fish_count = 40
+roaming_radius = 15.0
+
+[node name="FishFlock_NearReef2" parent="View" unique_id=2095198400 instance=ExtResource("18_81l6r")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 45.058334, 0, -82.6636)
 fish_count = 40
 roaming_radius = 15.0
 
