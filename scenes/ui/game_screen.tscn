@@ -12,14 +12,15 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/components/flag_indicator.tscn" id="9_tjkec"]
 [ext_resource type="FontFile" uid="uid://bef8jlqfff473" path="res://fonts/Pixelify_Sans/static/PixelifySans-Bold.ttf" id="10_bold_font"]
 [ext_resource type="PackedScene" path="res://scenes/ui/components/touch_controls.tscn" id="11_touch"]
-[ext_resource type="Texture2D" uid="uid://8k1t33ks6i85" path="res://assets/ui_pirate/panel_frame_pirate.png" id="12_panel_texture"]
+[ext_resource type="Texture2D" uid="uid://7f53q1nl5odk" path="res://assets/ui_pirate/panel_frame_hud.png" id="12_panel_texture"]
+[ext_resource type="Texture2D" uid="uid://b2lq81aedmgth" path="res://assets/ui_pirate/icon_pause.png" id="13_icon_pause"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_panel"]
 texture = ExtResource("12_panel_texture")
-texture_margin_left = 38.0
-texture_margin_top = 38.0
-texture_margin_right = 38.0
-texture_margin_bottom = 38.0
+texture_margin_left = 24.0
+texture_margin_top = 24.0
+texture_margin_right = 24.0
+texture_margin_bottom = 24.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_stat"]
 font = ExtResource("10_bold_font")
@@ -52,7 +53,7 @@ flags_2_container = NodePath("Control/HudPanel/Margin/HBox/Team2VBox/Flags2Box")
 kills_1_container = NodePath("Control/HudPanel/Margin/HBox/Team1VBox/Kills1Box")
 kills_2_container = NodePath("Control/HudPanel/Margin/HBox/Team2VBox/Kills2Box")
 
-[node name="TouchControls" parent="." instance=ExtResource("11_touch")]
+[node name="TouchControls" parent="." unique_id=792416543 instance=ExtResource("11_touch")]
 visible = false
 
 [node name="FlagIndicators" type="Control" parent="." unique_id=57190261]
@@ -84,15 +85,18 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="PauseButton" parent="Control" unique_id=1987654321 instance=ExtResource("2_game_button")]
+custom_minimum_size = Vector2(52, 52)
 layout_mode = 1
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 60.0
-offset_bottom = 60.0
-custom_minimum_size = Vector2(44, 44)
+offset_right = 68.0
+offset_bottom = 68.0
 focus_mode = 0
-text = "II"
-label = "II"
+text = ""
+icon = ExtResource("13_icon_pause")
+icon_alignment = 1
+expand_icon = true
+label = ""
 
 [node name="HudPanel" type="PanelContainer" parent="Control" unique_id=1036398968]
 layout_mode = 1
@@ -101,29 +105,31 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -155.0
-offset_top = -125.0
-offset_right = 155.0
+offset_left = -162.5
+offset_top = -154.0
+offset_right = 162.5
 offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 0
+scale = Vector2(0.85, 0.85)
+pivot_offset = Vector2(162.5, 144)
 theme_override_styles/panel = SubResource("StyleBoxTexture_panel")
 
-[node name="ClockOverlay" type="Control" parent="Control/HudPanel"]
+[node name="ClockOverlay" type="Control" parent="Control/HudPanel" unique_id=1226635594]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="ClockIcon" type="TextureRect" parent="Control/HudPanel/ClockOverlay"]
+[node name="ClockIcon" type="TextureRect" parent="Control/HudPanel/ClockOverlay" unique_id=1330663338]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -64.0
-offset_top = -84.0
-offset_right = 64.0
-offset_bottom = 44.0
+offset_left = -30.0
+offset_top = -44.0
+offset_right = 30.0
+offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -131,104 +137,102 @@ texture = ExtResource("7_p7vwb")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Margin" type="MarginContainer" parent="Control/HudPanel"]
+[node name="Margin" type="MarginContainer" parent="Control/HudPanel" unique_id=475671692]
 layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 4
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 2
 
-[node name="HBox" type="HBoxContainer" parent="Control/HudPanel/Margin"]
+[node name="HBox" type="HBoxContainer" parent="Control/HudPanel/Margin" unique_id=1570854883]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 12
 alignment = 1
 
-[node name="Team1VBox" type="VBoxContainer" parent="Control/HudPanel/Margin/HBox"]
+[node name="Team1VBox" type="VBoxContainer" parent="Control/HudPanel/Margin/HBox" unique_id=1923793276]
 layout_mode = 2
 theme_override_constants/separation = 2
 alignment = 1
 
-[node name="Flags1Box" type="HBoxContainer" parent="Control/HudPanel/Margin/HBox/Team1VBox"]
+[node name="Flags1Box" type="HBoxContainer" parent="Control/HudPanel/Margin/HBox/Team1VBox" unique_id=448769755]
 layout_mode = 2
 theme_override_constants/separation = 6
 alignment = 2
 
-[node name="Flags1" type="Label" parent="Control/HudPanel/Margin/HBox/Team1VBox/Flags1Box"]
+[node name="Flags1" type="Label" parent="Control/HudPanel/Margin/HBox/Team1VBox/Flags1Box" unique_id=1633133111]
 layout_mode = 2
 text = "0"
 label_settings = SubResource("LabelSettings_stat")
 
-[node name="Icon" type="TextureRect" parent="Control/HudPanel/Margin/HBox/Team1VBox/Flags1Box"]
-custom_minimum_size = Vector2(48, 48)
+[node name="Icon" type="TextureRect" parent="Control/HudPanel/Margin/HBox/Team1VBox/Flags1Box" unique_id=472148547]
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 texture = ExtResource("3_8dubc")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Kills1Box" type="HBoxContainer" parent="Control/HudPanel/Margin/HBox/Team1VBox"]
+[node name="Kills1Box" type="HBoxContainer" parent="Control/HudPanel/Margin/HBox/Team1VBox" unique_id=1998688667]
 layout_mode = 2
 theme_override_constants/separation = 6
 alignment = 2
 
-[node name="Kills1" type="Label" parent="Control/HudPanel/Margin/HBox/Team1VBox/Kills1Box"]
+[node name="Kills1" type="Label" parent="Control/HudPanel/Margin/HBox/Team1VBox/Kills1Box" unique_id=1480718255]
 layout_mode = 2
 text = "0"
 label_settings = SubResource("LabelSettings_stat")
 
-[node name="Icon" type="TextureRect" parent="Control/HudPanel/Margin/HBox/Team1VBox/Kills1Box"]
-custom_minimum_size = Vector2(44, 44)
+[node name="Icon" type="TextureRect" parent="Control/HudPanel/Margin/HBox/Team1VBox/Kills1Box" unique_id=31342636]
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 texture = ExtResource("5_ktti3")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TimerBox" type="VBoxContainer" parent="Control/HudPanel/Margin/HBox"]
+[node name="TimerBox" type="VBoxContainer" parent="Control/HudPanel/Margin/HBox" unique_id=921926791]
 custom_minimum_size = Vector2(105, 0)
 layout_mode = 2
 theme_override_constants/separation = 0
 alignment = 2
 
-[node name="Timer" type="Label" parent="Control/HudPanel/Margin/HBox/TimerBox"]
+[node name="Timer" type="Label" parent="Control/HudPanel/Margin/HBox/TimerBox" unique_id=1270527092]
 layout_mode = 2
 text = "2:00"
 label_settings = SubResource("LabelSettings_timer")
 horizontal_alignment = 1
 
-[node name="Team2VBox" type="VBoxContainer" parent="Control/HudPanel/Margin/HBox"]
+[node name="Team2VBox" type="VBoxContainer" parent="Control/HudPanel/Margin/HBox" unique_id=2083359940]
 layout_mode = 2
 theme_override_constants/separation = 2
 alignment = 1
 
-[node name="Flags2Box" type="HBoxContainer" parent="Control/HudPanel/Margin/HBox/Team2VBox"]
+[node name="Flags2Box" type="HBoxContainer" parent="Control/HudPanel/Margin/HBox/Team2VBox" unique_id=1006457068]
 layout_mode = 2
 theme_override_constants/separation = 6
-alignment = 0
 
-[node name="Icon" type="TextureRect" parent="Control/HudPanel/Margin/HBox/Team2VBox/Flags2Box"]
-custom_minimum_size = Vector2(48, 48)
+[node name="Icon" type="TextureRect" parent="Control/HudPanel/Margin/HBox/Team2VBox/Flags2Box" unique_id=557191435]
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 texture = ExtResource("4_p7vwb")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Flags2" type="Label" parent="Control/HudPanel/Margin/HBox/Team2VBox/Flags2Box"]
+[node name="Flags2" type="Label" parent="Control/HudPanel/Margin/HBox/Team2VBox/Flags2Box" unique_id=809230780]
 layout_mode = 2
 text = "0"
 label_settings = SubResource("LabelSettings_stat")
 
-[node name="Kills2Box" type="HBoxContainer" parent="Control/HudPanel/Margin/HBox/Team2VBox"]
+[node name="Kills2Box" type="HBoxContainer" parent="Control/HudPanel/Margin/HBox/Team2VBox" unique_id=1192117009]
 layout_mode = 2
 theme_override_constants/separation = 6
-alignment = 0
 
-[node name="Icon" type="TextureRect" parent="Control/HudPanel/Margin/HBox/Team2VBox/Kills2Box"]
-custom_minimum_size = Vector2(44, 44)
+[node name="Icon" type="TextureRect" parent="Control/HudPanel/Margin/HBox/Team2VBox/Kills2Box" unique_id=1977255225]
+custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 texture = ExtResource("6_cgfq5")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Kills2" type="Label" parent="Control/HudPanel/Margin/HBox/Team2VBox/Kills2Box"]
+[node name="Kills2" type="Label" parent="Control/HudPanel/Margin/HBox/Team2VBox/Kills2Box" unique_id=1079094413]
 layout_mode = 2
 text = "0"
 label_settings = SubResource("LabelSettings_stat")

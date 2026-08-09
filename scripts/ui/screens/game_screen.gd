@@ -63,12 +63,13 @@ func _animate_hud_entrance() -> void:
 	if hud_panel == null or not is_instance_valid(hud_panel):
 		return
 
+	var target_scale: Vector2 = hud_panel.scale
 	hud_panel.pivot_offset = Vector2(hud_panel.size.x / 2.0, hud_panel.size.y)
-	hud_panel.scale = Vector2(0.7, 0.7)
+	hud_panel.scale = target_scale * 0.7
 	hud_panel.modulate.a = 0.0
 
 	var tween := create_tween().set_parallel(true).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
-	tween.tween_property(hud_panel, "scale", Vector2.ONE, 0.35)
+	tween.tween_property(hud_panel, "scale", target_scale, 0.35)
 	tween.tween_property(hud_panel, "modulate:a", 1.0, 0.25)
 
 
@@ -117,7 +118,7 @@ func on_timer_changed(remaining_time_sec: float) -> void:
 			timer_label.modulate = Color(0.9, 0.15, 0.15, 1.0)
 			_punch_control(timer_container if timer_container != null else timer_label, 1.25, 0.25)
 		elif total_sec > 15:
-			timer_label.modulate = Color(0.28, 0.18, 0.1, 1.0)
+			timer_label.modulate = Color(1.0, 1.0, 1.0, 1.0)
 
 	_last_time_sec = total_sec
 
@@ -156,6 +157,7 @@ func _punch_control(target_node: Control, punch_scale: float = 1.3, duration: fl
 	if target_node == null or not is_instance_valid(target_node):
 		return
 
+	var orig_scale: Vector2 = target_node.scale
 	target_node.pivot_offset = target_node.size / 2.0
 
 	var tween_key := target_node.get_instance_id()
@@ -165,8 +167,8 @@ func _punch_control(target_node: Control, punch_scale: float = 1.3, duration: fl
 	var tween := create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 	_active_tweens[tween_key] = tween
 
-	tween.tween_property(target_node, "scale", Vector2.ONE * punch_scale, duration * 0.45)
-	tween.tween_property(target_node, "scale", Vector2.ONE, duration * 0.55)
+	tween.tween_property(target_node, "scale", orig_scale * punch_scale, duration * 0.45)
+	tween.tween_property(target_node, "scale", orig_scale, duration * 0.55)
 
 
 func on_pause_button_pressed() -> void:
