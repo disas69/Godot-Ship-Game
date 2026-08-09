@@ -229,6 +229,29 @@ func is_split_uv_owned_by_player_index(point_uv: Vector2, player_index: int, pla
 	return owner_index == player_index
 
 
+func get_split_player_uvs(screen_size: Vector2) -> Array[Vector2]:
+	if not is_dynamic_split_active() or targets.size() < 2 or screen_size.x <= 0.0 or screen_size.y <= 0.0:
+		return [Vector2(0.5, 0.5), Vector2(0.5, 0.5)]
+
+	var current_frame := Engine.get_frames_drawn()
+	if _cached_frame != current_frame:
+		_cached_frame = current_frame
+		_cached_player_1_uv = split_camera_1.unproject_position(targets[0].global_position) / screen_size
+		_cached_player_2_uv = split_camera_2.unproject_position(targets[1].global_position) / screen_size
+
+	return [_cached_player_1_uv, _cached_player_2_uv]
+
+
+func is_uv_in_player_region(point_uv: Vector2, player_index: int, screen_size: Vector2) -> bool:
+	if not is_dynamic_split_active() or targets.size() < 2:
+		return true
+	if player_index < 0 or player_index > 1:
+		return true
+
+	var uvs := get_split_player_uvs(screen_size)
+	return is_split_uv_owned_by_player_index(point_uv, player_index, uvs[0], uvs[1])
+
+
 func setup_dynamic_split_screen() -> void:
 	if not dynamic_split_enabled:
 		return
@@ -237,7 +260,7 @@ func setup_dynamic_split_screen() -> void:
 
 	split_layer = CanvasLayer.new()
 	split_layer.name = "DynamicSplitScreenLayer"
-	split_layer.layer = 128
+	split_layer.layer = -1
 	get_viewport().add_child.call_deferred(split_layer)
 	tree_exiting.connect(cleanup_dynamic_split_screen, CONNECT_ONE_SHOT as Object.ConnectFlags)
 

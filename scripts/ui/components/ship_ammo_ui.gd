@@ -19,6 +19,8 @@ class_name ShipAmmoUI extends Control
 @export var fade_in_duration: float = 0.2
 @export var fade_out_duration: float = 0.3
 
+var is_secondary: bool = false
+var _secondary_ui: ShipAmmoUI = null
 var _target_ship: Node
 var _current_ammo: float = 10.0
 var _max_ammo: int = 10
@@ -49,38 +51,47 @@ func setup(ship: Node) -> void:
 	update_visibility_state(true)
 
 
+func _exit_tree() -> void:
+	if _secondary_ui != null and is_instance_valid(_secondary_ui):
+		_secondary_ui.queue_free()
+		_secondary_ui = null
+
+
 func on_ship_ammo_changed(current_ammo: float, max_ammo: int) -> void:
 	_current_ammo = current_ammo
 	_max_ammo = max_ammo
 	queue_redraw()
+	if _secondary_ui != null and is_instance_valid(_secondary_ui):
+		_secondary_ui.on_ship_ammo_changed(current_ammo, max_ammo)
 
 
 func _process(_delta: float) -> void:
+	if is_secondary:
+		return
+
 	if _target_ship == null or not is_instance_valid(_target_ship):
 		visible = false
+		if _secondary_ui != null and is_instance_valid(_secondary_ui):
+			_secondary_ui.visible = false
 		return
 
 	if "is_destroyed" in _target_ship and _target_ship.get("is_destroyed"):
 		visible = false
+		if _secondary_ui != null and is_instance_valid(_secondary_ui):
+			_secondary_ui.visible = false
 		return
 
 	if is_in_menu():
 		visible = false
-		return
-
-	var camera := get_viewport().get_camera_3d()
-	if camera == null:
-		visible = false
+		if _secondary_ui != null and is_instance_valid(_secondary_ui):
+			_secondary_ui.visible = false
 		return
 
 	var ship_3d := _target_ship as Node3D
 	if ship_3d == null:
 		visible = false
-		return
-
-	var world_pos: Vector3 = ship_3d.global_position + Vector3(0, height_offset, 0)
-	if camera.is_position_behind(world_pos):
-		visible = false
+		if _secondary_ui != null and is_instance_valid(_secondary_ui):
+			_secondary_ui.visible = false
 		return
 
 	if "current_ammo" in _target_ship:
@@ -90,11 +101,67 @@ func _process(_delta: float) -> void:
 
 	if _current_ammo < float(_max_ammo):
 		queue_redraw()
+		if _secondary_ui != null and is_instance_valid(_secondary_ui):
+			_secondary_ui.queue_redraw()
 
-	var screen_pos := camera.unproject_position(world_pos)
-	global_position = screen_pos + screen_offset
-	
-	update_visibility_state(false)
+	var world_pos: Vector3 = ship_3d.global_position + Vector3(0, height_offset, 0)
+	var screen_size := get_viewport().get_visible_rect().size
+
+	var main_cam := get_tree().get_first_node_in_group("MainCamera") as MainCamera
+	var is_split := main_cam != null and is_instance_valid(main_cam) and main_cam.is_dynamic_split_active()
+
+	if not is_split:
+		if _secondary_ui != null and is_instance_valid(_secondary_ui):
+			_secondary_ui.visible = false
+
+		var camera := get_viewport().get_camera_3d()
+		if camera == null or camera.is_position_behind(world_pos):
+			visible = false
+			return
+
+		var screen_pos := camera.unproject_position(world_pos)
+		global_position = screen_pos + screen_offset
+		update_visibility_state(false)
+		return
+
+	if _secondary_ui == null or not is_instance_valid(_secondary_ui):
+		_secondary_ui = ShipAmmoUI.new()
+		_secondary_ui.is_secondary = true
+		_secondary_ui.name = "ShipAmmoUI_Secondary"
+		_target_ship.add_child(_secondary_ui)
+		_secondary_ui.setup(_target_ship)
+
+	# Region 0 (Player 1 view)
+	var show_0 := false
+	var cam0 := main_cam.split_camera_1
+	if cam0 != null and not cam0.is_position_behind(world_pos):
+		var pos0 := cam0.unproject_position(world_pos)
+		var uv0 := Vector2(pos0.x / screen_size.x, pos0.y / screen_size.y)
+		if main_cam.is_uv_in_player_region(uv0, 0, screen_size):
+			global_position = pos0 + screen_offset
+			show_0 = true
+	update_visibility_state_custom(self, show_0)
+
+	# Region 1 (Player 2 view)
+	var show_1 := false
+	var cam1 := main_cam.split_camera_2
+	if cam1 != null and not cam1.is_position_behind(world_pos):
+		var pos1 := cam1.unproject_position(world_pos)
+		var uv1 := Vector2(pos1.x / screen_size.x, pos1.y / screen_size.y)
+		if main_cam.is_uv_in_player_region(uv1, 1, screen_size):
+			_secondary_ui.global_position = pos1 + screen_offset
+			show_1 = true
+	update_visibility_state_custom(_secondary_ui, show_1)
+
+
+func update_visibility_state_custom(target_ui: ShipAmmoUI, in_region: bool) -> void:
+	if target_ui == null or not is_instance_valid(target_ui):
+		return
+	if not in_region:
+		target_ui.visible = false
+		return
+
+	target_ui.update_visibility_state(false)
 
 
 func update_visibility_state(instant: bool = false) -> void:

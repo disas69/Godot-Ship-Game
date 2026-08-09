@@ -14,6 +14,8 @@ class_name ShipHealthBarUI extends Control
 @export var empty_alpha: float = 0.5
 @export var flash_modulate: Color = Color(3.5, 3.5, 3.5, 1.0)
 
+var is_secondary: bool = false
+var _secondary_ui: ShipHealthBarUI = null
 var _target_ship: Node
 var _container: HBoxContainer
 var _slots: Array[TextureRect] = []
@@ -38,6 +40,12 @@ func setup(ship: Node) -> void:
 	if _target_ship != null and _target_ship.has_signal("health_changed"):
 		if not _target_ship.is_connected("health_changed", on_ship_health_changed):
 			_target_ship.connect("health_changed", on_ship_health_changed)
+
+
+func _exit_tree() -> void:
+	if _secondary_ui != null and is_instance_valid(_secondary_ui):
+		_secondary_ui.queue_free()
+		_secondary_ui = null
 
 
 func _ensure_container() -> void:
@@ -101,40 +109,84 @@ static func _generate_circle_texture(is_filled: bool) -> ImageTexture:
 
 
 func _process(_delta: float) -> void:
+	if is_secondary:
+		return
+
 	if _target_ship == null or not is_instance_valid(_target_ship):
 		visible = false
+		if _secondary_ui != null and is_instance_valid(_secondary_ui):
+			_secondary_ui.visible = false
 		return
 
 	if "is_destroyed" in _target_ship and _target_ship.get("is_destroyed"):
 		visible = false
+		if _secondary_ui != null and is_instance_valid(_secondary_ui):
+			_secondary_ui.visible = false
 		return
 
 	if is_in_menu():
 		visible = false
-		return
-
-	var camera := get_viewport().get_camera_3d()
-	if camera == null:
-		visible = false
+		if _secondary_ui != null and is_instance_valid(_secondary_ui):
+			_secondary_ui.visible = false
 		return
 
 	var ship_3d := _target_ship as Node3D
 	if ship_3d == null:
 		visible = false
+		if _secondary_ui != null and is_instance_valid(_secondary_ui):
+			_secondary_ui.visible = false
 		return
 
 	var world_pos: Vector3 = ship_3d.global_position + Vector3(0, height_offset, 0)
-	if camera.is_position_behind(world_pos):
-		visible = false
-		return
-
-	var screen_pos := camera.unproject_position(world_pos)
+	var screen_size := get_viewport().get_visible_rect().size
 	var container_size := _container.get_combined_minimum_size() if _container != null else circle_size
 	if container_size == Vector2.ZERO:
 		container_size = Vector2(_max_hp * (circle_size.x + circle_spacing), circle_size.y)
 
-	global_position = screen_pos - container_size / 2.0
-	visible = true
+	var main_cam := get_tree().get_first_node_in_group("MainCamera") as MainCamera
+	var is_split := main_cam != null and is_instance_valid(main_cam) and main_cam.is_dynamic_split_active()
+
+	if not is_split:
+		if _secondary_ui != null and is_instance_valid(_secondary_ui):
+			_secondary_ui.visible = false
+
+		var camera := get_viewport().get_camera_3d()
+		if camera == null or camera.is_position_behind(world_pos):
+			visible = false
+			return
+
+		var screen_pos := camera.unproject_position(world_pos)
+		global_position = screen_pos - container_size / 2.0
+		visible = true
+		return
+
+	if _secondary_ui == null or not is_instance_valid(_secondary_ui):
+		_secondary_ui = ShipHealthBarUI.new()
+		_secondary_ui.is_secondary = true
+		_secondary_ui.name = "ShipHealthBarUI_Secondary"
+		_target_ship.add_child(_secondary_ui)
+		_secondary_ui.setup(_target_ship)
+		_secondary_ui.update_health(_current_hp, _max_hp, false)
+
+	var show_0 := false
+	var cam0 := main_cam.split_camera_1
+	if cam0 != null and not cam0.is_position_behind(world_pos):
+		var pos0 := cam0.unproject_position(world_pos)
+		var uv0 := Vector2(pos0.x / screen_size.x, pos0.y / screen_size.y)
+		if main_cam.is_uv_in_player_region(uv0, 0, screen_size):
+			global_position = pos0 - container_size / 2.0
+			show_0 = true
+	visible = show_0
+
+	var show_1 := false
+	var cam1 := main_cam.split_camera_2
+	if cam1 != null and not cam1.is_position_behind(world_pos):
+		var pos1 := cam1.unproject_position(world_pos)
+		var uv1 := Vector2(pos1.x / screen_size.x, pos1.y / screen_size.y)
+		if main_cam.is_uv_in_player_region(uv1, 1, screen_size):
+			_secondary_ui.global_position = pos1 - container_size / 2.0
+			show_1 = true
+	_secondary_ui.visible = show_1
 
 
 func is_in_menu() -> bool:
@@ -168,6 +220,9 @@ func update_health(current_hp: int, max_hp: int, animate_hit: bool = true) -> vo
 			_animate_hit_slot(slot, i)
 		else:
 			_set_slot_state(slot, is_active)
+
+	if _secondary_ui != null and is_instance_valid(_secondary_ui):
+		_secondary_ui.update_health(current_hp, max_hp, animate_hit)
 
 
 func _rebuild_slots_if_needed(max_hp: int) -> void:
@@ -241,6 +296,9 @@ func on_ship_health_changed(current_hp: int, max_hp: int) -> void:
 
 
 func fade_out_and_destroy(duration: float = 0.4) -> void:
+	if _secondary_ui != null and is_instance_valid(_secondary_ui):
+		_secondary_ui.fade_out_and_destroy(duration)
+		_secondary_ui = null
 	var tween := create_tween().set_parallel(true)
 	for slot in _slots:
 		if is_instance_valid(slot):
