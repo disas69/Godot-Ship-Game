@@ -1,14 +1,14 @@
 # Ship Game
 
-A casual 3D top-down pirate ship game made with Godot 4. Sail around, fight enemy ships with cannons, and capture islands to score points.
+A small 3D top-down pirate ship game made with Godot 4. Sail around, fight enemy ships with cannons, and capture islands to score points.
 
-![Demo](screenshots/combat-sinking.gif)
+![](screenshots/combat-sinking.gif)
 
-![Demo](screenshots/island-capture.gif)
+![](screenshots/island-capture.gif)
 
 ## Features
 
-- **Naval combat:** Aim and fire cannon volleys, lead your shots, and sink enemy ships.
+- **Naval combat:** Aim and fire cannon balls, lead your shots, and sink enemy ships.
 - **Dynamic split screen:** Play with a friend on one screen — camera stays shared when you are close and smoothly splits apart when you separate.
 - **Island capture:** Sail into enemy island zones and hold them to raise your flag and rack up points.
 - **AI ships:** Bot-controlled ships that patrol, chase, and engage in firefights.
