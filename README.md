@@ -4,7 +4,7 @@ A small 3D top-down pirate ship game made with Godot 4. Sail around, fight enemy
 
 ![](screenshots/combat-sinking.gif)
 
-![](screenshots/island-capture.gif)
+![](screenshots/split-screen.gif)
 
 ## Features
 
