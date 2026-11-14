@@ -565,7 +565,7 @@ func shoot(target_position: Vector3) -> void:
 	on_shot_fired()
 	AudioManager.play_sfx("cannon_shoot", start_pos)
 	if self is PlayerShip:
-		get_tree().call_group("MainCamera", "shake_for_target", self, 0.05)
+		get_tree().call_group("MainCamera", "shake_for_target", self, 0.03)
 		Input.start_joy_vibration(0, 0.2, 0.2, 0.12)
 
 
@@ -717,7 +717,7 @@ func take_hit(hit_velocity: Vector3, attacker: Ship = null) -> void:
 		play_hit_feedback(Color.WHITE)
 		on_hit_taken(false)
 		if self is PlayerShip:
-			get_tree().call_group("MainCamera", "shake_for_target", self, 0.12)
+			get_tree().call_group("MainCamera", "shake_for_target", self, 0.06)
 			Input.start_joy_vibration(0, 0.35, 0.45, 0.18)
 
 	else:
@@ -731,7 +731,7 @@ func take_hit(hit_velocity: Vector3, attacker: Ship = null) -> void:
 		play_hit_feedback(Color.RED)
 		on_hit_taken(true)
 		if self is PlayerShip:
-			get_tree().call_group("MainCamera", "shake_for_target", self, 0.25)
+			get_tree().call_group("MainCamera", "shake_for_target", self, 0.13)
 			Input.start_joy_vibration(0, 0.6, 0.8, 0.35)
 		play_destroyed_feedback()
 

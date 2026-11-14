@@ -141,14 +141,14 @@ func disable_input_visuals() -> void:
 
 
 func on_shot_fired() -> void:
-	play_camera_shake(0.15)
+	play_camera_shake(0.08)
 
 
 func on_hit_taken(_destroyed: bool) -> void:
 	if _destroyed:
-		play_camera_shake(0.75)
+		play_camera_shake(0.4)
 	else:
-		play_camera_shake(0.25)
+		play_camera_shake(0.13)
 
 
 func play_camera_shake(amount: float) -> void:
